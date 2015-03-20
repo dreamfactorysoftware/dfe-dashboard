@@ -3,10 +3,12 @@
 //* Authentication Configuration
 //******************************************************************************
 
+use DreamFactory\Enterprise\Dashboard\Providers\DashboardAuthProvider;
+
 return [
-    'driver'   => 'console',
-    'model'    => 'DreamFactory\\Library\\Fabric\\Database\\Models\\Deploy\\ServiceUser',
-    'table'    => 'service_user_t',
+    'driver'   => DashboardAuthProvider::IOC_NAME,
+    'model'    => 'DreamFactory\\Library\\Fabric\\Database\\Models\\Deploy\\User',
+    'table'    => 'user_t',
     'password' => [
         'email'  => 'emails.password',
         'table'  => 'auth_reset_t',

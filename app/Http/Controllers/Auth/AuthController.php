@@ -14,6 +14,15 @@ class AuthController extends Controller
     use AuthenticatesAndRegistersUsers;
 
     //******************************************************************************
+    //* Members
+    //******************************************************************************
+
+    /**
+     * @type string
+     */
+    protected $redirectTo = '/app/dashboard';
+
+    //******************************************************************************
     //* Methods
     //******************************************************************************
 
@@ -30,5 +39,4 @@ class AuthController extends Controller
 
         $this->middleware( 'guest', ['except' => 'getLogout'] );
     }
-
 }
