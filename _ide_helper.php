@@ -7117,17 +7117,6 @@ namespace {
         }
         
         /**
-         * Get the current UNIX timestamp.
-         *
-         * @return int 
-         * @static 
-         */
-        public static function getTime(){
-            //Method inherited from \Illuminate\Queue\Queue            
-            return \Illuminate\Queue\SyncQueue::getTime();
-        }
-        
-        /**
          * Set the IoC container instance.
          *
          * @param \Illuminate\Container\Container $container
