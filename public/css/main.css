@@ -1,0 +1,167 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+
+html, body {
+	height: 100%;
+	/* The html and body elements cannot have any padding or margin. */
+}
+
+body {
+	font-family: 'Open Sans', 'Helvetica Neue Light', 'Arial', sans-serif;
+	font-weight: 400;
+}
+
+.row {
+	margin-left:  0 !important;
+	margin-right: 0 !important;
+}
+
+.footer-label-sm {
+
+	font-size: 10px;
+	padding:   13px;
+}
+
+.footer-section-header {
+	color: #777;
+}
+
+hr.footer-hr {
+	border-color: #444 !important;
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+	min-height: 100%;
+	/*noinspection CssOverwrittenProperties*/
+	height:     auto !important;
+	/*noinspection CssOverwrittenProperties*/
+	height:     100%;
+	/* Negative indent footer by its height */
+	margin:     0 auto -150px;
+	/* Pad bottom by footer height */
+	padding:    0 0 150px;
+	/** Hide bottom scroll when pushing */
+	overflow-x: hidden;
+}
+
+#db-wrapper {
+	padding-top: 30px;
+}
+
+#db-menu {
+	padding-top: 50px;
+}
+
+/* Set the fixed height of the footer here */
+#footer {
+	background-color: #222;
+	width:            100%;
+	color:            #777;
+	height:           150px;
+	margin:           0;
+	padding:          0;
+}
+
+#wrap > .container {
+	/*padding: 25px 15px 0;*/
+}
+
+.container .credit {
+	/*margin: 20px 0;*/
+}
+
+#footer > .container {
+	padding-left:   15px;
+	padding-right:  15px;
+	padding-top:    4px;
+	padding-bottom: 0;
+	margin-bottom:  0;
+}
+
+code {
+	font-size: 80%;
+}
+
+#footer ul, ol {
+	margin-bottom: 0;
+}
+
+#footer .social-links {
+	margin-top: 4px;
+}
+
+#footer > .container p {
+	margin-bottom: 0;
+}
+
+legend {
+	font-weight:   400;
+	margin-bottom: 10px;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+	font-weight: 700;
+	line-height: 1.1;
+	color:       inherit;
+}
+
+.dsp-header {
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15);
+	box-shadow:  0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.dsp-header .navbar-nav > li > a {
+	color:              #FFFFFF;
+	opacity:            .6;
+	-webkit-transition: opacity 1s ease-out;
+	transition:         opacity 1s ease-out;
+	/*background-color: rgba(0, 0, 0, .8);*/
+}
+
+.dsp-header .navbar-nav > .active > a, .dsp-header .navbar-nav > .active > a:hover {
+	color:            #fff;
+	opacity:          1;
+	background-color: rgba(0, 0, 0, .8);
+}
+
+.dsp-header .navbar-nav > li > a:hover {
+	opacity:            1;
+	-webkit-transition: opacity 0.25s ease-in;
+	transition:         opacity 0.25s ease-in;
+}
+
+.dsp-header .navbar-nav > li:hover {
+	background-color: rgba(0, 0, 0, .8);
+}
+
+.dsp-header .navbar-brand:hover, .dsp-header .navbar-brand:focus {
+	color:            #FFFFFF;
+	background-color: rgba(0, 0, 0, 0);
+}
+
+.dsp-header a {
+	/*color: #FFFFFF;*/
+}
+
+.dsp-header .navbar-nav > .open > a, .dsp-header .navbar-nav > .open > a:hover, .dsp-header .navbar-nav > .open > a:focus {
+	/*color:            #FFFFFF;*/
+	/*background-color: #463265;*/
+}
+
+.inner-content {
+	padding: 40px 0 0;
+}
+
+ul li a:hover {
+	text-decoration: none;
+}
+
+#live-api {
+	overflow: auto;
+	margin:   20px;
+	width:    98%;
+}
+
+.no-padding {
+	padding: 0 !important;
+}
