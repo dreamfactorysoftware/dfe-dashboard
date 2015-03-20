@@ -3,13 +3,7 @@
 //* Routes
 //******************************************************************************
 
-\Route::group(
-    ['middleware' => 'auth'],
-    function ()
-    {
-        \Route::get( 'home', 'HomeController@index' );
-    }
-);
+\Route::get( '/', ['as' => 'home', 'uses' => 'HomeController@index'] );
 
 \Route::controllers(
     [

@@ -169,3 +169,7 @@ input[type="email"], input[type="password"] {
 	color:     rgba(255, 255, 255, .90);
 	font-size: 13px;
 }
+
+#page-content {
+	margin-top: 10px;
+}

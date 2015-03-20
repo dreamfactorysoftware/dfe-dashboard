@@ -13,7 +13,7 @@
 
 @include('layouts.partials.navbar')
 
-<div class="container-fluid">
+<div id="page-content" class="container-fluid">
 	@yield('content')
 </div>
 

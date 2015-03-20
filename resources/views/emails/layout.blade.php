@@ -5,6 +5,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<style type="text/css">
 
+		* {
+			font-size: 14px;
+		}
+
 		.ExternalClass * {
 			line-height: 100%;
 		}
@@ -27,7 +31,7 @@
 	<!-- Left Header -->
 	<tr>
 		<td style="line-height:10px;" colspan="3"><img style="display:block;"
-													   src="{{ asset('/img/spacer.gif') }}"
+													   src="//dashboard.cloud.dreamfactory.com/img/spacer.gif"
 													   width="600"
 													   height="10"
 													   alt=""
@@ -37,7 +41,7 @@
 		<td align="left" colspan="3"><a name="Logo"
 										href="http://www.dreamfactory.com/"
 										target="_blank"><img style="display:block;"
-															 src="{{ asset('/img/logo-dreamfactory-default.png') }}"
+															 src="//dashboard.cloud.dreamfactory.com/img/logo-dreamfactory-default.png"
 															 width="215"
 															 height="29"
 															 alt="DreamFactory"
@@ -47,7 +51,7 @@
 
 	<tr>
 		<td style="line-height:1px;"><img style="display:block;"
-										  src="{{ asset( '/img/spacer.gif') }}"
+										  src="//dashboard.cloud.dreamfactory.com/img/spacer.gif"
 										  width="10"
 										  height="1"
 										  alt=""
@@ -57,7 +61,7 @@
 		</td>
 
 		<td style="line-height:1px;"><img style="display:block;"
-										  src="{{ asset('/img/spacer.gif') }}"
+										  src="//dashboard.cloud.dreamfactory.com/img/spacer.gif"
 										  width="10"
 										  height="1"
 										  alt=""
@@ -66,7 +70,7 @@
 
 	<tr>
 		<td align="center" style="line-height:1px;" colspan="3"><img style="display:block;"
-																	 src="{{ asset('/img/gray-line.gif') }}"
+																	 src="//dashboard.cloud.dreamfactory.com/img/gray-line.gif'"
 																	 width="580"
 																	 height="1"
 																	 alt=""
@@ -82,31 +86,31 @@
 			<table width="142" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td valign="top"><a name="Facebook" href="http://www.facebook.com/dfsoftwareinc" target="_blank"><img style="display:block;"
-																														  src="{{ asset('/img/facebook.gif') }}"
+																														  src="//dashboard.cloud.dreamfactory.com/img/facebook.gif"
 																														  alt="Facebook"
 																														  width="44"
 																														  height="44"
 																														  border="0" /></a></td>
 					<td valign="top"><img style="display:block;"
-										  src="{{ asset('social_divider.gif') }}"
+										  src="//dashboard.cloud.dreamfactory.com/img/social_divider.gif"
 										  alt=""
 										  width="1"
 										  height="44"
 										  border="0" /></td>
 					<td valign="top"><a name="Twitter" href="http://twitter.com/dfsoftwareinc/" target="_blank"><img style="display:block;"
-																													 src="{{ asset('/img/twitter.gif') }}"
+																													 src="//dashboard.cloud.dreamfactory.com/img/twitter.gif"
 																													 alt="Twitter"
 																													 width="52"
 																													 height="44"
 																													 border="0" /></a></td>
 					<td valign="top"><img style="display:block;"
-										  src="{{ asset('social_divider.gif') }}"
+										  src="//dashboard.cloud.dreamfactory.com/img/social_divider.gif"
 										  alt=""
 										  width="1"
 										  height="44"
 										  border="0" /></td>
 					<td valign="top"><a name="GitHub" href="https://github.com/dreamfactorysoftware/" target="_blank"><img style="display:block;"
-																														   src="{{ asset('/img/icon-github-48x48.png') }}"
+																														   src="//dashboard.cloud.dreamfactory.com/img/icon-github-48x48.png"
 																														   alt="GitHub"
 																														   width="44"
 																														   height="44"
@@ -116,11 +120,11 @@
 		</td>
 	</tr>
 	<tr>
-		<td colspan="3"><img style="display:block;" src="{{ asset('/img/spacer.gif') }}" width="1" height="20" alt="" border="0" /></td>
+		<td colspan="3"><img style="display:block;" src="//dashboard.cloud.dreamfactory.com/img/spacer.gif" width="1" height="20" alt="" border="0" /></td>
 	</tr>
 	<tr>
 		<td style="line-height:1px;"><img style="display:block;"
-										  src="{{ asset('/img/spacer.gif') }}"
+										  src="//dashboard.cloud.dreamfactory.com/img/spacer.gif"
 										  width="10"
 										  height="1"
 										  alt=""
@@ -149,7 +153,7 @@ DreamFactory Software, Inc. 1999 Bascom Avenue, Suite 928, Campbell, CA&nbsp;950
 												  target="_blank"
 												  style="color:#999999;">Terms and&nbsp;Conditions</a></span></td>
 		<td style="line-height:1px;"><img style="display:block;"
-										  src="{{ asset('/img/spacer.gif') }}"
+										  src="//dashboard.cloud.dreamfactory.com/img/spacer.gif"
 										  width="10"
 										  height="1"
 										  alt=""

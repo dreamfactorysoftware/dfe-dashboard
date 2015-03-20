@@ -1,8 +1,6 @@
 /*
  * Base structure
  */
-@import url(http://fonts.googleapis.com/css?family=Open+Sans|Lato|Roboto);
-
 /* Move down content because we have a fixed navbar that is 40px tall */
 body {
 	padding-top:      40px;
@@ -348,6 +346,10 @@ table.dataTable thead th {
 	background-color: rgba(0, 149, 135, 0.05);
 	box-shadow:       0 1px 4px rgba(0, 0, 0, .12), 0 1px 4px rgba(0, 0, 0, .12);
 	color:            #005547;
+}
+
+#page-content {
+	margin-top: 10px;
 }
 
 /*------------------------------------------------------------------------------*/
