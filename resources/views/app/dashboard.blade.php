@@ -9,7 +9,7 @@
     <script src="/static/highcharts/4.0.4/highcharts.min.js"></script>
 @stop
 
-@section('after-app-scripts')
+@section('after-body-scripts')
     @parent
     <script src="/js/chart-theme.js"></script>
     <script src="/js/cerberus.graphs.js"></script>

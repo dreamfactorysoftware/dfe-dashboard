@@ -31,13 +31,16 @@
 		}
 	],
 	"require":           {
-		"laravel/framework":          "5.0.*",
-		"dreamfactory/php-utils":     "*",
-		"dreamfactory/fabric-common": "dev-develop as dev-master",
-		"dreamfactory/fabric-db":     "dev-develop as dev-master",
-		"dreamfactory/fabric-audit":  "dev-develop as dev-master",
-		"dreamfactory/console-tools": "dev-develop as dev-master",
-		"wpb/string-blade-compiler":  "2.*@dev"
+		"laravel/framework":           "5.0.*",
+		"league/flysystem-sftp":       "*",
+		"league/flysystem-ziparchive": "*",
+		"wpb/string-blade-compiler":   "2.*@dev",
+		"guzzlehttp/guzzle":           "~4.0",
+		"dreamfactory/php-utils":      "*",
+		"dreamfactory/fabric-common":  "dev-develop as dev-master",
+		"dreamfactory/fabric-db":      "dev-develop as dev-master",
+		"dreamfactory/fabric-audit":   "dev-develop as dev-master",
+		"dreamfactory/console-tools":  "dev-develop as dev-master"
 	},
 	"require-dev":       {
 		"barryvdh/laravel-ide-helper": "~2.0",

@@ -1,132 +1,160 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>@yield('headTitle')</title>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <meta name="language" content="en" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="HandheldFriendly" content="true" />
-    <link rel="shortcut icon" href="//www.dreamfactory.com/favicon.ico" />
-    <style type="text/css">
-        @import url(http://fonts.googleapis.com/css?family=Open+Sans|Roboto);
+	<title>@yield('headTitle')</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<style type="text/css">
 
-        body, table, p {
-            font-family: Roboto, "Open Sans", Helvetica, Arial, sans-serif;
-        }
+		.ExternalClass * {
+			line-height: 100%;
+		}
 
-        body {
-            background-color: #dfdfdf;
-            padding:          0;
-            margin:           0 auto;
-            width:            100%;
-        }
+		@media screen and (max-width: 480px) {
+			.desktopSection110 {
+				display: none !important;
+			}
 
-        table {
-            border:           0;
-            padding:          0;
-            margin:           0;
-            font-family:      Roboto, "Open Sans", Helvetica, Arial, sans-serif;
-            background-color: #dfdfdf;
-            border-radius:    4px;
-        }
-
-        table table {
-            background-color: #ffffff;
-            margin:           0;
-            padding:          0;
-            text-align:       left;
-        }
-
-        .content-body {
-            padding: 15px 15px 10px;
-            margin:  0;
-        }
-
-        .content-header {
-            border-bottom: 1px solid #ddd;
-            padding:       10px 0 5px;
-            margin:        0 10px;
-        }
-    </style>
+			table[class=emailwrapto100pct], img[class=emailwrapto100pct] {
+				display: block !important;
+				width:   100% !important;
+			}
+		}
+	</style>
+	<!-- start padding for iOS -->    <!-- end padding for iOS -->
 </head>
-<body style="background-color:#DFDFDF; padding:0; margin: 0 auto; width:100%;">
-<table border="0"
-       cellspacing="0"
-       cellpadding="0"
-       style="width:600px !important; font-family: Roboto, 'Open Sans', Helvetica, Arial, sans-serif; margin:0 auto; padding:0;"
-       width="600">
-    <tbody>
-        <tr>
-            <td align="left" valign="middle" style="margin: 10px 0; padding: 10px 0 15px;">
-                <a style="text-decoration:none; cursor:pointer; border:none; display:block; height:29px; width:100%;"
-                   target="_blank"
-                   href="//dashboard.cloud.dreamfactory.com"><img src="http://dreamfactory.com/images/email-logo-215x29.png"
-                                                                  width="215"
-                                                                  height="29"
-                                                                  alt="DreamFactory"
-                                                                  style="border:none;text-decoration:none;" /></a>
-            </td>
-        </tr>
-    </tbody>
+<body style="padding:0; margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:100%; background-color:#ffffff;" bgcolor="#ffffff">
+<table class="desktopSection110" width="600" border="0" cellspacing="0" cellpadding="0" align="center" bgcolor="#ffffff">
+	<!-- Left Header -->
+	<tr>
+		<td style="line-height:10px;" colspan="3"><img style="display:block;"
+													   src="{{ asset('/img/spacer.gif') }}"
+													   width="600"
+													   height="10"
+													   alt=""
+													   border="0" /></td>
+	</tr>
+	<tr>
+		<td align="left" colspan="3"><a name="Logo"
+										href="http://www.dreamfactory.com/"
+										target="_blank"><img style="display:block;"
+															 src="{{ asset('/img/logo-dreamfactory-default.png') }}"
+															 width="215"
+															 height="29"
+															 alt="DreamFactory"
+															 border="0" /></a></td>
+	</tr>
+	<!-- End Left Header -->
+
+	<tr>
+		<td style="line-height:1px;"><img style="display:block;"
+										  src="{{ asset( '/img/spacer.gif') }}"
+										  width="10"
+										  height="1"
+										  alt=""
+										  border="0" /></td>
+		<td valign="top" align="left">
+			@yield('content')
+		</td>
+
+		<td style="line-height:1px;"><img style="display:block;"
+										  src="{{ asset('/img/spacer.gif') }}"
+										  width="10"
+										  height="1"
+										  alt=""
+										  border="0" /></td>
+	</tr>
+
+	<tr>
+		<td align="center" style="line-height:1px;" colspan="3"><img style="display:block;"
+																	 src="{{ asset('/img/gray-line.gif') }}"
+																	 width="580"
+																	 height="1"
+																	 alt=""
+																	 border="0" /></td>
+	</tr>
+
+	<tr>
+		<td valign="top" align="left" colspan="3">
+			<span style="font-size:26px; line-height:28px; font-family:Avenir, Arial, Helvetica, sans-serif; color:#000000;">&nbsp;</span></td>
+	</tr>
+	<tr>
+		<td valign="top" align="left" colspan="3">
+			<table width="142" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td valign="top"><a name="Facebook" href="http://www.facebook.com/dfsoftwareinc" target="_blank"><img style="display:block;"
+																														  src="{{ asset('/img/facebook.gif') }}"
+																														  alt="Facebook"
+																														  width="44"
+																														  height="44"
+																														  border="0" /></a></td>
+					<td valign="top"><img style="display:block;"
+										  src="{{ asset('social_divider.gif') }}"
+										  alt=""
+										  width="1"
+										  height="44"
+										  border="0" /></td>
+					<td valign="top"><a name="Twitter" href="http://twitter.com/dfsoftwareinc/" target="_blank"><img style="display:block;"
+																													 src="{{ asset('/img/twitter.gif') }}"
+																													 alt="Twitter"
+																													 width="52"
+																													 height="44"
+																													 border="0" /></a></td>
+					<td valign="top"><img style="display:block;"
+										  src="{{ asset('social_divider.gif') }}"
+										  alt=""
+										  width="1"
+										  height="44"
+										  border="0" /></td>
+					<td valign="top"><a name="GitHub" href="https://github.com/dreamfactorysoftware/" target="_blank"><img style="display:block;"
+																														   src="{{ asset('/img/icon-github-48x48.png') }}"
+																														   alt="GitHub"
+																														   width="44"
+																														   height="44"
+																														   border="0" /></a></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="3"><img style="display:block;" src="{{ asset('/img/spacer.gif') }}" width="1" height="20" alt="" border="0" /></td>
+	</tr>
+	<tr>
+		<td style="line-height:1px;"><img style="display:block;"
+										  src="{{ asset('/img/spacer.gif') }}"
+										  width="10"
+										  height="1"
+										  alt=""
+										  border="0" /></td>
+		<td valign="top"
+			align="left"><span style="font-size:11px; line-height:16px; font-family:Avenir, Arial, Helvetica, sans-serif; color:#999999;">This message was sent to {{ $user->email_addr_text }}
+				<br />
+If you would like to update your email address, please&nbsp;<a name="UserProfile"
+															   href="{{ url( '/user/profile') }}"
+															   target="_blank"
+															   style="color:#999999;">click&nbsp;here</a>.<br />
+
+					Visit <a name="UserSettings"
+							 href="{{ url( '/user/settings') }}"
+							 target="_blank"
+							 style="color:#999999;">alert preferences</a> to manage your email and mobile alerts.
+
+		<br />&nbsp;<br />
+				&copy;2012&mdash;{{ date('Y') }} DreamFactory Software, Inc. | All Rights&nbsp;Reserved.<br />
+DreamFactory Software, Inc. 1999 Bascom Avenue, Suite 928, Campbell, CA&nbsp;95008<br />
+<a name="Privacy"
+   href="http://www.dreamfactory.com/privacy/"
+   target="_blank"
+   style="color:#999999;">Privacy Policy</a> | <a name="Terms"
+												  href="http://www.dreamfactory.com/terms"
+												  target="_blank"
+												  style="color:#999999;">Terms and&nbsp;Conditions</a></span></td>
+		<td style="line-height:1px;"><img style="display:block;"
+										  src="{{ asset('/img/spacer.gif') }}"
+										  width="10"
+										  height="1"
+										  alt=""
+										  border="0" /></td>
+	</tr>
 </table>
-
-<table cellspacing="0"
-       cellpadding="0"
-       style="border-radius: 4px; background-color: #ffffff; font-family:Roboto,'Open Sans',Helvetica,Arial,sans-serif; margin: 0 auto; border: 1px solid #ccc;"
-       width="600"
-       bgcolor="#FFFFFF">
-    <tbody>
-        <tr>
-            <td style="padding:0;margin:0;" align="left">
-                <table
-                        cellspacing="0"
-                        cellpadding="0"
-                        style="font-family:Roboto,'Open Sans',Helvetica,Arial,sans-serif; "
-                        width="100%">
-                    <tbody>
-                        <tr>
-                            <td style="font-family:Roboto,'Open Sans',Helvetica,Arial,sans-serif;color:#333333;">
-                                <h2 class="content-header">@yield('contentHeader')</h2>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="font-family:Roboto,'Open Sans',Helvetica,Arial,sans-serif;color:#333333;">
-                                <div class="content-body">
-                                    @yield('contentBody')
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-<table border="0"
-       cellspacing="0"
-       cellpadding="0"
-       style="font-family:Roboto,'Open Sans',Helvetica,Arial,sans-serif; margin: 0 auto; padding: 0;margin-top:10px;"
-       width="600"
-       class="responsive">
-    <tbody>
-        <tr>
-            <td style="font-size: 8pt;color: #aaa; padding: 0 5px;">
-                <p>
-                    You received this email because you used the <a href="//www.dreamfactory.com/"
-                                                                    alt
-                                                                    target="_blank">DreamFactory Enterprise</a> Free-Hosting System. DreamFactory will not use your email address other than to communicate with you about your system usage.
-                </p>
-
-                <p>If you need further assistance or have questions, please email <a
-                            style="color:#0077B5;text-decoration:none;"
-                            target="_blank"
-                            href="mailto:support@dreamfactory.com">DreamFactory Support</a>.</p>
-            </td>
-        </tr>
-    </tbody>
-</table>
-
 </body>
 </html>
