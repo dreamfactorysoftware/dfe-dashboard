@@ -48,7 +48,6 @@
 	},
 	"autoload":          {
 		"psr-4": {
-			"App\\":                                 "app/",
 			"DreamFactory\\Enterprise\\Dashboard\\": "src/"
 		}
 	},

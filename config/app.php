@@ -39,11 +39,11 @@ return [
         'Illuminate\\Validation\\ValidationServiceProvider',
         'Illuminate\\View\\ViewServiceProvider',
         /** Application Service Providers... */
-        'App\\Providers\\AppServiceProvider',
-        'App\\Providers\\BusServiceProvider',
-        'App\\Providers\\ConfigServiceProvider',
-        'App\\Providers\\EventServiceProvider',
-        'App\\Providers\\RouteServiceProvider',
+        'DreamFactory\\Enterprise\\Dashboard\\Providers\\AppServiceProvider',
+        'DreamFactory\\Enterprise\\Dashboard\\Providers\\BusServiceProvider',
+        'DreamFactory\\Enterprise\\Dashboard\\Providers\\ConfigServiceProvider',
+        'DreamFactory\\Enterprise\\Dashboard\\Providers\\EventServiceProvider',
+        'DreamFactory\\Enterprise\\Dashboard\\Providers\\RouteServiceProvider',
         //        'App\\Providers\\DashboardAuthProvider',
         /** 3rd-party Service Providers */
         'Barryvdh\\LaravelIdeHelper\\IdeHelperServiceProvider',

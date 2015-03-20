@@ -1,7 +1,7 @@
 <?php
 /**
  * An helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.0.17 on 2015-03-19.
+ * Generated for Laravel 5.0.17 on 2015-03-20.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -975,7 +975,7 @@ namespace {
          */
         public static function handle($input, $output = null){
             //Method inherited from \Illuminate\Foundation\Console\Kernel            
-            return \App\Console\Kernel::handle($input, $output);
+            return \DreamFactory\Enterprise\Dashboard\Console\Kernel::handle($input, $output);
         }
         
         /**
@@ -988,7 +988,7 @@ namespace {
          */
         public static function terminate($input, $status){
             //Method inherited from \Illuminate\Foundation\Console\Kernel            
-            \App\Console\Kernel::terminate($input, $status);
+            \DreamFactory\Enterprise\Dashboard\Console\Kernel::terminate($input, $status);
         }
         
         /**
@@ -1001,7 +1001,7 @@ namespace {
          */
         public static function call($command, $parameters = array()){
             //Method inherited from \Illuminate\Foundation\Console\Kernel            
-            return \App\Console\Kernel::call($command, $parameters);
+            return \DreamFactory\Enterprise\Dashboard\Console\Kernel::call($command, $parameters);
         }
         
         /**
@@ -1014,7 +1014,7 @@ namespace {
          */
         public static function queue($command, $parameters = array()){
             //Method inherited from \Illuminate\Foundation\Console\Kernel            
-            \App\Console\Kernel::queue($command, $parameters);
+            \DreamFactory\Enterprise\Dashboard\Console\Kernel::queue($command, $parameters);
         }
         
         /**
@@ -1025,7 +1025,7 @@ namespace {
          */
         public static function all(){
             //Method inherited from \Illuminate\Foundation\Console\Kernel            
-            return \App\Console\Kernel::all();
+            return \DreamFactory\Enterprise\Dashboard\Console\Kernel::all();
         }
         
         /**
@@ -1036,7 +1036,7 @@ namespace {
          */
         public static function output(){
             //Method inherited from \Illuminate\Foundation\Console\Kernel            
-            return \App\Console\Kernel::output();
+            return \DreamFactory\Enterprise\Dashboard\Console\Kernel::output();
         }
         
         /**
@@ -1047,7 +1047,7 @@ namespace {
          */
         public static function bootstrap(){
             //Method inherited from \Illuminate\Foundation\Console\Kernel            
-            \App\Console\Kernel::bootstrap();
+            \DreamFactory\Enterprise\Dashboard\Console\Kernel::bootstrap();
         }
         
     }
