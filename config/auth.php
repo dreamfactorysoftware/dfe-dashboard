@@ -3,10 +3,8 @@
 //* Authentication Configuration
 //******************************************************************************
 
-use DreamFactory\Enterprise\Dashboard\Providers\DashboardAuthProvider;
-
 return [
-    'driver'   => DashboardAuthProvider::IOC_NAME,
+    'driver'   => 'dashboard',
     'model'    => 'DreamFactory\\Library\\Fabric\\Database\\Models\\Deploy\\User',
     'table'    => 'user_t',
     'password' => [

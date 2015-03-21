@@ -28,6 +28,10 @@
 		{
 			"type": "vcs",
 			"url":  "git@github.com:dreamfactorysoftware/fabric-db.git"
+		},
+		{
+			"type": "vcs",
+			"url":  "git@github.com:dreamfactorysoftware/dfe-common.git"
 		}
 	],
 	"require":           {
@@ -40,7 +44,8 @@
 		"dreamfactory/fabric-common":  "dev-develop as dev-master",
 		"dreamfactory/fabric-db":      "dev-develop as dev-master",
 		"dreamfactory/fabric-audit":   "dev-develop as dev-master",
-		"dreamfactory/console-tools":  "dev-develop as dev-master"
+		"dreamfactory/console-tools":  "dev-develop as dev-master",
+		"dreamfactory/dfe-common":     "dev-develop as dev-master"
 	},
 	"require-dev":       {
 		"barryvdh/laravel-ide-helper": "~2.0",

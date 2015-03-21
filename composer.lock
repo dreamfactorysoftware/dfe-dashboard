@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a399de7628b0013d91be7cd8484167dd",
+    "hash": "41f945206e28646c514e6df37b092345",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -399,6 +399,68 @@
             "time": "2015-02-05 16:35:43"
         },
         {
+            "name": "dreamfactory/dfe-common",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:dreamfactorysoftware/dfe-common.git",
+                "reference": "cf339a57cc1bfcfe6e53361cbb48d66d8e95d1df"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/cf339a57cc1bfcfe6e53361cbb48d66d8e95d1df",
+                "reference": "cf339a57cc1bfcfe6e53361cbb48d66d8e95d1df",
+                "shasum": ""
+            },
+            "require": {
+                "dreamfactory/fabric-db": "dev-develop as dev-master",
+                "league/flysystem-sftp": "*",
+                "league/flysystem-ziparchive": "*",
+                "wpb/string-blade-compiler": "2.*@dev"
+            },
+            "require-dev": {
+                "dreamfactory/fabric-audit": "dev-develop as dev-master",
+                "dreamfactory/fabric-common": "dev-develop as dev-master",
+                "laravel/framework": "5.0.*",
+                "phpspec/phpspec": "~2.1",
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "0.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DreamFactory\\Enterprise\\Common\\": "src/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Jerry Ablan",
+                    "email": "jerryablan@dreamfactory.com"
+                }
+            ],
+            "description": "DreamFactory Enterprise(tm) Common Components",
+            "homepage": "https://www.dreamfactory.com/",
+            "keywords": [
+                "common",
+                "dreamfactory",
+                "fabric",
+                "queue",
+                "utility"
+            ],
+            "support": {
+                "source": "https://github.com/dreamfactorysoftware/dfe-common/tree/develop",
+                "issues": "https://github.com/dreamfactorysoftware/dfe-common/issues"
+            },
+            "time": "2015-03-21 21:26:57"
+        },
+        {
             "name": "dreamfactory/fabric-audit",
             "version": "dev-develop",
             "source": {
@@ -566,12 +628,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/php-utils.git",
-                "reference": "8f3acc8d23b84d00ce52a6346bb74d6dc13dbc3c"
+                "reference": "7040462f92922b8cf2ed689656f1c69cfb432391"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/php-utils/zipball/8f3acc8d23b84d00ce52a6346bb74d6dc13dbc3c",
-                "reference": "8f3acc8d23b84d00ce52a6346bb74d6dc13dbc3c",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/php-utils/zipball/7040462f92922b8cf2ed689656f1c69cfb432391",
+                "reference": "7040462f92922b8cf2ed689656f1c69cfb432391",
                 "shasum": ""
             },
             "require": {
@@ -609,7 +671,7 @@
                 "dreamfactory",
                 "utility"
             ],
-            "time": "2015-03-10 13:55:13"
+            "time": "2015-03-20 21:20:31"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -921,12 +983,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "4bc1575b53a3cd8855054d5d12f9d4e2a0245176"
+                "reference": "b21be29a1fb12c84ab4e0b723e9c11492d0b25fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/4bc1575b53a3cd8855054d5d12f9d4e2a0245176",
-                "reference": "4bc1575b53a3cd8855054d5d12f9d4e2a0245176",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/b21be29a1fb12c84ab4e0b723e9c11492d0b25fe",
+                "reference": "b21be29a1fb12c84ab4e0b723e9c11492d0b25fe",
                 "shasum": ""
             },
             "require": {
@@ -1039,7 +1101,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2015-03-20 18:40:18"
+            "time": "2015-03-21 16:10:01"
         },
         {
             "name": "league/flysystem",
@@ -1047,12 +1109,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "51cd7cd7ee0defbaafc6ec0d3620110a5d71e11a"
+                "reference": "df47acdaefcff755cb6f15abd2e4735a2a9fad5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/51cd7cd7ee0defbaafc6ec0d3620110a5d71e11a",
-                "reference": "51cd7cd7ee0defbaafc6ec0d3620110a5d71e11a",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/df47acdaefcff755cb6f15abd2e4735a2a9fad5c",
+                "reference": "df47acdaefcff755cb6f15abd2e4735a2a9fad5c",
                 "shasum": ""
             },
             "require": {
@@ -1122,7 +1184,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2015-03-10 11:04:14"
+            "time": "2015-03-21 13:33:54"
         },
         {
             "name": "league/flysystem-sftp",
@@ -1386,12 +1448,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "592836c4dc9ca96e8843ed96fd1cac82a74c4df1"
+                "reference": "8982315b4e1fb19397c888223b43fa341c36dd0b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/592836c4dc9ca96e8843ed96fd1cac82a74c4df1",
-                "reference": "592836c4dc9ca96e8843ed96fd1cac82a74c4df1",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/8982315b4e1fb19397c888223b43fa341c36dd0b",
+                "reference": "8982315b4e1fb19397c888223b43fa341c36dd0b",
                 "shasum": ""
             },
             "require": {
@@ -1423,7 +1485,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2015-03-14 18:53:08"
+            "time": "2015-03-21 17:57:55"
         },
         {
             "name": "phpseclib/phpseclib",
@@ -1572,12 +1634,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "5e4b588609607d8d7bc60c28ae1cbc6eb6b08daa"
+                "reference": "19976b103ffe7db82c1d1e923626b1589ac4ef7d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/5e4b588609607d8d7bc60c28ae1cbc6eb6b08daa",
-                "reference": "5e4b588609607d8d7bc60c28ae1cbc6eb6b08daa",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/19976b103ffe7db82c1d1e923626b1589ac4ef7d",
+                "reference": "19976b103ffe7db82c1d1e923626b1589ac4ef7d",
                 "shasum": ""
             },
             "require": {
@@ -1635,7 +1697,7 @@
                 "interactive",
                 "shell"
             ],
-            "time": "2015-03-17 15:18:22"
+            "time": "2015-03-21 09:21:46"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -4387,6 +4449,12 @@
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
             "package": "dreamfactory/console-tools"
+        },
+        {
+            "alias": "dev-master",
+            "alias_normalized": "9999999-dev",
+            "version": "dev-develop",
+            "package": "dreamfactory/dfe-common"
         }
     ],
     "minimum-stability": "dev",
@@ -4395,7 +4463,8 @@
         "dreamfactory/fabric-common": 20,
         "dreamfactory/fabric-db": 20,
         "dreamfactory/fabric-audit": 20,
-        "dreamfactory/console-tools": 20
+        "dreamfactory/console-tools": 20,
+        "dreamfactory/dfe-common": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
