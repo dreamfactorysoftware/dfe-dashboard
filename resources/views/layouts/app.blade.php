@@ -1,20 +1,22 @@
-<!DOCTYPE html >
+<!DOCTYPE html>
 <html lang="en">
 <head>
-	@include('layouts.partials.head-master')
+    @section('head-master')
+        @include('layouts.partials.head-master')
+    @show
 
-	@section('head-links')
-	@show
+    @section('head-links')
+    @show
 
-	@section('head-scripts')
-	@show
+    @section('head-scripts')
+    @show
 </head>
 <body class="@yield('body-class')">
 
 @include('layouts.partials.navbar')
 
 <div id="page-content" class="container-fluid">
-	@yield('content')
+    @yield('content')
 </div>
 
 @section('before-body-scripts')

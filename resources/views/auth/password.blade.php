@@ -1,8 +1,15 @@
 @extends('layouts.app')
 
+{{-- no spaces... it won't be trimmed --}}
+{{-- @formatter:off --}}
 @section('page-title')
-    Password Reset
+Login
 @overwrite
+
+@section('page-theme')
+darkly
+@overwrite
+{{-- @formatter:on --}}
 
 @section('head-links')
     @parent
@@ -15,7 +22,8 @@
             <div class="col-md-offset-4 col-md-4 col-md-offset-4">
                 <div class="container-logo">
                     <h3><img src="/img/logo-dfe.png" alt="" />
-                        <small>DreamFactory Enterprise <span>{{ config('dashboard.version') }}</span>
+                        <small>DreamFactory Enterprise
+                            <span>{{ config('dashboard.version') }}</span>
                         </small>
                     </h3>
                 </div>
@@ -47,11 +55,11 @@
                             <span class="input-group-addon bg_lg"><i class="fa fa-user"></i></span>
 
                             <input type="email"
-                                   class="form-control email required"
-                                   autofocus
-                                   name="email"
-                                   placeholder="email address"
-                                   value="{{ old('email') }}">
+                                class="form-control email required"
+                                autofocus
+                                name="email"
+                                placeholder="email address"
+                                value="{{ old('email') }}">
                         </div>
                     </div>
 
@@ -59,7 +67,7 @@
 
                     <div class="form-actions">
                         <span class="pull-left"><a href="/auth/login" class="btn btn-success">Login</a></span> <span class="pull-right"><button class="btn btn-danger"
-                                                                                                                                                type="submit">Send Reset Link
+                                type="submit">Send Reset Link
                             </button></span>
                     </div>
                 </form>

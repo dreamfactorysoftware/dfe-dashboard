@@ -4,43 +4,8 @@ body {
 	color:            rgba(255, 255, 255, .5);
 }
 
-.fa {
-	/*color: rgba(255, 255, 255, .60);*/
-}
-
 .normal-text {
 	color: #ff9d1d;
-}
-
-/*------------------------------------------------------------------------------*/
-/* validation/error tweaks
-/*------------------------------------------------------------------------------*/
-
-.has-error .help-block,
-.has-error .control-label,
-.has-error .radio,
-.has-error .checkbox,
-.has-error .radio-inline,
-.has-error .checkbox-inline {
-	color: #ffc7c5;
-}
-
-input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
-	background: #353535 none !important;
-}
-
-.has-error .input-group-addon {
-	color: #c96462;
-}
-
-.has-success .input-group-addon {
-	color: #6ca66d;
-}
-
-#container-login {
-	/*width:     35%;*/
-	/*min-width: 450px;*/
-	/*max-width: 520px;*/
 }
 
 #container-login form h4 {
@@ -77,17 +42,13 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
 
 #container-login .form-actions {
 	border-top:  1px solid rgba(255, 255, 255, 0.1);
-	margin-top:  30px;
-	font-family: "Roboto Condensed", "Droid Sans", "Open Sans", Arial, sans-serif;
+	padding-top: 10px;
 }
 
-#container-login .form-actions .pull-left {
-	margin-top: 0;
-}
-
-#container-login form#login-form {
+#container-login > form {
 	/*z-index: 200;*/
 	display: block;
+	margin:  15px auto;
 }
 
 #container-login #recover-form {
@@ -106,7 +67,7 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
 	margin-bottom:  25px;
 	padding-bottom: 15px;
 	border-bottom:  1px solid rgba(189, 183, 107, 0.1);
-	font-family:    "Open Sans", "Droid Sans", Arial, sans-serif;
+	/*font-family:    "Open Sans", "Droid Sans", Arial, sans-serif;*/
 }
 
 .container-logo img {
@@ -134,42 +95,6 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
 	margin-right: 5px;
 }
 
-/*@media (max-width: 800px) {*/
-/*#logo {*/
-/*width: 60%;*/
-/*}*/
-
-/*#container-login {*/
-/*width: 80%*/
-/*}*/
-/*}*/
-
-/*@media (max-width: 480px) {*/
-/*#logo {*/
-/*width: 40%;*/
-/*}*/
-
-/*#container-login {*/
-/*width: 90%*/
-/*}*/
-
-/*#container-login .control-group {*/
-/*/!*padding:       8px 0;*!/*/
-/*/!*margin-bottom: 0;*!/*/
-/*}*/
-/*}*/
-
 .help-inline {
-	margin-left: 40px;
-	font-size:   11px;
-	color:       #c96462;
-}
-
-input[type="email"], input[type="password"] {
-	color:     rgba(255, 255, 255, .90);
-	font-size: 13px;
-}
-
-#page-content {
-	margin-top: 10px;
+	color: #c96462;
 }

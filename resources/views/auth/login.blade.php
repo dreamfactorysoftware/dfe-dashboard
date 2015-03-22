@@ -1,24 +1,29 @@
 @extends('layouts.app')
 
+{{-- no spaces... it won't be trimmed --}}
+{{-- @formatter:off --}}
 @section('page-title')
-    Login
+Login
 @overwrite
+
+@section('page-theme')
+darkly
+@overwrite
+{{-- @formatter:on --}}
 
 @section('head-links')
     @parent
     <link href="/css/login.css" rel="stylesheet">
 @stop
 
+@include('auth.branding')
+
 @section('content')
     <div id="container-login" class="container-fluid">
         <div class="row">
             <div class="col-md-offset-4 col-md-4 col-md-offset-4">
                 <div class="container-logo">
-                    <h3><img src="/img/logo-dfe.png" alt="" />
-                        <small>DreamFactory Enterprise
-                            <span>{{ config('dashboard.version') }}</span>
-                        </small>
-                    </h3>
+                    @yield('auth.branding')
                 </div>
 
                 @if (count($errors) > 0)
@@ -77,18 +82,14 @@
 
                         <span class="pull-right"><button type="submit" class="btn btn-success">Login</button></span>
                     </div>
-
-                    <input type="hidden" name="recover" value="0">
                 </form>
             </div>
         </div>
     </div>
 @stop
 
-@section( 'after-app-scripts' )
+@section( 'after-body-scripts' )
     @parent
     <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
-    <script src="/js/validate.js"></script>
-    <script src="/js/login.js"></script>
+    <script src="/js/auth.validate.js"></script>
 @stop
-

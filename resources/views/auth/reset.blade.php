@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@section('page-title')
-    Login
-@overwrite
+{{-- no spaces... it won't be trimmed --}}
+@section('page-theme')darkly@overwrite
+@section('page-title')Password Reset@overwrite
 
 @section('head-links')
     @parent

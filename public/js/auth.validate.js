@@ -28,3 +28,32 @@ var DefaultValidateOptions = {
 	},
 	rules:          {}
 };
+
+/**
+ * doc ready
+ */
+jQuery(function($) {
+	var _rules = {
+		email: {
+			required: true,
+			email:    true
+		}
+	};
+
+	if ($('input[name="password"]').length) {
+		_rules.password = {
+			required:  true,
+			minlength: 5
+		};
+	}
+
+	if ($('input[name="password_confirmation"]').length) {
+		_rules.password_confirmation = {
+			required:  true,
+			minlength: 5
+		};
+	}
+
+	var _validator = $('form').validate($.extend({}, DefaultValidateOptions, _rules));
+	var $_body = $('body'), _of = $_body.css('overflow');
+});
