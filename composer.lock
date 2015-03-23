@@ -461,12 +461,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/dfe-common.git",
-                "reference": "89e39795ba7046ddb802c26a1dacaeff48711f44"
+                "reference": "7a52e4a7c6bc9bc506c1eeffac5620e327c511ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/89e39795ba7046ddb802c26a1dacaeff48711f44",
-                "reference": "89e39795ba7046ddb802c26a1dacaeff48711f44",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/7a52e4a7c6bc9bc506c1eeffac5620e327c511ca",
+                "reference": "7a52e4a7c6bc9bc506c1eeffac5620e327c511ca",
                 "shasum": ""
             },
             "require": {
@@ -516,7 +516,7 @@
                 "source": "https://github.com/dreamfactorysoftware/dfe-common/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/dfe-common/issues"
             },
-            "time": "2015-03-23 19:05:29"
+            "time": "2015-03-23 19:12:55"
         },
         {
             "name": "dreamfactory/fabric-audit",
