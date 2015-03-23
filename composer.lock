@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "41f945206e28646c514e6df37b092345",
+    "hash": "9307f3cb4447b421273510896127c14d",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -404,12 +404,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/dfe-common.git",
-                "reference": "5c608ed8351e626b6b31fa0e526356835e625850"
+                "reference": "ef6cda6e731f5e674be8c6d80d5d87e66a49577e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/5c608ed8351e626b6b31fa0e526356835e625850",
-                "reference": "5c608ed8351e626b6b31fa0e526356835e625850",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/ef6cda6e731f5e674be8c6d80d5d87e66a49577e",
+                "reference": "ef6cda6e731f5e674be8c6d80d5d87e66a49577e",
                 "shasum": ""
             },
             "require": {
@@ -458,7 +458,7 @@
                 "source": "https://github.com/dreamfactorysoftware/dfe-common/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/dfe-common/issues"
             },
-            "time": "2015-03-23 15:28:09"
+            "time": "2015-03-23 17:08:10"
         },
         {
             "name": "dreamfactory/fabric-audit",
@@ -925,12 +925,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jeremeamia/super_closure.git",
-                "reference": "6165b5a68ca8622668732aaa82e173390c6905fe"
+                "reference": "34e892a5cdd2b9c0527cf2070116c528086719ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jeremeamia/super_closure/zipball/6165b5a68ca8622668732aaa82e173390c6905fe",
-                "reference": "6165b5a68ca8622668732aaa82e173390c6905fe",
+                "url": "https://api.github.com/repos/jeremeamia/super_closure/zipball/34e892a5cdd2b9c0527cf2070116c528086719ba",
+                "reference": "34e892a5cdd2b9c0527cf2070116c528086719ba",
                 "shasum": ""
             },
             "require": {
@@ -944,7 +944,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1-dev"
+                    "dev-master": "2.2-dev"
                 }
             },
             "autoload": {
@@ -975,7 +975,7 @@
                 "serialize",
                 "tokenizer"
             ],
-            "time": "2015-03-23 02:11:51"
+            "time": "2015-03-23 15:45:39"
         },
         {
             "name": "laravel/framework",

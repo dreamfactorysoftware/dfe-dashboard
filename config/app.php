@@ -11,8 +11,6 @@ return [
     'key'             => env( 'APP_KEY', 'ngv?hS"qNs5:~Gn%]R(_NCRS#1{l?s@/' ),
     'cipher'          => MCRYPT_RIJNDAEL_128,
     'log'             => 'daily',
-    'display-name'    => 'Platform Dashboard',
-    'display-version' => 'v1.0.x-alpha',
     //******************************************************************************
     //* Autoloaded Providers
     //******************************************************************************

@@ -1,8 +1,9 @@
 <?php namespace DreamFactory\Enterprise\Dashboard\Http\Controllers;
 
+use DreamFactory\Enterprise\Common\Http\Controllers\BaseController;
 use Illuminate\Http\Response;
 
-class HomeController extends Controller
+class HomeController extends BaseController
 {
     //******************************************************************************
     //* Methods

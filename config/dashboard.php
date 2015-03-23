@@ -4,9 +4,8 @@
 //******************************************************************************
 
 return [
-    'version' => 'v1.0.0-alpha',
     /** Theme settings (Bootswatch compatible) */
-    'theme'   => [
+    'theme' => [
         'login' => 'darkly',
         'site'  => 'flatly',
     ],
