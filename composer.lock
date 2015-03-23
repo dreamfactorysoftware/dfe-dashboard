@@ -7,6 +7,63 @@
     "hash": "38c60a35bae3d63f58d7e7932bede357",
     "packages": [
         {
+            "name": "caffeinated/modules",
+            "version": "v1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/caffeinated/modules.git",
+                "reference": "4ed902acf05501065cdfa3720eaba09a0d32a764"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/caffeinated/modules/zipball/4ed902acf05501065cdfa3720eaba09a0d32a764",
+                "reference": "4ed902acf05501065cdfa3720eaba09a0d32a764",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/config": "~5.0",
+                "illuminate/database": "~5.0",
+                "illuminate/filesystem": "~5.0",
+                "illuminate/routing": "~5.0",
+                "illuminate/support": "~5.0",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9"
+            },
+            "suggest": {
+                "wikimedia/composer-merge-plugin": "Allows the ability to create and merge composer.json files for your individual modules for module-specific dependency management."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Caffeinated\\Modules\\": "src/Caffeinated/Modules/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Shea Lewis",
+                    "email": "shea.lewis89@gmail.com"
+                }
+            ],
+            "description": "Laravel 5 Modules",
+            "keywords": [
+                "caffeinated",
+                "laravel",
+                "modules"
+            ],
+            "time": "2015-03-13 01:29:01"
+        },
+        {
             "name": "classpreloader/classpreloader",
             "version": "dev-master",
             "source": {
@@ -404,15 +461,16 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/dfe-common.git",
-                "reference": "ef6cda6e731f5e674be8c6d80d5d87e66a49577e"
+                "reference": "89e39795ba7046ddb802c26a1dacaeff48711f44"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/ef6cda6e731f5e674be8c6d80d5d87e66a49577e",
-                "reference": "ef6cda6e731f5e674be8c6d80d5d87e66a49577e",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/89e39795ba7046ddb802c26a1dacaeff48711f44",
+                "reference": "89e39795ba7046ddb802c26a1dacaeff48711f44",
                 "shasum": ""
             },
             "require": {
+                "caffeinated/modules": "~1.0",
                 "dreamfactory/fabric-db": "dev-develop as dev-master",
                 "league/flysystem-sftp": "*",
                 "league/flysystem-ziparchive": "*",
@@ -458,7 +516,7 @@
                 "source": "https://github.com/dreamfactorysoftware/dfe-common/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/dfe-common/issues"
             },
-            "time": "2015-03-23 17:08:10"
+            "time": "2015-03-23 19:05:29"
         },
         {
             "name": "dreamfactory/fabric-audit",
