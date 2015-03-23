@@ -5,15 +5,15 @@
 use DreamFactory\Enterprise\Common\Enums\MailTemplates;
 
 return [
-    //******************************************************************************
-    //* General
-    //******************************************************************************
-    'display-name'  => 'Platform Dashboard',
-    'version'       => 'v1.0.x-alpha',
-    //******************************************************************************
-    //* Mail template service
-    //******************************************************************************
-    'mail-template' => [
+    /** Global options */
+    'display-name'    => 'Platform Dashboard',
+    'display-version' => 'v1.0.x-alpha',
+    /** auth options */
+    'auth'            => [
+        'theme' => 'darkly',
+    ],
+    /** mail template options */
+    'mail-template'   => [
         'web-url'               => 'http://cerberus.fabric.dreamfactory.com/',
         'public-url'            => 'http://cerberus.fabric.dreamfactory.com/',
         'support-email-address' => 'support@dreamfactory.com',
