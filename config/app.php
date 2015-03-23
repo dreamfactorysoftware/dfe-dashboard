@@ -47,6 +47,7 @@ return [
         'DreamFactory\\Enterprise\\Dashboard\\Providers\\EventServiceProvider',
         'DreamFactory\\Enterprise\\Dashboard\\Providers\\RouteServiceProvider',
         /** DreamFactory Common Providers */
+        'DreamFactory\\Enterprise\\Common\\Providers\\LibraryAssetsProvider',
         'DreamFactory\\Enterprise\\Common\\Providers\\Auth\\DashboardAuthProvider',
         /** 3rd-party Service Providers */
         'Barryvdh\\LaravelIdeHelper\\IdeHelperServiceProvider',
