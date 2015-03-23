@@ -404,12 +404,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/dfe-common.git",
-                "reference": "e195fd8a5630befe2055abb4edc7ee8da4ee3ed1"
+                "reference": "14b7354510983a083172d2888b3c0715ebda9711"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/e195fd8a5630befe2055abb4edc7ee8da4ee3ed1",
-                "reference": "e195fd8a5630befe2055abb4edc7ee8da4ee3ed1",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/14b7354510983a083172d2888b3c0715ebda9711",
+                "reference": "14b7354510983a083172d2888b3c0715ebda9711",
                 "shasum": ""
             },
             "require": {
@@ -458,7 +458,7 @@
                 "source": "https://github.com/dreamfactorysoftware/dfe-common/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/dfe-common/issues"
             },
-            "time": "2015-03-23 00:26:08"
+            "time": "2015-03-23 14:25:47"
         },
         {
             "name": "dreamfactory/fabric-audit",
@@ -925,16 +925,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jeremeamia/super_closure.git",
-                "reference": "b712f39c671e5ead60c7ebfe662545456aade833"
+                "reference": "6165b5a68ca8622668732aaa82e173390c6905fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jeremeamia/super_closure/zipball/b712f39c671e5ead60c7ebfe662545456aade833",
-                "reference": "b712f39c671e5ead60c7ebfe662545456aade833",
+                "url": "https://api.github.com/repos/jeremeamia/super_closure/zipball/6165b5a68ca8622668732aaa82e173390c6905fe",
+                "reference": "6165b5a68ca8622668732aaa82e173390c6905fe",
                 "shasum": ""
             },
             "require": {
-                "nikic/php-parser": "~1.0",
+                "nikic/php-parser": "~1.2",
                 "php": ">=5.4"
             },
             "require-dev": {
@@ -975,7 +975,7 @@
                 "serialize",
                 "tokenizer"
             ],
-            "time": "2015-03-11 20:06:43"
+            "time": "2015-03-23 02:11:51"
         },
         {
             "name": "laravel/framework",
@@ -1701,7 +1701,7 @@
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "dev-master",
+            "version": "5.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
@@ -1928,12 +1928,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/DependencyInjection.git",
-                "reference": "025f79214bdcd55857e7f2b455a2d592809eef0d"
+                "reference": "beac828230aae7f1d551bdbcdd24c6437c7b9c0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/DependencyInjection/zipball/025f79214bdcd55857e7f2b455a2d592809eef0d",
-                "reference": "025f79214bdcd55857e7f2b455a2d592809eef0d",
+                "url": "https://api.github.com/repos/symfony/DependencyInjection/zipball/beac828230aae7f1d551bdbcdd24c6437c7b9c0f",
+                "reference": "beac828230aae7f1d551bdbcdd24c6437c7b9c0f",
                 "shasum": ""
             },
             "require": {
@@ -1980,7 +1980,7 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "http://symfony.com",
-            "time": "2015-03-22 16:57:18"
+            "time": "2015-03-23 08:18:05"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -2148,12 +2148,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/FrameworkBundle.git",
-                "reference": "e8e03a7e4e2ff478902d38414cf42466916de54c"
+                "reference": "d82e32482321731a08ba8863a0c92f44ff6630e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/FrameworkBundle/zipball/e8e03a7e4e2ff478902d38414cf42466916de54c",
-                "reference": "e8e03a7e4e2ff478902d38414cf42466916de54c",
+                "url": "https://api.github.com/repos/symfony/FrameworkBundle/zipball/d82e32482321731a08ba8863a0c92f44ff6630e8",
+                "reference": "d82e32482321731a08ba8863a0c92f44ff6630e8",
                 "shasum": ""
             },
             "require": {
@@ -2223,7 +2223,7 @@
             ],
             "description": "Symfony FrameworkBundle",
             "homepage": "http://symfony.com",
-            "time": "2015-03-22 16:55:57"
+            "time": "2015-03-23 08:38:04"
         },
         {
             "name": "symfony/http-foundation",
@@ -2364,12 +2364,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Process.git",
-                "reference": "b1966e1ec1cedd53498fc097b712c4be34d6b085"
+                "reference": "93731729893117ef5eaa1da0e981de69023e8c8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Process/zipball/b1966e1ec1cedd53498fc097b712c4be34d6b085",
-                "reference": "b1966e1ec1cedd53498fc097b712c4be34d6b085",
+                "url": "https://api.github.com/repos/symfony/Process/zipball/93731729893117ef5eaa1da0e981de69023e8c8a",
+                "reference": "93731729893117ef5eaa1da0e981de69023e8c8a",
                 "shasum": ""
             },
             "require": {
@@ -2405,7 +2405,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "http://symfony.com",
-            "time": "2015-03-22 16:55:57"
+            "time": "2015-03-23 07:56:12"
         },
         {
             "name": "symfony/routing",
