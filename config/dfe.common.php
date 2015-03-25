@@ -8,10 +8,8 @@ return [
     /** Global options */
     'display-name'    => 'Platform Dashboard',
     'display-version' => 'v1.0.x-alpha',
-    /** auth options */
-    'auth'            => [
-        'theme' => 'darkly',
-    ],
+    /** Theme selection (flatly or darkly) */
+    'theme'           => 'flatly',
     /** mail template options */
     'mail-template'   => [
         'web-url'               => 'http://cerberus.fabric.dreamfactory.com/',
