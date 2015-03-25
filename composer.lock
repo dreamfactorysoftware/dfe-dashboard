@@ -404,12 +404,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/dfe-common.git",
-                "reference": "b9a3795132015548958bfc19ea70dcecee2f513d"
+                "reference": "30620fd2be04a24813b2e9b0895db4d44235a8ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/b9a3795132015548958bfc19ea70dcecee2f513d",
-                "reference": "b9a3795132015548958bfc19ea70dcecee2f513d",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/30620fd2be04a24813b2e9b0895db4d44235a8ed",
+                "reference": "30620fd2be04a24813b2e9b0895db4d44235a8ed",
                 "shasum": ""
             },
             "require": {
@@ -458,7 +458,7 @@
                 "source": "https://github.com/dreamfactorysoftware/dfe-common/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/dfe-common/issues"
             },
-            "time": "2015-03-23 20:25:56"
+            "time": "2015-03-24 23:11:47"
         },
         {
             "name": "dreamfactory/fabric-audit",
@@ -983,12 +983,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "8114f60928345fba31bb4794e676ff01e87e4880"
+                "reference": "d16eee297dd0f86e666c8bbffa6b2434b323f9a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/8114f60928345fba31bb4794e676ff01e87e4880",
-                "reference": "8114f60928345fba31bb4794e676ff01e87e4880",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/d16eee297dd0f86e666c8bbffa6b2434b323f9a4",
+                "reference": "d16eee297dd0f86e666c8bbffa6b2434b323f9a4",
                 "shasum": ""
             },
             "require": {
@@ -1101,7 +1101,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2015-03-23 00:07:39"
+            "time": "2015-03-24 21:09:20"
         },
         {
             "name": "league/flysystem",
@@ -1448,12 +1448,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "edbf162e4cf116102d95eb635608b7d310cc01c6"
+                "reference": "dba7524b3724f25b947cd26a580787c55c8a6f9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/edbf162e4cf116102d95eb635608b7d310cc01c6",
-                "reference": "edbf162e4cf116102d95eb635608b7d310cc01c6",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/dba7524b3724f25b947cd26a580787c55c8a6f9b",
+                "reference": "dba7524b3724f25b947cd26a580787c55c8a6f9b",
                 "shasum": ""
             },
             "require": {
@@ -1485,7 +1485,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2015-03-22 16:17:25"
+            "time": "2015-03-24 19:10:28"
         },
         {
             "name": "phpseclib/phpseclib",
@@ -1928,12 +1928,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/DependencyInjection.git",
-                "reference": "beac828230aae7f1d551bdbcdd24c6437c7b9c0f"
+                "reference": "2cf8dac5fc708f8e03131ced1cc64e75bc23538d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/DependencyInjection/zipball/beac828230aae7f1d551bdbcdd24c6437c7b9c0f",
-                "reference": "beac828230aae7f1d551bdbcdd24c6437c7b9c0f",
+                "url": "https://api.github.com/repos/symfony/DependencyInjection/zipball/2cf8dac5fc708f8e03131ced1cc64e75bc23538d",
+                "reference": "2cf8dac5fc708f8e03131ced1cc64e75bc23538d",
                 "shasum": ""
             },
             "require": {
@@ -1980,7 +1980,7 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "http://symfony.com",
-            "time": "2015-03-23 08:18:05"
+            "time": "2015-03-24 17:00:58"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -2148,12 +2148,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/FrameworkBundle.git",
-                "reference": "d82e32482321731a08ba8863a0c92f44ff6630e8"
+                "reference": "ca06f347974748aa911ef8c31a5165ef302ef6c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/FrameworkBundle/zipball/d82e32482321731a08ba8863a0c92f44ff6630e8",
-                "reference": "d82e32482321731a08ba8863a0c92f44ff6630e8",
+                "url": "https://api.github.com/repos/symfony/FrameworkBundle/zipball/ca06f347974748aa911ef8c31a5165ef302ef6c0",
+                "reference": "ca06f347974748aa911ef8c31a5165ef302ef6c0",
                 "shasum": ""
             },
             "require": {
@@ -2223,7 +2223,7 @@
             ],
             "description": "Symfony FrameworkBundle",
             "homepage": "http://symfony.com",
-            "time": "2015-03-23 08:38:04"
+            "time": "2015-03-24 17:00:37"
         },
         {
             "name": "symfony/http-foundation",
@@ -2286,12 +2286,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/HttpKernel.git",
-                "reference": "c0e70bc318e9abb1898544b51747fdb8b3bfd742"
+                "reference": "36a7a84bfecb413c95c78a98007eddceeae1bc0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/HttpKernel/zipball/c0e70bc318e9abb1898544b51747fdb8b3bfd742",
-                "reference": "c0e70bc318e9abb1898544b51747fdb8b3bfd742",
+                "url": "https://api.github.com/repos/symfony/HttpKernel/zipball/36a7a84bfecb413c95c78a98007eddceeae1bc0f",
+                "reference": "36a7a84bfecb413c95c78a98007eddceeae1bc0f",
                 "shasum": ""
             },
             "require": {
@@ -2355,7 +2355,7 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "http://symfony.com",
-            "time": "2015-03-22 16:55:57"
+            "time": "2015-03-24 17:00:37"
         },
         {
             "name": "symfony/process",
