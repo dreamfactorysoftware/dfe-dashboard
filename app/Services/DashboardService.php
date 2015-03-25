@@ -1,10 +1,24 @@
-<?php
-namespace DreamFactory\Enterprise\Dashboard\Services;
+<?php namespace DreamFactory\Enterprise\Dashboard\Services;
 
 use DreamFactory\Enterprise\Common\Services\BaseService;
+use DreamFactory\Enterprise\Common\Traits\EntityLookup;
+use DreamFactory\Library\Fabric\Database\Enums\ProvisionStates;
+use DreamFactory\Library\Fabric\Database\Enums\ServerTypes;
+use DreamFactory\Library\Fabric\Database\Models\Auth\User;
+use DreamFactory\Library\Fabric\Database\Models\Deploy\Instance;
+use DreamFactory\Library\Utility\Curl;
+use DreamFactory\Library\Utility\IfSet;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class DashboardService extends BaseService
 {
+    //******************************************************************************
+    //* Traits
+    //******************************************************************************
+
+    use EntityLookup;
+
     //*************************************************************************
     //* Constants
     //*************************************************************************
@@ -34,6 +48,10 @@ class DashboardService extends BaseService
      * @type string
      */
     protected $_apiKey;
+    /**
+     * @type Request The request currently being handled
+     */
+    protected $_request;
 
     //*************************************************************************
     //* Methods
@@ -51,227 +69,112 @@ class DashboardService extends BaseService
     }
 
     /**
+     * @param \Illuminate\Http\Request $request
+     * @param string|int               $id
+     *
      * @return bool|mixed|\stdClass|void
-     * @return bool
      */
-    public function handleRequest()
+    public function handleRequest( Request $request, $id = null )
     {
-        static::$_user = $user;
+        $this->_request = $request;
 
-        if ( isset( $user, $user['admin_ind'] ) )
+        if ( $request->isMethod( Request::METHOD_POST ) )
         {
-            static::setIsAdminUser( 1 == $user['admin_ind'] );
-        }
-
-        if ( Pii::postRequest() )
-        {
-            if ( null === ( $_id = FilterInput::post( 'id' ) ) )
+            if ( null === $id )
             {
-                Pii::controller()->redirect( '/' );
+                abort( Response::HTTP_BAD_REQUEST );
             }
 
-            //	Is this a control request?
-            if ( null !== ( $_command = FilterInput::post( 'control' ) ) )
+            //	Handle the request
+            $_command = $request->input( 'control' );
+
+            if ( empty( $_command ) )
             {
-//                $_captcha = new Captcha();
-//                $_captcha->setPrivateKey( Pii::getParam( 'recaptcha.private_key' ) );
-//                $_captcha->timeout = 30;
+                if ( $this->_enableCaptcha )
+                {
+//                    $_captcha = new Captcha();
+//                    $_captcha->setPrivateKey( config( 'dashboard.recaptcha.private_key' ) );
+//                    $_captcha->timeout = 30;
+                }
 
                 switch ( $_command )
                 {
                     case 'create':
-                        /**                     try
-                         * {
-                         * //    Check captcha...
-                         * if ( !$_captcha->isValid() )
-                         * {
-                         * $_captcha->setError();
-                         * throw new CaptchaException( 'Validation code was not entered correctly.' );
-                         * }
-                         * }
-                         * catch ( CaptchaException $_ex )
-                         * {
-                         * Pii::setFlash( 'error', $_ex->getMessage() );
-                         *
-                         * return false;
-                         * }
-                         **/
+                        if ( $this->_enableCaptcha )
+                        {
+//                            try
+//                            {
+//                                //    Check captcha...
+//                                if ( !$_captcha->isValid() )
+//                                {
+//                                    $_captcha->setError();
+//                                    throw new CaptchaException( 'Validation code was not entered correctly.' );
+//                                }
+//                            }
+//                            catch ( CaptchaException $_ex )
+//                            {
+//                                Pii::setFlash( 'error', $_ex->getMessage() );
+//
+//                                return false;
+//                            }
+                        }
 
-                        static::provisionInstance( $_id, $user, true, false );
+                        $this->provisionInstance( $id, true, false );
                         break;
 
                     case 'create-remote':
-                        static::provisionInstance( $_id, $user, false, true );
+                        $this->provisionInstance( $id, false, true );
                         break;
 
                     case 'destroy':
                     case 'delete':
-                        static::deprovisionInstance( $_id, $user );
+                        $this->deprovisionInstance( $id );
                         break;
 
                     case 'start':
-                        static::startInstance( $_id, $user );
+                        $this->startInstance( $id );
                         break;
 
                     case 'stop':
-                        static::stopInstance( $_id, $user );
+                        $this->stopInstance( $id );
                         break;
 
                     case 'export':
                     case 'snapshot':
-                        static::snapshotInstance( $_id, $user );
+                        $this->exportInstance( $id );
                         break;
 
                     case 'snapshots':
-                        static::_instanceSnapshots( $_id, $user );
+                        $this->_instanceSnapshots( $id );
                         break;
 
                     case 'migrate':
                     case 'import':
-                        static::importInstance( $_id, $user );
+                        $this->importInstance( $id );
                         break;
 
                     case 'status':
-                        static::_instanceStatus( $_id );
+                        $this->_instanceStatus( $id );
                         break;
                 }
             }
 
-            Pii::controller()->redirect( '/' );
+            return true;
         }
+
+        $this->_request = null;
 
         return false;
-    }
-
-    /**
-     * @param \stdClass $user
-     *
-     * @return bool|mixed|\stdClass|void
-     * @return bool
-     */
-    public static function processKeysRequest( &$user )
-    {
-        static::$_user = $user;
-
-        if ( Pii::postRequest() )
-        {
-            if ( null === ( $_id = FilterInput::post( 'id' ) ) )
-            {
-                Pii::controller()->redirect( '/web/keys' );
-            }
-
-            if ( isset( $_FILES ) )
-            {
-                static::_handleFileUpload();
-            }
-            else
-            {
-                //	Is this a control request?
-                if ( null !== ( $_command = FilterInput::post( 'control' ) ) )
-                {
-                    switch ( $_command )
-                    {
-                        case 'create':
-                        case 'edit':
-                            return static::_upsertKey( $_id, $_POST );
-
-                        case 'delete':
-                            return static::_deleteKey( $_id );
-
-                        case 'enable':
-                            return static::_enableKey( $_id );
-
-                        case 'disable':
-                            return static::_disableKey( $_id );
-                    }
-                }
-            }
-
-            Pii::controller()->redirect( '/web/keys' );
-        }
-
-        return false;
-    }
-
-    /**
-     * @return bool|mixed|\stdClass
-     */
-    protected static function _upsertKey()
-    {
-        $_payload = array(
-            'label'    => FilterInput::post( 'key_name' ),
-            'key'      => FilterInput::post( 'key_key' ),
-            'secret'   => FilterInput::post( 'key_secret' ),
-            'vendorId' => FilterInput::post( 'vendor_id' ),
-        );
-
-        $_result = static::_apiCall( '/drupal/keys', $_payload, true );
-
-        if ( !$_result->success )
-        {
-            Pii::setFlash( 'error', $_result->details->message );
-        }
-        else
-        {
-            Pii::setFlash( 'success', 'Key deleted' );
-        }
-
-        return $_result;
-    }
-
-    /**
-     * @return bool|mixed|\stdClass
-     */
-    protected static function _deleteKey()
-    {
-        $_label = FilterInput::post( 'key_name' );
-        $_vendorId = FilterInput::post( 'vendor_id' );
-
-        if ( empty( $_label ) || empty( $_vendorId ) )
-        {
-            Pii::setFlash( 'error', 'Invalid arguments supplied.' );
-
-            return false;
-        }
-
-        $_result = static::_apiCall( '/drupal/keys/' . $_vendorId . '/' . $_label, array(), true, HttpMethod::Delete );
-
-        if ( !$_result->success )
-        {
-            Pii::setFlash( 'error', $_result->details->message );
-        }
-        else
-        {
-            Pii::setFlash( 'success', 'Key deleted' );
-        }
-
-        return $_result;
-    }
-
-    /**
-     * @throws Kisma\Core\Exceptions\NotImplementedException
-     * @return mixed
-     */
-    protected static function _enableKey()
-    {
-        throw new NotImplementedException();
-    }
-
-    /**
-     * @throws Kisma\Core\Exceptions\NotImplementedException
-     * @return mixed
-     */
-    protected static function _disableKey()
-    {
-        throw new NotImplementedException();
     }
 
     /**
      * @param string $id
+     *
+     * @return array|\stdClass
      */
-    protected static function _instanceStatus( $id )
+    protected function _instanceStatus( $id )
     {
-        $_status = static::_apiCall( '/drupal/status/' . $id );
+        $_status = $this->_apiCall( '/ops/status/' . $id );
         $_status->deleted = false;
 
         if ( isset( $_status->code, $_status->message ) )
@@ -279,7 +182,7 @@ class DashboardService extends BaseService
             $_status->provisioned = false;
             $_status->deprovisioned = false;
             $_status->trial = false;
-            $_status->instanceState = 4;
+            $_status->instanceState = ProvisionStates::DEPROVISIONED;
 
             if ( $_status->code == 404 )
             {
@@ -287,215 +190,135 @@ class DashboardService extends BaseService
             }
         }
 
-        $_status->icons = static::getStatusIcon( $_status );
-        $_status->buttons = static::getDspControls( $_status );
+        $_status->icons = $this->getStatusIcon( $_status );
+        $_status->buttons = $this->getDspControls( $_status );
 
         if ( 2 == $_status->instanceState )
         {
             $_status->link =
                 '<a href="https://' .
                 $_status->instanceName .
-                static::getDefaultDomain() .
+                $this->getDefaultDomain() .
                 '" target="_blank" class="dsp-launch-link">' .
                 $_status->instanceName .
                 '</a>';
         }
 
-        ob_end_clean();
-        echo json_encode( $_status );
-        Pii::end();
+        return $_status;
     }
 
     /**
-     * @param string    $name
-     * @param \stdClass $user
-     * @param bool      $trial
+     * @param string|int $instanceId
      *
      * @return bool|mixed|\stdClass
      */
-    public static function deprovisionInstance( $name, $user, $trial = true )
+    public function deprovisionInstance( $instanceId )
     {
-        $_result = static::_apiCall( '/drupal/destroy', array('name' => $name), true );
-
-        if ( !$_result->success )
-        {
-            Pii::setFlash( 'error', $_result->details->message );
-        }
-        else
-        {
-            Pii::setFlash(
-                'success',
-                'Your DSP is being destroyed. Once complete, you\'ll receive an email and you will be able to start a new instance.'
-            );
-        }
+        $_result = $this->_apiCall( '/ops/destroy', array('instance-id' => $instanceId), true );
 
         return $_result;
     }
 
     /**
-     * @param string    $name
-     * @param \stdClass $user
-     * @param bool      $trial
-     * @param bool      $remote If true, create instance on user's account
+     * @param string $instanceId
+     * @param bool   $trial
+     * @param bool   $remote If true, create instance on user's account
      *
      * @return bool|mixed|\stdClass
      */
-    public static function provisionInstance( $name, $user, $trial = false, $remote = false )
+    public function provisionInstance( $instanceId, $trial = false, $remote = false )
     {
         //	Clean up the name
-        $_instanceName = trim( strtolower( preg_replace( "/[^a-zA-z0-9]/", '-', $name ) ) );
-
-        if ( is_numeric( $_instanceName[0] ) )
+        if ( false === ( $_instanceName = Instance::isNameAvailable( $instanceId ) ) || is_numeric( $_instanceName[0] ) )
         {
-            Pii::setFlash( 'error', 'Your DSP name must begin with a letter (A-Z)' );
-
-            return false;
+            abort( Response::HTTP_BAD_REQUEST, 'Your DSP name is invalid. It must begin with a letter (A-Z)' );
         }
 
         //	Only admins can have a dsp without the prefix
-        if ( !static::$_isAdminUser )
-        {
-            $_cluster = 1;
-            $_dbServerId = 4;
+        $_cluster = $this->_findCluster( config( 'dashboard.cluster-id' ) );
+        $_dbServer = $this->_findServer( config( 'dashboard.db-server-id' ) );
 
-            if ( 'dsp-' != substr( $_instanceName, 0, 4 ) )
-            {
-                $_instanceName = 'dsp-' . $_instanceName;
-            }
-        }
-        else
+        if ( $_dbServer->server_type_id !== ServerTypes::DB )
         {
-            $_cluster = 2;
-            $_dbServerId = 7;
+            abort( Response::HTTP_INTERNAL_SERVER_ERROR, 'Database server invalid.' );
         }
 
         $_payload = array(
-            'name'         => $_instanceName,
-            'trial'        => $trial,
-            'remote'       => $remote,
-            'cluster_id'   => $_cluster,
-            'db_server_id' => $_dbServerId,
+            'instance-id'   => $_instanceName,
+            'cluster-id'    => $_cluster->id,
+            'db-server-id'  => $_dbServer->id,
+            'trial'         => $trial,
+            'remote'        => $remote,
+            'ram-size'      => $this->_request->input( 'ram-size' ),
+            'disk-size'     => $this->_request->input( 'disk-size' ),
+            'vendor-id'     => $this->_request->input( 'vendor-id' ),
+            'vendor-secret' => $this->_request->input( 'vendor-secret' ),
         );
 
-        $_url = '/drupal/provision';
-
-        if ( $remote )
-        {
-            $_payload['size'] = FilterInput::post( 'dsp_size' );
-            $_payload['key'] = FilterInput::post( 'vendor_key' );
-            $_payload['secret'] = FilterInput::post( 'vendor_secret' );
-        }
-
-        $_result = static::_apiCall( $_url, $_payload, true );
-
-        if ( !$_result->success )
-        {
-            static::drupal_set_message( $_result->details->message, 'error' );
-        }
-        else
-        {
-            static::drupal_set_message(
-                'Your DSP is being created. You\'ll receive an email when it\'s complete.',
-                'success'
-            );
-        }
+        $_result = $this->_apiCall( '/ops/create', $_payload, true );
 
         return $_result;
     }
 
     /**
-     * @param string $name
+     * @param string $instanceId
      *
      * @return bool|mixed|\stdClass
      */
-    public static function stopInstance( $name )
+    public function stopInstance( $instanceId )
     {
-        $_status = static::_apiCall( '/instance/stop/' . $name, array(), true );
-
-        if ( $_status->success )
-        {
-            static::drupal_set_message( 'Your DSP is being stopped.', 'success' );
-        }
-        else
-        {
-            static::drupal_set_message( 'There was a problem stopping your DSP.', 'error' );
-        }
+        return $this->_apiCall( '/ops/stop/' . $instanceId, [], true );
     }
 
     /**
-     * @param string $name
+     * @param string $instanceId
      *
      * @return bool|mixed|\stdClass
      */
-    public static function startInstance( $name )
+    public function startInstance( $instanceId )
     {
-        $_status = static::_apiCall( '/instance/start/' . $name, array(), true );
-
-        if ( $_status->success )
-        {
-            static::drupal_set_message( 'Your DSP is being started.', 'success' );
-        }
-        else
-        {
-            static::drupal_set_message( 'There was a problem starting your DSP.', 'error' );
-        }
+        return $this->_apiCall( '/ops/start/' . $instanceId, [], true );
     }
 
     /**
-     * @param string    $name
-     * @param \stdClass $user
-     * @param bool      $trial
+     * @param string $instanceId
+     * @param bool   $trial
      *
      * @return bool|mixed|\stdClass
      */
-    public static function snapshotInstance( $name, $user, $trial = true )
+    public function exportInstance( $instanceId, $trial = true )
     {
-        $_result = static::_apiCall( '/instance/snapshot', array('id' => $name), true );
+        return $this->_apiCall( '/ops/export/' . $instanceId );
+    }
+
+    /**
+     * @param string $instanceId
+     *
+     * @return bool|mixed|\stdClass
+     */
+    protected function _instanceSnapshots( $instanceId )
+    {
+        $_result = $this->_apiCall( '/ops/exports/' . $instanceId, [], true, Request::METHOD_GET );
 
         if ( !$_result->success )
         {
-            static::drupal_set_message( $_result->details->message, 'error' );
-        }
-        else
-        {
-            static::drupal_set_message(
-                'Your snapshot is being prepared. We will send you an email when it\'s ready to be downloaded.',
-                'success'
-            );
+            $this->_request->flash( $_result->details->message );
+
+            return null;
         }
 
-        return $_result;
-    }
-
-    /**
-     * @param string    $name
-     * @param \stdClass $user
-     *
-     * @return bool|mixed|\stdClass
-     */
-    protected static function _instanceSnapshots( $name, $user )
-    {
-        $_result = static::_apiCall( '/instance/snapshots/' . $name, array(), true, HttpMethod::Get );
-
-        if ( !$_result->success )
-        {
-            static::drupal_set_message( $_result->details->message, 'error' );
-
-            return;
-        }
-
-        $_return = null;
+        $_html = null;
 
         foreach ( $_result->details as $_name => $_snapshots )
         {
-            $_return .= '<optgroup label="' . $_name . '">';
+            $_html .= '<optgroup label="' . $_name . '">';
 
             /** @var $_snapshots \stdClass[] */
             foreach ( $_snapshots as $_snapshot )
             {
                 $_date = date( 'F j, Y @ H:i:s', strtotime( $_snapshot->date ) );
 
-                $_return .=
+                $_html .=
                     '<option id="' .
                     $_snapshot->snapshot_id .
                     '" value="' .
@@ -507,27 +330,24 @@ class DashboardService extends BaseService
                     '</option>';
             }
 
-            $_return .= '</optgroup>';
+            $_html .= '</optgroup>';
         }
 
-        ob_end_clean();
-        echo $_return;
-        Pii::end();
+        return $_html;
     }
 
     /**
-     * @param string    $name
-     * @param \stdClass $user
+     * @param string $instanceId
      *
      * @return bool|mixed|\stdClass
      */
-    public static function importInstance( $name, $user )
+    public function importInstance( $instanceId )
     {
-        $_snapshot = FilterInput::post( 'dsp-snapshot-list' );
+        $_snapshot = $this->_request->input( 'dsp-snapshot-list' );
 
         if ( empty( $_snapshot ) )
         {
-            static::drupal_set_message( 'No snapshot selected to import.', 'error' );
+            $this->_request->flash( 'No snapshot selected to import.' );
 
             return false;
         }
@@ -539,7 +359,7 @@ class DashboardService extends BaseService
 
             if ( 2 != count( $_parts ) || false === strtotime( $_parts[1] ) )
             {
-                static::drupal_set_message( 'Invalid snapshot ID', 'error' );
+                $this->_request->flash( 'Invalid snapshot ID' );
 
                 return false;
             }
@@ -547,58 +367,15 @@ class DashboardService extends BaseService
             $_snapshot = $_parts[1];
         }
 
-        $_result = static::_apiCall( '/instance/import', array('id' => $name, 'snapshot' => $_snapshot), true );
-
-        if ( !$_result->success )
-        {
-            static::drupal_set_message( $_result->details->message, 'error' );
-        }
-        else
-        {
-            static::drupal_set_message(
-                'Your import request is now queued for processing. We will send you an email when it\'s complete.',
-                'success'
-            );
-        }
-
-        return $_result;
-    }
-
-    /**
-     * @param string    $name
-     * @param \stdClass $user
-     * @param bool      $trial
-     *
-     * @return bool|mixed|\stdClass
-     */
-    public static function reprovisionInstance( $name, $user, $trial = true )
-    {
-        //	Clean up the name
-        $_instanceName = preg_replace( "/[^a-zA-z0-9]/", '_', $name );
-
-        $_result = static::_apiCall( '/drupal/reprovision', array('name' => $_instanceName), true );
-
-        if ( !$_result->success )
-        {
-            static::drupal_set_message( $_result->details->message, 'error' );
-        }
-        else
-        {
-            static::drupal_set_message(
-                'Your DSP is being restarted. You\'ll receive an email when it\'s complete.',
-                'success'
-            );
-        }
-
-        return $_result;
+        return $this->_apiCall( '/ops/import/' . $instanceId, array('snapshot' => $_snapshot), true );
     }
 
     /**
      * @return bool|mixed|\stdClass
      */
-    public static function getInstances()
+    public function getInstances()
     {
-        return static::_apiCall( '/drupal/instances' );
+        return $this->_apiCall( '/ops/instances' );
     }
 
     /**
@@ -608,15 +385,15 @@ class DashboardService extends BaseService
      *
      * @return array|null|string
      */
-    public static function instanceTable( &$user, $columns = null, $forRender = false )
+    public function instanceTable( &$user, $columns = null, $forRender = false )
     {
         $_html = null;
-        $_result = static::_apiCall( '/drupal/instances', array(), true );
+        $_result = $this->getInstances();
 
         if ( !$_result->success )
         {
-            Log::error( 'Error pulling instance list: ' . print_r( $_result, true ) );
-            static::drupal_set_message( $_result->details->message, 'error' );
+            \Log::error( 'Error pulling instance list: ' . print_r( $_result, true ) );
+            $this->_request->flash( $_result->details->message );
         }
         else
         {
@@ -630,8 +407,8 @@ class DashboardService extends BaseService
                         continue;
                     }
 
-                    list( $_divId, $_instanceHtml, $_statusIcon ) = static::formatInstance( $_model );
-                    $_domain = static::getDefaultDomain();
+                    list( $_divId, $_instanceHtml, $_statusIcon ) = $this->formatInstance( $_model );
+                    $_domain = $this->getDefaultDomain();
 
                     $_item = array(
                         'instance'       => $_model,
@@ -654,60 +431,10 @@ HTML
                     }
                     else
                     {
-                        $_html .= Pii::controller()->renderPartial( '_dashboard_item', $_item, true );
+                        $_html .= \View::make( 'layouts.partials._dashboard_item', $_item )->render();
                     }
 
                     unset( $_model );
-                }
-            }
-        }
-
-        return $_html;
-    }
-
-    /**
-     *
-     */
-    public static function keyTable( &$user, $columns = null )
-    {
-        $_html = null;
-        $_result = static::_apiCall( '/drupal/keys', array(), true );
-
-        if ( !$_result->success )
-        {
-            Log::error( 'Error pulling key list: ' . print_r( $_result, true ) );
-            static::drupal_set_message( $_result->details->message, 'error' );
-        }
-        else
-        {
-            $_html = null;
-
-            if ( !empty( $_result->details ) )
-            {
-                foreach ( $_result->details as $_label => $_key )
-                {
-                    if ( !isset( $_key, $_key->id ) )
-                    {
-                        continue;
-                    }
-
-                    list( $_divId, $_keyHtml, $_statusIcon ) = static::formatKey( $_key );
-
-                    $_item = array(
-                        'groupId'        => 'key_list',
-                        'targetId'       => $_divId,
-                        'triggerContent' =>
-                            '<i class="fa fa-chevron-down" style="text-decoration:none !important;"></i><span style="margin-left: 10px;">' .
-                            $_key->label .
-                            '</span></a><span class="instance-heading-status"><i class="fa ' .
-                            $_statusIcon .
-                            ' fa-2x"></i></span>',
-                        'targetContent'  => $_keyHtml,
-                    );
-
-                    $_html .= Pii::controller()->renderPartial( '_dashboard_item', $_item, true );
-
-                    unset( $_key );
                 }
             }
         }
@@ -721,30 +448,30 @@ HTML
      *
      * @return string
      */
-    public static function formatInstance( &$instance, $how = null )
+    public function formatInstance( &$instance, $how = null )
     {
         $_gettingStartedButton =
             '<a class="btn btn-xs btn-info dsp-help-button" id="dspcontrol-' .
             $instance->instanceName .
             '" data-placement="left" title="Help" target="_blank" href="' .
-            static::HELP_BUTTON_URL .
+            config( 'dashboard.help-button-url' ) .
             '"><i class="fa fa-question-circle"></i></a>';
 
-        list( $_icon, $_statusIcon, $_message, $_running ) = static::getStatusIcon( $instance );
+        list( $_icon, $_statusIcon, $_message, $_running ) = $this->getStatusIcon( $instance );
 
         if ( empty( $instance->instanceId ) )
         {
             $instance->instanceId = 'NEW';
         }
 
-        $_divId = static::divId( 'dsp', $instance );
+        $_divId = $this->divId( 'dsp', $instance );
 
         $_instanceLinkText = $_linkLink = null;
-        $_html = static::getDspControls( $instance, $_buttons );
+        $_html = $this->getDspControls( $instance, $_buttons );
 
         if ( $instance->instanceState == 2 )
         {
-            $_instanceLinkText = 'https://' . $instance->instanceName . static::getDefaultDomain();
+            $_instanceLinkText = 'https://' . $instance->instanceName . $this->getDefaultDomain();
             $_instanceLink =
                 '<a href="' .
                 $_instanceLinkText .
@@ -758,7 +485,7 @@ HTML
             $_instanceLink = $instance->instanceName;
         }
 
-        if ( static::_isIconClass( $_icon ) )
+        if ( $this->_isIconClass( $_icon ) )
         {
             $_icon = '<i class="fa ' . $_icon . ' fa-3x"></i>';
         }
@@ -779,52 +506,6 @@ HTML;
     }
 
     /**
-     * @param \stdClass $key
-     *
-     * @return string
-     */
-    public static function formatKey( &$key )
-    {
-        $_gettingStartedButton =
-            '<a class="btn btn-sm btn-info dsp-help-button pull-right" id="keycontrol-' .
-            $key->label .
-            '" data-placement="left" title="Help!" target="_blank" href="' .
-            static::HELP_BUTTON_URL .
-            '"><i class="fa fa-question-circle"></i></a >';
-
-        list( $_icon, $_statusIcon, $_message, $_running ) = static::getStatusIcon( $key, true );
-
-        if ( empty( $key->id ) )
-        {
-            $key->id = 'NEW';
-        }
-
-        $_divId = static::divId( 'key', $key, true );
-        $_html = static::getKeyControls( $key );
-
-        $_keyLink = $key->label;
-
-        if ( static::_isIconClass( $_icon ) )
-        {
-            $_icon = '<i class="fa ' . $_icon . ' fa-3x"></i>';
-        }
-
-        $_html = <<<HTML
-	<div class="key-icon well pull-left">{$_icon}</div>
-	<div class="key-info">
-		<div class="key-name">{$_keyLink}</div>
-		<div class="key-stats">{$_message}</div>
-		<div class="key-links">
-		<span class="key-controls pull-left">{$_html}</span>
-			{$_gettingStartedButton}
-		</div>
-	</div>
-HTML;
-
-        return array($_divId, $_html, $_statusIcon);
-    }
-
-    /**
      * Formats the button panel for an individual DSP
      *
      * @param \stdClass $instance
@@ -832,7 +513,7 @@ HTML;
      *
      * @return string
      */
-    public static function getDspControls( $instance, &$buttons = null )
+    public function getDspControls( $instance, &$buttons = null )
     {
         $_buttons = array(
             'start'  => array(
@@ -906,7 +587,7 @@ HTML;
         {
             switch ( $instance->instanceState )
             {
-                case static::Provisioned:
+                case $this->Provisioned:
                     //	Not queued for deprovisioning
                     if ( 1 != $instance->deprovisioned )
                     {
@@ -917,7 +598,7 @@ HTML;
                     }
                     break;
 
-                case static::Deprovisioned:
+                case $this->Deprovisioned:
                     //	Not queued for reprovisioning
                     if ( 1 != $instance->provisioned )
                     {
@@ -943,14 +624,14 @@ HTML;
             $_disabledClass = 'disabled';
             $_disabled = ( !$_button['enabled'] ? 'disabled="disabled"' : $_disabledClass = null );
 
-            if ( !$_disabled && null !== ( $_hint = Option::get( $_button, 'hint' ) ) )
+            if ( !$_disabled && null !== ( $_hint = IfSet::get( $_button, 'hint' ) ) )
             {
                 $_hint = 'data-toggle="tooltip" title="' . $_hint . '"';
             }
 
             if ( ( !isset( $instance->vendorId ) || 1 == $instance->vendorId ) && $_buttonName == 'start' )
             {
-                $_href = 'https://' . $instance->instanceName . static::getDefaultDomain();
+                $_href = 'https://' . $instance->instanceName . $this->getDefaultDomain();
                 $_button['text'] = 'Launch!';
                 $_disabled = $_disabledClass = null;
                 $_buttonName = 'launch';
@@ -975,97 +656,12 @@ HTML;
     }
 
     /**
-     * Formats the button panel for an individual key
-     *
-     * @param \stdClass $key
-     * @param array     $buttons
-     *
-     * @return string
-     */
-    public static function getKeyControls( $key, &$buttons = null )
-    {
-        static $_buttons = array(
-            'enable'  => array(
-                'enabled' => false,
-                'hint'    => 'Enable this key',
-                'color'   => 'success',
-                'icon'    => 'play',
-                'text'    => 'Enable'
-            ),
-            'disable' => array(
-                'enabled' => false,
-                'hint'    => 'Disable this key',
-                'color'   => 'warning',
-                'icon'    => 'pause',
-                'text'    => 'Disable'
-            ),
-            'edit'    => array(
-                'enabled' => false,
-                'hint'    => 'Edit this key',
-                'color'   => 'info',
-                'icon'    => 'pencil',
-                'text'    => 'Edit'
-            ),
-            'delete'  => array(
-                'enabled' => false,
-                'hint'    => 'Delete this key permanently',
-                'color'   => 'danger',
-                'icon'    => 'trash',
-                'text'    => 'Delete'
-            ),
-        );
-
-        if ( isset( $key->label ) )
-        {
-            $_buttons['edit']['enabled'] = true;
-            $_buttons['delete']['enabled'] = true;
-
-            $_buttons['enable']['enabled'] = !( isset( $key->enabled ) && $key->enabled );
-            $_buttons['disable']['enabled'] = false;
-        }
-        else
-        {
-            $_buttons['edit']['enabled'] = true;
-        }
-
-        $buttons = $_buttons;
-
-        $_html = null;
-
-        foreach ( $_buttons as $_buttonName => $_button )
-        {
-            $_hint = null;
-            $_disabledClass = 'disabled';
-            $_disabled = ( !$_button['enabled'] ? 'disabled="disabled"' : $_disabledClass = null );
-
-            if ( !$_disabled && null !== ( $_hint = Option::get( $_button, 'hint' ) ) )
-            {
-                $_hint = 'data-toggle="tooltip" title="' . $_hint . '"';
-            }
-
-            $_href = isset( $_button['href'] ) ? $_button['href'] : '#';
-
-            $_html .= <<<HTML
-<button type="button" id="keycontrol___{$_buttonName}___{$key->label}" class="btn btn-{$_button['color']} {$_disabledClass}" {$_disabled} href="{$_href}" {$_hint}><i class="fa fa-{$_button['icon']}"></i> {$_button['text']}</a>
-HTML;
-        }
-
-        $_html = <<<HTML
-<div class="btn3-group">
-{$_html}
-</div>
-HTML;
-
-        return $_html;
-    }
-
-    /**
      * @param \stdClass $status
      * @param bool      $key
      *
      * @return array
      */
-    public static function getStatusIcon( $status, $key = false )
+    public function getStatusIcon( $status, $key = false )
     {
         $_statusIcon = 'fa-rocket';
         $_icon = 'fa-rocket';
@@ -1116,18 +712,18 @@ HTML;
             {
                 switch ( $status->instanceState )
                 {
-                    case static::Created:
+                    case ProvisionStates::CREATED:
                         $_statusIcon = $_icon = static::SPINNING_ICON;
                         $_message = 'This DSP request has been received and is queued for creation.';
                         break;
 
-                    case static::Provisioning:
+                    case ProvisionStates::PROVISIONING:
                         $_statusIcon = $_icon = static::SPINNING_ICON;
                         $_message =
                             'Your DSP is being carefully assembled with lots of love. You will receive an email when it is ready.';
                         break;
 
-                    case static::Provisioned:
+                    case ProvisionStates::PROVISIONED:
                         //	Queued for deprovisioning
                         if ( 1 == $status->deprovisioned )
                         {
@@ -1137,21 +733,21 @@ HTML;
                         $_running = true;
                         break;
 
-                    case static::Deprovisioning:
+                    case ProvisionStates::DEPROVISIONING:
                         $_statusIcon = $_icon = static::SPINNING_ICON;
                         $_message =
                             'This DSP is being destroyed. You will receive an email when it has been destroyed.';
                         break;
 
-                    case static::Deprovisioned:
+                    case ProvisionStates::DEPROVISIONED:
                         $_icon = '<img src="/img/icon-deprovisioned.png" class="fa fa-3x">';
                         $_statusIcon = 'fa-exclamation-triangle';
                         $_message =
                             'This DSP is being destroyed. You will receive an email when it has been destroyed.';
                         break;
 
-                    case static::DeprovisioningError:
-                    case static::ProvisioningError:
+                    case ProvisionStates::DEPROVISIONING_ERROR:
+                    case ProvisionStates::PROVISIONING_ERROR:
                         $_message =
                             'There was an error issuing your request. Our engineers have been notified. Maybe go take a stroll?';
                         $_statusIcon = $_icon = 'fa-ambulance';
@@ -1170,49 +766,19 @@ HTML;
      *
      * @param string $method
      *
-     * @throws CHttpException
      * @return bool|mixed|\stdClass
      */
-    protected static function _apiCall( $url, $payload = array(), $returnAll = false, $method = HttpMethod::Post )
+    protected function _apiCall( $url, $payload = [], $returnAll = true, $method = Request::METHOD_POST )
     {
-        if ( null === static::$_user )
-        {
-            if ( null === ( static::$_user = Option::get( $_SESSION, 'user' ) ) )
-            {
-                throw new CHttpException( 'Not authorized.', 401 );
-            }
-
-//			Log::debug( 'UserDashboard user set to id#' . static::$_user['drupal_id'] );
-        }
-
         $_payload = array_merge(
             array(
-                'user_id'      => static::$_user['drupal_id'],
-                'access_token' => static::$_user['drupal_password_text'],
+                'user-id'      => \Auth::user()->id,
+                'access-token' => \Auth::user()->password_text,
             ),
-            $payload ?: array()
+            $payload ?: []
         );
 
-        $_response = Curl::post( static::Endpoint . '/' . trim( $url, '/' ), $_payload );
-        static::$_lastResponse = $_response;
-
-        if ( is_string( $_response ) && strlen( $_response ) > 1024 )
-        {
-            $_snippet = substr( $_response, 0, 1024 );
-        }
-        else
-        {
-            $_snippet = print_r( $_response, true );
-        }
-
-//		Log::debug(
-//			PHP_EOL . PHP_EOL . '//====== API Call: ' . $url . ' ========== BEGIN =========\\' . PHP_EOL .
-//			'>>----------------------------------------------------------->>  [REQUEST]' . PHP_EOL .
-//			print_r( $_payload, true ) . PHP_EOL .
-//			'<<-----------------------------------------------------------<<  [RESPONSE]' . PHP_EOL .
-//			( empty( $_snippet ) ? print_r( $_response, true ) : $_snippet ) . '...[truncated]' . PHP_EOL .
-//			'\\====== API Call: ' . $url . ' ========== END ==========//' . PHP_EOL . PHP_EOL
-//		);
+        $_response = Curl::post( $this->Endpoint . '/' . trim( $url, '/' ), $_payload );
 
         if ( $_response && is_object( $_response ) && isset( $_response->success ) )
         {
@@ -1220,9 +786,8 @@ HTML;
         }
 
         //	Error and redirect
-        static::drupal_set_message(
-            'An unexpected situation has occurred with your request. Please try again in a few minutes, or email <a href="mailto:support@dreamfactory.com">support@dreamfactory.com</a>.',
-            'error'
+        $this->_request->flash(
+            'An unexpected situation has occurred with your request. Please try again in a few minutes, or email <a href="mailto:support@dreamfactory.com">support@dreamfactory.com</a>.'
         );
 
         return false;
@@ -1235,12 +800,12 @@ HTML;
      *
      * @return string
      */
-    public static function divId( $prefix, $instance, $key = false )
+    public function divId( $prefix, $instance, $key = false )
     {
         return
             $prefix .
             '___' .
-            static::hashId( $instance->id ) .
+            $this->hashId( $instance->id ) .
             '___' .
             ( $key ? $instance->label : $instance->instanceName );
     }
@@ -1252,83 +817,22 @@ HTML;
      *
      * @return string
      */
-    public static function hashId( $valueToHash )
+    public function hashId( $valueToHash )
     {
         if ( null === $valueToHash )
         {
             return null;
         }
 
-        return Hasher::hash( static::SaltyGoodness . $valueToHash );
+        return hash( 'sha256', config( 'dashboard.api-key' ) . $valueToHash );
     }
 
     /**
-     * @param \stdClass $user
+     * @return User
      */
-    public static function setUser( $user )
+    public function getUser()
     {
-        static::$_user = $user;
-    }
-
-    /**
-     * @return \stdClass
-     */
-    public static function getUser()
-    {
-        return static::$_user;
-    }
-
-    /**
-     * @param string $defaultDomain
-     */
-    public static function setDefaultDomain( $defaultDomain )
-    {
-        static::$_defaultDomain = $defaultDomain;
-    }
-
-    /**
-     * @return string
-     */
-    public static function getDefaultDomain()
-    {
-        if ( empty( static::$_defaultDomain ) )
-        {
-            static::$_defaultDomain = Pii::getParam( 'dashboard.default_dsp_domain', static::DEFAULT_DSP_DOMAIN );
-        }
-
-        return static::$_defaultDomain;
-    }
-
-    /**
-     * @return bool
-     */
-    protected static function _handleFileUpload()
-    {
-        if ( !isset( $_FILES['key_file'] ) || !is_uploaded_file( $_FILES['key_file']['tmp_name'] ) )
-        {
-            return false;
-        }
-
-        $_fileHash = Hasher::generateUnique();
-        $_fileName = str_replace( ' ', '-', strtolower( $_FILES['key_file']['name'] ) );
-        $_size = $_FILES['key_file']['size'];
-        $_tempSource = $_FILES['key_file']['tmp_name'];
-        $_type = $_FILES['key_file']['type'];
-
-        //	Key files shouldn't be this big
-        if ( $_size > 10000 )
-        {
-            return false;
-        }
-
-        switch ( strtolower( $_type ) )
-        {
-            case 'application/xml':
-                //
-                break;
-        }
-
-        return true;
+        return \Auth::user();
     }
 
     /**
@@ -1336,107 +840,8 @@ HTML;
      *
      * @return string
      */
-    public static function buildProviderList()
+    public function buildProviderList()
     {
-        if ( null === ( $_html = Pii::getState( 'cache.cloud_providers' ) ) )
-        {
-
-            $_path = \Kisma::get( 'app.config_path' ) . '/templates/cloud-providers';
-
-            Log::debug( '>> Provider scan started > ' . $_path );
-
-            $_files = scandir( $_path );
-            $_count = 0;
-
-            if ( !empty( $_files ) )
-            {
-                foreach ( $_files as $_file )
-                {
-                    if ( $_file != '.' && $_file != '..' && !is_dir( $_path . '/' . $_file ) )
-                    {
-                        /** @noinspection PhpIncludeInspection */
-                        $_config = @include( $_path . '/' . $_file );
-
-                        if ( !empty( $_config ) )
-                        {
-                            if ( false === Pii::getParam( 'dashboard.' . $_config['id'], 'enabled', false ) )
-                            {
-                                Log::debug( '  * Skipping disabled provider "' . $_config['id'] . '": ' . $_file );
-                                continue;
-                            }
-
-                            Log::debug( '  * Found "' . $_config['id'] . '": ' . $_file );
-
-                            $_count++;
-                            $_header = Option::get( $_config, 'header', 'Installing on ' . $_config['title'] );
-
-                            $_item = array(
-                                'groupId'        => 'roll-your-own',
-                                'targetId'       => $_config['id'],
-                                'triggerContent' =>
-                                    '<i class="fa fa-cloud" style="text-decoration:none !important;"></i><span style="margin-left: 10px;">' .
-                                    $_config['title'] .
-                                    '</span>',
-                                'targetContent'  => '<h4>' . $_header . '</h4>' . $_config['body'],
-                            );
-
-                            $_html .= Pii::controller()->renderPartial( '_dashboard_item', $_item, true );
-                        }
-                    }
-                }
-            }
-
-            Log::debug( '<< Provider scan complete > ' . $_count . ' providers found' );
-        }
-
-        Pii::setState( 'cache.cloud_providers', $_html );
-
-        return $_html;
-    }
-
-    /**
-     * I didn't feel like rearranging all that code, so bite me
-     *
-     * @param string $message
-     * @param string $type
-     *
-     * @return CConsoleApplication|CWebApplication
-     */
-    public static function drupal_set_message( $message, $type )
-    {
-        return Pii::setFlash( $type, $message );
-    }
-
-    /**
-     * @param boolean $isAdminUser
-     */
-    public static function setIsAdminUser( $isAdminUser )
-    {
-        static::$_isAdminUser = $isAdminUser;
-    }
-
-    /**
-     * @return boolean
-     */
-    public static function getIsAdminUser()
-    {
-        return static::$_isAdminUser;
-    }
-
-    /**
-     * @return boolean
-     */
-    public static function isEnableCaptcha()
-    {
-        return static::$_enableCaptcha;
-    }
-
-    /**
-     * @param boolean $enableCaptcha
-     */
-    public static function setEnableCaptcha( $enableCaptcha )
-    {
-        static::$_enableCaptcha = $enableCaptcha;
     }
 
     /**
@@ -1446,7 +851,7 @@ HTML;
      *
      * @return bool
      */
-    protected static function _isIconClass( $class )
+    protected function _isIconClass( $class )
     {
         return ( 'icon-' == substr( $class, 0, 5 ) ||
             'fa-' == substr( $class, 0, 3 ) ||

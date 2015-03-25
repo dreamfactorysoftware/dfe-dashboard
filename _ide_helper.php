@@ -2114,7 +2114,7 @@ namespace {
         }
         
         /**
-         * Checks if macro is registered
+         * Checks if macro is registered.
          *
          * @param string $name
          * @return bool 
@@ -5041,7 +5041,7 @@ namespace {
         }
         
         /**
-         * Checks if macro is registered
+         * Checks if macro is registered.
          *
          * @param string $name
          * @return bool 
@@ -6963,7 +6963,7 @@ namespace {
          * Register an error_log handler.
          *
          * @param string $level
-         * @param integer $messageType
+         * @param int $messageType
          * @return void 
          * @static 
          */
@@ -6972,8 +6972,7 @@ namespace {
         }
         
         /**
-         * Register a new callback handler for when
-         * a log event is triggered.
+         * Register a new callback handler for when a log event is triggered.
          *
          * @param \Closure $callback
          * @return void 
@@ -7007,7 +7006,7 @@ namespace {
         /**
          * Set the event dispatcher instance.
          *
-         * @param \Illuminate\Contracts\Events\Dispatcher
+         * @param \Illuminate\Contracts\Events\Dispatcher $dispatcher
          * @return void 
          * @static 
          */
@@ -9374,7 +9373,7 @@ namespace {
         }
         
         /**
-         * Checks if macro is registered
+         * Checks if macro is registered.
          *
          * @param string $name
          * @return bool 
@@ -9743,7 +9742,7 @@ namespace {
         }
         
         /**
-         * Set a global where pattern on all routes
+         * Set a global where pattern on all routes.
          *
          * @param string $key
          * @param string $pattern
@@ -9755,7 +9754,7 @@ namespace {
         }
         
         /**
-         * Set a group of global where patterns on all routes
+         * Set a group of global where patterns on all routes.
          *
          * @param array $patterns
          * @return void 
@@ -9997,7 +9996,7 @@ namespace {
         }
         
         /**
-         * Checks if macro is registered
+         * Checks if macro is registered.
          *
          * @param string $name
          * @return bool 
