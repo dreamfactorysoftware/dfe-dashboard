@@ -1,7 +1,7 @@
 <?php
 /**
  * An helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.0.20 on 2015-03-24.
+ * Generated for Laravel 5.0.20 on 2015-03-25.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -2428,7 +2428,7 @@ namespace {
         }
         
         /**
-         * Get the cookies which have been queued for the next request
+         * Get the cookies which have been queued for the next request.
          *
          * @return array 
          * @static 
