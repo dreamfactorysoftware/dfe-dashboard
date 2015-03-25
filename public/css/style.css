@@ -9,6 +9,7 @@ body {
 	min-width:        785px;
 	min-height:       100%;
 	height:           100%;
+	margin-bottom:    60px;
 }
 
 /*
@@ -54,9 +55,13 @@ body {
 
 /** navbar menu items padding reduction **/
 .navbar .navbar-nav > li > a {
-	color:          inherit;
 	padding-top:    8px;
 	padding-bottom: 8px;
+}
+
+.nav.navbar-nav li a i.fa-fw {
+	margin-right: 4px;
+	text-align:   left;
 }
 
 /*
@@ -69,41 +74,6 @@ body {
 	overflow-x:       hidden;
 	overflow-y:       auto; /* Scrollable contents if viewport is shorter than content. */
 	border-right:     1px solid #eeeeee;
-}
-
-/* Sidebar navigation */
-#sidebar-collapse .nav-sidebar {
-	margin-right:  -21px; /* 20px padding + 1px border */
-	margin-bottom: 20px;
-	margin-left:   -20px;
-}
-
-#sidebar-collapse > ul > li > a > i {
-	margin-right: 5px;
-}
-
-#sidebar-collapse > ul > li > a {
-	padding-right: 20px;
-	padding-left:  20px;
-	border-radius: 2px
-}
-
-#sidebar-collapse > ul > li > a:hover {
-	background-color: rgba(0, 149, 135, 0.5);
-	color:            #ffffff;
-}
-
-#sidebar-collapse > ul > li > a:focus,
-#sidebar-collapse > ul > li > a:active {
-	background-color: rgba(0, 149, 135, 0.05);
-	box-shadow:       0 1px 4px rgba(0, 0, 0, .12), 0 1px 4px rgba(0, 0, 0, .12);
-	color:            #005547;
-}
-
-#sidebar-collapse > ul > li.active > a {
-	background-color: rgba(32, 149, 135, 0.05);
-	color:            #008577;
-	box-shadow:       0 1px 4px rgba(0, 0, 0, .12), 0 1px 4px rgba(0, 0, 0, .12);
 }
 
 .tab-header {
@@ -254,47 +224,6 @@ body.body-404 .main {
 	color:    #ebebeb;
 }
 
-/*------------------------------------------------------------------------------*/
-/* filter && search                                                             */
-/*------------------------------------------------------------------------------*/
-
-/*.dataTables_length label {*/
-/*text-indent: 4px;*/
-/*margin-top:  0;*/
-/*line-height: 23px;*/
-/*font-weight: normal;*/
-/*color:       #444444;*/
-/*text-shadow: 0 1px 1px #ffffff;*/
-/*}*/
-
-/*.dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter {*/
-/*margin-bottom: 8px;*/
-/*}*/
-
-/*.dataTables_wrapper .dataTables_length .help-block {*/
-/*display:   inline-block;*/
-/*float:     left;*/
-/*margin:    0 0 0 4px;*/
-/*padding:   6px 0 0;*/
-/*font-size: 11px;*/
-/*}*/
-
-/*.dataTables_wrapper .dataTables_length select,*/
-/*.dataTables_wrapper .dataTables_length .help-block {*/
-/*display: inline-block;*/
-/*float:   left;*/
-/*}*/
-
-/*.dataTables_wrapper .dataTables_length select {*/
-/*height: 28px;*/
-/*width:  auto;*/
-/*margin:      0;*/
-/*}*/
-
-/*.dataTables_wrapper .dataTables_filter i.form-control-feedback {*/
-/*top: 7px;*/
-/*}*/
-
 div.dataTables_filter input {
 	margin-left: 0;
 }
@@ -350,6 +279,33 @@ table.dataTable thead th {
 
 #page-content {
 	margin-top: 10px;
+}
+
+.footer {
+	position:         absolute;
+	bottom:           0;
+	width:            100%;
+	/* Set the fixed height of the footer here */
+	height:           60px;
+	background-color: #222222;
+	color:            rgba(255, 255, 255, .75);
+}
+
+.footer > .container {
+	padding-right: 15px;
+	padding-left:  15px;
+}
+
+.footer ul, ol {
+	margin-bottom: 0;
+}
+
+.footer .social-links {
+	margin-top: 4px;
+}
+
+.footer > .container p {
+	margin-bottom: 0;
 }
 
 /*------------------------------------------------------------------------------*/
