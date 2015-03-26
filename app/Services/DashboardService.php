@@ -2,6 +2,7 @@
 
 use DreamFactory\Enterprise\Common\Services\BaseService;
 use DreamFactory\Enterprise\Common\Traits\EntityLookup;
+use DreamFactory\Library\Fabric\Database\Enums\GuestLocations;
 use DreamFactory\Library\Fabric\Database\Enums\ProvisionStates;
 use DreamFactory\Library\Fabric\Database\Enums\ServerTypes;
 use DreamFactory\Library\Fabric\Database\Models\Auth\User;
@@ -63,7 +64,7 @@ class DashboardService extends BaseService
         parent::__construct( $app );
 
         $this->_defaultDomain = config( 'dashboard.default-domain' );
-        $this->_endpoint = config( 'dashboard.api-host' ) . '/' . trim( config( 'dashboard.api-endpoint' ) );
+        $this->_endpoint = config( 'dashboard.api-host' ) . '/' . trim( config( 'dashboard.api-endpoint' ), ' /' );
         $this->_apiKey = config( 'dashboard.api-key' );
         $this->_enableCaptcha = config( 'dashboard.require-captcha', true );
     }
@@ -113,7 +114,7 @@ class DashboardService extends BaseService
 //                            }
 //                            catch ( CaptchaException $_ex )
 //                            {
-//                                Pii::setFlash( 'error', $_ex->getMessage() );
+//                                Pii::setFlash( 'dashboard-failure', $_ex->getMessage() );
 //
 //                                return false;
 //                            }
@@ -179,10 +180,10 @@ class DashboardService extends BaseService
 
         if ( isset( $_status->code, $_status->message ) )
         {
-            $_status->provisioned = false;
-            $_status->deprovisioned = false;
-            $_status->trial = false;
-            $_status->instanceState = ProvisionStates::DEPROVISIONED;
+            $_status->provision_ind = false;
+            $_status->deprovision_ind = false;
+            $_status->trial_ind = false;
+            $_status->state_nbr = ProvisionStates::DEPROVISIONED;
 
             if ( $_status->code == 404 )
             {
@@ -193,14 +194,14 @@ class DashboardService extends BaseService
         $_status->icons = $this->getStatusIcon( $_status );
         $_status->buttons = $this->getDspControls( $_status );
 
-        if ( 2 == $_status->instanceState )
+        if ( 2 == $_status->state_nbr )
         {
             $_status->link =
                 '<a href="https://' .
-                $_status->instanceName .
-                $this->getDefaultDomain() .
+                $_status->instance_name_text .
+                $this->_defaultDomain .
                 '" target="_blank" class="dsp-launch-link">' .
-                $_status->instanceName .
+                $_status->instance_name_text .
                 '</a>';
         }
 
@@ -215,6 +216,15 @@ class DashboardService extends BaseService
     public function deprovisionInstance( $instanceId )
     {
         $_result = $this->_apiCall( '/ops/destroy', array('instance-id' => $instanceId), true );
+
+        if ( $_result->success )
+        {
+            \Session::flash( 'dashboard-success', 'Instance deprovisioning requested successfully.' );
+        }
+        else
+        {
+            \Session::flash( 'dashboard-failure', $_result->message );
+        }
 
         return $_result;
     }
@@ -257,6 +267,15 @@ class DashboardService extends BaseService
 
         $_result = $this->_apiCall( '/ops/create', $_payload, true );
 
+        if ( $_result->success )
+        {
+            \Session::flash( 'dashboard-success', 'Instance provisioning requested successfully.' );
+        }
+        else
+        {
+            \Session::flash( 'dashboard-failure', $_result->message );
+        }
+
         return $_result;
     }
 
@@ -298,11 +317,11 @@ class DashboardService extends BaseService
      */
     protected function _instanceSnapshots( $instanceId )
     {
-        $_result = $this->_apiCall( '/ops/exports/' . $instanceId, [], true, Request::METHOD_GET );
+        $_result = $this->_apiCall( '/ops/exports/' . $instanceId );
 
         if ( !$_result->success )
         {
-            $this->_request->flash( $_result->details->message );
+            \Session::flash( 'dashboard-failure', $_result->details->message );
 
             return null;
         }
@@ -347,7 +366,7 @@ class DashboardService extends BaseService
 
         if ( empty( $_snapshot ) )
         {
-            $this->_request->flash( 'No snapshot selected to import.' );
+            \Session::flash( 'dashboard-failure', 'No snapshot selected to import.' );
 
             return false;
         }
@@ -359,7 +378,7 @@ class DashboardService extends BaseService
 
             if ( 2 != count( $_parts ) || false === strtotime( $_parts[1] ) )
             {
-                $this->_request->flash( 'Invalid snapshot ID' );
+                \Session::flash( 'dashboard-failure', 'Invalid snapshot ID' );
 
                 return false;
             }
@@ -393,14 +412,14 @@ class DashboardService extends BaseService
         if ( !$_result->success )
         {
             \Log::error( 'Error pulling instance list: ' . print_r( $_result, true ) );
-            $this->_request->flash( $_result->details->message );
+            \Session::flash( 'dashboard-failure', $_result->details->message );
         }
         else
         {
-            if ( !empty( $_result->details ) )
+            if ( isset( $_result->response ) )
             {
                 /** @var \stdClass $_model */
-                foreach ( $_result->details as $_dspName => $_model )
+                foreach ( $_result->response as $_dspName => $_model )
                 {
                     if ( !isset( $_model, $_model->id ) )
                     {
@@ -408,19 +427,18 @@ class DashboardService extends BaseService
                     }
 
                     list( $_divId, $_instanceHtml, $_statusIcon ) = $this->formatInstance( $_model );
-                    $_domain = $this->getDefaultDomain();
+                    $_domain = $this->_defaultDomain;
 
                     $_item = array(
                         'instance'       => $_model,
                         'groupId'        => 'dsp_list',
                         'targetId'       => $_divId,
                         'targetRel'      => $_model->id,
-                        'opened'         => count( $_result->details ),
+                        'opened'         => count( $_result->response ),
                         'triggerContent' => <<<HTML
-<span class="instance-heading-dsp-name"><i class="fa fa-chevron-down"></i>{$_model->instanceName}<span class="muted">{$_domain}</span></span>
-<span class="instance-heading-status"><i class="fa {$_statusIcon} fa-2x"></i></span>
+<div class="instance-heading-dsp-name">{$_model->instance_name_text}<span class="text-muted">{$_domain}</div>
+<div class="instance-heading-status pull-right"><i class="fa fa-fw {$_statusIcon} fa-2x"></i></div>
 HTML
-
                         ,
                         'targetContent'  => $_instanceHtml,
                     );
@@ -452,16 +470,16 @@ HTML
     {
         $_gettingStartedButton =
             '<a class="btn btn-xs btn-info dsp-help-button" id="dspcontrol-' .
-            $instance->instanceName .
+            $instance->instance_name_text .
             '" data-placement="left" title="Help" target="_blank" href="' .
             config( 'dashboard.help-button-url' ) .
             '"><i class="fa fa-question-circle"></i></a>';
 
         list( $_icon, $_statusIcon, $_message, $_running ) = $this->getStatusIcon( $instance );
 
-        if ( empty( $instance->instanceId ) )
+        if ( empty( $instance->instance_id_text ) )
         {
-            $instance->instanceId = 'NEW';
+            $instance->instance_id_text = 'NEW';
         }
 
         $_divId = $this->divId( 'dsp', $instance );
@@ -469,20 +487,20 @@ HTML
         $_instanceLinkText = $_linkLink = null;
         $_html = $this->getDspControls( $instance, $_buttons );
 
-        if ( $instance->instanceState == 2 )
+        if ( $instance->state_nbr == ProvisionStates::PROVISIONED )
         {
-            $_instanceLinkText = 'https://' . $instance->instanceName . $this->getDefaultDomain();
+            $_instanceLinkText = 'https://' . $instance->instance_name_text . $this->_defaultDomain;
             $_instanceLink =
                 '<a href="' .
                 $_instanceLinkText .
                 '" target="_blank" class="dsp-launch-link">' .
-                $instance->instanceName .
+                $instance->instance_name_text .
                 '</a>';
             $_linkLink = '<a href="' . $_instanceLinkText . '" target="_blank">' . $_instanceLinkText . '</a>';
         }
         else
         {
-            $_instanceLink = $instance->instanceName;
+            $_instanceLink = $instance->instance_name_text;
         }
 
         if ( $this->_isIconClass( $_icon ) )
@@ -585,11 +603,11 @@ HTML;
         }
         else
         {
-            switch ( $instance->instanceState )
+            switch ( $instance->state_nbr )
             {
-                case $this->Provisioned:
+                case ProvisionStates::PROVISIONED:
                     //	Not queued for deprovisioning
-                    if ( 1 != $instance->deprovisioned )
+                    if ( 1 != $instance->deprovision_ind )
                     {
                         $_buttons['stop']['enabled'] = true;
                         $_buttons['export']['enabled'] = true;
@@ -598,9 +616,9 @@ HTML;
                     }
                     break;
 
-                case $this->Deprovisioned:
+                case ProvisionStates::DEPROVISIONED:
                     //	Not queued for reprovisioning
-                    if ( 1 != $instance->provisioned )
+                    if ( 1 != $instance->provision_ind )
                     {
                         $_buttons['start']['enabled'] = true;
                         $_buttons['export']['enabled'] = true;
@@ -629,9 +647,9 @@ HTML;
                 $_hint = 'data-toggle="tooltip" title="' . $_hint . '"';
             }
 
-            if ( ( !isset( $instance->vendorId ) || 1 == $instance->vendorId ) && $_buttonName == 'start' )
+            if ( ( !isset( $instance->vendor_id ) || GuestLocations::DFE_CLUSTER == $instance->vendor_id ) && $_buttonName == 'start' )
             {
-                $_href = 'https://' . $instance->instanceName . $this->getDefaultDomain();
+                $_href = config( 'dashboard.default-domain-protocol', 'https' ) . '://' . $instance->instance_name_text . $this->_defaultDomain;
                 $_button['text'] = 'Launch!';
                 $_disabled = $_disabledClass = null;
                 $_buttonName = 'launch';
@@ -642,7 +660,7 @@ HTML;
             }
 
             $_html .= <<<HTML
-  <a id="dspcontrol___{$_buttonName}___{$instance->instanceName}" class="btn btn-sm btn-{$_button['color']} {$_disabledClass}" {$_disabled} href="{$_href}" {$_hint}><i class="fa fa-{$_button['icon']}"></i> {$_button['text']}</a>
+  <a id="dspcontrol___{$_buttonName}___{$instance->instance_name_text}" class="btn btn-sm btn-{$_button['color']} {$_disabledClass}" {$_disabled} href="{$_href}" {$_hint}><i class="fa fa-{$_button['icon']}"></i> {$_button['text']}</a>
 HTML;
         }
 
@@ -710,7 +728,7 @@ HTML;
             }
             else
             {
-                switch ( $status->instanceState )
+                switch ( $status->state_nbr )
                 {
                     case ProvisionStates::CREATED:
                         $_statusIcon = $_icon = static::SPINNING_ICON;
@@ -725,7 +743,7 @@ HTML;
 
                     case ProvisionStates::PROVISIONED:
                         //	Queued for deprovisioning
-                        if ( 1 == $status->deprovisioned )
+                        if ( 1 == $status->deprovision_ind )
                         {
                             $_statusIcon = $_icon = static::SPINNING_ICON;
                         }
@@ -770,15 +788,8 @@ HTML;
      */
     protected function _apiCall( $url, $payload = [], $returnAll = true, $method = Request::METHOD_POST )
     {
-        $_payload = array_merge(
-            array(
-                'user-id'      => \Auth::user()->id,
-                'access-token' => \Auth::user()->password_text,
-            ),
-            $payload ?: []
-        );
-
-        $_response = Curl::post( $this->Endpoint . '/' . trim( $url, '/' ), $_payload );
+        $_payload = $this->_addTokenToPayload( $payload );
+        $_response = Curl::request( $method, $this->_endpoint . '/' . trim( $url, '/' ), $_payload );
 
         if ( $_response && is_object( $_response ) && isset( $_response->success ) )
         {
@@ -786,9 +797,15 @@ HTML;
         }
 
         //	Error and redirect
-        $this->_request->flash(
+        \Session::flash(
+            'dashboard-failure',
             'An unexpected situation has occurred with your request. Please try again in a few minutes, or email <a href="mailto:support@dreamfactory.com">support@dreamfactory.com</a>.'
         );
+
+        if ( is_string( $_response ) )
+        {
+            echo $_response;
+        }
 
         return false;
     }
@@ -807,7 +824,7 @@ HTML;
             '___' .
             $this->hashId( $instance->id ) .
             '___' .
-            ( $key ? $instance->label : $instance->instanceName );
+            ( $key ? $instance->label : $instance->instance_name_text );
     }
 
     /**
@@ -836,7 +853,7 @@ HTML;
     }
 
     /**
-     * Builds a list of enabled providers based on files in the dreamstrap/templates/cloud-providers directory
+     * Builds a list of enabled providers based on files in the templates directory
      *
      * @return string
      */
@@ -856,5 +873,37 @@ HTML;
         return ( 'icon-' == substr( $class, 0, 5 ) ||
             'fa-' == substr( $class, 0, 3 ) ||
             $class == static::SPINNING_ICON );
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultDomain()
+    {
+        return $this->_defaultDomain;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isEnableCaptcha()
+    {
+        return $this->_enableCaptcha;
+    }
+
+    protected function _addTokenToPayload( $payload )
+    {
+        $_id = config( 'dashboard.client-id' );
+        $_secret = config( 'dashboard.client-secret' );
+
+        return array_merge(
+            array(
+                'user-id'      => \Auth::user()->id,
+                'client-id'    => $_id,
+                'access-token' => hash_hmac( 'sha256', $_id, $_secret )
+            ),
+            $payload ?: []
+        );
+
     }
 }

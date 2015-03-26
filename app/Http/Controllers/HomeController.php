@@ -1,6 +1,8 @@
 <?php namespace DreamFactory\Enterprise\Dashboard\Http\Controllers;
 
 use DreamFactory\Enterprise\Common\Http\Controllers\BaseController;
+use DreamFactory\Enterprise\Dashboard\Services\DashboardService;
+use Illuminate\Http\Request;
 
 class HomeController extends BaseController
 {
@@ -28,66 +30,75 @@ class HomeController extends BaseController
         $_shortName = 'Platform';
         $_message = isset( $messages ) ? $messages : null;
         $_user = \Auth::user();
+        /** @type DashboardService $_dash */
+        $_dash = app( 'dashboard' );
+        /** @type Request $_request */
+        $_request = app( 'request' );
 
-        $_result = @UserDashboard::processRequest( $_user );
-        $_dspList = @UserDashboard::instanceTable( $_user, null, true );
+        $_result = $_dash->handleRequest( $_request );
+        $_dspList = $_dash->instanceTable( $_user, null, true );
         $_dspListOptions = '<li class="dropdown-header">Your DSPs</li><li>None!</li>';
 
+        /** @noinspection PhpIncludeInspection */
         $_groupItems = array(
-            $this->renderPartial( '_dashboard_item', require __DIR__ . '/_dashboard_new-fabric-dsp.php', true )
+            view(
+                'layouts.partials._dashboard_item',
+                require base_path( 'resources/views/layouts/partials/_dashboard_new-fabric-dsp.php' )
+            )->render()
         );
 
         if ( !empty( $_dspList ) )
         {
-            $_domain = UserDashboard::getDefaultDomain();
+            $_domain = $_dash->getDefaultDomain();
             $_dspListOptions = '<li class="dropdown-header">Your DSPs</li>';
 
             foreach ( $_dspList as $_dsp )
             {
                 $_dspListOptions .= <<<HTML
-        <li><a href="https://{$_dsp['instance']->instanceName}{$_domain}" title="Launch this DSP!" target="_blank">{$_dsp['instance']->instanceName}</a></li>
+        <li><a href="https://{$_dsp['instance']->instance_name_text}{$_domain}" title="Launch this DSP!" target="_blank">{$_dsp['instance']->instance_name_text}</a></li>
 HTML;
 
-                $_groupItems[] = $this->renderPartial( '_dashboard_item', $_dsp, true );
+                $_groupItems[] = view( 'layouts.partials._dashboard_item', $_dsp )->render();
             }
         }
 
-        $_panelGroup = $this->renderPartial(
-            '_dashboard_group',
-            array(
+        $_panelGroup = view(
+            'layouts.partials._dashboard_group',
+            [
                 'groupId'    => 'dsp_list',
-                'groupItems' => array(),
+                'groupItems' => [],
                 'groupHtml'  => $_groupItems,
-            ),
-            true
-        );
+            ]
+        )->render();
 
-        if ( null !== ( $_message = Pii::getFlash( 'success' ) ) )
+        if ( \Session::has( 'dashboard-success' ) )
         {
+            $_flash = \Session::get( 'dashboard-success' );
+
             $_message = <<<HTML
                 <div class="alert alert-success fade in">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     <h4>Success!</h4>
 
-                    <p>{$_message}</p>
+                    <p>{$_flash}</p>
                 </div>
 HTML;
         }
-        elseif ( null !== ( $_message = Pii::getFlash( 'error' ) ) )
+        elseif ( \Session::has( 'dashboard-failure' ) )
         {
+            $_flash = \Session::get( 'dashboard-failure' );
+
             $_message = <<<HTML
                 <div class="alert alert-danger fade in">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     <h4>Fail!</h4>
 
-                    <p>{$_message}</p>
+                    <p>{$_flash}</p>
                 </div>
 HTML;
         }
 
-        require_once __DIR__ . '/_dashboard_import-snapshot.php';
-
-        return view( 'home' );
+        return view( 'home', ['panelGroup' => $_panelGroup, 'message' => $_message] );
     }
 
 }

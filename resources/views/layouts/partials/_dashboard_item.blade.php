@@ -1,17 +1,17 @@
-<div class="panel panel-default panel-dsp">
-	<div class="panel-heading">
+<div class="panel panel-success panel-dsp">
+	<div class="panel-heading" role="tab" id="heading-{{ $groupId }}">
 		<h4 class="panel-title">
-			<a class="accordion-toggle"
-			   data-toggle="collapse"
+			<a data-toggle="collapse"
 			   data-parent="#{{ $groupId }}"
-			   href="#{{ $targetId }}">
-				{{ $triggerContent }}
-			</a>
+			   href="#{{ $targetId }}"
+			   aria-expanded="true"
+			   aria-controls="collapseOne">{!! $triggerContent !!}</a>
 		</h4>
 	</div>
-	<div id="{{ $targetId }}" class="panel-collapse collapse {{ $opened ? 'panel-body-open in' : null }}">
-		<div class="panel-body">
-			{{ $targetContent; }}
-		</div>
+	<div id="{{ $targetId }}"
+		 class="panel-collapse collapse {{ $opened ? 'in panel-body-open' : null }}"
+		 role="tabpanel"
+		 aria-labelledby="heading-{{ $groupId }}">
+		<div class="panel-body">{!! $targetContent !!}</div>
 	</div>
 </div>

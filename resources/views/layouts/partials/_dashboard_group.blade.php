@@ -14,7 +14,7 @@ if ( !empty( $groupItems ) )
 {
 	foreach ( $groupItems as $_item )
 	{
-		$_html .= $this->renderPartial( '_dashboard_item', $_item, true );
+		$_html .= view( 'layouts.partials._dashboard_item', $_item )->render();
 	}
 }
 
@@ -24,6 +24,6 @@ if ( isset( $groupHtml ) )
 }
 
 ?>
-<div class="panel-group" id="<?php echo $groupId; ?>">
-	<?php echo $_html; ?>
+<div class="panel-group" id="{{ $groupId }}" role="tablist" aria-multiselectable="true">
+	{!! $_html !!}
 </div>

@@ -38,7 +38,6 @@ return [
         'Illuminate\Translation\TranslationServiceProvider',
         'Illuminate\Validation\ValidationServiceProvider',
         'Illuminate\View\ViewServiceProvider',
-        'DreamFactory\Enterprise\Common\Providers\LibraryAssetsProvider',
         /** Application Service Providers... */
         'DreamFactory\Enterprise\Dashboard\Providers\AppServiceProvider',
         'DreamFactory\Enterprise\Dashboard\Providers\BusServiceProvider',
@@ -46,7 +45,10 @@ return [
         'DreamFactory\Enterprise\Dashboard\Providers\EventServiceProvider',
         'DreamFactory\Enterprise\Dashboard\Providers\RouteServiceProvider',
         /** DreamFactory Common Providers */
+        'DreamFactory\Enterprise\Common\Providers\LibraryAssetsProvider',
         'DreamFactory\Enterprise\Common\Providers\Auth\DashboardAuthProvider',
+        /** Dashboard Providers */
+        'DreamFactory\Enterprise\Dashboard\Providers\DashboardServiceProvider',
         /** 3rd-party Service Providers */
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
     ],

@@ -653,8 +653,8 @@ class UserDashboard
                         'targetRel'      => $_model->id,
                         'opened'         => count( $_result->details ),
                         'triggerContent' => <<<HTML
-<span class="instance-heading-dsp-name"><i class="fa fa-chevron-down"></i>{$_model->instanceName}<span class="muted">{$_domain}</span></span>
-<span class="instance-heading-status"><i class="fa {$_statusIcon} fa-2x"></i></span>
+<span class="instance-heading-dsp-name pull-left"><i class="fa fa-fw fa-chevron-down"></i>{$_model->instanceName}<span class="muted">{$_domain}</span></span>
+<span class="instance-heading-status pull-right"><i class="fa fa-fw {$_statusIcon} fa-2x"></i></span>
 HTML
 
                         ,

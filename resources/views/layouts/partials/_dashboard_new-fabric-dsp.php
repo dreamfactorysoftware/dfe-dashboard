@@ -1,42 +1,46 @@
 <?php
 /**
- * @file
- * This is the template for the new hosted dsp block on the dashboard page
- *
- * @var array $_user
+ * @var bool $_requireCaptcha
  */
+use DreamFactory\Library\Utility\Inflector;
 
-use DreamFactory\Yii\Utility\Pii;
+$_captchaHtml = $_html = null;
+$_requireCaptcha = config( 'dashboard.require-captcha' );
 
-$_html = null;
-
-if ( !isset( $_user ) )
+if ( $_requireCaptcha )
 {
-    $this->redirect( '/' );
+    $_captcha = new Captcha();
+    $_captcha->setPublicKey( config( 'recaptcha.public_key' ) );
+    $_captcha->setPrivateKey( config( 'recaptcha.private_key' ) );
+
+    $_html = $_captcha->displayHTML(
+        config( 'recaptcha.theme', 'white' ),
+        config( 'recaptcha.options', array() )
+    );
+
+    $_captchaHtml = <<<HTML
+					<div class="form-group">
+						<label for="captcha" class="col-md-2 control-label">Validation Code</label>
+						<div class="col-md-8">
+							<div class="recaptcha">{$_html}</div>
+							<p class="help-block" style="margin-top:2px;font-size: 13px;color:#888;">Please enter the validation code in the picture. This is a spam-prevention measure.</p>
+						</div>
+					</div>
+HTML;
 }
 
-//$_captcha = new Captcha();
-//$_captcha->setPublicKey( Pii::getParam( 'recaptcha.public_key' ) );
-//$_captcha->setPrivateKey( Pii::getParam( 'recaptcha.private_key' ) );
-
-//$_html = $_captcha->displayHTML(
-//    Pii::getParam( 'recaptcha.theme', 'white' ),
-//    Pii::getParam( 'recaptcha.options', array() )
-//);
-
-$_dspName = ( $_user['admin_ind'] != 1 ? 'dsp-' : null ) . $_user['display_name_text'];
+$_dspName = ( \Auth::user()->admin_ind != 1 ? 'dsp-' : null ) . Inflector::neutralize( str_replace( ' ', '-', \Auth::user()->display_name_text ) );
 
 $_item = array(
     'opened'         => empty( $_dspList ),
     'groupId'        => 'dsp_list',
     'targetId'       => 'dsp_new',
-    'triggerContent' => '<span class="instance-heading-dsp-name"><i class="fa fa-plus"></i>Create DreamFactory Services Platform</span>',
+    'triggerContent' => '<span class="instance-heading-dsp-name pull-left"><i class="fa fa-fw fa-plus"></i>Create an Instance</span>',
     'targetContent'  => <<<HTML
-			<div class="dsp-icon well pull-left"><i class="fa fa-check-square-o fa-3x" style="color: darkgreen;"></i></div>
+			<h3 class="dsp-box-heading">Create a new instance of the DreamFactory Services Platform</h3>
 			<div class="dsp-info">
 				<form id="form-provision" class="form-horizontal" method="POST">
-					<h3>Create a new instance of the DreamFactory Services Platform</h3>
-					<p>Please enter the name of the new instance below, or you may keep the name we have selected for you. Letters, numbers, and dashes are the only characters allowed.</p>
+										<p>Please enter the name of the new instance below, or you may keep the name we have selected for you. Letters, numbers, and dashes are the only characters allowed.</p>
 					<div class="clearfix"></div>
 
 					<div class="form-group">
@@ -49,17 +53,9 @@ $_item = array(
 							<p class="help-block" style="margin-top:2px;font-size: 13px;color:#888;">This may take a minute. We will send you an email when your platform is ready.</p>
 						</div>
 					</div>
-<!--
-					<div class="form-group">
-						<label for="captcha" class="col-md-2 control-label">Validation Code</label>
-						<div class="col-md-8">
-							<div class="recaptcha">{$_html}</div>
-							<p class="help-block" style="margin-top:2px;font-size: 13px;color:#888;">Please enter the validation code in the picture. This is a spam-prevention measure.</p>
-						</div>
-					</div>
--->
+					{$_captchaHtml}
 					<div class="dsp-links">
-						<button id="start-trial" type="submit" class="btn btn-primary btn-warning"><i class="fa fa-rocket" style="margin-right: 8px;"></i> Create DSP</button>
+						<button id="start-trial" type="submit" class="btn btn-primary btn-warning"><i class="fa fa-fw fa-rocket" style="margin-right: 8px;"></i> Create</button>
 					</div>
 
 					<input type="hidden" name="control" value="create">
@@ -68,6 +64,6 @@ $_item = array(
 HTML
 );
 
-unset( $_captcha, $_html );
+unset( $_requireCaptcha, $_captcha, $_html, $_captchaHtml, $_dspName );
 
 return $_item;
