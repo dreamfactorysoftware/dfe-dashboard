@@ -1,7 +1,7 @@
 <?php
 /**
  * An helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.0.20 on 2015-03-25.
+ * Generated for Laravel 5.0.21 on 2015-03-26.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -3033,7 +3033,7 @@ namespace {
         /**
          * Get the schema grammar used by the connection.
          *
-         * @return \Illuminate\Database\Query\Grammars\Grammar 
+         * @return \Illuminate\Database\Schema\Grammars\Grammar 
          * @static 
          */
         public static function getSchemaGrammar(){
