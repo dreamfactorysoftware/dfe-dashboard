@@ -1,8 +1,9 @@
-vendor
-node_modules
-.env
-storage
-.idea/workspace.xml
-.idea/tasks.xml
-build
-tests/storage
+vendor/
+node_modules/
+/.env
+/storage
+/.idea/workspace.xml
+/.idea/tasks.xml
+/build
+/tests/storage
+/_ide_*.php
