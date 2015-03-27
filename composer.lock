@@ -634,12 +634,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/fabric-db.git",
-                "reference": "932a34b4b184b1c8543d282693fae8cc565fa5d0"
+                "reference": "9ae4e8db5c0f054a763569bde19755f00ab74bd9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/fabric-db/zipball/932a34b4b184b1c8543d282693fae8cc565fa5d0",
-                "reference": "932a34b4b184b1c8543d282693fae8cc565fa5d0",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/fabric-db/zipball/9ae4e8db5c0f054a763569bde19755f00ab74bd9",
+                "reference": "9ae4e8db5c0f054a763569bde19755f00ab74bd9",
                 "shasum": ""
             },
             "require": {
@@ -681,7 +681,7 @@
                 "source": "https://github.com/dreamfactorysoftware/fabric-db/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/fabric-db/issues"
             },
-            "time": "2015-03-26 20:32:43"
+            "time": "2015-03-27 19:11:44"
         },
         {
             "name": "dreamfactory/php-utils",
@@ -1044,12 +1044,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "388289de68ba912746bd1adb20a8b1cd0f846ea1"
+                "reference": "ff2d92eaddc159e62ccfad3bc4d8afa213cc725e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/388289de68ba912746bd1adb20a8b1cd0f846ea1",
-                "reference": "388289de68ba912746bd1adb20a8b1cd0f846ea1",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/ff2d92eaddc159e62ccfad3bc4d8afa213cc725e",
+                "reference": "ff2d92eaddc159e62ccfad3bc4d8afa213cc725e",
                 "shasum": ""
             },
             "require": {
@@ -1162,7 +1162,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2015-03-27 14:49:51"
+            "time": "2015-03-27 19:13:18"
         },
         {
             "name": "league/flysystem",
@@ -1990,12 +1990,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/DependencyInjection.git",
-                "reference": "2cf8dac5fc708f8e03131ced1cc64e75bc23538d"
+                "reference": "c9e68c78b27d5272c38011eb47e5279329a2ecac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/DependencyInjection/zipball/2cf8dac5fc708f8e03131ced1cc64e75bc23538d",
-                "reference": "2cf8dac5fc708f8e03131ced1cc64e75bc23538d",
+                "url": "https://api.github.com/repos/symfony/DependencyInjection/zipball/c9e68c78b27d5272c38011eb47e5279329a2ecac",
+                "reference": "c9e68c78b27d5272c38011eb47e5279329a2ecac",
                 "shasum": ""
             },
             "require": {
@@ -2042,7 +2042,7 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "http://symfony.com",
-            "time": "2015-03-24 17:00:58"
+            "time": "2015-03-27 18:18:01"
         },
         {
             "name": "symfony/event-dispatcher",
