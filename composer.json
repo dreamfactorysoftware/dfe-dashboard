@@ -32,6 +32,10 @@
 		{
 			"type": "vcs",
 			"url":  "git@github.com:dreamfactorysoftware/dfe-common.git"
+		},
+		{
+			"type": "vcs",
+			"url":  "git@github.com:dreamfactorysoftware/dfe-ops-client.git"
 		}
 	],
 	"require":           {
@@ -45,6 +49,7 @@
 		"dreamfactory/fabric-db":      "dev-develop as dev-master",
 		"dreamfactory/fabric-audit":   "dev-develop as dev-master",
 		"dreamfactory/console-tools":  "dev-develop as dev-master",
+		"dreamfactory/dfe-ops-client": "dev-develop as dev-master",
 		"dreamfactory/dfe-common":     "dev-develop as dev-master"
 	},
 	"require-dev":       {

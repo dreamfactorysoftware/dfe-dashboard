@@ -44,11 +44,12 @@ return [
         'DreamFactory\Enterprise\Dashboard\Providers\ConfigServiceProvider',
         'DreamFactory\Enterprise\Dashboard\Providers\EventServiceProvider',
         'DreamFactory\Enterprise\Dashboard\Providers\RouteServiceProvider',
+        'DreamFactory\Enterprise\Dashboard\Providers\DashboardServiceProvider',
         /** DreamFactory Common Providers */
         'DreamFactory\Enterprise\Common\Providers\LibraryAssetsProvider',
         'DreamFactory\Enterprise\Common\Providers\Auth\DashboardAuthProvider',
-        /** Dashboard Providers */
-        'DreamFactory\Enterprise\Dashboard\Providers\DashboardServiceProvider',
+        /** DreamFactory Ops Client Provider */
+        'DreamFactory\Enterprise\Console\Ops\Providers\OpsClientServiceProvider',
         /** 3rd-party Service Providers */
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
     ],

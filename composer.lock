@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "38c60a35bae3d63f58d7e7932bede357",
+    "hash": "9e7ecacebe0f2786629cb2384f3b2940",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -459,6 +459,67 @@
                 "issues": "https://github.com/dreamfactorysoftware/dfe-common/issues"
             },
             "time": "2015-03-25 14:54:20"
+        },
+        {
+            "name": "dreamfactory/dfe-ops-client",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:dreamfactorysoftware/dfe-ops-client.git",
+                "reference": "5a12d9b299ca585f2a3c8d9d1f20f4531a08e52b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-ops-client/zipball/5a12d9b299ca585f2a3c8d9d1f20f4531a08e52b",
+                "reference": "5a12d9b299ca585f2a3c8d9d1f20f4531a08e52b",
+                "shasum": ""
+            },
+            "require": {
+                "dreamfactory/dfe-common": "dev-develop as dev-master",
+                "guzzlehttp/guzzle": "~4.0"
+            },
+            "require-dev": {
+                "dreamfactory/fabric-audit": "dev-develop as dev-master",
+                "dreamfactory/fabric-common": "dev-develop as dev-master",
+                "laravel/framework": "5.0.*",
+                "phpspec/phpspec": "~2.1",
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "0.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DreamFactory\\Enterprise\\Console\\Ops\\": "src/"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Jerry Ablan",
+                    "email": "jerryablan@dreamfactory.com"
+                }
+            ],
+            "description": "DreamFactory Enterprise(tm) Console Operations Client",
+            "homepage": "https://www.dreamfactory.com/",
+            "keywords": [
+                "common",
+                "dreamfactory",
+                "enterprise",
+                "fabric",
+                "queue",
+                "utility"
+            ],
+            "support": {
+                "source": "https://github.com/dreamfactorysoftware/dfe-ops-client/tree/develop",
+                "issues": "https://github.com/dreamfactorysoftware/dfe-ops-client/issues"
+            },
+            "time": "2015-03-27 16:24:17"
         },
         {
             "name": "dreamfactory/fabric-audit",
@@ -983,12 +1044,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "d30ff645035856d145a0ac191f07151d20fe691a"
+                "reference": "388289de68ba912746bd1adb20a8b1cd0f846ea1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/d30ff645035856d145a0ac191f07151d20fe691a",
-                "reference": "d30ff645035856d145a0ac191f07151d20fe691a",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/388289de68ba912746bd1adb20a8b1cd0f846ea1",
+                "reference": "388289de68ba912746bd1adb20a8b1cd0f846ea1",
                 "shasum": ""
             },
             "require": {
@@ -1101,7 +1162,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2015-03-26 19:09:29"
+            "time": "2015-03-27 14:49:51"
         },
         {
             "name": "league/flysystem",
@@ -1759,12 +1820,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Config.git",
-                "reference": "57477bf25d4805f124fa00da6e752370eb1cd091"
+                "reference": "8200f2ebda81b95d407d013954c4c734a3eefbda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Config/zipball/57477bf25d4805f124fa00da6e752370eb1cd091",
-                "reference": "57477bf25d4805f124fa00da6e752370eb1cd091",
+                "url": "https://api.github.com/repos/symfony/Config/zipball/8200f2ebda81b95d407d013954c4c734a3eefbda",
+                "reference": "8200f2ebda81b95d407d013954c4c734a3eefbda",
                 "shasum": ""
             },
             "require": {
@@ -1801,7 +1862,7 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "http://symfony.com",
-            "time": "2015-03-22 16:57:18"
+            "time": "2015-03-27 10:22:45"
         },
         {
             "name": "symfony/console",
@@ -2766,12 +2827,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "61ee6c848fd2c623e13f59df48833f8b8bad7fda"
+                "reference": "67f7c748c330aee3cfcaa3da28c997b68023c41d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/61ee6c848fd2c623e13f59df48833f8b8bad7fda",
-                "reference": "61ee6c848fd2c623e13f59df48833f8b8bad7fda",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/67f7c748c330aee3cfcaa3da28c997b68023c41d",
+                "reference": "67f7c748c330aee3cfcaa3da28c997b68023c41d",
                 "shasum": ""
             },
             "require": {
@@ -2817,7 +2878,7 @@
                 "debug",
                 "dump"
             ],
-            "time": "2015-03-06 16:45:31"
+            "time": "2015-03-26 17:20:25"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -3191,12 +3252,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "3b901cd314d1f79a54c93131d634aad507114b34"
+                "reference": "8e65cdc780e7deb129f9e792dc929ba8792ac67e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/3b901cd314d1f79a54c93131d634aad507114b34",
-                "reference": "3b901cd314d1f79a54c93131d634aad507114b34",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/8e65cdc780e7deb129f9e792dc929ba8792ac67e",
+                "reference": "8e65cdc780e7deb129f9e792dc929ba8792ac67e",
                 "shasum": ""
             },
             "require": {
@@ -3255,7 +3316,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2015-03-16 15:54:31"
+            "time": "2015-03-27 11:15:28"
         },
         {
             "name": "doctrine/instantiator",
@@ -4455,6 +4516,12 @@
             "alias": "dev-master",
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
+            "package": "dreamfactory/dfe-ops-client"
+        },
+        {
+            "alias": "dev-master",
+            "alias_normalized": "9999999-dev",
+            "version": "dev-develop",
             "package": "dreamfactory/dfe-common"
         }
     ],
@@ -4465,6 +4532,7 @@
         "dreamfactory/fabric-db": 20,
         "dreamfactory/fabric-audit": 20,
         "dreamfactory/console-tools": 20,
+        "dreamfactory/dfe-ops-client": 20,
         "dreamfactory/dfe-common": 20
     },
     "prefer-stable": false,
