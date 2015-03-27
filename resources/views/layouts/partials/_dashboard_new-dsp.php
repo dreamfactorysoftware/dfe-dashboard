@@ -12,7 +12,7 @@ $_item = array(
     'targetId'       => 'dsp_new_cloud',
     'triggerContent' => '<span class="instance-heading-dsp-name"><i class="fa fa-fw fa-plus"></i>Install on Your Cloud</span>',
     'targetContent'  => <<<HTML
-			<div class="dsp-icon well pull-left"><i class="fa fa-fw fa-check-square-o fa-3x" style="color: darkgreen;"></i></div>
+			<div class="dsp-icon well pull-left"><i class="fa fa-fw fa-check-square-o fa-3x text-success"></i></div>
 			<div class="dsp-info">
 				<form id="form-provision-cloud" class="form-horizontal" method="POST">
 					<h3>Install the DreamFactory Services Platform&trade; on Your Cloud</h3>

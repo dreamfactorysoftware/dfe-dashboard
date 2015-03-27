@@ -2,6 +2,7 @@
 
 use DreamFactory\Enterprise\Common\Services\BaseService;
 use DreamFactory\Enterprise\Common\Traits\EntityLookup;
+use DreamFactory\Enterprise\Console\Ops\Providers\OpsClientServiceProvider;
 use DreamFactory\Library\Fabric\Database\Enums\GuestLocations;
 use DreamFactory\Library\Fabric\Database\Enums\ProvisionStates;
 use DreamFactory\Library\Fabric\Database\Enums\ServerTypes;
@@ -11,6 +12,7 @@ use DreamFactory\Library\Utility\Curl;
 use DreamFactory\Library\Utility\IfSet;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Psr\Log\LogLevel;
 
 class DashboardService extends BaseService
 {
@@ -27,7 +29,7 @@ class DashboardService extends BaseService
     /**
      * @var string
      */
-    const SPINNING_ICON = 'fa fa-spinner fa-spin';
+    const SPINNING_ICON = 'fa fa-spinner fa-spin text-warning';
 
     //*************************************************************************
     //* Variables
@@ -321,7 +323,7 @@ class DashboardService extends BaseService
 
         if ( !$_result->success )
         {
-            \Session::flash( 'dashboard-failure', $_result->details->message );
+            \Session::flash( 'dashboard-failure', $_result->message );
 
             return null;
         }
@@ -394,7 +396,18 @@ class DashboardService extends BaseService
      */
     public function getInstances()
     {
-        return $this->_apiCall( '/ops/instances' );
+        $_client = $this->app[OpsClientServiceProvider::IOC_NAME];
+
+        if ( !$_client )
+        {
+            throw new \RuntimeException( 'The enterprise console api service is not available.' );
+        }
+
+        $_response = $_client->instances();
+
+        $this->log( LogLevel::DEBUG, 'instances response: ' . print_r( $_response, true ) );
+
+        return $_response;
     }
 
     /**
@@ -412,7 +425,7 @@ class DashboardService extends BaseService
         if ( !$_result->success )
         {
             \Log::error( 'Error pulling instance list: ' . print_r( $_result, true ) );
-            \Session::flash( 'dashboard-failure', $_result->details->message );
+            \Session::flash( 'dashboard-failure', $_result->message );
         }
         else
         {

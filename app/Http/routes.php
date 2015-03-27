@@ -3,7 +3,8 @@
 //* Routes
 //******************************************************************************
 
-\Route::get( '/', ['as' => 'home', 'uses' => 'HomeController@index'] );
+\Route::any( '/', ['uses' => 'HomeController@index'] );
+\Route::any( 'home', ['uses' => 'HomeController@index'] );
 
 \Route::controllers(
     [
