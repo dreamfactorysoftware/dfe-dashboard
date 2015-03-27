@@ -466,12 +466,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/dfe-ops-client.git",
-                "reference": "5a12d9b299ca585f2a3c8d9d1f20f4531a08e52b"
+                "reference": "f15d3dbd7b9cfe58851a35d055c60d31b1d98291"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-ops-client/zipball/5a12d9b299ca585f2a3c8d9d1f20f4531a08e52b",
-                "reference": "5a12d9b299ca585f2a3c8d9d1f20f4531a08e52b",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-ops-client/zipball/f15d3dbd7b9cfe58851a35d055c60d31b1d98291",
+                "reference": "f15d3dbd7b9cfe58851a35d055c60d31b1d98291",
                 "shasum": ""
             },
             "require": {
@@ -519,7 +519,7 @@
                 "source": "https://github.com/dreamfactorysoftware/dfe-ops-client/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/dfe-ops-client/issues"
             },
-            "time": "2015-03-27 16:24:17"
+            "time": "2015-03-27 23:13:23"
         },
         {
             "name": "dreamfactory/fabric-audit",
