@@ -97,7 +97,7 @@ HTML;
 require_once __DIR__ . '/_dashboard_import-snapshot.php';
 ?>
 <div class="container-fluid col-xs-12 col-sm-10 col-sm-offset-1 user-dashboard">
-    
+
     <div id="alert-status-change" class="alert alert-info alert-block alert-fixed hide">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
         <h4>Notice</h4>
@@ -115,17 +115,16 @@ require_once __DIR__ . '/_dashboard_import-snapshot.php';
 <form id="_dsp-control" method="POST">
     <input type="hidden" name="id" value="">
     <input type="hidden" name="control" value="">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
 </form>
 
 <script type="text/javascript">
 jQuery(function($) {
-        $('#dropdown-dsp-list').append('<?php echo $_dspListOptions; ?>');
+    $('#dropdown-dsp-list').append('<?php echo $_dspListOptions; ?>');
 
-        $('#reveal-portal-key').on('click', function(e) {
-                alert('Your API key for "portal" access is:\n\n<?php echo Option::get($user,'api_token_text'); ?>\n\nAdd the following header to your requests:\n\nX-DreamFactory-Portal-Key: <?php echo Option::get($user,'api_token_text'); ?>\n\n');
-                return false;
-            }
-        );
-    }
-);
+    $('#reveal-portal-key').on('click', function(e) {
+        alert('Your API key for "portal" access is:\n\n<?php echo Option::get($user,'api_token_text'); ?>\n\nAdd the following header to your requests:\n\nX-DreamFactory-Portal-Key: <?php echo Option::get($user,'api_token_text'); ?>\n\n');
+        return false;
+    });
+});
 </script>

@@ -82,9 +82,11 @@ class DashboardService extends BaseService
     {
         $this->_request = $request;
 
+        $id = $id ?: $request->input( 'id' );
+
         if ( $request->isMethod( Request::METHOD_POST ) )
         {
-            if ( null === $id )
+            if ( empty( $id ) )
             {
                 abort( Response::HTTP_BAD_REQUEST );
             }
@@ -92,7 +94,7 @@ class DashboardService extends BaseService
             //	Handle the request
             $_command = $request->input( 'control' );
 
-            if ( empty( $_command ) )
+            if ( !empty( $_command ) )
             {
                 if ( $this->_enableCaptcha )
                 {
@@ -158,8 +160,7 @@ class DashboardService extends BaseService
                         break;
 
                     case 'status':
-                        $this->_instanceStatus( $id );
-                        break;
+                        return $this->_instanceStatus( $id );
                 }
             }
 
@@ -180,26 +181,23 @@ class DashboardService extends BaseService
     {
         $_response = $this->_getOpsClient()->status( $id );
 
-        $_status = $this->_apiCall( '/ops/status/' . $id );
-        $_status->deleted = false;
-
-        if ( isset( $_status->code, $_status->message ) )
+        if ( $_response->success )
         {
-            $_status->provision_ind = false;
-            $_status->deprovision_ind = false;
-            $_status->trial_ind = false;
-            $_status->state_nbr = ProvisionStates::DEPROVISIONED;
-
-            if ( $_status->code == 404 )
-            {
-                $_status->deleted = true;
-            }
+            $_status = $_response->response;
+        }
+        else
+        {
+            $_status = new \stdClass();
+            $_status->deleted = false;
+            $_status->state_nbr = ProvisionStates::CREATION_ERROR;
+            $_status->instance_name_text = $id;
         }
 
+        $_status->deleted = false;
         $_status->icons = $this->getStatusIcon( $_status );
         $_status->buttons = $this->getDspControls( $_status );
 
-        if ( 2 == $_status->state_nbr )
+        if ( ProvisionStates::PROVISIONED == $_status->state_nbr )
         {
             $_status->link =
                 '<a href="https://' .

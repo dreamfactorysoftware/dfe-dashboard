@@ -52,51 +52,53 @@ var _checkProgress = function() {
 					$('input[name="id"]', $_form).val(_parts[2]);
 					$('input[name="control"]', $_form).val('status');
 
-					$.get('/status/' + _parts[2], function(data) {
-						var $_inner = $("div#" + _id + ".panel-collapse .panel-body");
+					$.post('/status/' + _parts[2], $_form.serialize(), function(data) {
+							   var $_inner = $("div#" + _id + ".panel-collapse .panel-body");
 
-						$(item).fadeOut('slow', function() {
-							$(item).fadeIn('fast');
-						});
+							   $(item).fadeOut('slow', function() {
+								   $(item).fadeIn('fast');
+							   });
 
-						if (data && ( 404 == data.code || 1 == data.deleted )) {
-							//	Delete one...
-							try {
+							   if (data && ( 404 == data.code || 1 == data.deleted )) {
+								   //	Delete one...
+								   try {
 //								_flasher($(item).closest('.accordion-group').find('.instance-heading'), true);
-								$(item).removeClass('fa-spinner fa-spin').addClass(data.icons[1]);
-								$(".dsp-icon i", $_inner).removeClass('fa-spinner fa-spin').addClass(data.icons[1]);
-								$(item).closest('.panel-dsp').fadeOut();
-							} catch (e) {
-								//	Ignore
-							}
+									   $(item).removeClass('fa-spinner fa-spin').addClass(data.icons[1]);
+									   $(".dsp-icon i", $_inner).removeClass('fa-spinner fa-spin').addClass(data.icons[1]);
+									   $(item).closest('.panel-dsp').fadeOut();
+								   } catch (e) {
+									   //	Ignore
+								   }
 
-							_closeAlert('#alert-status-change', _dso.alertHideTimeout, true);
-						} else {
-							if (data.instanceState) {
-								//	Replace message...
-								if (data.icons[2]) {
+								   _closeAlert('#alert-status-change', _dso.alertHideTimeout, true);
+							   } else {
+								   if (data.instanceState) {
+									   //	Replace message...
+									   if (data.icons[2]) {
 
-									$("div.dsp-info div.dsp-stats", $_inner).html(data.icons[2]);
-								}
+										   $("div.dsp-info div.dsp-stats", $_inner).html(data.icons[2]);
+									   }
 
-								if (data.link) {
-									$("div.dsp-info div.dsp-name", $_inner).html(data.link);
-								}
+									   if (data.link) {
+										   $("div.dsp-info div.dsp-name", $_inner).html(data.link);
+									   }
 
-								if (data.buttons) {
-									$("div.dsp-info div.dsp-links .dsp-controls", $_inner).html(data.buttons);
-								}
+									   if (data.buttons) {
+										   $("div.dsp-info div.dsp-links .dsp-controls", $_inner).html(data.buttons);
+									   }
 
-								if (data.icons[1] != 'fa-spinner fa-spin') {
+									   if (data.icons[1] != 'fa-spinner fa-spin') {
 //								_flasher($(item).closest('.accordion-group').find('.instance-heading'));
-									$(item).removeClass('fa-spinner fa-spin').addClass(data.icons[1]);
-									$(".dsp-icon i", $_inner).removeClass('fa-spinner fa-spin').addClass(data.icons[1]);
+										   $(item).removeClass('fa-spinner fa-spin').addClass(data.icons[1]);
+										   $(".dsp-icon i", $_inner).removeClass('fa-spinner fa-spin').addClass(data.icons[1]);
 
-									_closeAlert('#alert-status-change', _dso.alertHideTimeout, true);
-								}
-							}
-						}
-					}, 'json');
+										   _closeAlert('#alert-status-change', _dso.alertHideTimeout, true);
+									   }
+								   }
+							   }
+						   }
+
+						, 'json');
 				}
 			}
 		});
