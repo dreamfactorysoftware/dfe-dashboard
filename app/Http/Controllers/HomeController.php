@@ -1,6 +1,7 @@
 <?php namespace DreamFactory\Enterprise\Dashboard\Http\Controllers;
 
 use DreamFactory\Enterprise\Common\Http\Controllers\BaseController;
+use DreamFactory\Enterprise\Console\Ops\Providers\OpsClientServiceProvider;
 use DreamFactory\Enterprise\Dashboard\Services\DashboardService;
 use Illuminate\Http\Request;
 
@@ -17,6 +18,15 @@ class HomeController extends BaseController
     {
         //  require auth'd users
         $this->middleware( 'auth' );
+    }
+
+    public function status( $id )
+    {
+        $_status = app( OpsClientServiceProvider::IOC_NAME )->status( $id );
+
+        \Log::debug( 'status response: ' . print_r( $_status, true ) );
+
+        return $_status;
     }
 
     /**

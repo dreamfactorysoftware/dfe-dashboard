@@ -2,12 +2,10 @@
 /**
  * Default template for a single chunk in the accordion
  *
- * @var WebController $this
  * @var string        $groupId
  * @var array         $groupItems
  * @var string        $groupHtml
  */
-
 $_html = null;
 
 if ( !empty( $groupItems ) )

@@ -3,6 +3,7 @@
 use DreamFactory\Enterprise\Common\Services\BaseService;
 use DreamFactory\Enterprise\Common\Traits\EntityLookup;
 use DreamFactory\Enterprise\Console\Ops\Providers\OpsClientServiceProvider;
+use DreamFactory\Enterprise\Console\Ops\Services\OpsClientService;
 use DreamFactory\Library\Fabric\Database\Enums\GuestLocations;
 use DreamFactory\Library\Fabric\Database\Enums\ProvisionStates;
 use DreamFactory\Library\Fabric\Database\Enums\ServerTypes;
@@ -177,6 +178,8 @@ class DashboardService extends BaseService
      */
     protected function _instanceStatus( $id )
     {
+        $_response = $this->_getOpsClient()->status( $id );
+
         $_status = $this->_apiCall( '/ops/status/' . $id );
         $_status->deleted = false;
 
@@ -396,14 +399,7 @@ class DashboardService extends BaseService
      */
     public function getInstances()
     {
-        $_client = $this->app[OpsClientServiceProvider::IOC_NAME];
-
-        if ( !$_client )
-        {
-            throw new \RuntimeException( 'The enterprise console api service is not available.' );
-        }
-
-        $_response = $_client->instances();
+        $_response = $this->_getOpsClient()->instances();
 
         $this->log( LogLevel::DEBUG, 'instances response: ' . print_r( $_response, true ) );
 
@@ -440,7 +436,6 @@ class DashboardService extends BaseService
                     }
 
                     list( $_divId, $_instanceHtml, $_statusIcon ) = $this->formatInstance( $_model );
-                    $_domain = $this->_defaultDomain;
 
                     $_item = array(
                         'instance'       => $_model,
@@ -449,7 +444,7 @@ class DashboardService extends BaseService
                         'targetRel'      => $_model->id,
                         'opened'         => count( $_result->response ),
                         'triggerContent' => <<<HTML
-<div class="instance-heading-dsp-name">{$_model->instance_name_text}<span class="text-muted">{$_domain}</div>
+<div class="instance-heading-dsp-name">{$_model->instance_name_text}<span class="text-muted">{$this->_defaultDomain}</div>
 <div class="instance-heading-status pull-right"><i class="fa fa-fw {$_statusIcon} fa-2x"></i></div>
 HTML
                         ,
@@ -835,7 +830,8 @@ HTML;
         return
             $prefix .
             '___' .
-            $this->hashId( $instance->id ) .
+            $instance->id .
+            /*$this->hashId( $instance->id ) .*/
             '___' .
             ( $key ? $instance->label : $instance->instance_name_text );
     }
@@ -918,5 +914,19 @@ HTML;
             $payload ?: []
         );
 
+    }
+
+    /**
+     * @return OpsClientService
+     */
+    protected function _getOpsClient()
+    {
+        return $this->app[OpsClientServiceProvider::IOC_NAME]
+            ?: function ()
+            {
+                throw new \RuntimeException(
+                    'The enterprise console api service is not available.'
+                );
+            };
     }
 }
