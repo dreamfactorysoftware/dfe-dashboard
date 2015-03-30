@@ -416,10 +416,10 @@ class DashboardService extends BaseService
         $_html = null;
         $_result = $this->getInstances();
 
-        if ( !$_result->success )
+        if ( !is_object( $_result ) || !$_result->success )
         {
             \Log::error( 'Error pulling instance list: ' . print_r( $_result, true ) );
-            \Session::flash( 'dashboard-failure', $_result->message );
+            \Session::flash( 'dashboard-failure', 'Error connecting to operations console.' );
         }
         else
         {
