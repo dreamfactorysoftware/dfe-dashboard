@@ -1,5 +1,7 @@
 <?php namespace DreamFactory\Enterprise\Dashboard\Services;
 
+use DreamFactory\Enterprise\Common\Packets\ErrorPacket;
+use DreamFactory\Enterprise\Common\Packets\SuccessPacket;
 use DreamFactory\Enterprise\Common\Services\BaseService;
 use DreamFactory\Enterprise\Common\Traits\EntityLookup;
 use DreamFactory\Enterprise\Console\Ops\Providers\OpsClientServiceProvider;
@@ -241,45 +243,80 @@ class DashboardService extends BaseService
      */
     public function provisionInstance( $instanceId, $trial = false, $remote = false )
     {
+        $_provisioner = $this->_request->input( '_provisioner', GuestLocations::RAVE_CLUSTER );
+
         //	Clean up the name
         if ( false === ( $_instanceName = Instance::isNameAvailable( $instanceId ) ) || is_numeric( $_instanceName[0] ) )
         {
-            abort( Response::HTTP_BAD_REQUEST, 'Your DSP name is invalid. It must begin with a letter (A-Z)' );
+            \Session::flash(
+                'dashboard-failure',
+                'The name of your instance cannot be "' . $instanceId . '".  It is either currently in-use, or otherwise invalid.'
+            );
+
+            return ErrorPacket::make( null, Response::HTTP_BAD_REQUEST, 'Invalid instance name.' );
         }
 
-        //	Only admins can have a dsp without the prefix
         $_cluster = $this->_findCluster( config( 'dashboard.cluster-id' ) );
         $_dbServer = $this->_findServer( config( 'dashboard.db-server-id' ) );
 
-        if ( $_dbServer->server_type_id !== ServerTypes::DB )
+        if ( $_dbServer->server_type_id != ServerTypes::DB )
         {
-            abort( Response::HTTP_INTERNAL_SERVER_ERROR, 'Database server invalid.' );
+            return ErrorPacket::make( null, Response::HTTP_INTERNAL_SERVER_ERROR, 'Database server invalid.' );
         }
 
         $_payload = array(
-            'instance-id'   => $_instanceName,
-            'cluster-id'    => $_cluster->id,
-            'db-server-id'  => $_dbServer->id,
-            'trial'         => $trial,
-            'remote'        => $remote,
-            'ram-size'      => $this->_request->input( 'ram-size' ),
-            'disk-size'     => $this->_request->input( 'disk-size' ),
-            'vendor-id'     => $this->_request->input( 'vendor-id' ),
-            'vendor-secret' => $this->_request->input( 'vendor-secret' ),
+            'instance-id'        => $_instanceName,
+            'cluster-id'         => $_cluster->id,
+            'db-server-id'       => $_dbServer->id,
+            'trial'              => $trial,
+            'remote'             => $remote,
+            'ram-size'           => $this->_request->input( 'ram-size' ),
+            'disk-size'          => $this->_request->input( 'disk-size' ),
+            'vendor-id'          => $this->_request->input( 'vendor-id' ),
+            'vendor-secret'      => $this->_request->input( 'vendor-secret' ),
+            'owner-id'           => \Auth::user()->id,
+            'guest-location-nbr' => $_provisioner,
         );
 
-        $_result = $this->_apiCall( '/ops/create', $_payload, true );
+        $_result = $this->_apiCall( '/ops/provision', $_payload, true );
 
-        if ( $_result->success )
+        if ( is_object( $_result ) )
         {
-            \Session::flash( 'dashboard-success', 'Instance provisioning requested successfully.' );
+            if ( $_result->success )
+            {
+                \Session::flash( 'dashboard-success', 'Instance provisioning requested successfully.' );
+            }
+            else
+            {
+                if ( isset( $_result->error ) )
+                {
+                    $_message = isset( $_result->error->message ) ? $_result->error->message : 'Unknown error';
+                }
+                else
+                {
+                    $_message = 'Unknown server error';
+                }
+
+                \Session::flash( 'dashboard-failure', $_message );
+
+                //  Delete the instance that was created...
+                if ( null !== ( $_instance = $this->_findInstance( $instanceId ) ) )
+                {
+                    \Log::notice( '  * deleting instance id "' . $instanceId . '" because of failed provisioning.' );
+                    $_instance->delete();
+                }
+
+                return ErrorPacket::make( null, Response::HTTP_INTERNAL_SERVER_ERROR, 'Provisioning error.' );
+            }
         }
         else
         {
-            \Session::flash( 'dashboard-failure', $_result->message );
+            $this->error( 'Error calling ops console api: ' . print_r( $_result, true ) );
+
+            return ErrorPacket::make( null, Response::HTTP_INTERNAL_SERVER_ERROR, 'Cannot connect to ops console.' );
         }
 
-        return $_result;
+        return SuccessPacket::make( $_result );
     }
 
     /**
@@ -843,7 +880,7 @@ HTML;
      */
     public function hashId( $valueToHash )
     {
-        if ( null === $valueToHash )
+        if ( empty( $valueToHash ) )
         {
             return null;
         }

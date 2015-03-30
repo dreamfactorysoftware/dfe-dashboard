@@ -2,6 +2,7 @@
 /**
  * @var bool $_requireCaptcha
  */
+use DreamFactory\Library\Fabric\Database\Enums\GuestLocations;
 use DreamFactory\Library\Utility\Inflector;
 
 $_captchaHtml = $_html = null;
@@ -31,6 +32,7 @@ HTML;
 
 $_dspName = ( \Auth::user()->admin_ind != 1 ? 'dsp-' : null ) . Inflector::neutralize( str_replace( ' ', '-', \Auth::user()->display_name_text ) );
 $_token = csrf_token();
+$_guest = GuestLocations::RAVE_CLUSTER;
 
 $_item = array(
     'opened'         => true,
@@ -38,11 +40,12 @@ $_item = array(
     'targetId'       => 'dsp_new',
     'triggerContent' => '<span class="instance-heading-dsp-name pull-left"><i class="fa fa-fw fa-plus"></i>Create an Instance</span>',
     'targetContent'  => <<<HTML
-			<h3 class="dsp-box-heading">Create a new instance of the DreamFactory Services Platform</h3>
+			<h3 class="dsp-box-heading">Create a New Instance</h3>
 			<div class="dsp-info">
 				<form id="form-provision" class="form-horizontal" method="POST">
 		            <input type="hidden" name="_token" value="{$_token}">
-										<p>Please enter the name of the new instance below, or you may keep the name we have selected for you. Letters, numbers, and dashes are the only characters allowed.</p>
+		            <input type="hidden" name="_provisioner" value="{$_guest}">
+					<p>Please enter the name of the new instance below, or you may keep the name we have selected for you. Letters, numbers, and dashes are the only characters allowed.</p>
 					<div class="clearfix"></div>
 
 					<div class="form-group">

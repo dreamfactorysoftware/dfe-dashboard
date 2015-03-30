@@ -196,7 +196,7 @@ jQuery(function($) {
 				$('input[name="control"]', _dso.controlForm).val('snapshots');
 				$('body').css('cursor', 'wait');
 
-				$.post('/web/index', _dso.controlForm.serialize(), function(data) {
+				$.post('/control', _dso.controlForm.serialize(), function(data) {
 					$('body').css('cursor', 'pointer');
 					if (data) {
 						$('#dsp-snapshot-list').html(data);

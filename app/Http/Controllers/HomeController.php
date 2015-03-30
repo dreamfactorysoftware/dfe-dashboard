@@ -28,6 +28,12 @@ class HomeController extends BaseController
         return response()->json( $_status );
     }
 
+    public function control( Request $request, $id = null )
+    {
+        return
+            response()->json( app( 'dashboard' )->handleRequest( $request, $id ) );
+    }
+
     /**
      * Show the application dashboard to the user.
      *
@@ -76,13 +82,14 @@ class HomeController extends BaseController
             ]
         )->render();
 
-        return view( 'app.home',
-                     [
-                         'panelGroup'  => $_panelGroup,
-                         'message'     => $_message,
-                         'isAdmin'     => $_user->admin_ind,
-                         'displayName' => $_user->display_name_text
-                     ]
+        return view(
+            'app.home',
+            [
+                'panelGroup'  => $_panelGroup,
+                'message'     => $_message,
+                'isAdmin'     => $_user->admin_ind,
+                'displayName' => $_user->display_name_text
+            ]
         );
     }
 
