@@ -440,7 +440,7 @@ class DashboardService extends BaseService
                         'groupId'        => 'dsp_list',
                         'targetId'       => $_divId,
                         'targetRel'      => $_model->id,
-                        'opened'         => count( $_result->response ),
+                        'opened'         => false,
                         'triggerContent' => <<<HTML
 <div class="instance-heading-dsp-name">{$_model->instance_name_text}<span class="text-muted">{$this->_defaultDomain}</div>
 <div class="instance-heading-status pull-right"><i class="fa fa-fw {$_statusIcon} fa-2x"></i></div>

@@ -33,7 +33,7 @@ $_dspName = ( \Auth::user()->admin_ind != 1 ? 'dsp-' : null ) . Inflector::neutr
 $_token = csrf_token();
 
 $_item = array(
-    'opened'         => empty( $_dspList ),
+    'opened'         => true,
     'groupId'        => 'dsp_list',
     'targetId'       => 'dsp_new',
     'triggerContent' => '<span class="instance-heading-dsp-name pull-left"><i class="fa fa-fw fa-plus"></i>Create an Instance</span>',
