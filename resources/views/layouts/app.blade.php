@@ -48,7 +48,7 @@
         </div>
         <div class="clearfix"></div>
         <p>
-            <span class="pull-left hidden-xs hidden-sm">DreamFactory Enterprise&trade; Dashboard<small style="margin-left: 5px;font-size: 9px;">(v1.2.7)</small></span>
+            <span class="pull-left hidden-xs hidden-sm">DreamFactory Enterprise&trade; Dashboard<small style="margin-left: 5px;font-size: 9px;">({{ config('dfe.common.display-version') }})</small></span>
             <span class="pull-right">&copy; DreamFactory Software, Inc. 2012-<?php echo date( 'Y' ); ?>.&nbsp;All Rights Reserved.</span>
         </p>
     </div>

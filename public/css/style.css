@@ -429,3 +429,11 @@ table.dataTable thead th {
 .panel-dsp .panel-body .dsp-icon, .panel-dsp .panel-body .key-icon {
 	margin-right: 15px;
 }
+
+.instance-heading-dsp-name .text-muted {
+	color: rgba(255, 255, 255, .70);
+}
+
+.instance-heading-status .fa.fa-fw {
+	color: rgba(255, 255, 255, .70);
+}

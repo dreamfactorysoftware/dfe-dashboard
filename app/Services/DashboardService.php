@@ -515,7 +515,7 @@ HTML
         }
 
         $_html = <<<HTML
-	<div class="dsp-icon well pull-left dsp-real">{$_icon}</div>
+	<div class="dsp-icon well pull-left dsp-real text-success">{$_icon}</div>
 	<div class="dsp-info">
 		<div class="dsp-name">{$_instanceLink}<small>{$_linkLink}</small></div>
 		<div class="dsp-stats">{$_message}</div>

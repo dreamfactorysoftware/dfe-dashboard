@@ -30,6 +30,7 @@ HTML;
 }
 
 $_dspName = ( \Auth::user()->admin_ind != 1 ? 'dsp-' : null ) . Inflector::neutralize( str_replace( ' ', '-', \Auth::user()->display_name_text ) );
+$_token = csrf_token();
 
 $_item = array(
     'opened'         => empty( $_dspList ),
@@ -40,6 +41,7 @@ $_item = array(
 			<h3 class="dsp-box-heading">Create a new instance of the DreamFactory Services Platform</h3>
 			<div class="dsp-info">
 				<form id="form-provision" class="form-horizontal" method="POST">
+		            <input type="hidden" name="_token" value="{$_token}">
 										<p>Please enter the name of the new instance below, or you may keep the name we have selected for you. Letters, numbers, and dashes are the only characters allowed.</p>
 					<div class="clearfix"></div>
 

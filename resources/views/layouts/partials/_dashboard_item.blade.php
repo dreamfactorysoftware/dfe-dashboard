@@ -1,4 +1,4 @@
-<div class="panel panel-success panel-dsp">
+<div class="panel panel-{{ config('dashboard.panel-context','info') }} panel-dsp">
 	<div class="panel-heading" role="tab" id="heading-{{ $groupId }}">
 		<h4 class="panel-title">
 			<a data-toggle="collapse"

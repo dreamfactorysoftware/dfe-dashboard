@@ -19,4 +19,5 @@ return [
         'rave',
     ],
     'view-path'               => base_path() . '/resources/views',
+    'panel-context'           => 'info',
 ];

@@ -6,7 +6,7 @@
     <form id="_dsp-snapshot-control" method="POST">
         <input type="hidden" name="id" value="">
         <input type="hidden" name="control" value="import">
-        <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}" />
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <div class="modal-body">
             <p>Importing a prior snapshot replaces the entire database and local storage area for a DSP.</p>
 

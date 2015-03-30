@@ -3,6 +3,7 @@
 use DreamFactory\Enterprise\Common\Http\Controllers\BaseController;
 use DreamFactory\Enterprise\Dashboard\Providers\DashboardServiceProvider;
 use DreamFactory\Enterprise\Dashboard\Services\DashboardService;
+use DreamFactory\Library\Fabric\Database\Models\Auth\User;
 use Illuminate\Http\Request;
 
 class HomeController extends BaseController
@@ -36,16 +37,19 @@ class HomeController extends BaseController
     {
         $_tableId = 'platform-table';
         $_shortName = 'Platform';
+
         $_message = isset( $messages ) ? $messages : null;
+        /** @type User $_user */
         $_user = \Auth::user();
         /** @type DashboardService $_dash */
         $_dash = app( 'dashboard' );
+        $_domain = $_dash->getDefaultDomain();
+
         /** @type Request $_request */
         $_request = app( 'request' );
 
         $_result = $_dash->handleRequest( $_request );
         $_dspList = $_dash->instanceTable( $_user, null, true );
-        $_dspListOptions = '<li class="dropdown-header">Your DSPs</li><li>None!</li>';
 
         /** @noinspection PhpIncludeInspection */
         $_groupItems = array(
@@ -57,15 +61,8 @@ class HomeController extends BaseController
 
         if ( !empty( $_dspList ) )
         {
-            $_domain = $_dash->getDefaultDomain();
-            $_dspListOptions = '<li class="dropdown-header">Your DSPs</li>';
-
             foreach ( $_dspList as $_dsp )
             {
-                $_dspListOptions .= <<<HTML
-        <li><a href="https://{$_dsp['instance']->instance_name_text}{$_domain}" title="Launch this DSP!" target="_blank">{$_dsp['instance']->instance_name_text}</a></li>
-HTML;
-
                 $_groupItems[] = view( 'layouts.partials._dashboard_item', $_dsp )->render();
             }
         }
@@ -79,34 +76,14 @@ HTML;
             ]
         )->render();
 
-        if ( \Session::has( 'dashboard-success' ) )
-        {
-            $_flash = \Session::get( 'dashboard-success' );
-
-            $_message = <<<HTML
-                <div class="alert alert-success fade in">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <h4>Success!</h4>
-
-                    <p>{$_flash}</p>
-                </div>
-HTML;
-        }
-        elseif ( \Session::has( 'dashboard-failure' ) )
-        {
-            $_flash = \Session::get( 'dashboard-failure' );
-
-            $_message = <<<HTML
-                <div class="alert alert-danger fade in">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <h4>Fail!</h4>
-
-                    <p>{$_flash}</p>
-                </div>
-HTML;
-        }
-
-        return view( 'home', ['panelGroup' => $_panelGroup, 'message' => $_message] );
+        return view( 'app.home',
+                     [
+                         'panelGroup'  => $_panelGroup,
+                         'message'     => $_message,
+                         'isAdmin'     => $_user->admin_ind,
+                         'displayName' => $_user->display_name_text
+                     ]
+        );
     }
 
 }
