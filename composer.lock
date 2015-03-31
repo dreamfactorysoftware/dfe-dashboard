@@ -404,12 +404,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/dfe-common.git",
-                "reference": "d168da0d543fd47eb0dc87600f18787b1b9d9f82"
+                "reference": "5cdd6a94fd9a6fb69e3eb42d2e96ae53e50bbf8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/d168da0d543fd47eb0dc87600f18787b1b9d9f82",
-                "reference": "d168da0d543fd47eb0dc87600f18787b1b9d9f82",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/5cdd6a94fd9a6fb69e3eb42d2e96ae53e50bbf8e",
+                "reference": "5cdd6a94fd9a6fb69e3eb42d2e96ae53e50bbf8e",
                 "shasum": ""
             },
             "require": {
@@ -419,7 +419,6 @@
                 "wpb/string-blade-compiler": "2.*@dev"
             },
             "require-dev": {
-                "dreamfactory/fabric-audit": "dev-develop as dev-master",
                 "dreamfactory/fabric-common": "dev-develop as dev-master",
                 "laravel/framework": "5.0.*",
                 "phpspec/phpspec": "~2.1",
@@ -458,7 +457,7 @@
                 "source": "https://github.com/dreamfactorysoftware/dfe-common/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/dfe-common/issues"
             },
-            "time": "2015-03-30 21:30:49"
+            "time": "2015-03-31 17:36:17"
         },
         {
             "name": "dreamfactory/dfe-ops-client",
