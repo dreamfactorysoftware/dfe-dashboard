@@ -28,11 +28,17 @@ class HomeController extends BaseController
         return response()->json( $_status );
     }
 
+    /**
+     * @param Request $request
+     * @param string  $id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function control( Request $request, $id = null )
     {
         $_response = app( 'dashboard' )->handleRequest( $request, $id );
 
-        return \Redirect::route( 'home', ['handler_response' => $_response] );
+        return \Redirect::refresh();
     }
 
     /**

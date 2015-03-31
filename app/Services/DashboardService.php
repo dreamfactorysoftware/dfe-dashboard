@@ -58,6 +58,10 @@ class DashboardService extends BaseService
      * @type Request The request currently being handled
      */
     protected $_request;
+    /**
+     * @type bool If true, cluster servers are specified from config/dashboard.php
+     */
+    protected $_useConfigServers = false;
 
     //*************************************************************************
     //* Methods
@@ -72,6 +76,7 @@ class DashboardService extends BaseService
         $this->_endpoint = config( 'dashboard.api-host' ) . '/' . trim( config( 'dashboard.api-endpoint' ), ' /' );
         $this->_apiKey = config( 'dashboard.api-key' );
         $this->_enableCaptcha = config( 'dashboard.require-captcha', true );
+        $this->_useConfigServers = config( 'dashboard.override-cluster-servers', false );
     }
 
     /**
@@ -214,27 +219,6 @@ class DashboardService extends BaseService
     }
 
     /**
-     * @param string|int $instanceId
-     *
-     * @return bool|mixed|\stdClass
-     */
-    public function deprovisionInstance( $instanceId )
-    {
-        $_result = $this->_apiCall( '/ops/destroy', array('instance-id' => $instanceId), true );
-
-        if ( $_result->success )
-        {
-            \Session::flash( 'dashboard-success', 'Instance deprovisioning requested successfully.' );
-        }
-        else
-        {
-            \Session::flash( 'dashboard-failure', $_result->message );
-        }
-
-        return $_result;
-    }
-
-    /**
      * @param string $instanceId
      * @param bool   $trial
      * @param bool   $remote If true, create instance on user's account
@@ -245,7 +229,7 @@ class DashboardService extends BaseService
     {
         $_provisioner = $this->_request->input( '_provisioner', GuestLocations::RAVE_CLUSTER );
 
-        //	Clean up the name
+        //	Check the name here for quicker UI response...
         if ( false === ( $_instanceName = Instance::isNameAvailable( $instanceId ) ) || is_numeric( $_instanceName[0] ) )
         {
             \Session::flash(
@@ -256,26 +240,30 @@ class DashboardService extends BaseService
             return ErrorPacket::make( null, Response::HTTP_BAD_REQUEST, 'Invalid instance name.' );
         }
 
-        $_cluster = $this->_findCluster( config( 'dashboard.cluster-id' ) );
-        $_dbServer = $this->_findServer( config( 'dashboard.db-server-id' ) );
-
-        if ( $_dbServer->server_type_id != ServerTypes::DB )
+        if ( false === ( $_clusterConfig = $this->_getClusterConfig() ) )
         {
-            return ErrorPacket::make( null, Response::HTTP_INTERNAL_SERVER_ERROR, 'Database server invalid.' );
+            \Session::flash(
+                'dashboard-failure',
+                'Provisioning is not possible at this time. The configured enterprise console for this dashboard is not currently available. Please try your request later.'
+            );
+
+            return ErrorPacket::make( null, Response::HTTP_INTERNAL_SERVER_ERROR, 'Cluster server configuration error.' );
         }
 
-        $_payload = array(
-            'instance-id'        => $_instanceName,
-            'cluster-id'         => $_cluster->id,
-            'db-server-id'       => $_dbServer->id,
-            'trial'              => $trial,
-            'remote'             => $remote,
-            'ram-size'           => $this->_request->input( 'ram-size' ),
-            'disk-size'          => $this->_request->input( 'disk-size' ),
-            'vendor-id'          => $this->_request->input( 'vendor-id' ),
-            'vendor-secret'      => $this->_request->input( 'vendor-secret' ),
-            'owner-id'           => \Auth::user()->id,
-            'guest-location-nbr' => $_provisioner,
+        $_payload = array_merge(
+            [
+                'instance-id'        => $_instanceName,
+                'trial'              => $trial,
+                'remote'             => $remote,
+                'ram-size'           => $this->_request->input( 'ram-size' ),
+                'disk-size'          => $this->_request->input( 'disk-size' ),
+                'vendor-id'          => $this->_request->input( 'vendor-id' ),
+                'vendor-secret'      => $this->_request->input( 'vendor-secret' ),
+                'owner-id'           => \Auth::user()->id,
+                'guest-location-nbr' => $_provisioner,
+
+            ],
+            $_clusterConfig
         );
 
         $_result = $this->_apiCall( '/ops/provision', $_payload, true );
@@ -299,24 +287,43 @@ class DashboardService extends BaseService
 
                 \Session::flash( 'dashboard-failure', $_message );
 
-                //  Delete the instance that was created...
-                if ( null !== ( $_instance = $this->_findInstance( $instanceId ) ) )
-                {
-                    \Log::notice( '  * deleting instance id "' . $instanceId . '" because of failed provisioning.' );
-                    $_instance->delete();
-                }
-
                 return ErrorPacket::make( null, Response::HTTP_INTERNAL_SERVER_ERROR, 'Provisioning error.' );
             }
         }
         else
         {
+            \Session::flash(
+                'dashboard-failure',
+                'Provisioning is not possible at this time. The configured enterprise console for this dashboard is not currently available. Please try your request later.'
+            );
+
             $this->error( 'Error calling ops console api: ' . print_r( $_result, true ) );
 
             return ErrorPacket::make( null, Response::HTTP_INTERNAL_SERVER_ERROR, 'Cannot connect to ops console.' );
         }
 
         return SuccessPacket::make( $_result );
+    }
+
+    /**
+     * @param string|int $instanceId
+     *
+     * @return bool|mixed|\stdClass
+     */
+    public function deprovisionInstance( $instanceId )
+    {
+        $_result = $this->_apiCall( '/ops/destroy', array('instance-id' => $instanceId), true );
+
+        if ( $_result->success )
+        {
+            \Session::flash( 'dashboard-success', 'Instance deprovisioning requested successfully.' );
+        }
+        else
+        {
+            \Session::flash( 'dashboard-failure', $_result->message );
+        }
+
+        return $_result;
     }
 
     /**
@@ -963,5 +970,96 @@ HTML;
                     'The enterprise console api service is not available.'
                 );
             };
+    }
+
+    /**
+     * @param int|string $serverId
+     * @param int        $expectedType
+     * @param bool       $onlyId If true, only the record's "id" column is returned
+     *
+     * @return bool
+     */
+    protected function _ensureServer( $serverId, $expectedType = null, $onlyId = true )
+    {
+        if ( !empty( $serverId ) )
+        {
+            $_server = $this->_findServer( $serverId );
+
+            if ( $expectedType && $_server->server_type_id != $expectedType )
+            {
+                return false;
+            }
+
+            return $onlyId ? $_server->id : $_server;
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns an array of provisioning overrides
+     *
+     * @return array|bool
+     */
+    protected function _getClusterConfig()
+    {
+        $_config = [];
+
+        if ( !$this->_useConfigServers )
+        {
+            return $_config;
+        }
+
+        //  Check for a cluster override
+        $_clusterId = config( 'dashboard.override-cluster-id' );
+
+        if ( !empty( $_clusterId ) )
+        {
+            if ( false === ( $_server = $this->_findCluster( $_clusterId ) ) )
+            {
+                return false;
+            }
+
+            //  If you pick a cluster, you get no more choices
+            $_config['cluster-id'] = $_server->id;
+
+            return $_config;
+        }
+
+        //  Check cluster server overrides
+        $_dbServerId = config( 'dashboard.override-db-server-id' );
+
+        if ( false === ( $_serverId = $this->_ensureServer( $_dbServerId, ServerTypes::DB, true ) ) )
+        {
+            return false;
+        }
+        else if ( $_serverId )
+        {
+            $_config['db-server-id'] = $_serverId;
+        }
+
+        $_appServerId = config( 'dashboard.override-app-server-id' );
+
+        if ( false === ( $_serverId = $this->_ensureServer( $_appServerId, ServerTypes::APP, true ) ) )
+        {
+            return false;
+        }
+        else if ( $_serverId )
+        {
+            $_config['app-server-id'] = $_serverId;
+        }
+
+        $_webServerId = config( 'dashboard.override-web-server-id' );
+
+        if ( false === ( $_serverId = $this->_ensureServer( $_webServerId, ServerTypes::WEB, true ) ) )
+        {
+            return false;
+        }
+        else if ( $_serverId )
+        {
+            $_config['web-server-id'] = $_serverId;
+        }
+
+        return $_config;
     }
 }
