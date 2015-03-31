@@ -30,8 +30,9 @@ class HomeController extends BaseController
 
     public function control( Request $request, $id = null )
     {
-        return
-            response()->json( app( 'dashboard' )->handleRequest( $request, $id ) );
+        $_response = app( 'dashboard' )->handleRequest( $request, $id );
+
+        return \Redirect::route( 'home', ['handler_response' => $_response] );
     }
 
     /**
