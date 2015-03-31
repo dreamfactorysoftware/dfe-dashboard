@@ -633,12 +633,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/fabric-db.git",
-                "reference": "9ae4e8db5c0f054a763569bde19755f00ab74bd9"
+                "reference": "b27d1f83af49c0988e826068598b398b09fefb7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/fabric-db/zipball/9ae4e8db5c0f054a763569bde19755f00ab74bd9",
-                "reference": "9ae4e8db5c0f054a763569bde19755f00ab74bd9",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/fabric-db/zipball/b27d1f83af49c0988e826068598b398b09fefb7c",
+                "reference": "b27d1f83af49c0988e826068598b398b09fefb7c",
                 "shasum": ""
             },
             "require": {
@@ -680,7 +680,7 @@
                 "source": "https://github.com/dreamfactorysoftware/fabric-db/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/fabric-db/issues"
             },
-            "time": "2015-03-27 19:11:44"
+            "time": "2015-03-31 21:25:16"
         },
         {
             "name": "dreamfactory/php-utils",
@@ -1345,12 +1345,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "df7da8a5550eb94cb885df6be7ffebe2768c10fd"
+                "reference": "875cfb91e1ffb9a7fda4dddfdbc7ed529e52164a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/df7da8a5550eb94cb885df6be7ffebe2768c10fd",
-                "reference": "df7da8a5550eb94cb885df6be7ffebe2768c10fd",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/875cfb91e1ffb9a7fda4dddfdbc7ed529e52164a",
+                "reference": "875cfb91e1ffb9a7fda4dddfdbc7ed529e52164a",
                 "shasum": ""
             },
             "require": {
@@ -1410,7 +1410,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2015-03-26 18:30:54"
+            "time": "2015-03-31 21:43:29"
         },
         {
             "name": "mtdowling/cron-expression",
