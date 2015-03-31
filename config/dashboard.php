@@ -14,7 +14,7 @@ return [
     'client-id'               => 'acbab38ec7c7f9eeb97ec957b53857050d8b3b7b753b95ffb31e7161140049ea',
     'client-secret'           => '97b61eb7ad89bb63b6c575a90ffb86f971a7f0914210f84dcc827cd54fac4f27',
     'cluster-id'              => 'cluster-east-1',
-    'db-server-id'            => 'db-local-azrael',
+    'db-server-id'            => 'db-east-1',
     'provisioners'            => [
         'rave',
     ],
