@@ -45,7 +45,7 @@ class DashboardService extends BaseService
     /**
      * @type bool
      */
-    protected $_enableCaptcha = true;
+    protected $_requireCaptcha = true;
     /**
      * @type string
      */
@@ -75,7 +75,7 @@ class DashboardService extends BaseService
         $this->_defaultDomain = config( 'dashboard.default-domain' );
         $this->_endpoint = config( 'dashboard.api-host' ) . '/' . trim( config( 'dashboard.api-endpoint' ), ' /' );
         $this->_apiKey = config( 'dashboard.api-key' );
-        $this->_enableCaptcha = config( 'dashboard.require-captcha', true );
+        $this->_requireCaptcha = config( 'dashboard.require-captcha', true );
         $this->_useConfigServers = config( 'dashboard.override-cluster-servers', false );
     }
 
@@ -103,7 +103,7 @@ class DashboardService extends BaseService
 
             if ( !empty( $_command ) )
             {
-                if ( $this->_enableCaptcha )
+                if ( $this->_requireCaptcha )
                 {
 //                    $_captcha = new Captcha();
 //                    $_captcha->setPrivateKey( config( 'dashboard.recaptcha.private_key' ) );
@@ -113,7 +113,7 @@ class DashboardService extends BaseService
                 switch ( $_command )
                 {
                     case 'create':
-                        if ( $this->_enableCaptcha )
+                        if ( $this->_requireCaptcha )
                         {
 //                            try
 //                            {
@@ -513,6 +513,7 @@ HTML
     /**
      * @param \stdClass $instance
      * @param int       $how
+     *n/
      *
      * @return string
      */
@@ -939,7 +940,7 @@ HTML;
      */
     public function isEnableCaptcha()
     {
-        return $this->_enableCaptcha;
+        return $this->_requireCaptcha;
     }
 
     protected function _addTokenToPayload( $payload )

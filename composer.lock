@@ -465,12 +465,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/dfe-ops-client.git",
-                "reference": "76805184bef143c9fac353d013362fd9cf838648"
+                "reference": "205602949c138510dfb899c589ae8ab214383d79"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-ops-client/zipball/76805184bef143c9fac353d013362fd9cf838648",
-                "reference": "76805184bef143c9fac353d013362fd9cf838648",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-ops-client/zipball/205602949c138510dfb899c589ae8ab214383d79",
+                "reference": "205602949c138510dfb899c589ae8ab214383d79",
                 "shasum": ""
             },
             "require": {
@@ -518,7 +518,7 @@
                 "source": "https://github.com/dreamfactorysoftware/dfe-ops-client/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/dfe-ops-client/issues"
             },
-            "time": "2015-03-29 21:46:12"
+            "time": "2015-04-01 00:57:38"
         },
         {
             "name": "dreamfactory/fabric-audit",
@@ -633,12 +633,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/fabric-db.git",
-                "reference": "b27d1f83af49c0988e826068598b398b09fefb7c"
+                "reference": "a299611fd252a281c42303c0dfb5e07b8481da59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/fabric-db/zipball/b27d1f83af49c0988e826068598b398b09fefb7c",
-                "reference": "b27d1f83af49c0988e826068598b398b09fefb7c",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/fabric-db/zipball/a299611fd252a281c42303c0dfb5e07b8481da59",
+                "reference": "a299611fd252a281c42303c0dfb5e07b8481da59",
                 "shasum": ""
             },
             "require": {
@@ -680,7 +680,7 @@
                 "source": "https://github.com/dreamfactorysoftware/fabric-db/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/fabric-db/issues"
             },
-            "time": "2015-03-31 21:25:16"
+            "time": "2015-04-01 18:54:16"
         },
         {
             "name": "dreamfactory/php-utils",
@@ -1043,12 +1043,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "98d701e7ab250b31e83f70ee334a895565e858e3"
+                "reference": "44084f213ff38ea417fd6b08cb30a0f1ee4fbceb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/98d701e7ab250b31e83f70ee334a895565e858e3",
-                "reference": "98d701e7ab250b31e83f70ee334a895565e858e3",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/44084f213ff38ea417fd6b08cb30a0f1ee4fbceb",
+                "reference": "44084f213ff38ea417fd6b08cb30a0f1ee4fbceb",
                 "shasum": ""
             },
             "require": {
@@ -1161,7 +1161,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2015-03-30 03:33:44"
+            "time": "2015-04-01 14:50:51"
         },
         {
             "name": "league/flysystem",
@@ -2293,12 +2293,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/HttpFoundation.git",
-                "reference": "249de25e9eb4658474bd496d3f467bbcee87cc18"
+                "reference": "8a6337233f08f7520de97f4ffd6f00e947d892f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/249de25e9eb4658474bd496d3f467bbcee87cc18",
-                "reference": "249de25e9eb4658474bd496d3f467bbcee87cc18",
+                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/8a6337233f08f7520de97f4ffd6f00e947d892f9",
+                "reference": "8a6337233f08f7520de97f4ffd6f00e947d892f9",
                 "shasum": ""
             },
             "require": {
@@ -2338,7 +2338,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "http://symfony.com",
-            "time": "2015-03-30 15:54:10"
+            "time": "2015-04-01 16:50:12"
         },
         {
             "name": "symfony/http-kernel",
@@ -2347,12 +2347,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/HttpKernel.git",
-                "reference": "3ed710c8636d3212e1614b3809e8d90583791d47"
+                "reference": "5ef517e669d12a76e0533e53b94b2c364dfbf9de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/HttpKernel/zipball/3ed710c8636d3212e1614b3809e8d90583791d47",
-                "reference": "3ed710c8636d3212e1614b3809e8d90583791d47",
+                "url": "https://api.github.com/repos/symfony/HttpKernel/zipball/5ef517e669d12a76e0533e53b94b2c364dfbf9de",
+                "reference": "5ef517e669d12a76e0533e53b94b2c364dfbf9de",
                 "shasum": ""
             },
             "require": {
@@ -2416,7 +2416,7 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "http://symfony.com",
-            "time": "2015-03-30 15:54:10"
+            "time": "2015-04-01 18:51:37"
         },
         {
             "name": "symfony/process",
