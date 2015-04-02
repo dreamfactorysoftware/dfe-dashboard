@@ -404,12 +404,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/dfe-common.git",
-                "reference": "5cdd6a94fd9a6fb69e3eb42d2e96ae53e50bbf8e"
+                "reference": "b379b81cd3e0d39afc1af8bb9f26baa76a6d0792"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/5cdd6a94fd9a6fb69e3eb42d2e96ae53e50bbf8e",
-                "reference": "5cdd6a94fd9a6fb69e3eb42d2e96ae53e50bbf8e",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/b379b81cd3e0d39afc1af8bb9f26baa76a6d0792",
+                "reference": "b379b81cd3e0d39afc1af8bb9f26baa76a6d0792",
                 "shasum": ""
             },
             "require": {
@@ -457,7 +457,7 @@
                 "source": "https://github.com/dreamfactorysoftware/dfe-common/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/dfe-common/issues"
             },
-            "time": "2015-03-31 17:36:17"
+            "time": "2015-04-01 23:44:31"
         },
         {
             "name": "dreamfactory/dfe-ops-client",
@@ -633,12 +633,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/fabric-db.git",
-                "reference": "a299611fd252a281c42303c0dfb5e07b8481da59"
+                "reference": "61dc81c3d0594b7e51297f4cc65af85a1a7edbf9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/fabric-db/zipball/a299611fd252a281c42303c0dfb5e07b8481da59",
-                "reference": "a299611fd252a281c42303c0dfb5e07b8481da59",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/fabric-db/zipball/61dc81c3d0594b7e51297f4cc65af85a1a7edbf9",
+                "reference": "61dc81c3d0594b7e51297f4cc65af85a1a7edbf9",
                 "shasum": ""
             },
             "require": {
@@ -680,7 +680,7 @@
                 "source": "https://github.com/dreamfactorysoftware/fabric-db/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/fabric-db/issues"
             },
-            "time": "2015-04-01 18:54:16"
+            "time": "2015-04-01 23:45:12"
         },
         {
             "name": "dreamfactory/php-utils",
@@ -3461,12 +3461,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/phpspec.git",
-                "reference": "abd6e9bac2e5e8217836cc2727cac632679914be"
+                "reference": "92531b1e956dc15df41076f053ceddeb64fcdcaa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/phpspec/zipball/abd6e9bac2e5e8217836cc2727cac632679914be",
-                "reference": "abd6e9bac2e5e8217836cc2727cac632679914be",
+                "url": "https://api.github.com/repos/phpspec/phpspec/zipball/92531b1e956dc15df41076f053ceddeb64fcdcaa",
+                "reference": "92531b1e956dc15df41076f053ceddeb64fcdcaa",
                 "shasum": ""
             },
             "require": {
@@ -3531,7 +3531,7 @@
                 "testing",
                 "tests"
             ],
-            "time": "2015-03-29 10:20:06"
+            "time": "2015-04-02 09:23:46"
         },
         {
             "name": "phpspec/prophecy",
@@ -3657,31 +3657,33 @@
         },
         {
             "name": "phpunit/php-file-iterator",
-            "version": "1.3.4",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-file-iterator.git",
-                "reference": "acd690379117b042d1c8af1fafd61bde001bf6bb"
+                "reference": "a923bb15680d0089e2316f7a4af8f437046e96bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/acd690379117b042d1c8af1fafd61bde001bf6bb",
-                "reference": "acd690379117b042d1c8af1fafd61bde001bf6bb",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/a923bb15680d0089e2316f7a4af8f437046e96bb",
+                "reference": "a923bb15680d0089e2316f7a4af8f437046e96bb",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.4.x-dev"
+                }
+            },
             "autoload": {
                 "classmap": [
-                    "File/"
+                    "src/"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
-            "include-path": [
-                ""
-            ],
             "license": [
                 "BSD-3-Clause"
             ],
@@ -3698,7 +3700,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2013-10-10 15:34:57"
+            "time": "2015-04-02 05:19:05"
         },
         {
             "name": "phpunit/php-text-template",
@@ -3843,12 +3845,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "cc7eafa57206eeb797d6668299b3de537dfcfe82"
+                "reference": "e0c95bbc21112932abed7372ee98da01c219a6ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/cc7eafa57206eeb797d6668299b3de537dfcfe82",
-                "reference": "cc7eafa57206eeb797d6668299b3de537dfcfe82",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/e0c95bbc21112932abed7372ee98da01c219a6ed",
+                "reference": "e0c95bbc21112932abed7372ee98da01c219a6ed",
                 "shasum": ""
             },
             "require": {
@@ -3860,7 +3862,7 @@
                 "php": ">=5.3.3",
                 "phpspec/prophecy": "~1.3,>=1.3.1",
                 "phpunit/php-code-coverage": "~2.0,>=2.0.11",
-                "phpunit/php-file-iterator": "~1.3",
+                "phpunit/php-file-iterator": "~1.4",
                 "phpunit/php-text-template": "~1.2",
                 "phpunit/php-timer": "~1.0",
                 "phpunit/phpunit-mock-objects": "~2.3",
@@ -3910,7 +3912,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-03-28 20:46:47"
+            "time": "2015-04-02 05:38:19"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -3918,12 +3920,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "55484334fb4c306ed24bfc3bdb0874685c29036f"
+                "reference": "74ffb87f527f24616f72460e54b595f508dccb5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/55484334fb4c306ed24bfc3bdb0874685c29036f",
-                "reference": "55484334fb4c306ed24bfc3bdb0874685c29036f",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/74ffb87f527f24616f72460e54b595f508dccb5c",
+                "reference": "74ffb87f527f24616f72460e54b595f508dccb5c",
                 "shasum": ""
             },
             "require": {
@@ -3932,7 +3934,7 @@
                 "phpunit/php-text-template": "~1.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.4.*@dev"
+                "phpunit/phpunit": "~4.4"
             },
             "suggest": {
                 "ext-soap": "*"
@@ -3940,7 +3942,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.4.x-dev"
+                    "dev-master": "2.3.x-dev"
                 }
             },
             "autoload": {
@@ -3965,7 +3967,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2015-03-18 09:04:51"
+            "time": "2015-04-02 05:36:41"
         },
         {
             "name": "sebastian/comparator",
