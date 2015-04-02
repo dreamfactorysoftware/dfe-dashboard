@@ -3174,16 +3174,16 @@
         },
         {
             "name": "doctrine/common",
-            "version": "dev-master",
+            "version": "v2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/common.git",
-                "reference": "ad89591bebea6490fd589f872d0a9ef63e9674a9"
+                "reference": "cd8daf2501e10c63dced7b8b9b905844316ae9d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/common/zipball/ad89591bebea6490fd589f872d0a9ef63e9674a9",
-                "reference": "ad89591bebea6490fd589f872d0a9ef63e9674a9",
+                "url": "https://api.github.com/repos/doctrine/common/zipball/cd8daf2501e10c63dced7b8b9b905844316ae9d3",
+                "reference": "cd8daf2501e10c63dced7b8b9b905844316ae9d3",
                 "shasum": ""
             },
             "require": {
@@ -3243,7 +3243,7 @@
                 "persistence",
                 "spl"
             ],
-            "time": "2015-04-02 20:23:27"
+            "time": "2015-04-02 19:55:44"
         },
         {
             "name": "doctrine/dbal",
