@@ -1043,12 +1043,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "44084f213ff38ea417fd6b08cb30a0f1ee4fbceb"
+                "reference": "85796b76c5b4e2c59efbdee13c57fabbce737652"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/44084f213ff38ea417fd6b08cb30a0f1ee4fbceb",
-                "reference": "44084f213ff38ea417fd6b08cb30a0f1ee4fbceb",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/85796b76c5b4e2c59efbdee13c57fabbce737652",
+                "reference": "85796b76c5b4e2c59efbdee13c57fabbce737652",
                 "shasum": ""
             },
             "require": {
@@ -1161,7 +1161,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2015-04-01 14:50:51"
+            "time": "2015-04-02 19:11:13"
         },
         {
             "name": "league/flysystem",
@@ -3178,12 +3178,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/common.git",
-                "reference": "bd6a9bf487f1d6086a704c97fad465c16827aa8d"
+                "reference": "ad89591bebea6490fd589f872d0a9ef63e9674a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/common/zipball/bd6a9bf487f1d6086a704c97fad465c16827aa8d",
-                "reference": "bd6a9bf487f1d6086a704c97fad465c16827aa8d",
+                "url": "https://api.github.com/repos/doctrine/common/zipball/ad89591bebea6490fd589f872d0a9ef63e9674a9",
+                "reference": "ad89591bebea6490fd589f872d0a9ef63e9674a9",
                 "shasum": ""
             },
             "require": {
@@ -3200,7 +3200,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.5.x-dev"
+                    "dev-master": "2.6.x-dev"
                 }
             },
             "autoload": {
@@ -3243,7 +3243,7 @@
                 "persistence",
                 "spl"
             ],
-            "time": "2015-03-26 00:27:39"
+            "time": "2015-04-02 20:23:27"
         },
         {
             "name": "doctrine/dbal",
