@@ -90,6 +90,7 @@ return [
         'Validator' => 'Illuminate\Support\Facades\Validator',
         'View'      => 'Illuminate\Support\Facades\View',
         /** Third-party aliases */
+        'Dashboard' => 'DreamFactory\\Enterprise\\Dashboard\\Facades\\Dashboard',
     ],
 
 ];

@@ -10,7 +10,7 @@ class DashboardServiceProvider extends BaseServiceProvider
     //******************************************************************************
 
     /** @inheritdoc */
-    const IOC_NAME = 'dashboard';
+    const IOC_NAME = 'dfe.dashboard';
     /** @inheritdoc */
     const ALIAS_NAME = 'Dashboard';
 

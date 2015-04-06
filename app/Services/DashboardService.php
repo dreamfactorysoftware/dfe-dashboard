@@ -449,9 +449,9 @@ class DashboardService extends BaseService
     }
 
     /**
-     * @param      $user
-     * @param null $columns
-     * @param bool $forRender
+     * @param       $user
+     * @param array $columns
+     * @param bool  $forRender
      *
      * @return array|null|string
      */

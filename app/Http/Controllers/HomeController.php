@@ -1,8 +1,7 @@
 <?php namespace DreamFactory\Enterprise\Dashboard\Http\Controllers;
 
 use DreamFactory\Enterprise\Common\Http\Controllers\BaseController;
-use DreamFactory\Enterprise\Dashboard\Providers\DashboardServiceProvider;
-use DreamFactory\Enterprise\Dashboard\Services\DashboardService;
+use DreamFactory\Enterprise\Dashboard\Facades\Dashboard;
 use DreamFactory\Library\Fabric\Database\Models\Auth\User;
 use Illuminate\Http\Request;
 
@@ -12,18 +11,24 @@ class HomeController extends BaseController
     //* Methods
     //******************************************************************************
 
-    /**
-     * ctor
-     */
-    public function __construct()
+    /** @inheritdoc */
+    public function __construct( Request $request )
     {
+        parent::__construct( $request );
+
         //  require auth'd users
         $this->middleware( 'auth' );
     }
 
-    public function status( $id )
+    /**
+     * @param Request    $request
+     * @param string|int $id
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function status( Request $request, $id )
     {
-        $_status = app( DashboardServiceProvider::IOC_NAME )->handleRequest( app( 'request' ), $id );
+        $_status = Dashboard::handleRequest( $request, $id );
 
         return response()->json( $_status );
     }
@@ -36,33 +41,26 @@ class HomeController extends BaseController
      */
     public function control( Request $request, $id = null )
     {
-        $_response = app( 'dashboard' )->handleRequest( $request, $id );
+        $_response = Dashboard::handleRequest( $request, $id );
 
-        return \Redirect::refresh();
+        return \Redirect::home();
     }
 
     /**
      * Show the application dashboard to the user.
      *
+     * @param Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index( Request $request )
     {
-        $_tableId = 'platform-table';
-        $_shortName = 'Platform';
-
         $_message = isset( $messages ) ? $messages : null;
+
         /** @type User $_user */
         $_user = \Auth::user();
-        /** @type DashboardService $_dash */
-        $_dash = app( 'dashboard' );
-        $_domain = $_dash->getDefaultDomain();
 
-        /** @type Request $_request */
-        $_request = app( 'request' );
-
-        $_result = $_dash->handleRequest( $_request );
-        $_dspList = $_dash->instanceTable( $_user, null, true );
+        $_dspList = Dashboard::instanceTable( $_user, null, true );
 
         /** @noinspection PhpIncludeInspection */
         $_groupItems = array(

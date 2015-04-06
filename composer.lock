@@ -404,12 +404,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/dfe-common.git",
-                "reference": "b405a9069db93191bec2f7db3b00fa252628af7e"
+                "reference": "3aaf028a928bedfe466a69d73aaa99e1b26ff149"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/b405a9069db93191bec2f7db3b00fa252628af7e",
-                "reference": "b405a9069db93191bec2f7db3b00fa252628af7e",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/3aaf028a928bedfe466a69d73aaa99e1b26ff149",
+                "reference": "3aaf028a928bedfe466a69d73aaa99e1b26ff149",
                 "shasum": ""
             },
             "require": {
@@ -457,7 +457,7 @@
                 "source": "https://github.com/dreamfactorysoftware/dfe-common/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/dfe-common/issues"
             },
-            "time": "2015-04-02 14:14:10"
+            "time": "2015-04-03 19:10:47"
         },
         {
             "name": "dreamfactory/dfe-ops-client",
@@ -1509,12 +1509,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "805078e0a96a5309f05899f4a76923be6f94af60"
+                "reference": "e4eab9ec0c255a019933a3e5c68ac0764f03250f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/805078e0a96a5309f05899f4a76923be6f94af60",
-                "reference": "805078e0a96a5309f05899f4a76923be6f94af60",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/e4eab9ec0c255a019933a3e5c68ac0764f03250f",
+                "reference": "e4eab9ec0c255a019933a3e5c68ac0764f03250f",
                 "shasum": ""
             },
             "require": {
@@ -1546,7 +1546,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2015-03-28 17:14:24"
+            "time": "2015-04-03 20:30:30"
         },
         {
             "name": "phpseclib/phpseclib",
@@ -1870,12 +1870,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "5b91dc4ed5eb08553f57f6df04c4730a73992667"
+                "reference": "3f88e75bcc8bfeb1e99b213cbd636675648723b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/5b91dc4ed5eb08553f57f6df04c4730a73992667",
-                "reference": "5b91dc4ed5eb08553f57f6df04c4730a73992667",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/3f88e75bcc8bfeb1e99b213cbd636675648723b0",
+                "reference": "3f88e75bcc8bfeb1e99b213cbd636675648723b0",
                 "shasum": ""
             },
             "require": {
@@ -1919,7 +1919,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
-            "time": "2015-03-30 15:54:10"
+            "time": "2015-04-03 15:17:51"
         },
         {
             "name": "symfony/debug",
@@ -2209,12 +2209,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/FrameworkBundle.git",
-                "reference": "4cf4c91d61bc44e5b497d2617a1c5cbb7888b100"
+                "reference": "8a8cec9e2ab3250311dfd47825a9bc09aa8fd760"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/FrameworkBundle/zipball/4cf4c91d61bc44e5b497d2617a1c5cbb7888b100",
-                "reference": "4cf4c91d61bc44e5b497d2617a1c5cbb7888b100",
+                "url": "https://api.github.com/repos/symfony/FrameworkBundle/zipball/8a8cec9e2ab3250311dfd47825a9bc09aa8fd760",
+                "reference": "8a8cec9e2ab3250311dfd47825a9bc09aa8fd760",
                 "shasum": ""
             },
             "require": {
@@ -2284,7 +2284,7 @@
             ],
             "description": "Symfony FrameworkBundle",
             "homepage": "http://symfony.com",
-            "time": "2015-04-03 08:50:41"
+            "time": "2015-04-03 15:17:51"
         },
         {
             "name": "symfony/http-foundation",
@@ -2347,12 +2347,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/HttpKernel.git",
-                "reference": "5ef517e669d12a76e0533e53b94b2c364dfbf9de"
+                "reference": "82627019f93cbbbe2b619cbd4d5da8e8e94cbe64"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/HttpKernel/zipball/5ef517e669d12a76e0533e53b94b2c364dfbf9de",
-                "reference": "5ef517e669d12a76e0533e53b94b2c364dfbf9de",
+                "url": "https://api.github.com/repos/symfony/HttpKernel/zipball/82627019f93cbbbe2b619cbd4d5da8e8e94cbe64",
+                "reference": "82627019f93cbbbe2b619cbd4d5da8e8e94cbe64",
                 "shasum": ""
             },
             "require": {
@@ -2416,7 +2416,7 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "http://symfony.com",
-            "time": "2015-04-01 18:51:37"
+            "time": "2015-04-03 15:17:51"
         },
         {
             "name": "symfony/process",
@@ -3174,16 +3174,16 @@
         },
         {
             "name": "doctrine/common",
-            "version": "dev-master",
+            "version": "v2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/common.git",
-                "reference": "ad89591bebea6490fd589f872d0a9ef63e9674a9"
+                "reference": "cd8daf2501e10c63dced7b8b9b905844316ae9d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/common/zipball/ad89591bebea6490fd589f872d0a9ef63e9674a9",
-                "reference": "ad89591bebea6490fd589f872d0a9ef63e9674a9",
+                "url": "https://api.github.com/repos/doctrine/common/zipball/cd8daf2501e10c63dced7b8b9b905844316ae9d3",
+                "reference": "cd8daf2501e10c63dced7b8b9b905844316ae9d3",
                 "shasum": ""
             },
             "require": {
@@ -3243,7 +3243,7 @@
                 "persistence",
                 "spl"
             ],
-            "time": "2015-04-02 20:23:27"
+            "time": "2015-04-02 19:55:44"
         },
         {
             "name": "doctrine/dbal",
