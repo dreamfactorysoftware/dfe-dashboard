@@ -1,7 +1,7 @@
 <?php
 /**
  * An helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.0.27 on 2015-04-06.
+ * Generated for Laravel 5.0.27 on 2015-04-10.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -4362,7 +4362,7 @@ namespace {
          * Retrieve the minimum value of a given column.
          *
          * @param string $column
-         * @return mixed 
+         * @return float|int 
          * @static 
          */
         public static function min($column){
@@ -4373,7 +4373,7 @@ namespace {
          * Retrieve the maximum value of a given column.
          *
          * @param string $column
-         * @return mixed 
+         * @return float|int 
          * @static 
          */
         public static function max($column){
@@ -4384,7 +4384,7 @@ namespace {
          * Retrieve the sum of the values of a given column.
          *
          * @param string $column
-         * @return mixed 
+         * @return float|int 
          * @static 
          */
         public static function sum($column){
@@ -4395,7 +4395,7 @@ namespace {
          * Retrieve the average of the values of a given column.
          *
          * @param string $column
-         * @return mixed 
+         * @return float|int 
          * @static 
          */
         public static function avg($column){
@@ -4407,7 +4407,7 @@ namespace {
          *
          * @param string $function
          * @param array $columns
-         * @return mixed 
+         * @return float|int 
          * @static 
          */
         public static function aggregate($function, $columns = array()){
@@ -10055,6 +10055,19 @@ namespace {
         public static function hasColumn($table, $column){
             //Method inherited from \Illuminate\Database\Schema\Builder            
             return \Illuminate\Database\Schema\MySqlBuilder::hasColumn($table, $column);
+        }
+        
+        /**
+         * Determine if the given table has given columns.
+         *
+         * @param string $table
+         * @param array $columns
+         * @return bool 
+         * @static 
+         */
+        public static function hasColumns($table, $columns){
+            //Method inherited from \Illuminate\Database\Schema\Builder            
+            return \Illuminate\Database\Schema\MySqlBuilder::hasColumns($table, $columns);
         }
         
         /**
