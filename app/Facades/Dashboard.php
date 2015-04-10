@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Facade;
  *
  * @method static mixed handleRequest( Request $request, string $id = null );
  * @method static array|null|string instanceTable( User &$user, array $columns = null, bool $forRender = false )
+ * @method static string renderInstance( array $data = [] )
+ * @method static string|array renderInstances( array $instances = [], $asArray = true )
  */
 class Dashboard extends Facade
 {

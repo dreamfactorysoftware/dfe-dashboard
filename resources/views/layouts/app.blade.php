@@ -9,6 +9,7 @@
         <link href="/vendor/dfe-common/static/bootswatch-3.3.4/flatly.min.css" rel="stylesheet">
     @show
     <link href="/static/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Oswald|Montserrat' rel='stylesheet' type='text/css'>
     <link href="/css/style.css" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="//oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
@@ -24,7 +25,7 @@
 
 @include('layouts.partials.navbar')
 
-<div id="page-content" class="container-fluid container-content">
+<div class="container-fluid page-content">
     @yield('content')
 </div>
 
@@ -60,7 +61,9 @@
 <script src="/static/jquery-2.1.3/jquery.min.js"></script>
 <script src="/static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
 <script src="/js/app.jquery.js"></script>
+<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
 <script src="/js/df.dashboard.js"></script>
+<script src="/js/instance.validate.js"></script>
 
 @section('after-body-scripts')
 @show

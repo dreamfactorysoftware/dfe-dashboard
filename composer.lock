@@ -526,12 +526,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/fabric-audit.git",
-                "reference": "48659b17d7dc418d7bb0e669410afb71bb26ccd4"
+                "reference": "fdb4f6b4612b03c9e1d8db200e0c366f15ab0398"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/fabric-audit/zipball/48659b17d7dc418d7bb0e669410afb71bb26ccd4",
-                "reference": "48659b17d7dc418d7bb0e669410afb71bb26ccd4",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/fabric-audit/zipball/fdb4f6b4612b03c9e1d8db200e0c366f15ab0398",
+                "reference": "fdb4f6b4612b03c9e1d8db200e0c366f15ab0398",
                 "shasum": ""
             },
             "require": {
@@ -571,7 +571,7 @@
                 "queue",
                 "utility"
             ],
-            "time": "2015-03-09 18:53:17"
+            "time": "2015-04-10 15:51:00"
         },
         {
             "name": "dreamfactory/fabric-common",
@@ -1043,12 +1043,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "6124841043b53b6254796bc68b91170800e82ffa"
+                "reference": "ffc9662a070c72d59b11d0717bae50197354c7f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/6124841043b53b6254796bc68b91170800e82ffa",
-                "reference": "6124841043b53b6254796bc68b91170800e82ffa",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/ffc9662a070c72d59b11d0717bae50197354c7f4",
+                "reference": "ffc9662a070c72d59b11d0717bae50197354c7f4",
                 "shasum": ""
             },
             "require": {
@@ -1161,7 +1161,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2015-04-09 18:49:36"
+            "time": "2015-04-10 16:37:37"
         },
         {
             "name": "league/flysystem",
@@ -2604,26 +2604,26 @@
         },
         {
             "name": "symfony/security-csrf",
-            "version": "2.7.x-dev",
+            "version": "2.8.x-dev",
             "target-dir": "Symfony/Component/Security/Csrf",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/security-csrf.git",
-                "reference": "39965bde0531d4891070aab220652a798266d6ef"
+                "reference": "80cf46a34308e7374700889a3af115ef5d772d23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/security-csrf/zipball/39965bde0531d4891070aab220652a798266d6ef",
-                "reference": "39965bde0531d4891070aab220652a798266d6ef",
+                "url": "https://api.github.com/repos/symfony/security-csrf/zipball/80cf46a34308e7374700889a3af115ef5d772d23",
+                "reference": "80cf46a34308e7374700889a3af115ef5d772d23",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.9",
-                "symfony/security-core": "~2.4"
+                "symfony/security-core": "~2.4|~3.0.0"
             },
             "require-dev": {
-                "symfony/http-foundation": "~2.1",
-                "symfony/phpunit-bridge": "~2.7"
+                "symfony/http-foundation": "~2.1|~3.0.0",
+                "symfony/phpunit-bridge": "~2.7|~3.0.0"
             },
             "suggest": {
                 "symfony/http-foundation": "For using the class SessionTokenStorage."
@@ -2631,7 +2631,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.7-dev"
+                    "dev-master": "2.8-dev"
                 }
             },
             "autoload": {
@@ -2655,33 +2655,33 @@
             ],
             "description": "Symfony Security Component - CSRF Library",
             "homepage": "http://symfony.com",
-            "time": "2015-04-10 07:23:38"
+            "time": "2015-04-10 08:56:33"
         },
         {
             "name": "symfony/stopwatch",
-            "version": "2.7.x-dev",
+            "version": "2.8.x-dev",
             "target-dir": "Symfony/Component/Stopwatch",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Stopwatch.git",
-                "reference": "f9b0a6257cb94cb2665482b7204052c507f7b384"
+                "reference": "e91464c343fd51f6720aca125ae4050c3d937d30"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Stopwatch/zipball/f9b0a6257cb94cb2665482b7204052c507f7b384",
-                "reference": "f9b0a6257cb94cb2665482b7204052c507f7b384",
+                "url": "https://api.github.com/repos/symfony/Stopwatch/zipball/e91464c343fd51f6720aca125ae4050c3d937d30",
+                "reference": "e91464c343fd51f6720aca125ae4050c3d937d30",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.9"
             },
             "require-dev": {
-                "symfony/phpunit-bridge": "~2.7"
+                "symfony/phpunit-bridge": "~2.7|~3.0.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.7-dev"
+                    "dev-master": "2.8-dev"
                 }
             },
             "autoload": {
@@ -2705,21 +2705,21 @@
             ],
             "description": "Symfony Stopwatch Component",
             "homepage": "http://symfony.com",
-            "time": "2015-04-10 07:23:38"
+            "time": "2015-04-10 08:56:33"
         },
         {
             "name": "symfony/templating",
-            "version": "2.7.x-dev",
+            "version": "2.8.x-dev",
             "target-dir": "Symfony/Component/Templating",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Templating.git",
-                "reference": "e073d8d038b336b367813f9760a489069267e08a"
+                "reference": "257209ee49760d66186808ebf6ebc85cd565d8c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Templating/zipball/e073d8d038b336b367813f9760a489069267e08a",
-                "reference": "e073d8d038b336b367813f9760a489069267e08a",
+                "url": "https://api.github.com/repos/symfony/Templating/zipball/257209ee49760d66186808ebf6ebc85cd565d8c6",
+                "reference": "257209ee49760d66186808ebf6ebc85cd565d8c6",
                 "shasum": ""
             },
             "require": {
@@ -2727,7 +2727,7 @@
             },
             "require-dev": {
                 "psr/log": "~1.0",
-                "symfony/phpunit-bridge": "~2.7"
+                "symfony/phpunit-bridge": "~2.7|~3.0.0"
             },
             "suggest": {
                 "psr/log": "For using debug logging in loaders"
@@ -2735,7 +2735,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.7-dev"
+                    "dev-master": "2.8-dev"
                 }
             },
             "autoload": {
@@ -2759,7 +2759,7 @@
             ],
             "description": "Symfony Templating Component",
             "homepage": "http://symfony.com",
-            "time": "2015-04-10 07:23:38"
+            "time": "2015-04-10 08:56:33"
         },
         {
             "name": "symfony/translation",
@@ -4391,29 +4391,29 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "2.7.x-dev",
+            "version": "2.8.x-dev",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "43e7bee10c88f23252ee1b6b25140dc9917c3d96"
+                "reference": "fdded56dde4ca9efce6322887bf5eaa7bb0aae3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/43e7bee10c88f23252ee1b6b25140dc9917c3d96",
-                "reference": "43e7bee10c88f23252ee1b6b25140dc9917c3d96",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/fdded56dde4ca9efce6322887bf5eaa7bb0aae3e",
+                "reference": "fdded56dde4ca9efce6322887bf5eaa7bb0aae3e",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.9"
             },
             "require-dev": {
-                "symfony/phpunit-bridge": "~2.7"
+                "symfony/phpunit-bridge": "~2.7|~3.0.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.7-dev"
+                    "dev-master": "2.8-dev"
                 }
             },
             "autoload": {
@@ -4437,7 +4437,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2015-04-10 07:23:38"
+            "time": "2015-04-10 08:56:33"
         },
         {
             "name": "way/generators",

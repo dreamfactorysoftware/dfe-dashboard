@@ -14,8 +14,6 @@ class HomeController extends BaseController
     /** @inheritdoc */
     public function __construct( Request $request )
     {
-        parent::__construct( $request );
-
         //  require auth'd users
         $this->middleware( 'auth' );
     }
@@ -61,41 +59,26 @@ class HomeController extends BaseController
         $_user = \Auth::user();
 
         $_dspList = Dashboard::instanceTable( $_user, null, true );
-
-        /** @noinspection PhpIncludeInspection */
-        $_groupItems = array(
-            view(
-                'layouts.partials._dashboard_item',
-                require base_path( 'resources/views/layouts/partials/_dashboard_new-fabric-dsp.php' )
-            )->render()
-        );
-
-        if ( !empty( $_dspList ) )
-        {
-            foreach ( $_dspList as $_dsp )
-            {
-                $_groupItems[] = view( 'layouts.partials._dashboard_item', $_dsp )->render();
-            }
-        }
+        $_instanceCreator =
+            view( 'layouts.partials._dashboard_new-rave-instance', ['defaultDomain' => config( 'dashboard.default-domain' )] )->render();
 
         $_panelGroup = view(
             'layouts.partials._dashboard_group',
             [
-                'groupId'    => 'dsp_list',
-                'groupItems' => [],
-                'groupHtml'  => $_groupItems,
+                'groupId'   => 'dsp_list',
+                'groupHtml' => Dashboard::renderInstances( $_dspList, false ),
             ]
         )->render();
 
         return view(
             'app.home',
             [
-                'panelGroup'  => $_panelGroup,
-                'message'     => $_message,
-                'isAdmin'     => $_user->admin_ind,
-                'displayName' => $_user->display_name_text
+                'panelGroup'      => $_panelGroup,
+                'message'         => $_message,
+                'isAdmin'         => $_user->admin_ind,
+                'displayName'     => $_user->display_name_text,
+                'instanceCreator' => $_instanceCreator,
             ]
         );
     }
-
 }

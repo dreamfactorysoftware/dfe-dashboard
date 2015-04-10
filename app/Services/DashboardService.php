@@ -6,6 +6,7 @@ use DreamFactory\Enterprise\Common\Services\BaseService;
 use DreamFactory\Enterprise\Common\Traits\EntityLookup;
 use DreamFactory\Enterprise\Console\Ops\Providers\OpsClientServiceProvider;
 use DreamFactory\Enterprise\Console\Ops\Services\OpsClientService;
+use DreamFactory\Enterprise\Dashboard\Enums\DashboardDefaults;
 use DreamFactory\Library\Fabric\Database\Enums\GuestLocations;
 use DreamFactory\Library\Fabric\Database\Enums\ProvisionStates;
 use DreamFactory\Library\Fabric\Database\Enums\ServerTypes;
@@ -62,6 +63,14 @@ class DashboardService extends BaseService
      * @type bool If true, cluster servers are specified from config/dashboard.php
      */
     protected $_useConfigServers = false;
+    /**
+     * @type int The number of instances to display per row by default
+     */
+    protected $_instancesPerRow = 3;
+    /**
+     * @type string The class to wrap columns in
+     */
+    protected $_columnClass;
 
     //*************************************************************************
     //* Methods
@@ -77,6 +86,18 @@ class DashboardService extends BaseService
         $this->_apiKey = config( 'dashboard.api-key' );
         $this->_requireCaptcha = config( 'dashboard.require-captcha', true );
         $this->_useConfigServers = config( 'dashboard.override-cluster-servers', false );
+        $this->_instancesPerRow = config( 'dashboard.instances-per-row', DashboardDefaults::INSTANCES_PER_ROW );
+
+        if ( $this->_instancesPerRow < 1 )
+        {
+            $this->_instancesPerRow = 1;
+        }
+        else if ( $this->_instancesPerRow > 4 )
+        {
+            $this->_instancesPerRow = 4;
+        }
+
+        $this->_determineGridClasses();
     }
 
     /**
@@ -227,7 +248,7 @@ class DashboardService extends BaseService
      */
     public function provisionInstance( $instanceId, $trial = false, $remote = false )
     {
-        $_provisioner = $this->_request->input( '_provisioner', GuestLocations::RAVE_CLUSTER );
+        $_provisioner = $this->_request->input( '_provisioner', GuestLocations::DFE_CLUSTER );
 
         //	Check the name here for quicker UI response...
         if ( false === ( $_instanceName = Instance::isNameAvailable( $instanceId ) ) || is_numeric( $_instanceName[0] ) )
@@ -480,17 +501,15 @@ class DashboardService extends BaseService
                     list( $_divId, $_instanceHtml, $_statusIcon ) = $this->formatInstance( $_model );
 
                     $_item = array(
-                        'instance'       => $_model,
-                        'groupId'        => 'dsp_list',
-                        'targetId'       => $_divId,
-                        'targetRel'      => $_model->id,
-                        'opened'         => false,
-                        'triggerContent' => <<<HTML
-<div class="instance-heading-dsp-name">{$_model->instance_name_text}<span class="text-muted">{$this->_defaultDomain}</div>
-<div class="instance-heading-status pull-right"><i class="fa fa-fw {$_statusIcon} fa-2x"></i></div>
-HTML
-                        ,
-                        'targetContent'  => $_instanceHtml,
+                        'instance'      => $_model,
+                        'groupId'       => 'dsp_list',
+                        'targetId'      => $_divId,
+                        'targetRel'     => $_model->id,
+                        'opened'        => false,
+                        'defaultDomain' => $this->_defaultDomain,
+                        'statusIcon'    => $_statusIcon,
+                        'instanceName'  => $_model->instance_name_text,
+                        'targetContent' => $_instanceHtml,
                     );
 
                     if ( $forRender )
@@ -499,7 +518,7 @@ HTML
                     }
                     else
                     {
-                        $_html .= \View::make( 'layouts.partials._dashboard_item', $_item )->render();
+                        $_html .= $this->renderInstance( $_item );
                     }
 
                     unset( $_model );
@@ -519,13 +538,6 @@ HTML
      */
     public function formatInstance( &$instance, $how = null )
     {
-        $_gettingStartedButton =
-            '<a class="btn btn-xs btn-info dsp-help-button" id="dspcontrol-' .
-            $instance->instance_name_text .
-            '" data-placement="left" title="Help" target="_blank" href="' .
-            config( 'dashboard.help-button-url' ) .
-            '"><i class="fa fa-question-circle"></i></a>';
-
         list( $_icon, $_statusIcon, $_message, $_running ) = $this->getStatusIcon( $instance );
 
         if ( empty( $instance->instance_id_text ) )
@@ -565,8 +577,7 @@ HTML
 		<div class="dsp-name">{$_instanceLink}<small>{$_linkLink}</small></div>
 		<div class="dsp-stats">{$_message}</div>
 		<div class="dsp-links">
-		<span class="dsp-controls pull-left">{$_html}</span>
-			{$_gettingStartedButton}
+    		<div class="dsp-controls">{$_html}</div>
 		</div>
 	</div>
 HTML;
@@ -711,13 +722,21 @@ HTML;
             }
 
             $_html .= <<<HTML
-  <a id="dspcontrol___{$_buttonName}___{$instance->instance_name_text}" class="btn btn-sm btn-{$_button['color']} {$_disabledClass}" {$_disabled} href="{$_href}" {$_hint}><i class="fa fa-{$_button['icon']}"></i> {$_button['text']}</a>
+  <a id="dspcontrol___{$_buttonName}___{$instance->instance_name_text}" class="btn btn-xs btn-{$_button['color']} {$_disabledClass}" {$_disabled} href="{$_href}" {$_hint}><i class="fa fa-{$_button['icon']}"></i> {$_button['text']}</a>
 HTML;
         }
+
+        $_gettingStartedButton =
+            '<a class="btn btn-xs btn-info dsp-help-button" id="dspcontrol-' .
+            $instance->instance_name_text .
+            '" data-placement="left" title="Help" target="_blank" href="' .
+            config( 'dashboard.help-button-url' ) .
+            '"><i class="fa fa-question-circle"></i> Help</a>';
 
         $_html = <<<HTML
 <div class="btn2-group">
 {$_html}
+{$_gettingStartedButton}
 </div>
 HTML;
 
@@ -732,97 +751,47 @@ HTML;
      */
     public function getStatusIcon( $status, $key = false )
     {
-        $_statusIcon = 'fa-rocket';
-        $_icon = 'fa-rocket';
+        $_statusIcon = config( 'dashboard.icons.instance-up' );
+        $_icon = config( 'dashboard.icons.instance-up' );
         $_message = null;
         $_running = false;
 
-        if ( $key )
+        switch ( $status->state_nbr )
         {
-            $_statusIcon = 'fa-key';
-            $_message = null;
-        }
-        else
-        {
+            default:
+                $_statusIcon = $_icon = static::SPINNING_ICON;
+                $_message =
+                    'Your request is being processed.';
+                break;
 
-            if ( isset( $status->vendorStateName ) && null !== $status->vendorStateName )
-            {
-                switch ( $status->vendorStateName )
-                {
-                    case 'stopped':
-                        $_statusIcon = $_icon = 'fa-stop';
-                        $_message = 'This DSP is stopped. Click the Start button to restart.';
-                        break;
+            case ProvisionStates::CREATED:
+            case ProvisionStates::PROVISIONING:
+                $_statusIcon = $_icon = static::SPINNING_ICON;
+                $_message = 'Your instance is being created, with lots of love! You will receive an email when it is ready.';
+                break;
 
-                    case 'terminated':
-                        $_statusIcon = $_icon = 'fa-ambulance';
-                        $_message = 'This DSP is terminated. All you can do is destroy it.';
-                        break;
+            case ProvisionStates::DEPROVISIONING:
+                $_statusIcon = $_icon = static::SPINNING_ICON;
+                $_message = 'This instance is shutting down.';
+                break;
 
-                    case 'shutting-down':
-                    case 'stopping':
-                        $_statusIcon = $_icon = static::SPINNING_ICON;
-                        $_message = 'This DSP is being stopped.';
-                        break;
+            case ProvisionStates::CREATION_ERROR:
+            case ProvisionStates::PROVISIONING_ERROR:
+            case ProvisionStates::DEPROVISIONING_ERROR:
+                $_message =
+                    'There was an error completing your request. Our engineers have been notified. Maybe go take a stroll?';
+                $_statusIcon = $_icon = config( 'dashboard.icons.instance-dead' );
+                break;
 
-                    case 'pending':
-                        $_statusIcon = $_icon = static::SPINNING_ICON;
-                        $_message =
-                            'This DSP is being prepared for the requested operation. Be cool baby, it\'ll be done in a sec.';
-                        break;
+            case ProvisionStates::PROVISIONED:
+                $_message = 'Your instance is up and running.';
+                $_running = true;
+                break;
 
-                    case 'running':
-                        $_message = 'This DSP is alive and well. Click on the name above to launch.';
-                        $_running = true;
-                        break;
-                }
-            }
-            else
-            {
-                switch ( $status->state_nbr )
-                {
-                    case ProvisionStates::CREATED:
-                        $_statusIcon = $_icon = static::SPINNING_ICON;
-                        $_message = 'This DSP request has been received and is queued for creation.';
-                        break;
-
-                    case ProvisionStates::PROVISIONING:
-                        $_statusIcon = $_icon = static::SPINNING_ICON;
-                        $_message =
-                            'Your DSP is being carefully assembled with lots of love. You will receive an email when it is ready.';
-                        break;
-
-                    case ProvisionStates::PROVISIONED:
-                        //	Queued for deprovisioning
-                        if ( 1 == $status->deprovision_ind )
-                        {
-                            $_statusIcon = $_icon = static::SPINNING_ICON;
-                        }
-                        $_message = 'This DSP is alive and well. Click on the name above to launch.';
-                        $_running = true;
-                        break;
-
-                    case ProvisionStates::DEPROVISIONING:
-                        $_statusIcon = $_icon = static::SPINNING_ICON;
-                        $_message =
-                            'This DSP is being destroyed. You will receive an email when it has been destroyed.';
-                        break;
-
-                    case ProvisionStates::DEPROVISIONED:
-                        $_icon = '<img src="/img/icon-deprovisioned.png" class="fa fa-3x">';
-                        $_statusIcon = 'fa-exclamation-triangle';
-                        $_message =
-                            'This DSP is being destroyed. You will receive an email when it has been destroyed.';
-                        break;
-
-                    case ProvisionStates::DEPROVISIONING_ERROR:
-                    case ProvisionStates::PROVISIONING_ERROR:
-                        $_message =
-                            'There was an error issuing your request. Our engineers have been notified. Maybe go take a stroll?';
-                        $_statusIcon = $_icon = 'fa-ambulance';
-                        break;
-                }
-            }
+            case ProvisionStates::DEPROVISIONED:
+                $_statusIcon = $_icon = config( 'dashboard.icons.instance-dead' );;
+                $_message = 'This DSP is terminated. All you can do is destroy it.';
+                break;
         }
 
         return array($_icon, $_statusIcon, $_message, $_running);
@@ -1062,5 +1031,62 @@ HTML;
         }
 
         return $_config;
+    }
+
+    /**
+     * Renders an instance view
+     *
+     * @param array $data
+     *
+     * @return string
+     */
+    public function renderInstance( $data = [] )
+    {
+        $_html = '<div class="' . $this->_columnClass . '">' . \View::make( 'layouts.partials._dashboard_item', $data )->render() . '</div>';
+
+        return $_html;
+    }
+
+    /**
+     * Renders multiple instance views
+     *
+     * @param array $instances
+     * @param bool  $asArray If true, the instances are returned rendered into an array. If false, a single string is returned
+     *
+     * @return array|string
+     */
+    public function renderInstances( $instances = [], $asArray = true )
+    {
+        $_rendered = [];
+
+        foreach ( $instances as $_instance )
+        {
+            $_rendered[] = $this->renderInstance( $_instance );
+        }
+
+        return $asArray ? $_rendered : implode( PHP_EOL, $_rendered );
+    }
+
+    protected function _determineGridClasses()
+    {
+        switch ( $this->_instancesPerRow )
+        {
+            case 1:
+                $this->_columnClass = 'col-xs-12 col-sm-12 col-md-12';
+                break;
+            case 2:
+                $this->_columnClass = 'col-xs-12 col-sm-6 col-md-6';
+                break;
+            case 3:
+                $this->_columnClass = 'col-xs-12 col-sm-6 col-md-3';
+                break;
+            case 4:
+                //  4 per row, col-md-3 x 4 = 12
+                $this->_columnClass = 'col-xs-12 col-sm-4 col-md-3';
+                break;
+            default:
+                $this->_columnClass = null;
+                break;
+        }
     }
 }

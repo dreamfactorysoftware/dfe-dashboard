@@ -11,15 +11,6 @@ class DashboardServiceProvider extends BaseServiceProvider
 
     /** @inheritdoc */
     const IOC_NAME = 'dfe.dashboard';
-    /** @inheritdoc */
-    const ALIAS_NAME = 'Dashboard';
-
-    //******************************************************************************
-    //* Members
-    //******************************************************************************
-
-    /** @inheritdoc */
-    protected $_serviceClass = 'DreamFactory\\Enterprise\\Dashboard\\Services\\DashboardService';
 
     //******************************************************************************
     //* Methods
