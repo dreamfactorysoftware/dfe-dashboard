@@ -32,18 +32,30 @@ HTML;
 @extends('layouts.app')
 
 @section('content')
+    <div id="alert-status-change" class="alert alert-info alert-block alert-fixed hide">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <strong>Alert</strong> The status of one of your DSPs below has changed!
+    </div>
+
+    {!! $_message !!}
+
     <div class="row">
-        <div class="col-xs-12 col-md-12 user-dashboard">
+        <div class="col-md-6">
             <div class="create-instance">
                 {!! $instanceCreator !!}
             </div>
+        </div>
 
-            <div id="alert-status-change" class="alert alert-info alert-block alert-fixed hide">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <strong>Alert</strong> The status of one of your DSPs below has changed!
+        <div class="col-md-6">
+            <div class="import-snapshot">
+                {!! $snapshotImporter !!}
             </div>
+        </div>
+    </div>
 
-            {!! $_message !!}
+    <div class="row">
+        <div class="col-md-12">
+            <hr class="hr" />
         </div>
     </div>
 

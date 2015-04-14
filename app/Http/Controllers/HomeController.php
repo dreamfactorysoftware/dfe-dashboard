@@ -3,6 +3,7 @@
 use DreamFactory\Enterprise\Common\Http\Controllers\BaseController;
 use DreamFactory\Enterprise\Dashboard\Facades\Dashboard;
 use DreamFactory\Library\Fabric\Database\Models\Auth\User;
+use DreamFactory\Library\Fabric\Database\Models\Deploy\Snapshot;
 use Illuminate\Http\Request;
 
 class HomeController extends BaseController
@@ -54,13 +55,12 @@ class HomeController extends BaseController
     public function index( Request $request )
     {
         $_message = isset( $messages ) ? $messages : null;
+        $_defaultDomain = config( 'dashboard.default-domain' );
 
         /** @type User $_user */
         $_user = \Auth::user();
 
         $_dspList = Dashboard::instanceTable( $_user, null, true );
-        $_instanceCreator =
-            view( 'layouts.partials._dashboard_new-rave-instance', ['defaultDomain' => config( 'dashboard.default-domain' )] )->render();
 
         $_panelGroup = view(
             'layouts.partials._dashboard_group',
@@ -73,12 +73,43 @@ class HomeController extends BaseController
         return view(
             'app.home',
             [
-                'panelGroup'      => $_panelGroup,
-                'message'         => $_message,
-                'isAdmin'         => $_user->admin_ind,
-                'displayName'     => $_user->display_name_text,
-                'instanceCreator' => $_instanceCreator,
+                'defaultDomain'    => $_defaultDomain,
+                'panelGroup'       => $_panelGroup,
+                'message'          => $_message,
+                'isAdmin'          => $_user->admin_ind,
+                'displayName'      => $_user->display_name_text,
+                'instanceCreator'  => view(
+                    'layouts.partials._dashboard_new-rave-instance',
+                    ['defaultDomain' => $_defaultDomain,]
+                )->render(),
+                'snapshotImporter' => view(
+                    'layouts.partials._dashboard_import-rave-instance',
+                    ['defaultDomain' => $_defaultDomain, 'snapshotList' => $this->_getSnapshotList(),]
+                )->render(),
             ]
         );
+    }
+
+    /**
+     * @return array A list of available snapshots for this user
+     */
+    protected function _getSnapshotList()
+    {
+        $_result = [];
+        $_rows = Snapshot::where( 'user_id', \Auth::user()->id )->get();
+
+        if ( !empty( $_rows ) )
+        {
+            /** @var Snapshot[] $_rows */
+            foreach ( $_rows as $_row )
+            {
+                $_result[] = [
+                    'id'   => $_row->id,
+                    'name' => $_row->snapshot_id_text,
+                ];
+            }
+        }
+
+        return $_result;
     }
 }

@@ -12,6 +12,9 @@ return [
     'require-captcha'          => false,
     /** Dashboard UI info and settings */
     'panel-context'            => 'info',
+    'create-panel-context'     => 'success',
+    'import-panel-context'     => 'warning',
+    'import-panel-icon'        => 'upload',
     'help-button-url'          => 'http://www.dreamfactory.com/',
     'default-domain'           => '.cloud.dreamfactory.com',
     'default-domain-protocol'  => 'https',
@@ -34,6 +37,7 @@ return [
     ],
     'instances-per-row'        => 4,
     'new-instance-html'        => '<p>Please enter the name of the new instance below, or you may keep the name we have selected for you. Letters, numbers, and dashes are the only characters allowed.</p>',
+    'import-instance-html'     => '<p>Please choose a snapshot to import from the drop-down below. You may alternatively upload one through your browser by clicking the <strong>Upload</strong> button below the drop-down.</p><p class="help-block" style="margin-top:2px;font-size: 13px;color:#888;">Currently, only exports created by the DreamFactory Enterprise Dashboard are supported.</p>',
     //******************************************************************************
     //* DFE console api overrides
     //******************************************************************************

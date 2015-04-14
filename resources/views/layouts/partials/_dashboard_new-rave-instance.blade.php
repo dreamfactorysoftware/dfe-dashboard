@@ -37,9 +37,9 @@ $_token = csrf_token();
 $_guest = GuestLocations::DFE_CLUSTER;
 ?>
 <div class="panel panel-{{ config('dashboard.panel-context','info') }} panel-dsp">
-    <div class="panel-heading" role="tab" id="heading-dsp_list">
+    <div class="panel-heading" role="tab">
         <h4 class="panel-title">
-            <span class="instance-heading-dsp-name pull-left"><i class="fa fa-fw fa-asterisk"></i>Start Here</span>
+            <span class="instance-heading-dsp-name pull-left"><i class="fa fa-fw fa-asterisk"></i>Need an instance?</span>
         </h4>
     </div>
     <div id="dsp_new"
@@ -49,15 +49,15 @@ $_guest = GuestLocations::DFE_CLUSTER;
         <div class="panel-body"><h3 class="dsp-box-heading">Create a New Instance</h3>
 
             <div class="dsp-info">
-                <form id="form-provision" class="form-horizontal" method="POST">
+                <form id="form-provision" class="form-vertical" method="POST">
                     <input type="hidden" name="_token" value="{{ $_token }}">
                     <input type="hidden" name="_provisioner" value="{{ $_guest }}">
                     {!! config('dashboard.new-instance-html') !!}
                     <div class="clearfix"></div>
 
                     <div class="form-group">
-                        <label for="dsp_name" class="col-md-2 control-label">Name Your DSP</label>
-                        <div class="col-md-5">
+                        <label for="dsp_name" class="col-md-2 control-label">Instance Name</label>
+                        <div class="col-md-10">
                             <div class="input-group">
                                 <input type="text" required name="id" id="dsp_name" class="form-control" placeholder="{{ $_dspName }}">
                                 <span class="input-group-addon">{{ $defaultDomain }}</span>
@@ -66,7 +66,9 @@ $_guest = GuestLocations::DFE_CLUSTER;
                                 style="margin-top:2px;font-size: 13px;color:#888;">This may take a minute. We will send you an email when your platform is ready.</p>
                         </div>
                     </div>
+
                     {{ $_captchaHtml }}
+
                     <div class="dsp-links">
                         <button id="start-trial" type="submit" class="btn btn-primary btn-warning"><i class="fa fa-fw fa-rocket"
                                 style="margin-right: 8px;"></i> Create

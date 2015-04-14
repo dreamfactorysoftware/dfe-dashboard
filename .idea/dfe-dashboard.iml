@@ -15,6 +15,9 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-ops-client.setdev-on" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-ops-client/.idea" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-ops-client/vendor" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/fabric-db.setdev-on" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/fabric-db/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/fabric-db/vendor" />
       <excludeFolder url="file://$MODULE_DIR$/yii.config" />
     </content>
     <orderEntry type="inheritedJdk" />

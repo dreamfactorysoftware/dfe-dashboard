@@ -6,7 +6,7 @@ body {
 	padding-top:   40px;
 	font-family:   "Lato", "Open Sans", Arial, Helvetica, sans-serif;
 	/*background-color: #eeeeee;*/
-	min-width:     785px;
+	min-width:     768px;
 	min-height:    100%;
 	height:        100%;
 	margin-bottom: 60px;
@@ -308,55 +308,27 @@ table.dataTable thead th {
 	margin-bottom: 0;
 }
 
-/*------------------------------------------------------------------------------*/
-/* Media Queries                                                                */
-/*------------------------------------------------------------------------------*/
-
-@media (min-width: 785px) {
-	.main {
-		padding-right: 15px;
-		padding-left:  15px;
-	}
-}
-
-@media (max-width: 785px) {
-	.sidebar {
-		padding: 0;
-	}
-
-	.navbar .navbar-brand {
-		height:      40px;
-		padding-top: 4px;
-	}
-}
-
-@media (max-width: 1199px) {
-	.navbar .navbar-brand {
-		padding: 4px 15px 15px;
-		/* padding: 10px 15px; */
-	}
-}
-
 .dsp-box-heading {
 	margin-top:    0;
 	border-bottom: 1px solid #cccccc;
 }
 
 .dsp-links {
-	/*float: right;*/
 	clear:    both;
 	overflow: hidden;
 }
 
 .panel-title {
+	position:    relative;;
 	min-height:  18px;
 	line-height: 18px;
+	font-size:   15px;
 }
 
 .dsp-help-button {
 	/*vertical-align: bottom;*/
 	/*margin-top:     4px;*/
-	font-size: 11px;
+	/*font-size: 11px;*/
 }
 
 .instance-heading-dsp-name {
@@ -371,15 +343,23 @@ table.dataTable thead th {
 .instance-heading-status {
 	float:      right;
 	display:    inline-block;
-	margin-top: -8px;
+	margin-top: 0;
 }
 
 .dsp-links .dsp-controls .btn i.fa {
 	margin-right: 4px;
 }
 
+a[id^="dspcontrol___"]:first-child {
+	margin-left: 0;
+}
+
 a[id^="dspcontrol___"] {
-	font-size: 11px;
+	/*font-size:    11px;*/
+}
+
+a[id^="dspcontrol___"]:last-child {
+	margin-right: 0;
 }
 
 .dsp-info .dsp-name .dsp-launch-link {
@@ -400,6 +380,16 @@ a[id^="dspcontrol___"] {
 	display:       block;
 	margin-top:    -6px;
 	margin-bottom: 8px;
+}
+
+.panel {
+	overflow: hidden;
+}
+
+.panel-body {
+	position:       relative;
+	padding-bottom: 10px;
+	overflow:       hidden;
 }
 
 .panel-dsp .panel-body .dsp-info .dsp-name small a {
@@ -426,7 +416,7 @@ a[id^="dspcontrol___"] {
 
 .panel-dsp .panel-body .dsp-links {
 	/*width:         100%;*/
-	/*text-align:    right;*/
+	text-align:    right;
 	margin-bottom: 4px;
 }
 
@@ -439,11 +429,15 @@ a[id^="dspcontrol___"] {
 }
 
 .instance-heading-dsp-name .text-muted {
-	color: rgba(255, 255, 255, .70);
+	color:       rgba(255, 255, 255, .70);
+	transition:  1s;
+	margin-left: -3px;
+	white-space: nowrap;
 }
 
 .instance-heading-status .fa.fa-fw {
-	color: rgba(255, 255, 255, .70);
+	color:   #FFFFFF;
+	opacity: .75;
 }
 
 #dsp_name-error {
@@ -456,4 +450,143 @@ a[id^="dspcontrol___"] {
 
 .dsp-name {
 	white-space: nowrap;
+}
+
+.btn2-group.row {
+	margin-left:  0;
+	margin-right: 0;
+}
+
+label[for="import-file-label"] {
+	font-size: 17px;
+}
+
+.instance-heading-status.pull-right {
+	position: absolute;
+	top:      -1px;
+	right:    0;
+	opacity:  1;
+}
+
+#import-id {
+	font-size: 11px;
+}
+
+#import-file {
+	padding: 10px;
+}
+
+.dsp-links > .btn {
+	margin-bottom: 0;
+}
+
+.instance-heading-dsp-name:hover {
+	text-decoration: underline;
+	cursor:          pointer;
+}
+
+.instance-heading-dsp-name:hover > span {
+	color:      rgba(252, 221, 134, 1);
+	transition: color 0.25s
+}
+
+.instance-heading-dsp-name:hover > span.text-faded {
+	color:      rgba(252, 221, 134, 0.8);
+	transition: color 0.25s;
+}
+
+/*------------------------------------------------------------------------------*/
+/* Media Queries                                                                */
+/*------------------------------------------------------------------------------*/
+
+@media (min-width: 768px) {
+	.main {
+		padding-right: 15px;
+		padding-left:  15px;
+	}
+}
+
+@media (max-width: 768px) {
+	.sidebar {
+		padding: 0;
+	}
+
+	.navbar .navbar-brand {
+		height:      40px;
+		padding-top: 4px;
+	}
+
+	.panel-title {
+		font-size: 11px;
+	}
+
+	.dsp-info .dsp-name .dsp-launch-link {
+		font-size: 13px;
+	}
+
+	.dsp-icon.dsp-real i.fa-3x {
+		font-size: 1.5em;
+	}
+
+	.dsp-list > .panel-body {
+		padding: 5px;
+	}
+
+	.panel-dsp .panel-body .dsp-icon, .panel-dsp .panel-body .key-icon {
+		margin-right: 5px;
+	}
+}
+
+.text-faded {
+	background-image: linear-gradient(to right, rgba(52, 152, 219, 1), transparent);
+}
+
+@media (max-width: 1024px) {
+	.dsp-list > .panel-body {
+		padding: 5px 10px;
+	}
+
+	.panel-heading-instance h4 .instance-heading-status i.fa,
+	.panel-heading-instance h4 .instance-heading-dsp-name {
+		font-size: 11px;
+		opacity:   1;
+	}
+
+	.dsp-info .dsp-name .dsp-launch-link {
+		font-size: 17px;
+	}
+
+	.dsp-icon.dsp-real i.fa-3x {
+		font-size: 1.5em;
+	}
+
+	.dsp-stats {
+		font-size: 13px;
+	}
+
+	.panel-dsp .panel-body .dsp-icon, .panel-dsp .panel-body .key-icon {
+		margin-right: 5px;
+	}
+}
+
+@media (max-width: 1024px) {
+	.panel-title {
+		font-size: 13px;
+	}
+
+	.dsp-icon.dsp-real i.fa-3x {
+		font-size: 2em;
+	}
+
+	.instance-heading-status.pull-right {
+		right: -10px;
+	}
+
+}
+
+@media (max-width: 1199px) {
+	.navbar .navbar-brand {
+		padding: 4px 15px 15px;
+		/* padding: 10px 15px; */
+	}
 }

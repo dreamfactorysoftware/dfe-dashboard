@@ -552,14 +552,9 @@ class DashboardService extends BaseService
 
         if ( $instance->state_nbr == ProvisionStates::PROVISIONED )
         {
-            $_instanceLinkText = 'https://' . $instance->instance_name_text . $this->_defaultDomain;
-            $_instanceLink =
-                '<a href="' .
-                $_instanceLinkText .
-                '" target="_blank" class="dsp-launch-link">' .
-                $instance->instance_name_text .
-                '</a>';
-            $_linkLink = '<a href="' . $_instanceLinkText . '" target="_blank">' . $_instanceLinkText . '</a>';
+            $_instanceLinkText = $instance->instance_name_text . $this->_defaultDomain;
+            $_instanceLink = '<a href="' . $_instanceLinkText . '" target="_blank" class="dsp-launch-link">' . $instance->instance_name_text . '</a>';
+            $_linkLink = '<small><a href="' . $_instanceLinkText . '" target="_blank">' . $_instanceLinkText . '</a>></small>';
         }
         else
         {
@@ -574,7 +569,7 @@ class DashboardService extends BaseService
         $_html = <<<HTML
 	<div class="dsp-icon well pull-left dsp-real text-success">{$_icon}</div>
 	<div class="dsp-info">
-		<div class="dsp-name">{$_instanceLink}<small>{$_linkLink}</small></div>
+		<div class="dsp-name">{$_instanceLink}</div>
 		<div class="dsp-stats">{$_message}</div>
 		<div class="dsp-links">
     		<div class="dsp-controls">{$_html}</div>
@@ -601,7 +596,7 @@ HTML;
                 'hint'    => 'Start this DSP',
                 'color'   => 'success',
                 'icon'    => 'play',
-                'text'    => 'Start'
+                'text'    => 'Start',
             ),
             'stop'   => array(
                 'enabled' => false,
@@ -611,23 +606,23 @@ HTML;
                 'text'    => 'Stop'
             ),
             'export' => array(
-                'enabled' => false,
-                'hint'    => 'Make a portable DSP backup',
+                'enabled' => ProvisionStates::PROVISIONED == $instance->state_nbr,
+                'hint'    => 'Make an instance snapshot',
                 'color'   => 'info',
                 'icon'    => 'cloud-download',
-                'text'    => 'Backup'
+                'text'    => 'Export'
             ),
             'import' => array(
                 'enabled' => false,
-                'hint'    => 'Restore a portable backup',
+                'hint'    => 'Restore a snapshot',
                 'color'   => 'warning',
                 'icon'    => 'cloud-upload',
-                'text'    => 'Restore',
+                'text'    => 'Import',
                 'href'    => '#dsp-import-snapshot',
             ),
             'delete' => array(
                 'enabled' => false,
-                'hint'    => 'Delete this DSP permanently',
+                'hint'    => 'Delete instance permanently',
                 'color'   => 'danger',
                 'icon'    => 'trash',
                 'text'    => 'Destroy!'
@@ -643,13 +638,13 @@ HTML;
                     $_buttons['stop']['enabled'] = false;
                     $_buttons['export']['enabled'] = false;
                     $_buttons['import']['enabled'] = false;
-                    $_buttons['delete']['enabled'] = true;
+                    $_buttons['delete']['enabled'] = false;
                     break;
 
                 case 'stopped':
-                    $_buttons['start']['enabled'] = true;
-                    $_buttons['stop']['enabled'] = false;
-                    $_buttons['export']['enabled'] = true;
+                    $_buttons['start']['enabled'] = false;
+                    $_buttons['stop']['enabled'] = true;
+                    $_buttons['export']['enabled'] = false;
                     $_buttons['delete']['enabled'] = true;
                     $_buttons['import']['enabled'] = false;
                     break;
@@ -659,7 +654,7 @@ HTML;
                     $_buttons['stop']['enabled'] = true;
                     $_buttons['export']['enabled'] = true;
                     $_buttons['delete']['enabled'] = true;
-                    $_buttons['import']['enabled'] = true;
+                    $_buttons['import']['enabled'] = false;
                     break;
             }
         }
@@ -675,6 +670,7 @@ HTML;
                         $_buttons['export']['enabled'] = true;
                         $_buttons['import']['enabled'] = true;
                         $_buttons['delete']['enabled'] = true;
+                        $_buttons['start']['enabled'] = false;
                     }
                     break;
 
@@ -709,7 +705,10 @@ HTML;
                 $_hint = 'data-toggle="tooltip" title="' . $_hint . '"';
             }
 
-            if ( ( !isset( $instance->vendor_id ) || GuestLocations::DFE_CLUSTER == $instance->vendor_id ) && $_buttonName == 'start' )
+            if ( $instance->guest_location_nbr == GuestLocations::DFE_CLUSTER &&
+                $_buttonName == 'start' &&
+                $instance->state_nbr == ProvisionStates::PROVISIONED
+            )
             {
                 $_href = config( 'dashboard.default-domain-protocol', 'https' ) . '://' . $instance->instance_name_text . $this->_defaultDomain;
                 $_button['text'] = 'Launch!';
@@ -722,21 +721,21 @@ HTML;
             }
 
             $_html .= <<<HTML
-  <a id="dspcontrol___{$_buttonName}___{$instance->instance_name_text}" class="btn btn-xs btn-{$_button['color']} {$_disabledClass}" {$_disabled} href="{$_href}" {$_hint}><i class="fa fa-{$_button['icon']}"></i> {$_button['text']}</a>
+  <a id="dspcontrol___{$_buttonName}___{$instance->instance_name_text}" class="btn btn-xs btn-{$_button['color']} {$_disabledClass} col-xs-2 col-sm-2" {$_disabled} href="{$_href}" {$_hint}><i class="fa fa-{$_button['icon']}"></i><span class="hidden-sm hidden-xs"> {$_button['text']}</span></a>
 HTML;
         }
 
         $_gettingStartedButton =
-            '<a class="btn btn-xs btn-info dsp-help-button" id="dspcontrol-' .
+            '<a class="btn btn-xs btn-info col-xs-2 col-sm-2 dsp-help-button" id="dspcontrol-' .
             $instance->instance_name_text .
-            '" data-placement="left" title="Help" target="_blank" href="' .
+            '" data-placement="middle" title="Help" target="_blank" href="' .
             config( 'dashboard.help-button-url' ) .
-            '"><i class="fa fa-question-circle"></i> Help</a>';
+            '"><i style="margin-right: 0;" class="fa fa-question-circle"></i></a>';
 
         $_html = <<<HTML
-<div class="btn2-group">
-{$_html}
-{$_gettingStartedButton}
+<div class="btn2-group row">
+    {$_html}
+    {$_gettingStartedButton}
 </div>
 HTML;
 
