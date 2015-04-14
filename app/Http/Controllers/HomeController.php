@@ -17,6 +17,13 @@ class HomeController extends BaseController
     {
         //  require auth'd users
         $this->middleware( 'auth' );
+
+        if ( config('dashboard.require-captcha') && $request->isMethod( Request::METHOD_POST ))
+        {
+            $_validator = new Model
+            $_key = $request->input('g-captcha-response');
+            if ( )
+        }
     }
 
     /**

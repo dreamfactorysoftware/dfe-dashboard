@@ -44,6 +44,7 @@
 		"league/flysystem-ziparchive": "*",
 		"wpb/string-blade-compiler":   "2.*@dev",
 		"guzzlehttp/guzzle":           "~4.0",
+		"marwelln/recaptcha":          "dev-master",
 		"dreamfactory/php-utils":      "*",
 		"dreamfactory/fabric-common":  "dev-develop as dev-master",
 		"dreamfactory/fabric-db":      "dev-develop as dev-master",

@@ -319,10 +319,10 @@ table.dataTable thead th {
 }
 
 .panel-title {
-	position:    relative;;
+	position:    relative;
 	min-height:  18px;
 	line-height: 18px;
-	font-size:   15px;
+	font-size:   14px;
 }
 
 .dsp-help-button {
@@ -366,7 +366,7 @@ a[id^="dspcontrol___"]:last-child {
 	color:           #000000;
 	text-decoration: none;
 	margin:          0;
-	font-size:       28px;
+	font-size:       19px;
 	font-weight:     400;
 	font-family:     "Montserrat", "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -412,6 +412,7 @@ a[id^="dspcontrol___"]:last-child {
 	position:    relative;
 	color:       #4f4e4e;
 	font-family: "Montserrat", "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size:   11px;
 }
 
 .panel-dsp .panel-body .dsp-links {
@@ -435,8 +436,12 @@ a[id^="dspcontrol___"]:last-child {
 	white-space: nowrap;
 }
 
+.text-muted.text-faded {
+	font-size: 11px;
+}
+
 .instance-heading-status .fa.fa-fw {
-	color:   #FFFFFF;
+	color:   #ffffff;
 	opacity: .75;
 }
 

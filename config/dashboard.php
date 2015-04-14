@@ -2,6 +2,7 @@
 //******************************************************************************
 //* DFE Dashboard Specific Settings
 //******************************************************************************
+
 return [
     //******************************************************************************
     //* General
@@ -31,9 +32,13 @@ return [
     ],
     /** FontAwesome icons to use */
     'icons'                    => [
-        'instance-up'   => 'fa-thumbs-o-up',
-        'instance-down' => 'fa-thumbs-o-down',
-        'instance-dead' => 'fa-ambulance',
+        'spinner'     => 'fa fa-spinner fa-spin text-info',
+        'up'          => 'fa-thumbs-o-up',
+        'down'        => 'fa-thumbs-o-down',
+        'starting'    => 'fa fa-spinner fa-spin text-success',
+        'stopping'    => 'fa fa-spinner fa-spin text-warning',
+        'terminating' => 'fa fa-spinner fa-spin text-danger',
+        'dead'        => 'fa-ambulance',
     ],
     'instances-per-row'        => 4,
     'new-instance-html'        => '<p>Please enter the name of the new instance below, or you may keep the name we have selected for you. Letters, numbers, and dashes are the only characters allowed.</p>',

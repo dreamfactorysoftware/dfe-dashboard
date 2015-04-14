@@ -27,15 +27,6 @@ class DashboardService extends BaseService
     use EntityLookup;
 
     //*************************************************************************
-    //* Constants
-    //*************************************************************************
-
-    /**
-     * @var string
-     */
-    const SPINNING_ICON = 'fa fa-spinner fa-spin text-warning';
-
-    //*************************************************************************
     //* Variables
     //*************************************************************************
 
@@ -97,7 +88,7 @@ class DashboardService extends BaseService
             $this->_instancesPerRow = 4;
         }
 
-        $this->_determineGridClasses();
+        $this->_determineGridLayout();
     }
 
     /**
@@ -111,31 +102,31 @@ class DashboardService extends BaseService
         $this->_request = $request;
 
         $id = $id ?: $request->input( 'id' );
+        $_command = $request->input( 'control' );
 
         if ( $request->isMethod( Request::METHOD_POST ) )
         {
-            if ( empty( $id ) )
+            if ( empty( $id ) || empty( $_command ) )
             {
-                abort( Response::HTTP_BAD_REQUEST );
+
+                $this->_request = null;
+
+                return ErrorPacket::make( null, Response::HTTP_BAD_REQUEST );
             }
 
             //	Handle the request
-            $_command = $request->input( 'control' );
-
-            if ( !empty( $_command ) )
+            if ( $this->_requireCaptcha )
             {
-                if ( $this->_requireCaptcha )
-                {
 //                    $_captcha = new Captcha();
 //                    $_captcha->setPrivateKey( config( 'dashboard.recaptcha.private_key' ) );
 //                    $_captcha->timeout = 30;
-                }
+            }
 
-                switch ( $_command )
-                {
-                    case 'create':
-                        if ( $this->_requireCaptcha )
-                        {
+            switch ( $_command )
+            {
+                case 'create':
+                    if ( $this->_requireCaptcha )
+                    {
 //                            try
 //                            {
 //                                //    Check captcha...
@@ -151,53 +142,48 @@ class DashboardService extends BaseService
 //
 //                                return false;
 //                            }
-                        }
+                    }
 
-                        $this->provisionInstance( $id, true, false );
-                        break;
+                    $this->provisionInstance( $id, true, false );
+                    break;
 
-                    case 'create-remote':
-                        $this->provisionInstance( $id, false, true );
-                        break;
+                case 'create-remote':
+                    $this->provisionInstance( $id, false, true );
+                    break;
 
-                    case 'destroy':
-                    case 'delete':
-                        $this->deprovisionInstance( $id );
-                        break;
+                case 'destroy':
+                case 'delete':
+                    $this->deprovisionInstance( $id );
+                    break;
 
-                    case 'start':
-                        $this->startInstance( $id );
-                        break;
+                case 'start':
+                    $this->startInstance( $id );
+                    break;
 
-                    case 'stop':
-                        $this->stopInstance( $id );
-                        break;
+                case 'stop':
+                    $this->stopInstance( $id );
+                    break;
 
-                    case 'export':
-                    case 'snapshot':
-                        $this->exportInstance( $id );
-                        break;
+                case 'export':
+                case 'snapshot':
+                    $this->exportInstance( $id );
+                    break;
 
-                    case 'snapshots':
-                        $this->_instanceSnapshots( $id );
-                        break;
+                case 'snapshots':
+                    $this->_instanceSnapshots( $id );
+                    break;
 
-                    case 'migrate':
-                    case 'import':
-                        $this->importInstance( $id );
-                        break;
+                case 'migrate':
+                case 'import':
+                    $this->importInstance( $id );
+                    break;
 
-                    case 'status':
-                        return $this->_instanceStatus( $id );
-                }
+                case 'status':
+                    return $this->_instanceStatus( $id );
             }
-
-            return true;
         }
 
-        $this->_request = null;
-
-        return false;
+        return true;
     }
 
     /**
@@ -224,16 +210,11 @@ class DashboardService extends BaseService
         $_status->deleted = false;
         $_status->icons = $this->getStatusIcon( $_status );
         $_status->buttons = $this->getDspControls( $_status );
+        $_status->panelIcons = $this->_getPanelIcons( $_status );
 
         if ( ProvisionStates::PROVISIONED == $_status->state_nbr )
         {
-            $_status->link =
-                '<a href="https://' .
-                $_status->instance_name_text .
-                $this->_defaultDomain .
-                '" target="_blank" class="dsp-launch-link">' .
-                $_status->instance_name_text .
-                '</a>';
+            $_status->link = $this->_buildInstanceLink( $_status );
         }
 
         return $_status;
@@ -510,6 +491,7 @@ class DashboardService extends BaseService
                         'statusIcon'    => $_statusIcon,
                         'instanceName'  => $_model->instance_name_text,
                         'targetContent' => $_instanceHtml,
+                        'panelIcons'    => $this->_getPanelIcons( $_model ),
                     );
 
                     if ( $forRender )
@@ -1066,7 +1048,10 @@ HTML;
         return $asArray ? $_rendered : implode( PHP_EOL, $_rendered );
     }
 
-    protected function _determineGridClasses()
+    /**
+     * Based on the configured number of instances per row, set the appropriate grid classes.
+     */
+    protected function _determineGridLayout()
     {
         switch ( $this->_instancesPerRow )
         {
@@ -1077,15 +1062,93 @@ HTML;
                 $this->_columnClass = 'col-xs-12 col-sm-6 col-md-6';
                 break;
             case 3:
-                $this->_columnClass = 'col-xs-12 col-sm-6 col-md-3';
+                $this->_columnClass = 'col-xs-6 col-sm-6 col-md-4';
                 break;
             case 4:
                 //  4 per row, col-md-3 x 4 = 12
-                $this->_columnClass = 'col-xs-12 col-sm-4 col-md-3';
+                $this->_columnClass = 'col-xs-6 col-sm-4 col-md-3';
                 break;
             default:
                 $this->_columnClass = null;
                 break;
         }
+    }
+
+    /**
+     * @param \stdClass $status
+     *
+     * @return array [:icon, :message]
+     */
+    protected function _getPanelIcons( $status )
+    {
+        $_message = null;
+        $_icon = $_spinner = config( 'dashboard.icons.spinner', DashboardDefaults::SPINNING_ICON );
+
+        switch ( $status->state_nbr )
+        {
+            case ProvisionStates::CREATION_ERROR:
+            case ProvisionStates::PROVISIONING_ERROR:
+            case ProvisionStates::DEPROVISIONING_ERROR:
+                $_message = \Lang::get( 'dashboard.provision-error' );
+                $_icon = config( 'dashboard.icons.dead' );
+                break;
+
+            case ProvisionStates::CREATED:
+            case ProvisionStates::PROVISIONING:
+                $_message = \Lang::get( 'dashboard.provision-starting' );
+                $_icon = $_spinner;
+                break;
+
+            case ProvisionStates::DEPROVISIONING:
+                $_icon = $_spinner;
+                $_message = \Lang::get( 'dashboard.provision-stopping' );
+                break;
+
+            case ProvisionStates::PROVISIONED:
+                $_message = \Lang::get( 'dashboard.provision-up' );
+                break;
+
+            case ProvisionStates::DEPROVISIONED:
+                $_icon = config( 'dashboard.icons.instance-dead' );;
+                $_message = \Lang::get( 'dashboard.provision-dead' );
+                break;
+
+            default:
+                $_icon = $_spinner;
+                $_message = \Lang::get( 'dashboard.provision-other' );
+                break;
+        }
+
+        return array('icon' => $_icon, 'message' => $_message);
+    }
+
+    /**
+     * Create an HTML <A> with link to help info
+     *
+     * @param \stdClass|Instance $status
+     *
+     * @return string
+     */
+    protected function _buildHelpButton( $instance )
+    {
+        return
+            '<a class="btn btn-xs btn-info col-xs-2 col-sm-2 dsp-help-button" id="dspcontrol-' . $instance->instance_name_text .
+            '" data-placement="middle" title="Help" target="_blank" href="' . config( 'dashboard.help-button-url' ) .
+            '"><i style="margin-right: 0;" class="fa fa-question-circle"></i></a>';
+
+    }
+
+    /**
+     * Create an HTML <A> with a link to the given instance
+     *
+     * @param \stdClass|Instance $status
+     *
+     * @return string
+     */
+    protected function _buildInstanceLink( $status )
+    {
+        return
+            '<a href="https://' . $status->instance_name_text . $this->_defaultDomain . '" ' .
+            'target="_blank" class="dsp-launch-link">' . $status->instance_name_text . '</a>';
     }
 }

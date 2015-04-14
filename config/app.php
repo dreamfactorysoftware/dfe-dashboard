@@ -51,6 +51,7 @@ return [
         /** DreamFactory Ops Client Provider */
         'DreamFactory\Enterprise\Console\Ops\Providers\OpsClientServiceProvider',
         /** 3rd-party Service Providers */
+        'Marwelln\Recaptcha\RecaptchaServiceProvider',
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
     ],
     //******************************************************************************
