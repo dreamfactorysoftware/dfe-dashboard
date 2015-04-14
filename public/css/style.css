@@ -279,6 +279,15 @@ table.dataTable thead th {
 
 .page-content {
 	margin: 15px;
+	height: 100%;
+}
+
+#form-provision > .clearfix:first-of-type {
+	margin-top: 25px;
+}
+
+#form-import > .clearfix:first-of-type {
+	margin-top: -3px;
 }
 
 .footer {
@@ -322,7 +331,11 @@ table.dataTable thead th {
 	position:    relative;
 	min-height:  18px;
 	line-height: 18px;
-	font-size:   14px;
+	font-size:   17px;
+}
+
+.dsp-list > .panel-title {
+	font-size: 11px;
 }
 
 .dsp-help-button {
@@ -384,6 +397,7 @@ a[id^="dspcontrol___"]:last-child {
 
 .panel {
 	overflow: hidden;
+	height:   100%;
 }
 
 .panel-body {
@@ -466,6 +480,10 @@ label[for="import-file-label"] {
 	font-size: 17px;
 }
 
+label[for="dsp_name"] {
+	padding-top: 11px;
+}
+
 .instance-heading-status.pull-right {
 	position: absolute;
 	top:      -1px;
@@ -546,6 +564,14 @@ label[for="import-file-label"] {
 	background-image: linear-gradient(to right, rgba(52, 152, 219, 1), transparent);
 }
 
+.g-recaptcha + .help-block {
+	margin-top: -10px;
+}
+
+#form-import > div.form-group:first-child {
+	margin-top: 74px
+}
+
 @media (max-width: 1024px) {
 	.dsp-list > .panel-body {
 		padding: 5px 10px;
@@ -576,7 +602,7 @@ label[for="import-file-label"] {
 
 @media (max-width: 1024px) {
 	.panel-title {
-		font-size: 13px;
+		font-size: 14px;
 	}
 
 	.dsp-icon.dsp-real i.fa-3x {

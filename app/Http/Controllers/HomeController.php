@@ -17,13 +17,6 @@ class HomeController extends BaseController
     {
         //  require auth'd users
         $this->middleware( 'auth' );
-
-        if ( config('dashboard.require-captcha') && $request->isMethod( Request::METHOD_POST ))
-        {
-            $_validator = new Model
-            $_key = $request->input('g-captcha-response');
-            if ( )
-        }
     }
 
     /**
@@ -47,6 +40,8 @@ class HomeController extends BaseController
      */
     public function control( Request $request, $id = null )
     {
+        $this->_validateCaptcha( $request );
+
         $_response = Dashboard::handleRequest( $request, $id );
 
         return \Redirect::home();
@@ -67,21 +62,11 @@ class HomeController extends BaseController
         /** @type User $_user */
         $_user = \Auth::user();
 
-        $_dspList = Dashboard::instanceTable( $_user, null, true );
-
-        $_panelGroup = view(
-            'layouts.partials._dashboard_group',
-            [
-                'groupId'   => 'dsp_list',
-                'groupHtml' => Dashboard::renderInstances( $_dspList, false ),
-            ]
-        )->render();
-
         return view(
             'app.home',
             [
                 'defaultDomain'    => $_defaultDomain,
-                'panelGroup'       => $_panelGroup,
+                'panelGroup'       => Dashboard::instanceTable( $_user, null, false ),
                 'message'          => $_message,
                 'isAdmin'          => $_user->admin_ind,
                 'displayName'      => $_user->display_name_text,
@@ -118,5 +103,34 @@ class HomeController extends BaseController
         }
 
         return $_result;
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return bool
+     */
+    protected function _validateCaptcha( $request )
+    {
+        //  If captcha is on, check it...
+        if ( config( 'dashboard.require-captcha' ) && $request->isMethod( Request::METHOD_POST ) )
+        {
+            $_validator = \Validator::make(
+                \Input::all(),
+                [
+                    'g-recaptcha-response' => 'required|recaptcha'
+                ]
+            );
+
+            if ( !$_validator->passes() )
+            {
+                \Log::error( 'recaptcha failure: ' . print_r( $_validator->errors()->all(), true ) );
+                \Session::flash( 'dashboard-failure', 'There was a problem with your request.' );
+
+                return false;
+            }
+        }
+
+        return true;
     }
 }

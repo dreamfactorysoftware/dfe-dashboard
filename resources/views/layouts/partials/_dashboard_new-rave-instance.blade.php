@@ -6,7 +6,6 @@
 use DreamFactory\Library\Fabric\Database\Enums\GuestLocations;
 use DreamFactory\Library\Utility\Inflector;
 
-$_captchaHtml = $_html = null;
 $_requireCaptcha = config( 'dashboard.require-captcha' );
 
 if ( $_requireCaptcha )
@@ -39,44 +38,47 @@ $_guest = GuestLocations::DFE_CLUSTER;
 <div class="panel panel-{{ config('dashboard.panel-context','info') }} panel-dsp">
 	<div class="panel-heading" role="tab">
 		<h4 class="panel-title">
-			<span class="instance-heading-dsp-name pull-left"><i class="fa fa-fw fa-asterisk"></i>Need an instance?</span>
+			<span class="instance-heading-dsp-name pull-left"><i class="fa fa-fw fa-asterisk"></i>{{ \Lang::get('dashboard.instance-create-title') }}</span>
 		</h4>
 	</div>
 	<div id="dsp_new"
 		 class="panel-body-open"
 		 role="tabpanel"
 		 aria-labelledby="heading-dsp_list">
-		<div class="panel-body"><h3 class="dsp-box-heading">Create a New Instance</h3>
-
+		<div class="panel-body">
 			<div class="dsp-info">
 				<form id="form-provision" class="form-vertical" method="POST">
 					<input type="hidden" name="_token" value="{{ $_token }}">
 					<input type="hidden" name="_provisioner" value="{{ $_guest }}">
-					{!! config('dashboard.new-instance-html') !!}
+					{!! \Lang::get('dashboard.instance-create') !!}
 					<div class="clearfix"></div>
 
 					<div class="form-group">
-						<label for="dsp_name" class="col-md-2 control-label">Instance Name</label>
+						<label for="dsp_name" class="col-md-2 control-label">{{ \Lang::get('dashboard.instance-name-label') }}</label>
 						<div class="col-md-10">
 							<div class="input-group">
 								<input type="text" required name="id" id="dsp_name" class="form-control" placeholder="{{ $_dspName }}">
 								<span class="input-group-addon">{{ $defaultDomain }}</span>
 							</div>
-							<p class="help-block"
-							   style="margin-top:2px;font-size: 13px;color:#888;">This may take a minute. We will send you an email when your platform is ready.</p>
 						</div>
 					</div>
 
-					{{ $_captchaHtml }}
+					<div class="form-group form-group-recaptcha">
+						<label for="dsp_name" class="col-md-2 control-label"></label>
+						<div class="col-md-10">
+							<div id="rc-create" class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
+							<p class="help-block" style="margin-top:2px;font-size: 13px;color:#888;">{!! \Lang::get('dashboard.instance-proof-text') !!}</p>
+						</div>
+					</div>
 
 					<div class="dsp-links">
-						<button id="start-trial" type="submit" class="btn btn-primary btn-warning"><i class="fa fa-fw fa-rocket"
-																									  style="margin-right: 8px;"></i> Create
+						<hr class="hr" />
+						<button id="start-trial" type="submit" class="btn btn-primary btn-success"><i class="fa fa-fw fa-rocket"
+																									  style="margin-right: 8px;"></i> {{ \Lang::get('dashboard.instance-create-button-text') }}
 						</button>
 					</div>
 
 					<input type="hidden" name="control" value="create">
-					<div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
 				</form>
 			</div>
 

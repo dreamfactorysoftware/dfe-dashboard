@@ -479,7 +479,7 @@ class DashboardService extends BaseService
                         continue;
                     }
 
-                    list( $_divId, $_instanceHtml, $_statusIcon ) = $this->formatInstance( $_model );
+                    list( $_divId, $_instanceHtml, $_icons ) = $this->formatInstance( $_model );
 
                     $_item = array(
                         'instance'      => $_model,
@@ -488,10 +488,10 @@ class DashboardService extends BaseService
                         'targetRel'     => $_model->id,
                         'opened'        => false,
                         'defaultDomain' => $this->_defaultDomain,
-                        'statusIcon'    => $_statusIcon,
+                        'statusIcon'    => $_icons['icon'],
                         'instanceName'  => $_model->instance_name_text,
                         'targetContent' => $_instanceHtml,
-                        'panelIcons'    => $this->_getPanelIcons( $_model ),
+                        'panelIcons'    => $_icons,
                     );
 
                     if ( $forRender )
@@ -520,7 +520,7 @@ class DashboardService extends BaseService
      */
     public function formatInstance( &$instance, $how = null )
     {
-        list( $_icon, $_statusIcon, $_message, $_running ) = $this->getStatusIcon( $instance );
+        $_icons = $this->_getPanelIcons( $instance );
 
         if ( empty( $instance->instance_id_text ) )
         {
@@ -543,23 +543,15 @@ class DashboardService extends BaseService
             $_instanceLink = $instance->instance_name_text;
         }
 
-        if ( $this->_isIconClass( $_icon ) )
-        {
-            $_icon = '<i class="fa ' . $_icon . ' fa-3x"></i>';
-        }
+        $_icon = $_icons['icon'] ? '<i class="fa ' . $_icons['icon'] . ' fa-3x"></i>' : null;
 
-        $_html = <<<HTML
-	<div class="dsp-icon well pull-left dsp-real text-success">{$_icon}</div>
-	<div class="dsp-info">
-		<div class="dsp-name">{$_instanceLink}</div>
-		<div class="dsp-stats">{$_message}</div>
-		<div class="dsp-links">
-    		<div class="dsp-controls">{$_html}</div>
-		</div>
-	</div>
-HTML;
+        $_html =
+            view(
+                'layouts.partials._dashboard_inner-item',
+                ['instanceLink' => $_instanceLink, 'icon' => $_icon, 'message' => $_icons['message'], 'html' => $_html]
+            )->render();
 
-        return array($_divId, $_html, $_statusIcon, $_instanceLinkText);
+        return array($_divId, $_html, $_icons);
     }
 
     /**
@@ -733,6 +725,7 @@ HTML;
     public function getStatusIcon( $status, $key = false )
     {
         $_statusIcon = config( 'dashboard.icons.instance-up' );
+        $_spinner = config( 'dashboard.icons.spinner' );
         $_icon = config( 'dashboard.icons.instance-up' );
         $_message = null;
         $_running = false;
@@ -740,19 +733,19 @@ HTML;
         switch ( $status->state_nbr )
         {
             default:
-                $_statusIcon = $_icon = static::SPINNING_ICON;
+                $_statusIcon = $_icon = $_spinner;
                 $_message =
                     'Your request is being processed.';
                 break;
 
             case ProvisionStates::CREATED:
             case ProvisionStates::PROVISIONING:
-                $_statusIcon = $_icon = static::SPINNING_ICON;
+                $_statusIcon = $_icon = $_spinner;
                 $_message = 'Your instance is being created, with lots of love! You will receive an email when it is ready.';
                 break;
 
             case ProvisionStates::DEPROVISIONING:
-                $_statusIcon = $_icon = static::SPINNING_ICON;
+                $_statusIcon = $_icon = $_spinner;
                 $_message = 'This instance is shutting down.';
                 break;
 
@@ -874,7 +867,7 @@ HTML;
     {
         return ( 'icon-' == substr( $class, 0, 5 ) ||
             'fa-' == substr( $class, 0, 3 ) ||
-            $class == static::SPINNING_ICON );
+            $class == config( 'dashboard.icons.spinner', DashboardDefaults::SPINNING_ICON ) );
     }
 
     /**
@@ -1089,33 +1082,33 @@ HTML;
             case ProvisionStates::CREATION_ERROR:
             case ProvisionStates::PROVISIONING_ERROR:
             case ProvisionStates::DEPROVISIONING_ERROR:
-                $_message = \Lang::get( 'dashboard.provision-error' );
+                $_message = \Lang::get( 'dashboard.status-error' );
                 $_icon = config( 'dashboard.icons.dead' );
                 break;
 
             case ProvisionStates::CREATED:
             case ProvisionStates::PROVISIONING:
-                $_message = \Lang::get( 'dashboard.provision-starting' );
+                $_message = \Lang::get( 'dashboard.status-starting' );
                 $_icon = $_spinner;
                 break;
 
             case ProvisionStates::DEPROVISIONING:
                 $_icon = $_spinner;
-                $_message = \Lang::get( 'dashboard.provision-stopping' );
+                $_message = \Lang::get( 'dashboard.status-stopping' );
                 break;
 
             case ProvisionStates::PROVISIONED:
-                $_message = \Lang::get( 'dashboard.provision-up' );
+                $_message = \Lang::get( 'dashboard.status-up' );
                 break;
 
             case ProvisionStates::DEPROVISIONED:
                 $_icon = config( 'dashboard.icons.instance-dead' );;
-                $_message = \Lang::get( 'dashboard.provision-dead' );
+                $_message = \Lang::get( 'dashboard.status-dead' );
                 break;
 
             default:
                 $_icon = $_spinner;
-                $_message = \Lang::get( 'dashboard.provision-other' );
+                $_message = \Lang::get( 'dashboard.status-other' );
                 break;
         }
 

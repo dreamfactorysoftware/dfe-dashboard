@@ -20,7 +20,19 @@
 
 	@section('head-scripts')
 	@show
-	<script src='https://www.google.com/recaptcha/api.js'></script>
+	<script type="text/javascript">
+	var _rcCallback = function() {
+		alert('loaded');
+		var _gr = {
+			'sitekey': '6LdJVwUTAAAAAEOFCLUsZ9_CfWPo2Svk2jJ2jO3P',
+			'theme':   'light'
+		};
+
+		grecaptcha.render('#rc-create', _gr);
+		grecaptcha.render('#rc-import', _gr);
+	};
+	</script>
+	<script src="https://www.google.com/recaptcha/api.js?onload=_rcCallback&render=explicit" async defer></script>
 </head>
 <body class="@yield('body-class')">
 

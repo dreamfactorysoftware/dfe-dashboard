@@ -63,12 +63,6 @@ HTML;
 		{!! $panelGroup !!}
 	</div>
 
-	<div class="row">
-		<div class="col-xs-12 col-md-12">
-			@include( 'layouts.partials._dashboard_import-snapshot')
-		</div>
-	</div>
-
 	<form id="_dsp-control" method="POST">
 		<input type="hidden" name="id" value="">
 		<input type="hidden" name="control" value="">
