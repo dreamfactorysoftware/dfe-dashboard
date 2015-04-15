@@ -529,7 +529,7 @@ class DashboardService extends BaseService
 
         $_divId = $this->divId( 'dsp', $instance );
 
-        $_instanceLinkText = $_linkLink = null;
+        $_linkLink = null;
         $_html = $this->getDspControls( $instance, $_buttons );
 
         if ( $instance->state_nbr == ProvisionStates::PROVISIONED )

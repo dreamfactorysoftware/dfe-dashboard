@@ -327,6 +327,10 @@ table.dataTable thead th {
 	overflow: hidden;
 }
 
+.panel-description {
+	height: 80px;
+}
+
 .panel-title {
 	position:    relative;
 	min-height:  18px;

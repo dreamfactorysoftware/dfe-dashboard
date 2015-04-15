@@ -11571,5 +11571,409 @@ namespace {
     }
 
 
+    class Dashboard extends \DreamFactory\Enterprise\Dashboard\Facades\Dashboard{
+        
+        /**
+         * 
+         *
+         * @param \Illuminate\Http\Request $request
+         * @param string|int $id
+         * @return bool|mixed|\stdClass|void 
+         * @static 
+         */
+        public static function handleRequest($request, $id = null){
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::handleRequest($request, $id);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $instanceId
+         * @param bool $trial
+         * @param bool $remote If true, create instance on user's account
+         * @return bool|mixed|\stdClass 
+         * @static 
+         */
+        public static function provisionInstance($instanceId, $trial = false, $remote = false){
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::provisionInstance($instanceId, $trial, $remote);
+        }
+        
+        /**
+         * 
+         *
+         * @param string|int $instanceId
+         * @return bool|mixed|\stdClass 
+         * @static 
+         */
+        public static function deprovisionInstance($instanceId){
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::deprovisionInstance($instanceId);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $instanceId
+         * @return bool|mixed|\stdClass 
+         * @static 
+         */
+        public static function stopInstance($instanceId){
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::stopInstance($instanceId);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $instanceId
+         * @return bool|mixed|\stdClass 
+         * @static 
+         */
+        public static function startInstance($instanceId){
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::startInstance($instanceId);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $instanceId
+         * @param bool $trial
+         * @return bool|mixed|\stdClass 
+         * @static 
+         */
+        public static function exportInstance($instanceId, $trial = true){
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::exportInstance($instanceId, $trial);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $instanceId
+         * @return bool|mixed|\stdClass 
+         * @static 
+         */
+        public static function importInstance($instanceId){
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::importInstance($instanceId);
+        }
+        
+        /**
+         * 
+         *
+         * @return bool|mixed|\stdClass 
+         * @static 
+         */
+        public static function getInstances(){
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::getInstances();
+        }
+        
+        /**
+         * 
+         *
+         * @param $user
+         * @param array $columns
+         * @param bool $forRender
+         * @return array|null|string 
+         * @static 
+         */
+        public static function instanceTable($user, $columns = null, $forRender = false){
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::instanceTable($user, $columns, $forRender);
+        }
+        
+        /**
+         * 
+         *
+         * @param \stdClass $instance
+         * @param int $how n/
+         * @return string 
+         * @static 
+         */
+        public static function formatInstance($instance, $how = null){
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::formatInstance($instance, $how);
+        }
+        
+        /**
+         * Formats the button panel for an individual DSP
+         *
+         * @param \stdClass $instance
+         * @param array $buttons
+         * @return string 
+         * @static 
+         */
+        public static function getDspControls($instance, $buttons = null){
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::getDspControls($instance, $buttons);
+        }
+        
+        /**
+         * 
+         *
+         * @param \stdClass $status
+         * @param bool $key
+         * @return array 
+         * @static 
+         */
+        public static function getStatusIcon($status, $key = false){
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::getStatusIcon($status, $key);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $prefix
+         * @param object $instance
+         * @param bool $key
+         * @return string 
+         * @static 
+         */
+        public static function divId($prefix, $instance, $key = false){
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::divId($prefix, $instance, $key);
+        }
+        
+        /**
+         * Get a hashed id suitable for framing
+         *
+         * @param string $valueToHash
+         * @return string 
+         * @static 
+         */
+        public static function hashId($valueToHash){
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::hashId($valueToHash);
+        }
+        
+        /**
+         * 
+         *
+         * @return \DreamFactory\Enterprise\Dashboard\Services\User 
+         * @static 
+         */
+        public static function getUser(){
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::getUser();
+        }
+        
+        /**
+         * Builds a list of enabled providers based on files in the templates directory
+         *
+         * @return string 
+         * @static 
+         */
+        public static function buildProviderList(){
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::buildProviderList();
+        }
+        
+        /**
+         * 
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getDefaultDomain(){
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::getDefaultDomain();
+        }
+        
+        /**
+         * 
+         *
+         * @return boolean 
+         * @static 
+         */
+        public static function isEnableCaptcha(){
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::isEnableCaptcha();
+        }
+        
+        /**
+         * Renders an instance view
+         *
+         * @param array $data
+         * @return string 
+         * @static 
+         */
+        public static function renderInstance($data = array()){
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::renderInstance($data);
+        }
+        
+        /**
+         * Renders multiple instance views
+         *
+         * @param array $instances
+         * @param bool $asArray If true, the instances are returned rendered into an array. If false, a single string is returned
+         * @return array|string 
+         * @static 
+         */
+        public static function renderInstances($instances = array(), $asArray = true){
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::renderInstances($instances, $asArray);
+        }
+        
+        /**
+         * Perform any service initialization
+         *
+         * @static 
+         */
+        public static function boot(){
+            //Method inherited from \DreamFactory\Enterprise\Common\Services\BaseService            
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::boot();
+        }
+        
+        /**
+         * 
+         *
+         * @return \DreamFactory\Enterprise\Common\Services\Application 
+         * @static 
+         */
+        public static function getApplication(){
+            //Method inherited from \DreamFactory\Enterprise\Common\Services\BaseService            
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::getApplication();
+        }
+        
+        /**
+         * System is unusable.
+         *
+         * @param string $message
+         * @param array $context
+         * @return null 
+         * @static 
+         */
+        public static function emergency($message, $context = array()){
+            //Method inherited from \DreamFactory\Enterprise\Common\Services\BaseService            
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::emergency($message, $context);
+        }
+        
+        /**
+         * Action must be taken immediately.
+         * 
+         * Example: Entire website down, database unavailable, etc. This should
+         * trigger the SMS alerts and wake you up.
+         *
+         * @param string $message
+         * @param array $context
+         * @return null 
+         * @static 
+         */
+        public static function alert($message, $context = array()){
+            //Method inherited from \DreamFactory\Enterprise\Common\Services\BaseService            
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::alert($message, $context);
+        }
+        
+        /**
+         * Critical conditions.
+         * 
+         * Example: Application component unavailable, unexpected exception.
+         *
+         * @param string $message
+         * @param array $context
+         * @return null 
+         * @static 
+         */
+        public static function critical($message, $context = array()){
+            //Method inherited from \DreamFactory\Enterprise\Common\Services\BaseService            
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::critical($message, $context);
+        }
+        
+        /**
+         * Runtime errors that do not require immediate action but should typically
+         * be logged and monitored.
+         *
+         * @param string $message
+         * @param array $context
+         * @return null 
+         * @static 
+         */
+        public static function error($message, $context = array()){
+            //Method inherited from \DreamFactory\Enterprise\Common\Services\BaseService            
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::error($message, $context);
+        }
+        
+        /**
+         * Exceptional occurrences that are not errors.
+         * 
+         * Example: Use of deprecated APIs, poor use of an API, undesirable things
+         * that are not necessarily wrong.
+         *
+         * @param string $message
+         * @param array $context
+         * @return null 
+         * @static 
+         */
+        public static function warning($message, $context = array()){
+            //Method inherited from \DreamFactory\Enterprise\Common\Services\BaseService            
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::warning($message, $context);
+        }
+        
+        /**
+         * Normal but significant events.
+         *
+         * @param string $message
+         * @param array $context
+         * @return null 
+         * @static 
+         */
+        public static function notice($message, $context = array()){
+            //Method inherited from \DreamFactory\Enterprise\Common\Services\BaseService            
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::notice($message, $context);
+        }
+        
+        /**
+         * Interesting events.
+         * 
+         * Example: User logs in, SQL logs.
+         *
+         * @param string $message
+         * @param array $context
+         * @return null 
+         * @static 
+         */
+        public static function info($message, $context = array()){
+            //Method inherited from \DreamFactory\Enterprise\Common\Services\BaseService            
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::info($message, $context);
+        }
+        
+        /**
+         * Detailed debug information.
+         *
+         * @param string $message
+         * @param array $context
+         * @return null 
+         * @static 
+         */
+        public static function debug($message, $context = array()){
+            //Method inherited from \DreamFactory\Enterprise\Common\Services\BaseService            
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::debug($message, $context);
+        }
+        
+        /**
+         * Logs with an arbitrary level.
+         *
+         * @param mixed $level
+         * @param string $message
+         * @param array $context
+         * @return null 
+         * @static 
+         */
+        public static function log($level, $message, $context = array()){
+            //Method inherited from \DreamFactory\Enterprise\Common\Services\BaseService            
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::log($level, $message, $context);
+        }
+        
+        /**
+         * 
+         *
+         * @return \Psr\Log\LoggerInterface 
+         * @static 
+         */
+        public static function getLogger(){
+            //Method inherited from \DreamFactory\Enterprise\Common\Services\BaseService            
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::getLogger();
+        }
+        
+        /**
+         * Sets a logger.
+         *
+         * @param \DreamFactory\Enterprise\Common\Services\LoggerInterface $logger
+         * @static 
+         */
+        public static function setLogger($logger){
+            //Method inherited from \DreamFactory\Enterprise\Common\Services\BaseService            
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::setLogger($logger);
+        }
+        
+    }
+
+
 }
 
