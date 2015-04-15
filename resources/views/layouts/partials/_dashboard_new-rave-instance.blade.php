@@ -35,7 +35,7 @@ $_dspName = ( \Auth::user()->admin_ind != 1 ? 'dsp-' : null ) . Inflector::neutr
 $_token = csrf_token();
 $_guest = GuestLocations::DFE_CLUSTER;
 ?>
-<div class="panel panel-{{ config('dashboard.panel-context','info') }} panel-dsp">
+<div class="panel {{ $panelContext }} panel-dsp">
     <div class="panel-heading" role="tab">
         <h4 class="panel-title">
             <span class="instance-heading-dsp-name pull-left"><i class="fa fa-fw fa-asterisk"></i>{{ \Lang::get('dashboard.instance-create-title') }}</span>

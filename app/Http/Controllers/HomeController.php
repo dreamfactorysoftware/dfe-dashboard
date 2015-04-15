@@ -58,6 +58,7 @@ class HomeController extends BaseController
     {
         $_message = isset( $messages ) ? $messages : null;
         $_defaultDomain = config( 'dashboard.default-domain' );
+        $_panelContext = config( 'dashboard.panel-context', 'panel-info' );
 
         /** @type User $_user */
         $_user = \Auth::user();
@@ -72,11 +73,11 @@ class HomeController extends BaseController
                 'displayName'      => $_user->display_name_text,
                 'instanceCreator'  => view(
                     'layouts.partials._dashboard_new-rave-instance',
-                    ['defaultDomain' => $_defaultDomain,]
+                    ['defaultDomain' => $_defaultDomain, 'panelContext' => $_panelContext]
                 )->render(),
                 'snapshotImporter' => view(
                     'layouts.partials._dashboard_import-rave-instance',
-                    ['defaultDomain' => $_defaultDomain, 'snapshotList' => $this->_getSnapshotList(),]
+                    ['defaultDomain' => $_defaultDomain, 'snapshotList' => $this->_getSnapshotList(), 'panelContext' => $_panelContext,]
                 )->render(),
             ]
         );
@@ -132,5 +133,25 @@ class HomeController extends BaseController
         }
 
         return true;
+    }
+
+    /**
+     * Retrieves a dashboard configuration item
+     *
+     * @param string $key
+     * @param mixed  $default
+     *
+     * @return mixed
+     */
+    public function getConfig( $key = null, $default = null )
+    {
+        if ( null === $key )
+        {
+            return config( 'dashboard', [] );
+        }
+
+        $key = 'dashboard.' . $key;
+
+        return \Config::has( $key ) ? config( $key ) : $default;
     }
 }

@@ -9,6 +9,7 @@ return [
     'status-error'                => 'There was an error completing your request.',
     'status-starting'             => 'Your instance is starting up.',
     'status-stopping'             => 'Your instance is shutting down.',
+    'status-terminating'          => 'Your instance is being terminated.',
     'status-up'                   => 'Your instance is up and running.',
     'status-down'                 => 'Your instance is shut down.',
     'status-dead'                 => 'Your instance is terminated.',

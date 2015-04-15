@@ -12,12 +12,13 @@ return [
     /** If true, recaptcha is required on new hosted instances */
     'require-captcha'          => false,
     /** Dashboard UI info and settings */
-    'panel-context'            => 'info',
-    'create-panel-context'     => 'success',
-    'import-panel-context'     => 'warning',
+    'panel-context'            => 'panel-info',
+    'create-panel-context'     => 'panel-success',
+    'import-panel-context'     => 'panel-warning',
     'help-button-url'          => 'http://www.dreamfactory.com/',
-    'default-domain'           => '.cloud.dreamfactory.com',
+    'default-domain'           => env( 'DFE_DEFAULT_DOMAIN', '.cloud.dreamfactory.com' ),
     'default-domain-protocol'  => 'https',
+    'instances-per-row'        => 4,
     /** The console api settings */
     'api-host'                 => 'http://dfe-console.local',
     'api-endpoint'             => '/api/v1',
@@ -26,9 +27,7 @@ return [
     'client-id'                => 'acbab38ec7c7f9eeb97ec957b53857050d8b3b7b753b95ffb31e7161140049ea',
     'client-secret'            => '97b61eb7ad89bb63b6c575a90ffb86f971a7f0914210f84dcc827cd54fac4f27',
     /** Provisioners configured on this dashboard */
-    'provisioners'             => [
-        'rave',
-    ],
+    'provisioners'             => ['rave',],
     /** FontAwesome icons to use */
     'icons'                    => [
         'import'      => 'fa-cloud-upload',
@@ -40,8 +39,8 @@ return [
         'stopping'    => 'fa fa-spinner fa-spin text-warning',
         'terminating' => 'fa fa-spinner fa-spin text-danger',
         'dead'        => 'fa-ambulance',
+        'unknown'     => 'fa-question',
     ],
-    'instances-per-row'        => 4,
     //******************************************************************************
     //* DFE console api overrides
     //******************************************************************************

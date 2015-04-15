@@ -443,7 +443,11 @@ a[id^="dspcontrol___"]:last-child {
 	padding-left: 20px;
 }
 
-.panel-dsp .panel-body .dsp-icon, .panel-dsp .panel-body .key-icon {
+.panel-dsp .panel-body .dsp-icon {
+	margin-right: 15px;
+}
+
+.panel-dsp .panel-body .dsp-icon {
 	margin-right: 15px;
 }
 
@@ -565,7 +569,7 @@ label[for="dsp_name"] {
 }
 
 .text-faded {
-	background-image: linear-gradient(to right, rgba(52, 152, 219, 1), transparent);
+	background-image: linear-gradient(to right, rgba(0, 0, 0, 0), transparent);
 }
 
 .g-recaptcha + .help-block {
@@ -579,6 +583,10 @@ label[for="dsp_name"] {
 @media (max-width: 1024px) {
 	.dsp-list > .panel-body {
 		padding: 5px 10px;
+	}
+
+	.panel-description {
+		font-size: 13px;
 	}
 
 	.panel-heading-instance h4 .instance-heading-status i.fa,

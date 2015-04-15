@@ -11723,7 +11723,7 @@ namespace {
          * @static 
          */
         public static function divId($prefix, $instance, $key = false){
-            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::divId($prefix, $instance, $key);
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::createDivId($prefix, $instance, $key);
         }
         
         /**

@@ -16,6 +16,7 @@ use DreamFactory\Library\Utility\Curl;
 use DreamFactory\Library\Utility\IfSet;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\View\View;
 use Psr\Log\LogLevel;
 
 class DashboardService extends BaseService
@@ -479,28 +480,15 @@ class DashboardService extends BaseService
                         continue;
                     }
 
-                    list( $_divId, $_instanceHtml, $_icons ) = $this->formatInstance( $_model );
-
-                    $_item = array(
-                        'instance'      => $_model,
-                        'groupId'       => 'dsp_list',
-                        'targetId'      => $_divId,
-                        'targetRel'     => $_model->id,
-                        'opened'        => false,
-                        'defaultDomain' => $this->_defaultDomain,
-                        'statusIcon'    => $_icons['icon'],
-                        'instanceName'  => $_model->instance_name_text,
-                        'targetContent' => $_instanceHtml,
-                        'panelIcons'    => $_icons,
-                    );
+                    $_instance = $this->_getInstancePanel( $_model );
 
                     if ( $forRender )
                     {
-                        $_html[] = $_item;
+                        $_html[] = $_instance;
                     }
                     else
                     {
-                        $_html .= $this->renderInstance( $_item );
+                        $_html = $_instance->render();
                     }
 
                     unset( $_model );
@@ -514,20 +502,19 @@ class DashboardService extends BaseService
     /**
      * @param \stdClass $instance
      * @param int       $how
-     *n/
      *
      * @return string
      */
     public function formatInstance( &$instance, $how = null )
     {
-        $_icons = $this->_getPanelIcons( $instance );
-
         if ( empty( $instance->instance_id_text ) )
         {
             $instance->instance_id_text = 'NEW';
         }
 
-        $_divId = $this->divId( 'dsp', $instance );
+        $_icons = $this->_getPanelIcons( $instance );
+
+        $_divId = $this->createDivId( 'dsp', $instance );
 
         $_linkLink = null;
         $_html = $this->getDspControls( $instance, $_buttons );
@@ -760,6 +747,7 @@ HTML;
             case ProvisionStates::PROVISIONED:
                 $_message = 'Your instance is up and running.';
                 $_running = true;
+                $_statusIcon = $_icon = config( 'dashboard.icons.instance-up' );
                 break;
 
             case ProvisionStates::DEPROVISIONED:
@@ -811,15 +799,9 @@ HTML;
      *
      * @return string
      */
-    public function divId( $prefix, $instance, $key = false )
+    public function createDivId( $prefix, $instance, $key = false )
     {
-        return
-            $prefix .
-            '___' .
-            $instance->id .
-            /*$this->hashId( $instance->id ) .*/
-            '___' .
-            ( $key ? $instance->label : $instance->instance_name_text );
+        return implode( '___', [$prefix, $instance->id, ( $key ? $instance->label : $instance->instance_name_text )] );
     }
 
     /**
@@ -1016,9 +998,7 @@ HTML;
      */
     public function renderInstance( $data = [] )
     {
-        $_html = '<div class="' . $this->_columnClass . '">' . \View::make( 'layouts.partials._dashboard_item', $data )->render() . '</div>';
-
-        return $_html;
+        return $this->_getInstancePanel( $data, true );
     }
 
     /**
@@ -1082,14 +1062,14 @@ HTML;
             case ProvisionStates::CREATION_ERROR:
             case ProvisionStates::PROVISIONING_ERROR:
             case ProvisionStates::DEPROVISIONING_ERROR:
-                $_message = \Lang::get( 'dashboard.status-error' );
                 $_icon = config( 'dashboard.icons.dead' );
+                $_message = \Lang::get( 'dashboard.status-error' );
                 break;
 
             case ProvisionStates::CREATED:
             case ProvisionStates::PROVISIONING:
-                $_message = \Lang::get( 'dashboard.status-starting' );
                 $_icon = $_spinner;
+                $_message = \Lang::get( 'dashboard.status-starting' );
                 break;
 
             case ProvisionStates::DEPROVISIONING:
@@ -1098,6 +1078,7 @@ HTML;
                 break;
 
             case ProvisionStates::PROVISIONED:
+                $_icon = config( 'dashboard.icons.up' );
                 $_message = \Lang::get( 'dashboard.status-up' );
                 break;
 
@@ -1143,5 +1124,129 @@ HTML;
         return
             '<a href="https://' . $status->instance_name_text . $this->_defaultDomain . '" ' .
             'target="_blank" class="dsp-launch-link">' . $status->instance_name_text . '</a>';
+    }
+
+    /**
+     * @param \stdClass|Instance $instance
+     * @param bool               $rendered
+     *
+     * @return string|View
+     */
+    protected function _getInstancePanel( $instance, $rendered = false )
+    {
+        $_status = $this->_getInstanceStatus( $instance );
+
+        $_data = [
+            'panelSize'              => $this->_columnClass,
+            'panelContext'           => config( 'dashboard.panel-context', 'panel-info' ),
+            'instanceName'           => $instance->instance_name_text,
+            'defaultDomain'          => config( 'dashboard.default-domain' ),
+            'headerIcon'             => $_status['icon'],
+            'headerIconSize'         => 'fa-1x',
+            'instanceDivId'          => $this->createDivId( 'instance', $instance ),
+            'instanceStatusContext'  => $_status['context'],
+            'instanceStatusIcon'     => $_status['icon'],
+            'instanceStatusIconSize' => 'fa-3x',
+            'instanceStatusText'     => $_status['text'],
+            'instanceUrl'            => config( 'dashboard.default-domain-protocol', 'https' ) .
+                '://' .
+                $instance->instance_name_text .
+                $this->_defaultDomain,
+            'panelButtons'           => $this->_getPanelButtons( $instance ),
+        ];
+
+        $_view = view( 'layouts.partials._dashboard_instance-panel', $_data );
+
+        return $rendered ? $_view->render() : $_view;
+    }
+
+    /**
+     * @param \stdClass|Instance $instance
+     *
+     * @return array
+     */
+    protected function _getInstanceStatus( $instance )
+    {
+        $_spinner = config( 'dashboard.icons.spinner', DashboardDefaults::SPINNING_ICON );
+
+        switch ( $instance->state_nbr )
+        {
+            case ProvisionStates::CREATED:
+                $_icon = $_spinner;
+                $_context = 'btn-success';
+                $_text = \Lang::get( 'dashboard.status-started' );
+                break;
+
+            case ProvisionStates::PROVISIONING:
+                $_icon = $_spinner;
+                $_context = 'btn-info';
+                $_text = \Lang::get( 'dashboard.status-started' );
+                break;
+
+            case ProvisionStates::PROVISIONED:
+                $_icon = config( 'dashboard.icons.instance-up' );
+                $_context = 'btn-success';
+                $_text = \Lang::get( 'dashboard.status-up' );
+                break;
+
+            case ProvisionStates::DEPROVISIONING:
+                $_icon = $_spinner;
+                $_context = 'btn-info';
+                $_text = \Lang::get( 'dashboard.status-stopping' );
+                break;
+
+            case ProvisionStates::DEPROVISIONED:
+                $_icon = config( 'dashboard.icons.instance-terminating' );
+                $_context = 'btn-warning';
+                $_text = \Lang::get( 'dashboard.status-terminating' );
+                break;
+
+            case ProvisionStates::PROVISIONING_ERROR:
+            case ProvisionStates::DEPROVISIONING_ERROR:
+            case ProvisionStates::CREATION_ERROR:
+                $_icon = config( 'dashboard.icons.instance-dead' );
+                $_context = 'btn-danger';
+                $_text = \Lang::get( 'dashboard.status-dead' );
+                break;
+
+            default:
+                $_icon = config( 'dashboard.icons.instance-unknown' );
+                $_context = 'btn-warning';
+                $_text = \Lang::get( 'dashboard.status-dead' );
+                break;
+        }
+
+        return [
+            'icon'    => $_icon,
+            'context' => $_context,
+            'text'    => $_text,
+        ];
+
+    }
+
+    /**
+     * @param \stdClass|Instance $instance
+     *
+     * @return array
+     */
+    protected function _getPanelButtons( $instance )
+    {
+        $_buttons = [
+            'launch' => ['id' => '', 'size' => '', 'context' => 'btn-success', 'icon' => 'fa-play', 'hint' => '', 'text' => 'Launch'],
+            'stop'   => ['id' => '', 'size' => '', 'context' => 'btn-warning', 'icon' => 'fa-stop', 'hint' => '', 'text' => 'Stop'],
+            'import' => ['id' => '', 'size' => '', 'context' => 'btn-warning', 'icon' => 'fa-cloud-upload', 'hint' => '', 'text' => 'Import'],
+            'export' => ['id' => '', 'size' => '', 'context' => 'btn-info', 'icon' => 'fa-cloud-download', 'hint' => '', 'text' => 'Export'],
+            'delete' => ['id' => '', 'size' => '', 'context' => 'btn-danger', 'icon' => 'fa-times', 'hint' => '', 'text' => 'Destroy'],
+            'help'   => [
+                'id'      => 'instance-control-' . $instance->instance_name_text,
+                'size'    => '',
+                'context' => 'btn-danger',
+                'icon'    => 'fa-times',
+                'hint'    => '',
+                'text'    => 'Destroy'
+            ],
+        ];
+
+        return $_buttons;
     }
 }
