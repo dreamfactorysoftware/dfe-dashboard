@@ -65,7 +65,7 @@ var _checkProgress = function() {
 //								_flasher($(item).closest('.accordion-group').find('.instance-heading'), true);
 									   $(item).removeClass('fa-spinner fa-spin').addClass(data.icons[1]);
 									   $(".dsp-icon i", $_inner).removeClass('fa-spinner fa-spin').addClass(data.icons[1]);
-									   $(item).closest('.panel-dsp').fadeOut();
+									   $(item).closest('.panel-instance').fadeOut();
 								   } catch (e) {
 									   //	Ignore
 								   }
@@ -131,13 +131,13 @@ jQuery(function($) {
 			case 'hide':
 				$_element.removeClass('panel-body-open');
 				$_heading.removeClass('instance-heading-shown');
-				$('.instance-heading-dsp-name i.fa-chevron-up', $_heading).removeClass('fa-chevron-up').addClass('fa-chevron-down');
+				$('.instance-heading-name i.fa-chevron-up', $_heading).removeClass('fa-chevron-up').addClass('fa-chevron-down');
 				break;
 
 			case 'show':
 				$_element.addClass('panel-body-open');
 				$_heading.addClass('instance-heading-shown');
-				$('.instance-heading-dsp-name i.fa-chevron-down', $_heading).removeClass('fa-chevron-down').addClass('fa-chevron-up');
+				$('.instance-heading-name i.fa-chevron-down', $_heading).removeClass('fa-chevron-down').addClass('fa-chevron-up');
 				break;
 
 			case 'shown':

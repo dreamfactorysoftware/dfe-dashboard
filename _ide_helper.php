@@ -1,7 +1,7 @@
 <?php
 /**
  * An helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.0.27 on 2015-04-14.
+ * Generated for Laravel 5.0.27 on 2015-04-16.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -11549,6 +11549,17 @@ namespace {
         }
         
         /**
+         * Check if section exists.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */
+        public static function hasSection($name){
+            return \Illuminate\View\Factory::hasSection($name);
+        }
+        
+        /**
          * Get the entire array of sections.
          *
          * @return array 
@@ -11681,7 +11692,7 @@ namespace {
          * 
          *
          * @param \stdClass $instance
-         * @param int $how n/
+         * @param int $how
          * @return string 
          * @static 
          */
@@ -11722,7 +11733,7 @@ namespace {
          * @return string 
          * @static 
          */
-        public static function divId($prefix, $instance, $key = false){
+        public static function createDivId($prefix, $instance, $key = false){
             return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::createDivId($prefix, $instance, $key);
         }
         

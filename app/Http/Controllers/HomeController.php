@@ -1,9 +1,11 @@
 <?php namespace DreamFactory\Enterprise\Dashboard\Http\Controllers;
 
 use DreamFactory\Enterprise\Common\Http\Controllers\BaseController;
+use DreamFactory\Enterprise\Dashboard\Enums\DashboardDefaults;
 use DreamFactory\Enterprise\Dashboard\Facades\Dashboard;
 use DreamFactory\Library\Fabric\Database\Models\Auth\User;
 use DreamFactory\Library\Fabric\Database\Models\Deploy\Snapshot;
+use DreamFactory\Library\Utility\Inflector;
 use Illuminate\Http\Request;
 
 class HomeController extends BaseController
@@ -66,16 +68,22 @@ class HomeController extends BaseController
         return view(
             'app.home',
             [
-                'defaultDomain'    => $_defaultDomain,
-                'panelGroup'       => Dashboard::instanceTable( $_user, null, false ),
-                'message'          => $_message,
-                'isAdmin'          => $_user->admin_ind,
-                'displayName'      => $_user->display_name_text,
-                'instanceCreator'  => view(
+
+                'defaultDomain'       => $_defaultDomain,
+                'panelGroup'          => Dashboard::instanceTable( $_user, null, false ),
+                'message'             => $_message,
+                'isAdmin'             => $_user->admin_ind,
+                'displayName'         => $_user->display_name_text,
+                'defaultInstanceName' =>
+                    ( \Auth::user()->admin_ind != 1
+                        ? config( 'dashboard.instance-prefix', DashboardDefaults::INSTANCE_PREFIX )
+                        : null
+                    ) . Inflector::neutralize( str_replace( ' ', '-', \Auth::user()->display_name_text ) ),
+                'instanceCreator'     => view(
                     'layouts.partials._dashboard_new-rave-instance',
                     ['defaultDomain' => $_defaultDomain, 'panelContext' => $_panelContext]
                 )->render(),
-                'snapshotImporter' => view(
+                'snapshotImporter'    => view(
                     'layouts.partials._dashboard_import-rave-instance',
                     ['defaultDomain' => $_defaultDomain, 'snapshotList' => $this->_getSnapshotList(), 'panelContext' => $_panelContext,]
                 )->render(),

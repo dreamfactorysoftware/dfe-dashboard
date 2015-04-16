@@ -13,16 +13,41 @@ return [
     'view-path'                => base_path() . '/resources/views',
     /** If true, recaptcha is required on new hosted instances */
     'require-captcha'          => false,
+    /** The prefix for all non-admin provisioned instances  */
+    'instance-prefix'          => 'dsp-',
     //******************************************************************************
     //* ui/ux settings
     //******************************************************************************
+    'default-domain'           => env( 'DFE_DEFAULT_DOMAIN', '.cloud.dreamfactory.com' ),
+    'default-domain-protocol'  => 'https',
+    'columns-per-panel'        => DashboardDefaults::COLUMNS_PER_PANEL,
+    'panels'                   => [
+        'create'   => [
+            'context'     => 'panel-success',
+            'template'    => 'layouts.create-instance',
+            'header-icon' => 'fa-asterisk',
+            'body-icon'   => false,
+        ],
+        'import'   => [
+            'context'     => 'panel-warning',
+            'template'    => 'layouts.import-instance',
+            'header-icon' => 'fa-cloud-upload',
+            'body-icon'   => false,
+        ],
+        'instance' => [
+            'context'     => 'panel-info',
+            'template'    => 'layouts.single-instance',
+            'header-icon' => 'fa-thumbs-o-up',
+            'body-icon'   => 'fa-thumbs-o-up',
+            'help-icon'   => 'fa-question',
+            'help-url'    => 'http://www.dreamfactory.com/resources/',
+            'help-text'   => null,
+        ],
+    ],
     'panel-context'            => 'panel-info',
     'create-panel-context'     => 'panel-success',
     'import-panel-context'     => 'panel-warning',
     'help-button-url'          => 'http://www.dreamfactory.com/',
-    'default-domain'           => env( 'DFE_DEFAULT_DOMAIN', '.cloud.dreamfactory.com' ),
-    'default-domain-protocol'  => 'https',
-    'columns-per-panel'        => DashboardDefaults::COLUMNS_PER_PANEL,
     //******************************************************************************
     //* console api settings
     //******************************************************************************

@@ -5,9 +5,9 @@
 ?>
 <div class="{{ $panelSize }}">
     <div class="panel-instance">
-        <div class="panel {{ $panelContext }} panel-dsp">
+        <div class="panel {{ $panelContext }} panel-instance">
             <div class="panel-heading panel-heading-instance">
-                <h4 class="panel-title instance-heading-dsp-name" data-instance-name="{{ $instanceName }}">{{ $instanceName }}
+                <h4 class="panel-title" data-instance-name="{{ $instanceName }}">{{ $instanceName }}
                     {{--<span class="text-muted text-faded">{{ $defaultDomain }}</span>--}}
                     <span class="instance-heading-status pull-right"><i class="fa fa-fw {{ $headerIcon }} {{ $headerIconSize or 'fa-1x' }}"></i></span>
                 </h4>

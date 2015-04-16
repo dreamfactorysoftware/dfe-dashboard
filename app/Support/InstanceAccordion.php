@@ -81,7 +81,7 @@ class InstanceAccordion
             'targetRel'      => $instance->id,
             'opened'         => false,
             'triggerContent' => <<<HTML
-<div class="instance-heading-dsp-name">{$instance->instance_name_text}<span class="text-muted">{$_domain}</div>
+<div class="instance-heading-name">{$instance->instance_name_text}<span class="text-muted">{$_domain}</div>
 <div class="instance-heading-status pull-right"><i class="fa fa-fw {$_statusIcon} fa-2x"></i></div>
 HTML
             ,

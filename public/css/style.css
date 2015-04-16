@@ -331,30 +331,42 @@ table.dataTable thead th {
 	height: 80px;
 }
 
-.panel-title {
+.panel-instance .panel-heading .panel-title .fa.fa-fw {
+	margin-right: 5px;
+}
+
+.panel-heading-instance .panel-title {
 	position:    relative;
 	min-height:  18px;
 	line-height: 18px;
 	font-size:   17px;
+	float:       left;
+	display:     inline-block;
 }
 
-.dsp-list > .panel-title {
-	font-size: 11px;
+.panel-heading-instance .panel-title:hover {
+	text-decoration: underline;
+	cursor:          pointer;
+}
+
+.panel-heading-instance .panel-title:hover > span {
+	color:      rgba(252, 221, 134, 1);
+	transition: color 0.25s
+}
+
+.panel-heading-instance .panel-title:hover > span.text-faded {
+	color:      rgba(252, 221, 134, 0.8);
+	transition: color 0.25s;
+}
+
+.panel-heading-instance .panel-title .fa {
+	margin-right: 4px;
 }
 
 .dsp-help-button {
 	/*vertical-align: bottom;*/
 	/*margin-top:     4px;*/
 	/*font-size: 11px;*/
-}
-
-.instance-heading-dsp-name {
-	float:   left;
-	display: inline-block;
-}
-
-.instance-heading-dsp-name .fa {
-	margin-right: 4px;
 }
 
 .instance-heading-status {
@@ -410,21 +422,21 @@ a[id^="dspcontrol___"]:last-child {
 	overflow:       hidden;
 }
 
-.panel-dsp .panel-body .dsp-info .dsp-name small a {
+.panel-instance .panel-body .dsp-info .dsp-name small a {
 	color:           #999999;
 	text-decoration: none;
 	font-family:     "Montserrat", "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.panel-dsp .panel-body .dsp-info .dsp-name small a:hover {
+.panel-instance .panel-body .dsp-info .dsp-name small a:hover {
 	text-decoration: underline;
 }
 
-.panel-dsp .panel-body .dsp-name a, .key-name a {
+.panel-instance .panel-body .dsp-name a, .key-name a {
 	text-decoration: none;
 }
 
-.panel-dsp .panel-body .dsp-info .dsp-stats, .panel-dsp .panel-body .key-info .key-stats {
+.panel-instance .panel-body .dsp-info .dsp-stats, .panel-instance .panel-body .key-info .key-stats {
 	margin:      0 0 10px 0;
 	min-height:  15px;
 	position:    relative;
@@ -433,25 +445,25 @@ a[id^="dspcontrol___"]:last-child {
 	font-size:   11px;
 }
 
-.panel-dsp .panel-body .dsp-links {
+.panel-instance .panel-body .dsp-links {
 	/*width:         100%;*/
 	text-align:    right;
 	margin-bottom: 4px;
 }
 
-.panel-dsp .panel-body .key-info .form-actions {
+.panel-instance .panel-body .key-info .form-actions {
 	padding-left: 20px;
 }
 
-.panel-dsp .panel-body .dsp-icon {
+.panel-instance .panel-body .dsp-icon {
 	margin-right: 15px;
 }
 
-.panel-dsp .panel-body .dsp-icon {
+.panel-instance .panel-body .dsp-icon {
 	margin-right: 15px;
 }
 
-.instance-heading-dsp-name .text-muted {
+.panel-heading-instance .panel-title .text-muted {
 	color:       rgba(255, 255, 255, .70);
 	transition:  1s;
 	margin-left: -3px;
@@ -511,21 +523,6 @@ label[for="dsp_name"] {
 	margin-bottom: 0;
 }
 
-.instance-heading-dsp-name:hover {
-	text-decoration: underline;
-	cursor:          pointer;
-}
-
-.instance-heading-dsp-name:hover > span {
-	color:      rgba(252, 221, 134, 1);
-	transition: color 0.25s
-}
-
-.instance-heading-dsp-name:hover > span.text-faded {
-	color:      rgba(252, 221, 134, 0.8);
-	transition: color 0.25s;
-}
-
 /*------------------------------------------------------------------------------*/
 /* Media Queries                                                                */
 /*------------------------------------------------------------------------------*/
@@ -563,7 +560,7 @@ label[for="dsp_name"] {
 		padding: 5px;
 	}
 
-	.panel-dsp .panel-body .dsp-icon, .panel-dsp .panel-body .key-icon {
+	.panel-instance .panel-body .dsp-icon, .panel-instance .panel-body .key-icon {
 		margin-right: 5px;
 	}
 }
@@ -590,7 +587,7 @@ label[for="dsp_name"] {
 	}
 
 	.panel-heading-instance h4 .instance-heading-status i.fa,
-	.panel-heading-instance h4 .instance-heading-dsp-name {
+	.panel-heading-instance h4 .panel-title {
 		font-size: 11px;
 		opacity:   1;
 	}
@@ -607,7 +604,7 @@ label[for="dsp_name"] {
 		font-size: 13px;
 	}
 
-	.panel-dsp .panel-body .dsp-icon, .panel-dsp .panel-body .key-icon {
+	.panel-instance .panel-body .dsp-icon, .panel-instance .panel-body .key-icon {
 		margin-right: 5px;
 	}
 }
