@@ -78,7 +78,7 @@ class DashboardService extends BaseService
         $this->_apiKey = config( 'dashboard.api-key' );
         $this->_requireCaptcha = config( 'dashboard.require-captcha', true );
         $this->_useConfigServers = config( 'dashboard.override-cluster-servers', false );
-        $this->_instancesPerRow = config( 'dashboard.instances-per-row', DashboardDefaults::INSTANCES_PER_ROW );
+        $this->_instancesPerRow = config( 'dashboard.instances-per-row', DashboardDefaults::COLUMNS_PER_PANEL );
 
         if ( $this->_instancesPerRow < 1 )
         {
@@ -480,7 +480,7 @@ class DashboardService extends BaseService
                         continue;
                     }
 
-                    $_instance = $this->_getInstancePanel( $_model );
+                    $_instance = $this->_buildInstancePanel( $_model );
 
                     if ( $forRender )
                     {
@@ -711,9 +711,9 @@ HTML;
      */
     public function getStatusIcon( $status, $key = false )
     {
-        $_statusIcon = config( 'dashboard.icons.instance-up' );
+        $_statusIcon = config( 'dashboard.icons.up' );
         $_spinner = config( 'dashboard.icons.spinner' );
-        $_icon = config( 'dashboard.icons.instance-up' );
+        $_icon = config( 'dashboard.icons.up' );
         $_message = null;
         $_running = false;
 
@@ -741,17 +741,17 @@ HTML;
             case ProvisionStates::DEPROVISIONING_ERROR:
                 $_message =
                     'There was an error completing your request. Our engineers have been notified. Maybe go take a stroll?';
-                $_statusIcon = $_icon = config( 'dashboard.icons.instance-dead' );
+                $_statusIcon = $_icon = config( 'dashboard.icons.dead' );
                 break;
 
             case ProvisionStates::PROVISIONED:
                 $_message = 'Your instance is up and running.';
                 $_running = true;
-                $_statusIcon = $_icon = config( 'dashboard.icons.instance-up' );
+                $_statusIcon = $_icon = config( 'dashboard.icons.up' );
                 break;
 
             case ProvisionStates::DEPROVISIONED:
-                $_statusIcon = $_icon = config( 'dashboard.icons.instance-dead' );;
+                $_statusIcon = $_icon = config( 'dashboard.icons.dead' );;
                 $_message = 'This DSP is terminated. All you can do is destroy it.';
                 break;
         }
@@ -836,20 +836,6 @@ HTML;
      */
     public function buildProviderList()
     {
-    }
-
-    /**
-     * Determine if a class contains a FontAwesome icon (v3+)
-     *
-     * @param string $class
-     *
-     * @return bool
-     */
-    protected function _isIconClass( $class )
-    {
-        return ( 'icon-' == substr( $class, 0, 5 ) ||
-            'fa-' == substr( $class, 0, 3 ) ||
-            $class == config( 'dashboard.icons.spinner', DashboardDefaults::SPINNING_ICON ) );
     }
 
     /**
@@ -998,7 +984,7 @@ HTML;
      */
     public function renderInstance( $data = [] )
     {
-        return $this->_getInstancePanel( $data, true );
+        return $this->_buildInstancePanel( $data, true );
     }
 
     /**
@@ -1132,32 +1118,40 @@ HTML;
      *
      * @return string|View
      */
-    protected function _getInstancePanel( $instance, $rendered = false )
+    protected function _buildInstancePanel( $instance, $rendered = false )
     {
-        $_status = $this->_getInstanceStatus( $instance );
-
-        $_data = [
-            'panelSize'              => $this->_columnClass,
-            'panelContext'           => config( 'dashboard.panel-context', 'panel-info' ),
-            'instanceName'           => $instance->instance_name_text,
-            'defaultDomain'          => config( 'dashboard.default-domain' ),
-            'headerIcon'             => $_status['icon'],
-            'headerIconSize'         => 'fa-1x',
-            'instanceDivId'          => $this->createDivId( 'instance', $instance ),
-            'instanceStatusContext'  => $_status['context'],
-            'instanceStatusIcon'     => $_status['icon'],
-            'instanceStatusIconSize' => 'fa-3x',
-            'instanceStatusText'     => $_status['text'],
-            'instanceUrl'            => config( 'dashboard.default-domain-protocol', 'https' ) .
-                '://' .
-                $instance->instance_name_text .
-                $this->_defaultDomain,
-            'panelButtons'           => $this->_getPanelButtons( $instance ),
-        ];
-
-        $_view = view( 'layouts.partials._dashboard_instance-panel', $_data );
+        $_viewData = $this->_buildInstancePanelData( $instance );
+        $_view = view( 'layouts.partials._dashboard_instance-panel', $_viewData );
 
         return $rendered ? $_view->render() : $_view;
+    }
+
+    /**
+     * Provides the array of data necessary to populate an individual instance panel
+     *
+     * @param \stdClass|Instance $instance
+     *
+     * @return array
+     */
+    protected function _buildInstancePanelData( $instance )
+    {
+        return array_merge(
+            [
+                'panelSize'              => $this->_columnClass,
+                'panelContext'           => config( 'dashboard.panel-context', 'panel-info' ),
+                'instanceName'           => $instance->instance_name_text,
+                'defaultDomain'          => config( 'dashboard.default-domain' ),
+                'headerIconSize'         => 'fa-1x',
+                'instanceDivId'          => $this->createDivId( 'instance', $instance ),
+                'instanceStatusIconSize' => 'fa-3x',
+                'instanceUrl'            => config( 'dashboard.default-domain-protocol', 'https' ) .
+                    '://' .
+                    $instance->instance_name_text .
+                    $this->_defaultDomain,
+                'panelButtons'           => $this->_getPanelButtons( $instance ),
+            ],
+            $this->_getInstanceStatus( $instance )
+        );
     }
 
     /**
@@ -1184,7 +1178,7 @@ HTML;
                 break;
 
             case ProvisionStates::PROVISIONED:
-                $_icon = config( 'dashboard.icons.instance-up' );
+                $_icon = config( 'dashboard.icons.up' );
                 $_context = 'btn-success';
                 $_text = \Lang::get( 'dashboard.status-up' );
                 break;
@@ -1217,9 +1211,10 @@ HTML;
         }
 
         return [
-            'icon'    => $_icon,
-            'context' => $_context,
-            'text'    => $_text,
+            'headerIcon'            => $_icon,
+            'instanceStatusIcon'    => $_icon,
+            'instanceStatusContext' => $_context,
+            'instanceStatusText'    => $_text,
         ];
 
     }

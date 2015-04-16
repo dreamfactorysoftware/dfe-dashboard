@@ -9,9 +9,14 @@ class DashboardDefaults extends FactoryEnum
     //******************************************************************************
 
     /**
-     * @type int The number of instances per row
+     * @type int The number of grid columns each instance panel utilizes. Each row consists of 12 utilizable columns. This setting can be from 3 to
+     *       12. 3 being the smallest (four instances per row), and 12 the largest (one instance per row)
      */
-    const INSTANCES_PER_ROW = 3;
+    const COLUMNS_PER_PANEL = 3;
+    /**
+     * @var string
+     */
+    const INSTANCE_PANEL_TEMPLATE = 'layouts.partials._dashboard_instance-panel';
     /**
      * @var string
      */

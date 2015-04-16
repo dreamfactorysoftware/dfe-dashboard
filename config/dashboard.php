@@ -3,23 +3,29 @@
 //* DFE Dashboard Specific Settings
 //******************************************************************************
 
+use DreamFactory\Enterprise\Dashboard\Enums\DashboardDefaults;
+
 return [
     //******************************************************************************
-    //* General
+    //* general dashboard settings
     //******************************************************************************
     /** The path to our views */
     'view-path'                => base_path() . '/resources/views',
     /** If true, recaptcha is required on new hosted instances */
     'require-captcha'          => false,
-    /** Dashboard UI info and settings */
+    //******************************************************************************
+    //* ui/ux settings
+    //******************************************************************************
     'panel-context'            => 'panel-info',
     'create-panel-context'     => 'panel-success',
     'import-panel-context'     => 'panel-warning',
     'help-button-url'          => 'http://www.dreamfactory.com/',
     'default-domain'           => env( 'DFE_DEFAULT_DOMAIN', '.cloud.dreamfactory.com' ),
     'default-domain-protocol'  => 'https',
-    'instances-per-row'        => 4,
-    /** The console api settings */
+    'columns-per-panel'        => DashboardDefaults::COLUMNS_PER_PANEL,
+    //******************************************************************************
+    //* console api settings
+    //******************************************************************************
     'api-host'                 => 'http://dfe-console.local',
     'api-endpoint'             => '/api/v1',
     'hash-key'                 => '%]3,]~&t,EOxL30[wKw3auju:[+L>eYEVWEP,@3n79Qy',
@@ -41,6 +47,8 @@ return [
         'dead'        => 'fa-ambulance',
         'unknown'     => 'fa-question',
     ],
+    /** Templates */
+    'instance-panel-blade'     => DashboardDefaults::INSTANCE_PANEL_TEMPLATE,
     //******************************************************************************
     //* DFE console api overrides
     //******************************************************************************
