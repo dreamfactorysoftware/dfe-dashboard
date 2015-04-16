@@ -60,34 +60,59 @@ class HomeController extends BaseController
     {
         $_message = isset( $messages ) ? $messages : null;
         $_defaultDomain = config( 'dashboard.default-domain' );
-        $_panelContext = config( 'dashboard.panel-context', 'panel-info' );
+        $_panelContext = config( 'dashboard.panels.default.context', DashboardDefaults::PANEL_CONTEXT );
 
         /** @type User $_user */
         $_user = \Auth::user();
 
+        $_coreData = [
+            /** General */
+            'defaultDomain'       => $_defaultDomain,
+            'message'             => $_message,
+            'isAdmin'             => $_user->admin_ind,
+            'displayName'         => $_user->display_name_text,
+            'defaultInstanceName' =>
+                ( \Auth::user()->admin_ind != 1
+                    ? config( 'dashboard.instance-prefix', DashboardDefaults::INSTANCE_PREFIX )
+                    : null
+                ) . Inflector::neutralize( str_replace( ' ', '-', \Auth::user()->display_name_text ) ),
+        ];
+
+        $_instances = Dashboard::instanceTable( $_user, null, true );
+
         return view(
             'app.home',
-            [
-
-                'defaultDomain'       => $_defaultDomain,
-                'panelGroup'          => Dashboard::instanceTable( $_user, null, false ),
-                'message'             => $_message,
-                'isAdmin'             => $_user->admin_ind,
-                'displayName'         => $_user->display_name_text,
-                'defaultInstanceName' =>
-                    ( \Auth::user()->admin_ind != 1
-                        ? config( 'dashboard.instance-prefix', DashboardDefaults::INSTANCE_PREFIX )
-                        : null
-                    ) . Inflector::neutralize( str_replace( ' ', '-', \Auth::user()->display_name_text ) ),
-                'instanceCreator'     => view(
-                    'layouts.partials._dashboard_new-rave-instance',
-                    ['defaultDomain' => $_defaultDomain, 'panelContext' => $_panelContext]
-                )->render(),
-                'snapshotImporter'    => view(
-                    'layouts.partials._dashboard_import-rave-instance',
-                    ['defaultDomain' => $_defaultDomain, 'snapshotList' => $this->_getSnapshotList(), 'panelContext' => $_panelContext,]
-                )->render(),
-            ]
+            array_merge(
+                [
+                    /** The instance list */
+                    'instances'        => $_instances,
+                    /** The instance create panel */
+                    'instanceCreator'  => Dashboard::renderInstance(
+                        'layouts.partials.create-instance',
+                        array_merge(
+                            $_coreData,
+                            [
+                                'panelContext' => config( 'dashboard.panels.create.context' ),
+                                'statusIcon'   => config( 'dashboard.panels.create.status-icon' ),
+                            ]
+                        ),
+                        'create'
+                    ),
+                    /** The instance import panel */
+                    'snapshotImporter' => view(
+                        'layouts.partials.import-instance',
+                        array_merge(
+                            $_coreData,
+                            [
+                                'panelContext' => config( 'dashboard.panels.import.context' ),
+                                'statusIcon'   => config( 'dashboard.panels.import.status-icon' ),
+                                'snapshotList' => $this->_getSnapshotList(),
+                            ]
+                        )
+                    )->render(),
+                ],
+                $_coreData
+            )
         );
     }
 

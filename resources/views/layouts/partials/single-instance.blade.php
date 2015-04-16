@@ -1,69 +1,71 @@
-<?php
-/**
- * @var bool $_requireCaptcha
- */
-
-use DreamFactory\Library\Fabric\Database\Enums\GuestLocations;
-use DreamFactory\Library\Utility\Inflector;
-
-$_dspName = ( \Auth::user()->admin_ind != 1 ? 'dsp-' : null ) . Inflector::neutralize( str_replace( ' ', '-', \Auth::user()->display_name_text ) );
-$_token = csrf_token();
-$_guest = GuestLocations::DFE_CLUSTER;
-?>
 <div class="panel {{ $panelContext }} panel-instance">
+
 	<div class="panel-heading" role="tab">
-		<h4 class="panel-title"><i class="fa fa-fw {{ config('dashboard.icons.import') }}"></i>{{ \Lang::get('dashboard.instance-import-title') }}</h4>
+		<h4 class="panel-title" data-instance-name="{{ $instanceName or 'NEW' }}">
+			@if( isset($headerIcon) )
+				{{ $headerIcon }}
+			@endif
+			{{ $panelTitle }}
+			@if ( isset($statusIcon) )
+				<span class="pull-right"><i class="fa fa-fw {{ $statusIcon or null }} fa-1x"></i></span>
+			@endif
+		</h4>
 	</div>
 
-	<div class="panel-body">
-		<div class="dsp-info">
-			<form id="form-import" class="form-horizontal" method="POST">
-				<div class="panel-description">{!! \Lang::get('dashboard.instance-import') !!}</div>
-				<div class="clearfix"></div>
+	<div class="panel-body instance-panel-body">
 
-				<div class="form-group">
-					<label for="import-id" class="col-md-2 control-label">{{ \Lang::get('dashboard.instance-import-label') }}</label>
-					<div class="col-md-4">
-						<select name="import-id"
-								id="import-id"
-								class="form-control" {{ 0 == count($snapshotList) ? 'disabled style="pointer-events: none;"' : null }}>
-							@forelse( $snapshotList as $snapshot )
-								<option value="{{ $snapshot->snapshot_id }}">{{ $snapshot->snapshot_name}}</option>
-							@empty
-								<option value=>No snapshots found</option>
-							@endforelse
-						</select>
+		<form id="{{ $formId }}" class="form-horizontal" method="POST">
+
+			@if( isset($panelDescription) )
+				<div class="panel-description">{!! $panelDescription !!}</div>
+				<hr class="hr" />
+			@endif
+
+			@section('panel-body')
+				@if( isset($panelBody) )
+					{!! $panelBody !!}
+				@endif
+			@show
+
+			@section('panel-captcha')
+				@if ( config('dashboard.require-captcha') )
+					<div class="form-group form-group-recaptcha">
+						<label for="{{ $captchaId or 'rc-text-input' }}" class="col-md-2 control-label"></label>
+						<div class="col-md-10">
+							<div id="{{ $captchaId or 'rc-text-input' }}" class="g-recaptcha" data-sitekey="{{ config('recaptcha.siteKey') }}"></div>
+							<p class="help-block" style="margin-top:2px;font-size: 13px;color:#888;">{!! \Lang::get('dashboard.instance-proof-text') !!}</p>
+						</div>
 					</div>
+				@endif
+			@show
 
-					<label for="import-file-label" class="col-md-1 control-label">or</label>
-					<div class="col-md-5">
-						<label class="btn btn-primary" for="import-file">
-							<input id="import-file" type="file" style="display:none;">
-							<i class="fa fa-fw fa-cloud-upload"></i> Upload Your Own!
-						</label>
+			<hr class="hr" />
+
+			@section('panel-toolbar')
+				@if ( isset($toolbarButtons) && !empty($toolbarButtons) )
+					<div class="btn-toolbar" role="toolbar">
+						<div class="btn-group" role="group">
+							@foreach( $toolbarButtons as $_button )
+								<button id="{{ $_button['id'] }}type="{{ $_button['type'] or 'button' }}" class="btn {{ $_button['class'] or 'btn-default' }}">{{ $_button['text'] }}</button>
+							@endforeach
+						</div>
 					</div>
-				</div>
+				@endif
+			@show
 
-				<div class="form-group form-group-recaptcha">
-					<label for="rc-import" class="col-md-2 control-label"></label>
-					<div class="col-md-10">
-						<div id="rc-import" class="g-recaptcha" data-sitekey="{{ config('recaptcha.siteKey') }}"></div>
-						<p class="help-block" style="margin-top:2px;font-size: 13px;color:#888;">{!! \Lang::get('dashboard.instance-proof-text') !!}</p>
+			@section('panel-links')
+				@if ( isset($instanceLinks) && !empty($instanceLinks))
+					<div class="dsp-links">
+						@foreach( $instanceLinks as $_linkId => $_link )
+							<button id="{{ $_link['id'] or $_linkId }}" type="{{ $_link['type'] }}" class="btn {{ $_link['context'] or 'btn-success' }}">
+								<i class="fa fa-fw {{ $_link['icon'] }}"></i>{{ $link['text'] }}</button>
+						@endforeach
 					</div>
-				</div>
+				@endif
+			@show
 
-				<div class="dsp-links">
-					<hr class="hr" />
-
-					<button type="submit" class="btn btn-primary btn-success"><i class="fa fa-fw {{ config('dashboard.icons.import') }}"
-																				 style="margin-right: 8px;"></i> {{ \Lang::get('dashboard.instance-import-button-text') }}
-					</button>
-				</div>
-
-				<input type="hidden" name="_token" value="{{ $_token }}">
-				<input type="hidden" name="_provisioner" value="{{ $_guest }}">
-			</form>
-		</div>
-
+			<input type="hidden" name="_token" value="{{ csrf_token() }}">
+			<input type="hidden" name="_provisioner" value="{{ DreamFactory\Library\Fabric\Database\Enums\GuestLocations::DFE_CLUSTER }}">
+		</form>
 	</div>
 </div>

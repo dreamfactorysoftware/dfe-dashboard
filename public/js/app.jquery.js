@@ -48,7 +48,7 @@ $(function() {
 							   });
 	}
 
-	var $_dspList = $('.dsp-list .panel-instance');
+	var $_dspList = $('.instance-panel-group .panel-instance');
 	var _count = $_dspList.length;
 
 	if (0 == _count) {

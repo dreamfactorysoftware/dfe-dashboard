@@ -369,12 +369,6 @@ table.dataTable thead th {
 	/*font-size: 11px;*/
 }
 
-.instance-heading-status {
-	float:      right;
-	display:    inline-block;
-	margin-top: 0;
-}
-
 .dsp-links .dsp-controls .btn i.fa {
 	margin-right: 4px;
 }
@@ -474,7 +468,20 @@ a[id^="dspcontrol___"]:last-child {
 	font-size: 11px;
 }
 
-.instance-heading-status .fa.fa-fw {
+.panel-title-status {
+	float:      right;
+	display:    inline-block;
+	margin-top: 0;
+}
+
+.panel-title-status.pull-right {
+	position: absolute;
+	top:      -1px;
+	right:    0;
+	opacity:  1;
+}
+
+.panel-title-status .fa.fa-fw {
 	color:   #ffffff;
 	opacity: .75;
 }
@@ -502,13 +509,6 @@ label[for="import-file-label"] {
 
 label[for="dsp_name"] {
 	padding-top: 11px;
-}
-
-.instance-heading-status.pull-right {
-	position: absolute;
-	top:      -1px;
-	right:    0;
-	opacity:  1;
 }
 
 #import-id {
@@ -556,7 +556,7 @@ label[for="dsp_name"] {
 		font-size: 1.5em;
 	}
 
-	.dsp-list > .panel-body {
+	.instance-panel-group > .panel-body {
 		padding: 5px;
 	}
 
@@ -578,7 +578,7 @@ label[for="dsp_name"] {
 }
 
 @media (max-width: 1024px) {
-	.dsp-list > .panel-body {
+	.instance-panel-group > .panel-body {
 		padding: 5px 10px;
 	}
 
@@ -586,8 +586,8 @@ label[for="dsp_name"] {
 		font-size: 13px;
 	}
 
-	.panel-heading-instance h4 .instance-heading-status i.fa,
-	.panel-heading-instance h4 .panel-title {
+	.phi-status > i.fa,
+	.phi-name > i.fa {
 		font-size: 11px;
 		opacity:   1;
 	}
@@ -618,7 +618,7 @@ label[for="dsp_name"] {
 		font-size: 2em;
 	}
 
-	.instance-heading-status.pull-right {
+	.panel-title-status.pull-right {
 		right: -10px;
 	}
 

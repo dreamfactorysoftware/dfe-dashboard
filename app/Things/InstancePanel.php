@@ -24,7 +24,7 @@ class InstancePanel
     /**
      * @type string The name of the blade to use for rendering the panel
      */
-    protected $_blade = DashboardDefaults::INSTANCE_PANEL_TEMPLATE;
+    protected $_blade = DashboardDefaults::SINGLE_INSTANCE_BLADE;
     /**
      * @type string
      */
@@ -43,7 +43,8 @@ class InstancePanel
     {
         $this->_id = $id;
         $this->_data = $data ?: [];
-        $this->_blade = $blade ?: \Config::get( 'dashboard.instance-panel-template', DashboardDefaults::INSTANCE_PANEL_TEMPLATE );
+        $this->_blade = $blade ?: \Config::get( 'dashboard.panels.default.template', DashboardDefaults::SINGLE_INSTANCE_BLADE );
+
         $this->_defaultDomain = \Config::get( 'dashboard.default-domain' );
     }
 

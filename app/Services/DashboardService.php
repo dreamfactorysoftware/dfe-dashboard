@@ -16,7 +16,6 @@ use DreamFactory\Library\Utility\Curl;
 use DreamFactory\Library\Utility\IfSet;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\View\View;
 use Psr\Log\LogLevel;
 
 class DashboardService extends BaseService
@@ -452,13 +451,13 @@ class DashboardService extends BaseService
     }
 
     /**
-     * @param       $user
-     * @param array $columns
-     * @param bool  $forRender
+     * @param array  $data      Any data needed to build the table
+     * @param string $panel     The type panel. Can be "default", "create", or "import"
+     * @param bool   $forRender If true, the rendered HTML is returned as a string
      *
      * @return array|null|string
      */
-    public function instanceTable( &$user, $columns = null, $forRender = false )
+    public function instanceTable( $data = [], $panel = 'default', $forRender = false )
     {
         $_html = null;
         $_result = $this->getInstances();
@@ -480,7 +479,7 @@ class DashboardService extends BaseService
                         continue;
                     }
 
-                    $_instance = $this->_buildInstancePanel( $_model );
+                    $_instance = $this->_buildInstancePanel( $_model, $data, $panel );
 
                     if ( $forRender )
                     {
@@ -497,6 +496,150 @@ class DashboardService extends BaseService
         }
 
         return $_html;
+    }
+
+    /**
+     * Create an HTML <A> with a link to the given instance
+     *
+     * @param \stdClass|Instance $status
+     *
+     * @return string
+     */
+    protected function _buildInstanceLink( $status )
+    {
+        return
+            '<a href="https://' . $status->instance_name_text . $this->_defaultDomain . '" ' .
+            'target="_blank" class="dsp-launch-link">' . $status->instance_name_text . '</a>';
+    }
+
+    /**
+     * @param \stdClass|Instance $instance
+     * @param array              $data
+     * @param string             $panel The panel to use if not "default"
+     * @param bool               $rendered
+     *
+     * @return \Illuminate\View\View|string
+     */
+    protected function _buildInstancePanel( $instance, $data = [], $panel = 'default', $rendered = false )
+    {
+        $_viewData = $this->_buildInstancePanelData( $instance, $data, $panel );
+        $_viewName = config( 'dashboard.panels.' . $panel . '.template', DashboardDefaults::SINGLE_INSTANCE_BLADE );
+        $_view = view( $_viewName, $_viewData );
+
+        return $rendered ? $_view->render() : $_view;
+    }
+
+    /**
+     * Provides the array of data necessary to populate an individual instance panel
+     *
+     * @param \stdClass|Instance $instance
+     * @param array              $data
+     * @param string             $formId The id of the inner panel form
+     * @param string             $panel  The type panel. Can be "default", "create", or "import"
+     *
+     * @return array
+     */
+    protected function _buildInstancePanelData( $instance, $data = [], $panel = 'default', $formId = null )
+    {
+        if ( empty( $data ) || !is_array( $data ) )
+        {
+            $data = [];
+        }
+
+        $_name = is_object( $instance ) ? $instance->instance_name_text : 'NEW';
+        $_id = is_object( $instance ) ? $instance->id : 0;
+
+        return array_merge(
+            [
+                'panelContext'           => config( 'dashboard.panel-context', 'panel-info' ),
+                'instanceName'           => $_name,
+                'panelTitle'             => $_name,
+                'panelStatusIcon'        => null,
+                'formId'                 => $formId ?: 'form-' . $panel,
+                'captchaId'              => 'dfe-rc-' . $_name,
+                'panelDescription'       => config( 'dashboard.panels.' . $panel . '.description' ),
+                'panelBody'              => '',
+                'panelSize'              => $this->_columnClass,
+                'toolbarButtons'         => $this->_getToolbarButtons( $instance ),
+                'instanceLinks'          => [],//$this->_getInstanceLinks( $instance ),
+                'defaultDomain'          => $this->_defaultDomain,
+                'headerIconSize'         => config( 'dashboard.panels.' . $panel . '.header-icon-size' ),
+                'instanceDivId'          => $this->createDivId( 'instance', $_id, $_name ),
+                'instanceStatusIconSize' => 'fa-3x',
+                'instanceUrl'            => config( 'dashboard.default-domain-protocol', 'https' ) .
+                    '://' .
+                    $_name .
+                    $this->_defaultDomain,
+                'panelButtons'           => $this->_getPanelButtons( $instance ),
+            ],
+            $this->_getInstanceStatus( $instance ),
+            $data ?: []
+        );
+    }
+
+    /**
+     * @param \stdClass|Instance $instance
+     *
+     * @return array
+     */
+    protected function _getInstanceStatus( $instance )
+    {
+        $_spinner = config( 'dashboard.icons.spinner', DashboardDefaults::SPINNING_ICON );
+
+        switch ( $instance->state_nbr )
+        {
+            case ProvisionStates::CREATED:
+                $_icon = $_spinner;
+                $_context = 'btn-success';
+                $_text = \Lang::get( 'dashboard.status-started' );
+                break;
+
+            case ProvisionStates::PROVISIONING:
+                $_icon = $_spinner;
+                $_context = 'btn-info';
+                $_text = \Lang::get( 'dashboard.status-started' );
+                break;
+
+            case ProvisionStates::PROVISIONED:
+                $_icon = config( 'dashboard.icons.up' );
+                $_context = 'btn-success';
+                $_text = \Lang::get( 'dashboard.status-up' );
+                break;
+
+            case ProvisionStates::DEPROVISIONING:
+                $_icon = $_spinner;
+                $_context = 'btn-info';
+                $_text = \Lang::get( 'dashboard.status-stopping' );
+                break;
+
+            case ProvisionStates::DEPROVISIONED:
+                $_icon = config( 'dashboard.icons.instance-terminating' );
+                $_context = 'btn-warning';
+                $_text = \Lang::get( 'dashboard.status-terminating' );
+                break;
+
+            case ProvisionStates::PROVISIONING_ERROR:
+            case ProvisionStates::DEPROVISIONING_ERROR:
+            case ProvisionStates::CREATION_ERROR:
+                $_icon = config( 'dashboard.icons.instance-dead' );
+                $_context = 'btn-danger';
+                $_text = \Lang::get( 'dashboard.status-dead' );
+                break;
+
+            default:
+                $_icon = config( 'dashboard.icons.instance-unknown' );
+                $_context = 'btn-warning';
+                $_text = \Lang::get( 'dashboard.status-dead' );
+                break;
+        }
+
+        return [
+            'headerIcon'            => $_icon,
+            'instanceStatusIcon'    => $_icon,
+            'instanceStatusContext' => $_context,
+            'instanceStatusText'    => $_text,
+        ];
+
     }
 
     /**
@@ -793,15 +936,18 @@ HTML;
     }
 
     /**
-     * @param string $prefix
-     * @param object $instance
-     * @param bool   $key
+     * @param string  $prefix
+     * @param integer $id
+     * @param string  $name
      *
      * @return string
+     * @internal param object $instance
+     * @internal param bool $key
+     *
      */
-    public function createDivId( $prefix, $instance, $key = false )
+    public function createDivId( $prefix, $id, $name )
     {
-        return implode( '___', [$prefix, $instance->id, ( $key ? $instance->label : $instance->instance_name_text )] );
+        return implode( '___', [$prefix, $id, $name] );
     }
 
     /**
@@ -978,30 +1124,34 @@ HTML;
     /**
      * Renders an instance view
      *
-     * @param array $data
+     * @param array|\stdClass|Instance $instance
+     * @param array                    $data  Any data needed to build the table
+     * @param string                   $panel The type panel. Can be "default", "create", or "import"
      *
      * @return string
      */
-    public function renderInstance( $data = [] )
+    public function renderInstance( $instance, $data = [], $panel = 'default' )
     {
-        return $this->_buildInstancePanel( $data, true );
+        return $this->_buildInstancePanel( $instance, $data, $panel, true );
     }
 
     /**
      * Renders multiple instance views
      *
-     * @param array $instances
-     * @param bool  $asArray If true, the instances are returned rendered into an array. If false, a single string is returned
+     * @param array  $instances
+     * @param array  $data    Any data needed to build the table
+     * @param string $panel   The type panel. Can be "default", "create", or "import"
+     * @param bool   $asArray If true, the instances are returned rendered into an array. If false, a single string is returned
      *
      * @return array|string
      */
-    public function renderInstances( $instances = [], $asArray = true )
+    public function renderInstances( $instances = [], $data = [], $panel = 'default', $asArray = true )
     {
         $_rendered = [];
 
         foreach ( $instances as $_instance )
         {
-            $_rendered[] = $this->renderInstance( $_instance );
+            $_rendered[] = $this->renderInstance( $_instance, $data, $panel );
         }
 
         return $asArray ? $_rendered : implode( PHP_EOL, $_rendered );
@@ -1099,133 +1249,39 @@ HTML;
     }
 
     /**
-     * Create an HTML <A> with a link to the given instance
-     *
-     * @param \stdClass|Instance $status
-     *
-     * @return string
-     */
-    protected function _buildInstanceLink( $status )
-    {
-        return
-            '<a href="https://' . $status->instance_name_text . $this->_defaultDomain . '" ' .
-            'target="_blank" class="dsp-launch-link">' . $status->instance_name_text . '</a>';
-    }
-
-    /**
-     * @param \stdClass|Instance $instance
-     * @param bool               $rendered
-     *
-     * @return string|View
-     */
-    protected function _buildInstancePanel( $instance, $rendered = false )
-    {
-        $_viewData = $this->_buildInstancePanelData( $instance );
-        $_view = view( 'layouts.partials._dashboard_instance-panel', $_viewData );
-
-        return $rendered ? $_view->render() : $_view;
-    }
-
-    /**
-     * Provides the array of data necessary to populate an individual instance panel
-     *
-     * @param \stdClass|Instance $instance
-     *
-     * @return array
-     */
-    protected function _buildInstancePanelData( $instance )
-    {
-        return array_merge(
-            [
-                'panelSize'              => $this->_columnClass,
-                'panelContext'           => config( 'dashboard.panel-context', 'panel-info' ),
-                'instanceName'           => $instance->instance_name_text,
-                'defaultDomain'          => config( 'dashboard.default-domain' ),
-                'headerIconSize'         => 'fa-1x',
-                'instanceDivId'          => $this->createDivId( 'instance', $instance ),
-                'instanceStatusIconSize' => 'fa-3x',
-                'instanceUrl'            => config( 'dashboard.default-domain-protocol', 'https' ) .
-                    '://' .
-                    $instance->instance_name_text .
-                    $this->_defaultDomain,
-                'panelButtons'           => $this->_getPanelButtons( $instance ),
-            ],
-            $this->_getInstanceStatus( $instance )
-        );
-    }
-
-    /**
-     * @param \stdClass|Instance $instance
-     *
-     * @return array
-     */
-    protected function _getInstanceStatus( $instance )
-    {
-        $_spinner = config( 'dashboard.icons.spinner', DashboardDefaults::SPINNING_ICON );
-
-        switch ( $instance->state_nbr )
-        {
-            case ProvisionStates::CREATED:
-                $_icon = $_spinner;
-                $_context = 'btn-success';
-                $_text = \Lang::get( 'dashboard.status-started' );
-                break;
-
-            case ProvisionStates::PROVISIONING:
-                $_icon = $_spinner;
-                $_context = 'btn-info';
-                $_text = \Lang::get( 'dashboard.status-started' );
-                break;
-
-            case ProvisionStates::PROVISIONED:
-                $_icon = config( 'dashboard.icons.up' );
-                $_context = 'btn-success';
-                $_text = \Lang::get( 'dashboard.status-up' );
-                break;
-
-            case ProvisionStates::DEPROVISIONING:
-                $_icon = $_spinner;
-                $_context = 'btn-info';
-                $_text = \Lang::get( 'dashboard.status-stopping' );
-                break;
-
-            case ProvisionStates::DEPROVISIONED:
-                $_icon = config( 'dashboard.icons.instance-terminating' );
-                $_context = 'btn-warning';
-                $_text = \Lang::get( 'dashboard.status-terminating' );
-                break;
-
-            case ProvisionStates::PROVISIONING_ERROR:
-            case ProvisionStates::DEPROVISIONING_ERROR:
-            case ProvisionStates::CREATION_ERROR:
-                $_icon = config( 'dashboard.icons.instance-dead' );
-                $_context = 'btn-danger';
-                $_text = \Lang::get( 'dashboard.status-dead' );
-                break;
-
-            default:
-                $_icon = config( 'dashboard.icons.instance-unknown' );
-                $_context = 'btn-warning';
-                $_text = \Lang::get( 'dashboard.status-dead' );
-                break;
-        }
-
-        return [
-            'headerIcon'            => $_icon,
-            'instanceStatusIcon'    => $_icon,
-            'instanceStatusContext' => $_context,
-            'instanceStatusText'    => $_text,
-        ];
-
-    }
-
-    /**
      * @param \stdClass|Instance $instance
      *
      * @return array
      */
     protected function _getPanelButtons( $instance )
     {
+        $_buttons = [
+            'launch' => ['context' => 'btn-success', 'icon' => 'fa-play', 'hint' => 'Launch your instance', 'text' => 'Launch'],
+            //            'stop'   => ['context' => 'btn-warning', 'icon' => 'fa-stop', 'hint' => 'Stop your instance', 'text' => 'Stop'],
+            'export' => ['context' => 'btn-info', 'icon' => 'fa-cloud-download', 'hint' => 'Create an export of your instance', 'text' => 'Export'],
+            'import' => ['context' => 'btn-warning', 'icon' => 'fa-cloud-upload', 'hint' => 'Import a prior export', 'text' => 'Import'],
+            'delete' => ['context' => 'btn-danger', 'icon' => 'fa-times', 'hint' => 'Permanently destroy this instance', 'text' => 'Destroy'],
+            'help'   => [
+                'id'      => 'instance-control-' . $instance->instance_name_text,
+                'context' => 'btn-danger',
+                'icon'    => 'fa-times',
+                'hint'    => 'Documentation and Support',
+                'text'    => null,
+            ],
+        ];
+
+        return $_buttons;
+    }
+
+    /**
+     * @param \stdClass|Instance $instance
+     *
+     * @return array
+     */
+    protected function _getToolbarButtons( $instance )
+    {
+        static $_template = ['id' => '', 'size' => '', 'context' => 'btn-success', 'icon' => 'fa-play', 'hint' => '', 'text' => 'Launch'];
+
         $_buttons = [
             'launch' => ['id' => '', 'size' => '', 'context' => 'btn-success', 'icon' => 'fa-play', 'hint' => '', 'text' => 'Launch'],
             'stop'   => ['id' => '', 'size' => '', 'context' => 'btn-warning', 'icon' => 'fa-stop', 'hint' => '', 'text' => 'Stop'],

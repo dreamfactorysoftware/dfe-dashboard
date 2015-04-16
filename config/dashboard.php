@@ -14,34 +14,40 @@ return [
     /** If true, recaptcha is required on new hosted instances */
     'require-captcha'          => false,
     /** The prefix for all non-admin provisioned instances  */
-    'instance-prefix'          => 'dsp-',
+    'instance-prefix'          => DashboardDefaults::INSTANCE_PREFIX,
     //******************************************************************************
     //* ui/ux settings
     //******************************************************************************
     'default-domain'           => env( 'DFE_DEFAULT_DOMAIN', '.cloud.dreamfactory.com' ),
     'default-domain-protocol'  => 'https',
-    'columns-per-panel'        => DashboardDefaults::COLUMNS_PER_PANEL,
     'panels'                   => [
-        'create'   => [
-            'context'     => 'panel-success',
-            'template'    => 'layouts.create-instance',
-            'header-icon' => 'fa-asterisk',
-            'body-icon'   => false,
+        'columns-per-panel' => DashboardDefaults::COLUMNS_PER_PANEL,
+        'create'            => [
+            'context'          => 'panel-success',
+            'template'         => DashboardDefaults::CREATE_INSTANCE_BLADE,
+            'status-icon'      => 'fa-asterisk',
+            'status-icon-size' => 'fa-1x',
+            'body-icon'        => false,
+            'description'      => 'dashboard.instance-create',
         ],
-        'import'   => [
-            'context'     => 'panel-warning',
-            'template'    => 'layouts.import-instance',
-            'header-icon' => 'fa-cloud-upload',
-            'body-icon'   => false,
+        'import'            => [
+            'context'          => 'panel-warning',
+            'template'         => DashboardDefaults::IMPORT_INSTANCE_BLADE,
+            'status-icon'      => 'fa-cloud-upload',
+            'status-icon-size' => 'fa-1x',
+            'body-icon'        => false,
+            'description'      => 'dashboard.instance-import',
         ],
-        'instance' => [
-            'context'     => 'panel-info',
-            'template'    => 'layouts.single-instance',
-            'header-icon' => 'fa-thumbs-o-up',
-            'body-icon'   => 'fa-thumbs-o-up',
-            'help-icon'   => 'fa-question',
-            'help-url'    => 'http://www.dreamfactory.com/resources/',
-            'help-text'   => null,
+        'default'           => [
+            'context'          => DashboardDefaults::PANEL_CONTEXT,
+            'template'         => DashboardDefaults::SINGLE_INSTANCE_BLADE,
+            'status-icon'      => 'fa-thumbs-o-up',
+            'status-icon-size' => 'fa-1x',
+            'body-icon'        => 'fa-thumbs-o-up',
+            'help-icon'        => 'fa-question',
+            'help-url'         => 'http://www.dreamfactory.com/resources/',
+            'help-text'        => null,
+            'description'      => 'dashboard.instance-default',
         ],
     ],
     'panel-context'            => 'panel-info',
@@ -72,8 +78,6 @@ return [
         'dead'        => 'fa-ambulance',
         'unknown'     => 'fa-question',
     ],
-    /** Templates */
-    'instance-panel-blade'     => DashboardDefaults::INSTANCE_PANEL_TEMPLATE,
     //******************************************************************************
     //* DFE console api overrides
     //******************************************************************************

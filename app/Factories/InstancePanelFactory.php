@@ -26,7 +26,7 @@ class InstancePanelFactory implements StaticRenderFactory
     public static function make( $panelId, $viewData = [] )
     {
         $_viewData = static::_preparePanelData( $viewData );
-        $_view = \View::make( \Config::get( 'instance-panel-template', DashboardDefaults::INSTANCE_PANEL_TEMPLATE ), $_viewData );
+        $_view = \View::make( \Config::get( 'instance-panel-template', DashboardDefaults::SINGLE_INSTANCE_BLADE ), $_viewData );
 
         return $_view;
     }
