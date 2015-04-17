@@ -18,6 +18,10 @@ class DashboardDefaults extends FactoryEnum
      */
     const COLUMNS_PER_PANEL = 3;
     /**
+     * @type int The number of panels to display in each row. This setting can be 1, 2, 3, 4, and 6. Five panels per row aren't available.
+     */
+    const PANELS_PER_ROW = 4;
+    /**
      * @type string
      */
     const CREATE_INSTANCE_BLADE = 'layouts.partials.create-instance';
@@ -32,7 +36,18 @@ class DashboardDefaults extends FactoryEnum
     /**
      * @type string
      */
-    const INSTANCE_PREFIX       = 'dsp-';
+    const DEFAULT_PANEL = 'default';
+    /**
+     * @type string
+     */
+    const INSTANCE_PREFIX = 'dsp-';
+    /**
+     * @type string
+     */
     const PANEL_CONTEXT = 'panel-info';
+    /**
+     * @type string
+     */
+    const PANEL_CREATE_TITLE = 'Create a New Instance';
 
 }

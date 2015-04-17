@@ -7,6 +7,7 @@ use DreamFactory\Enterprise\Common\Traits\EntityLookup;
 use DreamFactory\Enterprise\Console\Ops\Providers\OpsClientServiceProvider;
 use DreamFactory\Enterprise\Console\Ops\Services\OpsClientService;
 use DreamFactory\Enterprise\Dashboard\Enums\DashboardDefaults;
+use DreamFactory\Enterprise\Dashboard\Enums\PanelTypes;
 use DreamFactory\Library\Fabric\Database\Enums\GuestLocations;
 use DreamFactory\Library\Fabric\Database\Enums\ProvisionStates;
 use DreamFactory\Library\Fabric\Database\Enums\ServerTypes;
@@ -16,6 +17,7 @@ use DreamFactory\Library\Utility\Curl;
 use DreamFactory\Library\Utility\IfSet;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\View\View;
 use Psr\Log\LogLevel;
 
 class DashboardService extends BaseService
@@ -57,7 +59,7 @@ class DashboardService extends BaseService
     /**
      * @type int The number of instances to display per row by default
      */
-    protected $_instancesPerRow = 3;
+    protected $_panelsPerRow = 3;
     /**
      * @type string The class to wrap columns in
      */
@@ -77,17 +79,7 @@ class DashboardService extends BaseService
         $this->_apiKey = config( 'dashboard.api-key' );
         $this->_requireCaptcha = config( 'dashboard.require-captcha', true );
         $this->_useConfigServers = config( 'dashboard.override-cluster-servers', false );
-        $this->_instancesPerRow = config( 'dashboard.instances-per-row', DashboardDefaults::COLUMNS_PER_PANEL );
-
-        if ( $this->_instancesPerRow < 1 )
-        {
-            $this->_instancesPerRow = 1;
-        }
-        else if ( $this->_instancesPerRow > 4 )
-        {
-            $this->_instancesPerRow = 4;
-        }
-
+        $this->_panelsPerRow = config( 'dashboard.panels-per-row', DashboardDefaults::PANELS_PER_ROW );
         $this->_determineGridLayout();
     }
 
@@ -451,13 +443,12 @@ class DashboardService extends BaseService
     }
 
     /**
-     * @param array  $data      Any data needed to build the table
-     * @param string $panel     The type panel. Can be "default", "create", or "import"
-     * @param bool   $forRender If true, the rendered HTML is returned as a string
+     * @param array $data   Any data needed to build the table
+     * @param bool  $render If true, the rendered HTML is returned as a string
      *
      * @return array|null|string
      */
-    public function instanceTable( $data = [], $panel = 'default', $forRender = false )
+    public function instanceTable( $data = [], $render = false )
     {
         $_html = null;
         $_result = $this->getInstances();
@@ -479,15 +470,15 @@ class DashboardService extends BaseService
                         continue;
                     }
 
-                    $_instance = $this->_buildInstancePanel( $_model, $data, $panel );
+                    $_instance = $this->_buildInstancePanel( $_model, $data, PanelTypes::SINGLE );
 
-                    if ( $forRender )
+                    if ( $render )
                     {
-                        $_html[] = $_instance;
+                        $_html = $_instance->render();
                     }
                     else
                     {
-                        $_html = $_instance->render();
+                        $_html[] = $_instance;
                     }
 
                     unset( $_model );
@@ -522,8 +513,8 @@ class DashboardService extends BaseService
      */
     protected function _buildInstancePanel( $instance, $data = [], $panel = 'default', $rendered = false )
     {
-        $_viewData = $this->_buildInstancePanelData( $instance, $data, $panel );
-        $_viewName = config( 'dashboard.panels.' . $panel . '.template', DashboardDefaults::SINGLE_INSTANCE_BLADE );
+        $_viewData = $this->buildInstancePanelData( $instance, $data, $panel );
+        $_viewName = $this->panelConfig( $panel, 'template', DashboardDefaults::SINGLE_INSTANCE_BLADE );
         $_view = view( $_viewName, $_viewData );
 
         return $rendered ? $_view->render() : $_view;
@@ -539,33 +530,62 @@ class DashboardService extends BaseService
      *
      * @return array
      */
-    protected function _buildInstancePanelData( $instance, $data = [], $panel = 'default', $formId = null )
+    public function buildInstancePanelData( $instance, $data = [], $panel = 'default', $formId = null )
     {
+        $_overrides = [];
+
         if ( empty( $data ) || !is_array( $data ) )
         {
             $data = [];
         }
 
+        if ( empty( $panel ) )
+        {
+            $panel = 'default';
+        }
+
+        if ( empty( $formId ) )
+        {
+            $formId = $this->panelConfig( $panel, 'form-id', 'form-' . $panel );
+        }
+
         $_name = is_object( $instance ) ? $instance->instance_name_text : 'NEW';
         $_id = is_object( $instance ) ? $instance->id : 0;
 
+        if ( null !== ( $_hi = $this->panelConfig( $panel, 'header-icon' ) ) )
+        {
+            $_overrides['headerIcon'] = $_hi;
+            $_overrides['headerIconSize'] = $this->panelConfig( $panel, 'header-icon-size', 'fa-1x' );
+            $_overrides['instanceStatusIcon'] = null;
+            $_overrides['instanceStatusIconSize'] = null;
+        }
+        else
+        {
+            $_overrides['headerIcon'] = null;
+            $_overrides['headerIconSize'] = null;
+            $_overrides['instanceStatusIcon'] = $this->panelConfig( $panel, 'status-icon' );
+            $_overrides['instanceStatusIconSize'] = $this->panelConfig( $panel, 'status-icon-size' );
+        }
+
         return array_merge(
             [
-                'panelContext'           => config( 'dashboard.panel-context', 'panel-info' ),
+                'panelType'              => $panel,
+                'panelContext'           => $this->panelConfig( $panel, 'context', DashboardDefaults::PANEL_CONTEXT ),
                 'instanceName'           => $_name,
                 'panelTitle'             => $_name,
-                'panelStatusIcon'        => null,
-                'formId'                 => $formId ?: 'form-' . $panel,
+                'headerIcon'             => IfSet::get( $data, 'header-icon' ),
+                'headerIconSize'         => IfSet::get( $data, 'header-icon-size' ),
+                'formId'                 => $formId,
                 'captchaId'              => 'dfe-rc-' . $_name,
-                'panelDescription'       => config( 'dashboard.panels.' . $panel . '.description' ),
-                'panelBody'              => '',
+                'panelDescription'       => \Lang::get( $this->panelConfig( $panel, 'description' ) ),
+                'panelBody'              => null,
                 'panelSize'              => $this->_columnClass,
                 'toolbarButtons'         => $this->_getToolbarButtons( $instance ),
                 'instanceLinks'          => [],//$this->_getInstanceLinks( $instance ),
                 'defaultDomain'          => $this->_defaultDomain,
-                'headerIconSize'         => config( 'dashboard.panels.' . $panel . '.header-icon-size' ),
                 'instanceDivId'          => $this->createDivId( 'instance', $_id, $_name ),
-                'instanceStatusIconSize' => 'fa-3x',
+                'instanceStatusIcon'     => $this->panelConfig( $panel, 'status-icon' ),
+                'instanceStatusIconSize' => $this->panelConfig( $panel, 'status-icon-size' ),
                 'instanceUrl'            => config( 'dashboard.default-domain-protocol', 'https' ) .
                     '://' .
                     $_name .
@@ -573,7 +593,8 @@ class DashboardService extends BaseService
                 'panelButtons'           => $this->_getPanelButtons( $instance ),
             ],
             $this->_getInstanceStatus( $instance ),
-            $data ?: []
+            $data,
+            $_overrides
         );
     }
 
@@ -613,7 +634,7 @@ class DashboardService extends BaseService
                 break;
 
             case ProvisionStates::DEPROVISIONED:
-                $_icon = config( 'dashboard.icons.instance-terminating' );
+                $_icon = config( 'dashboard.icons.terminating' );
                 $_context = 'btn-warning';
                 $_text = \Lang::get( 'dashboard.status-terminating' );
                 break;
@@ -621,13 +642,13 @@ class DashboardService extends BaseService
             case ProvisionStates::PROVISIONING_ERROR:
             case ProvisionStates::DEPROVISIONING_ERROR:
             case ProvisionStates::CREATION_ERROR:
-                $_icon = config( 'dashboard.icons.instance-dead' );
+                $_icon = config( 'dashboard.icons.dead' );
                 $_context = 'btn-danger';
                 $_text = \Lang::get( 'dashboard.status-dead' );
                 break;
 
             default:
-                $_icon = config( 'dashboard.icons.instance-unknown' );
+                $_icon = config( 'dashboard.icons.unknown' );
                 $_context = 'btn-warning';
                 $_text = \Lang::get( 'dashboard.status-dead' );
                 break;
@@ -657,7 +678,7 @@ class DashboardService extends BaseService
 
         $_icons = $this->_getPanelIcons( $instance );
 
-        $_divId = $this->createDivId( 'dsp', $instance );
+        $_divId = $this->createDivId( 'dsp', $instance->id, $instance->instance_name_text );
 
         $_linkLink = null;
         $_html = $this->getDspControls( $instance, $_buttons );
@@ -854,9 +875,7 @@ HTML;
      */
     public function getStatusIcon( $status, $key = false )
     {
-        $_statusIcon = config( 'dashboard.icons.up' );
         $_spinner = config( 'dashboard.icons.spinner' );
-        $_icon = config( 'dashboard.icons.up' );
         $_message = null;
         $_running = false;
 
@@ -1162,23 +1181,38 @@ HTML;
      */
     protected function _determineGridLayout()
     {
-        switch ( $this->_instancesPerRow )
+        if ( $this->_panelsPerRow < 1 )
+        {
+            $this->_panelsPerRow = 1;
+        }
+        else if ( $this->_panelsPerRow > 6 )
+        {
+            $this->_panelsPerRow = 6;
+        }
+
+        switch ( $this->_panelsPerRow )
         {
             case 1:
                 $this->_columnClass = 'col-xs-12 col-sm-12 col-md-12';
                 break;
+
             case 2:
-                $this->_columnClass = 'col-xs-12 col-sm-6 col-md-6';
+                $this->_columnClass = 'col-xs-6 col-sm-6 col-md-6';
                 break;
+
             case 3:
-                $this->_columnClass = 'col-xs-6 col-sm-6 col-md-4';
+                $this->_columnClass = 'col-xs-12 col-sm-3 col-md-4';
                 break;
+
+            default:
             case 4:
                 //  4 per row, col-md-3 x 4 = 12
-                $this->_columnClass = 'col-xs-6 col-sm-4 col-md-3';
+                $this->_columnClass = 'col-xs-12 col-sm-4 col-md-3';
                 break;
-            default:
-                $this->_columnClass = null;
+
+            case 6:
+                //  6 per row, col-md-2 x 6 = 12
+                $this->_columnClass = 'col-xs-12 col-sm-6 col-md-2';
                 break;
         }
     }
@@ -1191,7 +1225,7 @@ HTML;
     protected function _getPanelIcons( $status )
     {
         $_message = null;
-        $_icon = $_spinner = config( 'dashboard.icons.spinner', DashboardDefaults::SPINNING_ICON );
+        $_spinner = config( 'dashboard.icons.spinner', DashboardDefaults::SPINNING_ICON );
 
         switch ( $status->state_nbr )
         {
@@ -1219,7 +1253,7 @@ HTML;
                 break;
 
             case ProvisionStates::DEPROVISIONED:
-                $_icon = config( 'dashboard.icons.instance-dead' );;
+                $_icon = config( 'dashboard.icons.dead' );;
                 $_message = \Lang::get( 'dashboard.status-dead' );
                 break;
 
@@ -1282,6 +1316,8 @@ HTML;
     {
         static $_template = ['id' => '', 'size' => '', 'context' => 'btn-success', 'icon' => 'fa-play', 'hint' => '', 'text' => 'Launch'];
 
+        $_name = $instance ? $instance->instance_name_text : 'NEW';
+
         $_buttons = [
             'launch' => ['id' => '', 'size' => '', 'context' => 'btn-success', 'icon' => 'fa-play', 'hint' => '', 'text' => 'Launch'],
             'stop'   => ['id' => '', 'size' => '', 'context' => 'btn-warning', 'icon' => 'fa-stop', 'hint' => '', 'text' => 'Stop'],
@@ -1289,7 +1325,7 @@ HTML;
             'export' => ['id' => '', 'size' => '', 'context' => 'btn-info', 'icon' => 'fa-cloud-download', 'hint' => '', 'text' => 'Export'],
             'delete' => ['id' => '', 'size' => '', 'context' => 'btn-danger', 'icon' => 'fa-times', 'hint' => '', 'text' => 'Destroy'],
             'help'   => [
-                'id'      => 'instance-control-' . $instance->instance_name_text,
+                'id'      => 'instance-control-' . $_name,
                 'size'    => '',
                 'context' => 'btn-danger',
                 'icon'    => 'fa-times',
@@ -1299,5 +1335,63 @@ HTML;
         ];
 
         return $_buttons;
+    }
+
+    /**
+     * @param string $panel
+     * @param string $key
+     * @param mixed  $default
+     *
+     * @return mixed
+     */
+    public function panelConfig( $panel, $key, $default = null )
+    {
+        return config( 'dashboard.panels.' . $panel . '.' . $key, $default );
+    }
+
+    /**
+     * @param string $panel  The panel to render
+     * @param array  $data   Any additional view data
+     * @param bool   $render If true, view is rendered and html is returned
+     *
+     * @return View|string
+     */
+    public function renderPanel( $panel, $data = [], $render = true )
+    {
+        if ( !PanelTypes::contains( $panel = $panel ?: DashboardDefaults::DEFAULT_PANEL ) )
+        {
+            throw new \InvalidArgumentException( 'The panel type "' . $panel . '" is invalid.' );
+        }
+
+        $_blade = $this->panelConfig( $panel, 'template', DashboardDefaults::SINGLE_INSTANCE_BLADE );
+
+        $_description = \Lang::get( $this->panelConfig( $panel, 'description' ) );
+
+        if ( empty( $_description ) )
+        {
+            $_description = null;
+        }
+
+        if ( PanelTypes::SINGLE == $panel )
+        {
+            $data['panelSize'] = IfSet::get( $data, 'panelSize', $this->_columnClass );
+        }
+
+        $_view = view(
+            $_blade,
+            array_merge(
+                $data,
+                [
+                    'panelTitle'       => \Lang::get( 'dashboard.instance-' . $panel . '-title' ),
+                    'panelType'        => $panel,
+                    'formId'           => 'form-' . $panel,
+                    'panelContext'     => $this->panelConfig( $panel, 'context' ),
+                    'headerIcon'       => $this->panelConfig( $panel, 'header-icon' ),
+                    'panelDescription' => $_description,
+                ]
+            )
+        );
+
+        return $render ? $_view->render() : $_view;
     }
 }

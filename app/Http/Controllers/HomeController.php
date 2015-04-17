@@ -2,6 +2,7 @@
 
 use DreamFactory\Enterprise\Common\Http\Controllers\BaseController;
 use DreamFactory\Enterprise\Dashboard\Enums\DashboardDefaults;
+use DreamFactory\Enterprise\Dashboard\Enums\PanelTypes;
 use DreamFactory\Enterprise\Dashboard\Facades\Dashboard;
 use DreamFactory\Library\Fabric\Database\Models\Auth\User;
 use DreamFactory\Library\Fabric\Database\Models\Deploy\Snapshot;
@@ -60,13 +61,14 @@ class HomeController extends BaseController
     {
         $_message = isset( $messages ) ? $messages : null;
         $_defaultDomain = config( 'dashboard.default-domain' );
-        $_panelContext = config( 'dashboard.panels.default.context', DashboardDefaults::PANEL_CONTEXT );
 
         /** @type User $_user */
         $_user = \Auth::user();
 
         $_coreData = [
             /** General */
+            'panelContext'        => config( 'dashboard.panels.default.context', DashboardDefaults::PANEL_CONTEXT ),
+            'panelType'           => PanelTypes::SINGLE,
             'defaultDomain'       => $_defaultDomain,
             'message'             => $_message,
             'isAdmin'             => $_user->admin_ind,
@@ -78,40 +80,22 @@ class HomeController extends BaseController
                 ) . Inflector::neutralize( str_replace( ' ', '-', \Auth::user()->display_name_text ) ),
         ];
 
-        $_instances = Dashboard::instanceTable( $_user, null, true );
+        $_instances = Dashboard::instanceTable( null, false );
+        $_create = Dashboard::renderPanel( 'create', ['panelType' => PanelTypes::CREATE] );
+        $_import = Dashboard::renderPanel( 'import', ['panelType' => PanelTypes::IMPORT, 'snapshotList' => $this->_getSnapshotList()] );
 
         return view(
             'app.home',
             array_merge(
+                $_coreData,
                 [
+                    /** The instance create panel */
+                    'instanceCreator'  => $_create,
+                    /** The instance import panel */
+                    'snapshotImporter' => $_import,
                     /** The instance list */
                     'instances'        => $_instances,
-                    /** The instance create panel */
-                    'instanceCreator'  => Dashboard::renderInstance(
-                        'layouts.partials.create-instance',
-                        array_merge(
-                            $_coreData,
-                            [
-                                'panelContext' => config( 'dashboard.panels.create.context' ),
-                                'statusIcon'   => config( 'dashboard.panels.create.status-icon' ),
-                            ]
-                        ),
-                        'create'
-                    ),
-                    /** The instance import panel */
-                    'snapshotImporter' => view(
-                        'layouts.partials.import-instance',
-                        array_merge(
-                            $_coreData,
-                            [
-                                'panelContext' => config( 'dashboard.panels.import.context' ),
-                                'statusIcon'   => config( 'dashboard.panels.import.status-icon' ),
-                                'snapshotList' => $this->_getSnapshotList(),
-                            ]
-                        )
-                    )->render(),
-                ],
-                $_coreData
+                ]
             )
         );
     }
