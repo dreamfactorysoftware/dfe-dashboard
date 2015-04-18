@@ -1,3 +1,4 @@
+@extends('layouts.app')
 <?php
 $_message = null;
 
@@ -27,9 +28,7 @@ elseif ( \Session::has( 'dashboard-failure' ) )
                 </div>
 HTML;
 }
-
 ?>
-@extends('layouts.app')
 
 @section('content')
 	<div id="alert-status-change" class="alert alert-info alert-block alert-fixed hide">

@@ -80,7 +80,7 @@ class HomeController extends BaseController
                 ) . Inflector::neutralize( str_replace( ' ', '-', \Auth::user()->display_name_text ) ),
         ];
 
-        $_instances = Dashboard::instanceTable( null, false );
+        $_instances = Dashboard::instanceTable( null, true );
         $_create = Dashboard::renderPanel( 'create', ['panelType' => PanelTypes::CREATE] );
         $_import = Dashboard::renderPanel( 'import', ['panelType' => PanelTypes::IMPORT, 'snapshotList' => $this->_getSnapshotList()] );
 

@@ -474,7 +474,7 @@ class DashboardService extends BaseService
 
                     if ( $render )
                     {
-                        $_html = $_instance->render();
+                        $_html .= $_instance->render();
                     }
                     else
                     {
@@ -514,8 +514,8 @@ class DashboardService extends BaseService
     protected function _buildInstancePanel( $instance, $data = [], $panel = 'default', $rendered = false )
     {
         $_viewData = $this->buildInstancePanelData( $instance, $data, $panel );
-        $_viewName = $this->panelConfig( $panel, 'template', DashboardDefaults::SINGLE_INSTANCE_BLADE );
-        $_view = view( $_viewName, $_viewData );
+        $_viewName = $this->panelConfig( $panel, 'template', DashboardDefaults::DEFAULT_INSTANCE_BLADE );
+        $_view = \View::make( $_viewName, $_viewData, ['instance' => $instance] );
 
         return $rendered ? $_view->render() : $_view;
     }
@@ -567,6 +567,13 @@ class DashboardService extends BaseService
             $_overrides['instanceStatusIconSize'] = $this->panelConfig( $panel, 'status-icon-size' );
         }
 
+        $_key = $this->panelConfig( $panel, 'description' );
+
+        if ( $_key != ( $_panelDescription = \Lang::get( $_key ) ) )
+        {
+            $_overrides['panelDescription'] = $_panelDescription;
+        }
+
         return array_merge(
             [
                 'panelType'              => $panel,
@@ -577,7 +584,6 @@ class DashboardService extends BaseService
                 'headerIconSize'         => IfSet::get( $data, 'header-icon-size' ),
                 'formId'                 => $formId,
                 'captchaId'              => 'dfe-rc-' . $_name,
-                'panelDescription'       => \Lang::get( $this->panelConfig( $panel, 'description' ) ),
                 'panelBody'              => null,
                 'panelSize'              => $this->_columnClass,
                 'toolbarButtons'         => $this->_getToolbarButtons( $instance ),

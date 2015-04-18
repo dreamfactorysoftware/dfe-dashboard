@@ -24,6 +24,10 @@ class DashboardDefaults extends FactoryEnum
     /**
      * @type string
      */
+    const DEFAULT_INSTANCE_BLADE = 'layouts.partials.default-instance';
+    /**
+     * @type string
+     */
     const CREATE_INSTANCE_BLADE = 'layouts.partials.create-instance';
     /**
      * @type string

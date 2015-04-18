@@ -33,6 +33,7 @@ HTML
     //******************************************************************************
     //* Instance panel bodies
     //******************************************************************************
+    'instance-default'            => null,
     'instance-create'             => <<<HTML
 <p>Please choose a name for your new instance below. Once the creation process has completed, you will receive an email with access details.</p><p>Letters, numbers, and dashes are the only characters allowed.</p>
 HTML

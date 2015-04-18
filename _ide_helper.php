@@ -1,7 +1,7 @@
 <?php
 /**
  * An helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.0.27 on 2015-04-16.
+ * Generated for Laravel 5.0.27 on 2015-04-18.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -558,6 +558,16 @@ namespace {
         }
         
         /**
+         * Get the application's deferred services.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function getDeferredServices(){
+            return \Illuminate\Foundation\Application::getDeferredServices();
+        }
+        
+        /**
          * Set the application's deferred services.
          *
          * @param array $services
@@ -566,6 +576,17 @@ namespace {
          */
         public static function setDeferredServices($services){
             \Illuminate\Foundation\Application::setDeferredServices($services);
+        }
+        
+        /**
+         * Add an array of services to the application's deferred services.
+         *
+         * @param array $services
+         * @return void 
+         * @static 
+         */
+        public static function addDeferredServices($services){
+            \Illuminate\Foundation\Application::addDeferredServices($services);
         }
         
         /**
@@ -11678,14 +11699,27 @@ namespace {
         /**
          * 
          *
-         * @param $user
-         * @param array $columns
-         * @param bool $forRender
+         * @param array $data Any data needed to build the table
+         * @param bool $render If true, the rendered HTML is returned as a string
          * @return array|null|string 
          * @static 
          */
-        public static function instanceTable($user, $columns = null, $forRender = false){
-            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::instanceTable($user, $columns, $forRender);
+        public static function instanceTable($data = array(), $render = false){
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::instanceTable($data, $render);
+        }
+        
+        /**
+         * Provides the array of data necessary to populate an individual instance panel
+         *
+         * @param \stdClass|\DreamFactory\Enterprise\Dashboard\Services\Instance $instance
+         * @param array $data
+         * @param string $formId The id of the inner panel form
+         * @param string $panel The type panel. Can be "default", "create", or "import"
+         * @return array 
+         * @static 
+         */
+        public static function buildInstancePanelData($instance, $data = array(), $panel = 'default', $formId = null){
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::buildInstancePanelData($instance, $data, $panel, $formId);
         }
         
         /**
@@ -11728,13 +11762,15 @@ namespace {
          * 
          *
          * @param string $prefix
-         * @param object $instance
-         * @param bool $key
+         * @param integer $id
+         * @param string $name
          * @return string 
+         * @internal param object $instance
+         * @internal param bool $key
          * @static 
          */
-        public static function createDivId($prefix, $instance, $key = false){
-            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::createDivId($prefix, $instance, $key);
+        public static function createDivId($prefix, $id, $name){
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::createDivId($prefix, $id, $name);
         }
         
         /**
@@ -11791,24 +11827,54 @@ namespace {
         /**
          * Renders an instance view
          *
-         * @param array $data
+         * @param array|\stdClass|\DreamFactory\Enterprise\Dashboard\Services\Instance $instance
+         * @param array $data Any data needed to build the table
+         * @param string $panel The type panel. Can be "default", "create", or "import"
          * @return string 
          * @static 
          */
-        public static function renderInstance($data = array()){
-            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::renderInstance($data);
+        public static function renderInstance($instance, $data = array(), $panel = 'default'){
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::renderInstance($instance, $data, $panel);
         }
         
         /**
          * Renders multiple instance views
          *
          * @param array $instances
+         * @param array $data Any data needed to build the table
+         * @param string $panel The type panel. Can be "default", "create", or "import"
          * @param bool $asArray If true, the instances are returned rendered into an array. If false, a single string is returned
          * @return array|string 
          * @static 
          */
-        public static function renderInstances($instances = array(), $asArray = true){
-            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::renderInstances($instances, $asArray);
+        public static function renderInstances($instances = array(), $data = array(), $panel = 'default', $asArray = true){
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::renderInstances($instances, $data, $panel, $asArray);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $panel
+         * @param string $key
+         * @param mixed $default
+         * @return mixed 
+         * @static 
+         */
+        public static function panelConfig($panel, $key, $default = null){
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::panelConfig($panel, $key, $default);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $panel The panel to render
+         * @param array $data Any additional view data
+         * @param bool $render If true, view is rendered and html is returned
+         * @return \DreamFactory\Enterprise\Dashboard\Services\View|string 
+         * @static 
+         */
+        public static function renderPanel($panel, $data = array(), $render = true){
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::renderPanel($panel, $data, $render);
         }
         
         /**
