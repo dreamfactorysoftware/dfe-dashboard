@@ -331,8 +331,13 @@ table.dataTable thead th {
 	height: 100px;
 }
 
+.panel-toolbar .btn-xs, .panel-toolbar .btn-group-xs > .btn {
+	font-size: 11px;
+}
+
 .panel-instance .panel-heading .panel-title .fa.fa-fw {
-	margin-right: 5px;
+	/*margin-right: 5px;*/
+	text-align: right;
 }
 
 .panel-heading-instance .panel-title {
@@ -389,7 +394,7 @@ a[id^="dspcontrol___"]:last-child {
 	color:           #000000;
 	text-decoration: none;
 	margin:          0;
-	font-size:       19px;
+	font-size:       17px;
 	font-weight:     400;
 	font-family:     "Montserrat", "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -430,13 +435,18 @@ a[id^="dspcontrol___"]:last-child {
 	text-decoration: none;
 }
 
-.panel-instance .panel-body .dsp-info .dsp-stats, .panel-instance .panel-body .key-info .key-stats {
+.dsp-stats {
 	margin:      0 0 10px 0;
 	min-height:  15px;
 	position:    relative;
-	color:       #4f4e4e;
+	color:       #7f7e7e;
 	font-family: "Montserrat", "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.instance-status-stats {
 	font-size:   11px;
+	font-weight: normal;
+	opacity:     0.8;
 }
 
 .panel-instance .panel-body .dsp-links {
@@ -523,6 +533,35 @@ label[for="dsp_name"] {
 	margin-bottom: 0;
 }
 
+.header-status-icon {
+	text-align: right;
+}
+
+.panel-toolbar {
+	text-align: center;
+}
+
+.instance-status-name {
+	overflow: hidden;
+}
+
+.text-faded {
+	background-image: linear-gradient(to right, rgba(0, 0, 0, 0), transparent);
+}
+
+.g-recaptcha + .help-block {
+	margin-top: -10px;
+}
+
+#form-import > div.form-group:first-child {
+	margin-top: 74px
+}
+
+.instance-actions {
+	width:      100%;
+	text-align: center;
+}
+
 /*------------------------------------------------------------------------------*/
 /* Media Queries                                                                */
 /*------------------------------------------------------------------------------*/
@@ -549,7 +588,7 @@ label[for="dsp_name"] {
 	}
 
 	.dsp-info .dsp-name .dsp-launch-link {
-		font-size: 13px;
+		font-size: 12px;
 	}
 
 	.dsp-icon.dsp-real i.fa-3x {
@@ -563,18 +602,6 @@ label[for="dsp_name"] {
 	.panel-instance .panel-body .dsp-icon, .panel-instance .panel-body .key-icon {
 		margin-right: 5px;
 	}
-}
-
-.text-faded {
-	background-image: linear-gradient(to right, rgba(0, 0, 0, 0), transparent);
-}
-
-.g-recaptcha + .help-block {
-	margin-top: -10px;
-}
-
-#form-import > div.form-group:first-child {
-	margin-top: 74px
 }
 
 @media (max-width: 1024px) {
@@ -593,15 +620,15 @@ label[for="dsp_name"] {
 	}
 
 	.dsp-info .dsp-name .dsp-launch-link {
-		font-size: 17px;
+		font-size: 12px;
 	}
 
 	.dsp-icon.dsp-real i.fa-3x {
 		font-size: 1.5em;
 	}
 
-	.dsp-stats {
-		font-size: 13px;
+	.dsp-stats, .instance-status-stats {
+		font-size: 11px;
 	}
 
 	.panel-instance .panel-body .dsp-icon, .panel-instance .panel-body .key-icon {
@@ -622,6 +649,9 @@ label[for="dsp_name"] {
 		right: -10px;
 	}
 
+	.dsp-info .dsp-name .dsp-launch-link {
+		font-size: 11px;
+	}
 }
 
 @media (max-width: 1199px) {

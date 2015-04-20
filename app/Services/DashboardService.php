@@ -437,7 +437,7 @@ class DashboardService extends BaseService
     {
         $_response = $this->_getOpsClient()->instances();
 
-        $this->log( LogLevel::DEBUG, 'instances response: ' . print_r( $_response, true ) );
+        //$this->log( LogLevel::DEBUG, 'instances response: ' . print_r( $_response, true ) );
 
         return $_response;
     }
@@ -552,20 +552,13 @@ class DashboardService extends BaseService
         $_name = is_object( $instance ) ? $instance->instance_name_text : 'NEW';
         $_id = is_object( $instance ) ? $instance->id : 0;
 
-        if ( null !== ( $_hi = $this->panelConfig( $panel, 'header-icon' ) ) )
-        {
-            $_overrides['headerIcon'] = $_hi;
-            $_overrides['headerIconSize'] = $this->panelConfig( $panel, 'header-icon-size', 'fa-1x' );
-            $_overrides['instanceStatusIcon'] = null;
-            $_overrides['instanceStatusIconSize'] = null;
-        }
-        else
-        {
-            $_overrides['headerIcon'] = null;
-            $_overrides['headerIconSize'] = null;
-            $_overrides['instanceStatusIcon'] = $this->panelConfig( $panel, 'status-icon' );
-            $_overrides['instanceStatusIconSize'] = $this->panelConfig( $panel, 'status-icon-size' );
-        }
+        $_overrides['headerIcon'] = $this->panelConfig( $panel, 'header-icon' );
+        $_overrides['headerIconSize'] = $this->panelConfig( $panel, 'header-icon-size', 'fa-1x' );
+        $_overrides['headerStatusIcon'] = $this->panelConfig( $panel, 'header-status-icon' );
+        $_overrides['headerStatusIconSize'] = $this->panelConfig( $panel, 'header-status-icon-size' );
+        $_overrides['instanceStatusIcon'] = $this->panelConfig( $panel, 'status-icon' );
+        $_overrides['instanceStatusIconSize'] = $this->panelConfig( $panel, 'status-icon-size' );
+        $_overrides['instanceStatusIconContext'] = $this->panelConfig( $panel, 'status-icon-context' );
 
         $_key = $this->panelConfig( $panel, 'description' );
 
@@ -584,19 +577,19 @@ class DashboardService extends BaseService
                 'headerIconSize'         => IfSet::get( $data, 'header-icon-size' ),
                 'formId'                 => $formId,
                 'captchaId'              => 'dfe-rc-' . $_name,
-                'panelBody'              => null,
                 'panelSize'              => $this->_columnClass,
                 'toolbarButtons'         => $this->_getToolbarButtons( $instance ),
+                'panelButtons'           => $this->_getToolbarButtons( $instance ),
                 'instanceLinks'          => [],//$this->_getInstanceLinks( $instance ),
                 'defaultDomain'          => $this->_defaultDomain,
                 'instanceDivId'          => $this->createDivId( 'instance', $_id, $_name ),
                 'instanceStatusIcon'     => $this->panelConfig( $panel, 'status-icon' ),
                 'instanceStatusIconSize' => $this->panelConfig( $panel, 'status-icon-size' ),
+                'instanceStatusContext'  => $this->panelConfig( $panel, 'status-icon-context' ),
                 'instanceUrl'            => config( 'dashboard.default-domain-protocol', 'https' ) .
                     '://' .
                     $_name .
                     $this->_defaultDomain,
-                'panelButtons'           => $this->_getPanelButtons( $instance ),
             ],
             $this->_getInstanceStatus( $instance ),
             $data,
@@ -617,31 +610,31 @@ class DashboardService extends BaseService
         {
             case ProvisionStates::CREATED:
                 $_icon = $_spinner;
-                $_context = 'btn-success';
+                $_context = 'text-success';
                 $_text = \Lang::get( 'dashboard.status-started' );
                 break;
 
             case ProvisionStates::PROVISIONING:
                 $_icon = $_spinner;
-                $_context = 'btn-info';
+                $_context = 'text-info';
                 $_text = \Lang::get( 'dashboard.status-started' );
                 break;
 
             case ProvisionStates::PROVISIONED:
                 $_icon = config( 'dashboard.icons.up' );
-                $_context = 'btn-success';
+                $_context = 'text-success';
                 $_text = \Lang::get( 'dashboard.status-up' );
                 break;
 
             case ProvisionStates::DEPROVISIONING:
                 $_icon = $_spinner;
-                $_context = 'btn-info';
+                $_context = 'text-info';
                 $_text = \Lang::get( 'dashboard.status-stopping' );
                 break;
 
             case ProvisionStates::DEPROVISIONED:
                 $_icon = config( 'dashboard.icons.terminating' );
-                $_context = 'btn-warning';
+                $_context = 'text-warning';
                 $_text = \Lang::get( 'dashboard.status-terminating' );
                 break;
 
@@ -649,13 +642,13 @@ class DashboardService extends BaseService
             case ProvisionStates::DEPROVISIONING_ERROR:
             case ProvisionStates::CREATION_ERROR:
                 $_icon = config( 'dashboard.icons.dead' );
-                $_context = 'btn-danger';
+                $_context = 'text-danger';
                 $_text = \Lang::get( 'dashboard.status-dead' );
                 break;
 
             default:
                 $_icon = config( 'dashboard.icons.unknown' );
-                $_context = 'btn-warning';
+                $_context = 'text-warning';
                 $_text = \Lang::get( 'dashboard.status-dead' );
                 break;
         }
@@ -667,48 +660,6 @@ class DashboardService extends BaseService
             'instanceStatusText'    => $_text,
         ];
 
-    }
-
-    /**
-     * @param \stdClass $instance
-     * @param int       $how
-     *
-     * @return string
-     */
-    public function formatInstance( &$instance, $how = null )
-    {
-        if ( empty( $instance->instance_id_text ) )
-        {
-            $instance->instance_id_text = 'NEW';
-        }
-
-        $_icons = $this->_getPanelIcons( $instance );
-
-        $_divId = $this->createDivId( 'dsp', $instance->id, $instance->instance_name_text );
-
-        $_linkLink = null;
-        $_html = $this->getDspControls( $instance, $_buttons );
-
-        if ( $instance->state_nbr == ProvisionStates::PROVISIONED )
-        {
-            $_instanceLinkText = $instance->instance_name_text . $this->_defaultDomain;
-            $_instanceLink = '<a href="' . $_instanceLinkText . '" target="_blank" class="dsp-launch-link">' . $instance->instance_name_text . '</a>';
-            $_linkLink = '<small><a href="' . $_instanceLinkText . '" target="_blank">' . $_instanceLinkText . '</a>></small>';
-        }
-        else
-        {
-            $_instanceLink = $instance->instance_name_text;
-        }
-
-        $_icon = $_icons['icon'] ? '<i class="fa ' . $_icons['icon'] . ' fa-3x"></i>' : null;
-
-        $_html =
-            view(
-                'layouts.partials._dashboard_inner-item',
-                ['instanceLink' => $_instanceLink, 'icon' => $_icon, 'message' => $_icons['message'], 'html' => $_html]
-            )->render();
-
-        return array($_divId, $_html, $_icons);
     }
 
     /**
@@ -836,9 +787,9 @@ class DashboardService extends BaseService
                 $_hint = 'data-toggle="tooltip" title="' . $_hint . '"';
             }
 
-            if ( $instance->guest_location_nbr == GuestLocations::DFE_CLUSTER &&
-                $_buttonName == 'start' &&
-                $instance->state_nbr == ProvisionStates::PROVISIONED
+            if ( GuestLocations::DFE_CLUSTER == $instance->guest_location_nbr &&
+                'start' == $_buttonName &&
+                ProvisionStates::PROVISIONED == $instance->state_nbr
             )
             {
                 $_href = config( 'dashboard.default-domain-protocol', 'https' ) . '://' . $instance->instance_name_text . $this->_defaultDomain;
@@ -1273,22 +1224,6 @@ HTML;
     }
 
     /**
-     * Create an HTML <A> with link to help info
-     *
-     * @param \stdClass|Instance $status
-     *
-     * @return string
-     */
-    protected function _buildHelpButton( $instance )
-    {
-        return
-            '<a class="btn btn-xs btn-info col-xs-2 col-sm-2 dsp-help-button" id="dspcontrol-' . $instance->instance_name_text .
-            '" data-placement="middle" title="Help" target="_blank" href="' . config( 'dashboard.help-button-url' ) .
-            '"><i style="margin-right: 0;" class="fa fa-question-circle"></i></a>';
-
-    }
-
-    /**
      * @param \stdClass|Instance $instance
      *
      * @return array
@@ -1313,6 +1248,25 @@ HTML;
         return $_buttons;
     }
 
+    protected function _getToolbarButton( $id, $text, array $options = [] )
+    {
+        static $_template = ['type' => 'button', 'size' => 'btn-xs', 'context' => 'btn-info', 'icon' => '', 'hint' => ''];
+
+        if ( isset( $options['icon'] ) )
+        {
+            $options['icon'] = '<i class="fa fa-fw ' . $options['icon'] . ' instance-toolbar-button"></i>';
+        }
+
+        return array_merge(
+            $_template,
+            [
+                'id'   => $id,
+                'text' => $text,
+            ],
+            $options
+        );
+    }
+
     /**
      * @param \stdClass|Instance $instance
      *
@@ -1320,25 +1274,25 @@ HTML;
      */
     protected function _getToolbarButtons( $instance )
     {
-        static $_template = ['id' => '', 'size' => '', 'context' => 'btn-success', 'icon' => 'fa-play', 'hint' => '', 'text' => 'Launch'];
-
-        $_name = $instance ? $instance->instance_name_text : 'NEW';
-
-        $_buttons = [
-            'launch' => ['id' => '', 'size' => '', 'context' => 'btn-success', 'icon' => 'fa-play', 'hint' => '', 'text' => 'Launch'],
-            'stop'   => ['id' => '', 'size' => '', 'context' => 'btn-warning', 'icon' => 'fa-stop', 'hint' => '', 'text' => 'Stop'],
-            'import' => ['id' => '', 'size' => '', 'context' => 'btn-warning', 'icon' => 'fa-cloud-upload', 'hint' => '', 'text' => 'Import'],
-            'export' => ['id' => '', 'size' => '', 'context' => 'btn-info', 'icon' => 'fa-cloud-download', 'hint' => '', 'text' => 'Export'],
-            'delete' => ['id' => '', 'size' => '', 'context' => 'btn-danger', 'icon' => 'fa-times', 'hint' => '', 'text' => 'Destroy'],
-            'help'   => [
-                'id'      => 'instance-control-' . $_name,
-                'size'    => '',
-                'context' => 'btn-danger',
-                'icon'    => 'fa-times',
-                'hint'    => '',
-                'text'    => 'Destroy'
-            ],
-        ];
+        if ( GuestLocations::DFE_CLUSTER == $instance->guest_location_nbr )
+        {
+            $_buttons = [
+                'launch' => $this->_getToolbarButton( 'launch', 'Launch', ['context' => 'btn-success', 'icon' => 'fa-play',] ),
+                'delete' => $this->_getToolbarButton( 'delete', 'Delete', ['context' => 'btn-danger', 'icon' => 'fa-times',] ),
+                'import' => $this->_getToolbarButton( 'import', 'Import', ['context' => 'btn-warning', 'icon' => 'fa-cloud-upload',] ),
+                'export' => $this->_getToolbarButton( 'export', 'Export', ['context' => 'btn-info', 'icon' => 'fa-cloud-download',] ),
+            ];
+        }
+        else
+        {
+            $_buttons = [
+                'start'     => $this->_getToolbarButton( 'start', 'Start', ['context' => 'btn-success', 'icon' => 'fa-play',] ),
+                'stop'      => $this->_getToolbarButton( 'stop', 'Stop', ['context' => 'btn-warning', 'icon' => 'fa-stop',] ),
+                'terminate' => $this->_getToolbarButton( 'terminate', 'Terminate', ['context' => 'btn-danger', 'icon' => 'fa-times',] ),
+                'import'    => $this->_getToolbarButton( 'import', 'Import', ['context' => 'btn-warning', 'icon' => 'fa-cloud-upload',] ),
+                'export'    => $this->_getToolbarButton( 'export', 'Export', ['context' => 'btn-info', 'icon' => 'fa-cloud-download',] ),
+            ];
+        }
 
         return $_buttons;
     }

@@ -12,3 +12,9 @@
 		</div>
 	</div>
 @overwrite
+
+@section('panel-body-links')
+	<button type="submit" class="btn btn-primary btn-success">
+		<i class="fa fa-fw {{ config('dashboard.icons.create') }}" style="margin-right: 8px;"></i> {{ \Lang::get('dashboard.instance-create-button-text') }}
+	</button>
+@overwrite

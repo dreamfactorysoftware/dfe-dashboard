@@ -116,9 +116,21 @@ var _checkProgress = function() {
  * DR
  */
 jQuery(function($) {
+	var $_toolbars = $('div[id^="instance-toolbar-"]');
+
 	if (!_dso.controlForm) {
 		_dso.controlForm = $('form#_dsp-control');
 	}
+
+	$_toolbars.on('show.bs.collapse', function() {
+		var $_icon = $(this).prev('.instance-actions').find('.fa-angle-down');
+		$_icon.removeClass('fa-angle-down').addClass('fa-angle-up');
+	});
+
+	$_toolbars.on('hide.bs.collapse', function() {
+		var $_icon = $(this).prev('.instance-actions').find('.fa-angle-up');
+		$_icon.removeClass('fa-angle-up').addClass('fa-angle-down');
+	});
 
 	/**
 	 * Panel eye-candy

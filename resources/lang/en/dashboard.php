@@ -39,7 +39,7 @@ HTML
 HTML
     ,
     'instance-import'             => <<<HTML
-<p>Please choose a snapshot to import from the drop-down below. You may alternatively upload an existing snapshot by clicking the <strong>Upload Your Own</strong> button below. You will receive an email once the import is complete.</p>
+<p>Please choose a snapshot to import from the drop-down below. You may alternatively upload an existing snapshot by clicking <strong>Upload Your Own</strong>. You will receive an email once the process completes.</p>
 <p class="help-block" style="margin-top:2px; font-size: 13px; color:#888;">Currently, only exports created by the DreamFactory Enterprise Dashboard are supported.</p>
 HTML
     ,

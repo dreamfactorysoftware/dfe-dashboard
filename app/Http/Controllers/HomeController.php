@@ -80,9 +80,13 @@ class HomeController extends BaseController
                 ) . Inflector::neutralize( str_replace( ' ', '-', \Auth::user()->display_name_text ) ),
         ];
 
+        $_create = Dashboard::renderPanel( 'create', array_merge( $_coreData, ['panelType' => PanelTypes::CREATE] ) );
+        $_import =
+            Dashboard::renderPanel(
+                'import',
+                array_merge( $_coreData, ['panelType' => PanelTypes::IMPORT, 'snapshotList' => $this->_getSnapshotList()] )
+            );
         $_instances = Dashboard::instanceTable( null, true );
-        $_create = Dashboard::renderPanel( 'create', ['panelType' => PanelTypes::CREATE] );
-        $_import = Dashboard::renderPanel( 'import', ['panelType' => PanelTypes::IMPORT, 'snapshotList' => $this->_getSnapshotList()] );
 
         return view(
             'app.home',

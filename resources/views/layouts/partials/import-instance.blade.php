@@ -16,6 +16,7 @@
 		</div>
 
 		<label for="import-file-label" class="col-md-1 control-label">or</label>
+
 		<div class="col-md-5">
 			<label class="btn btn-primary" for="import-file">
 				<input id="import-file" type="file" style="display:none;">
@@ -26,7 +27,7 @@
 @overwrite
 
 @section('panel-body-links')
-	<button type="submit" class="btn btn-primary btn-success">
+	<button type="submit" class="btn btn-primary btn-warning">
 		<i class="fa fa-fw {{ config('dashboard.icons.import') }}" style="margin-right: 8px;"></i> {{ \Lang::get('dashboard.instance-import-button-text') }}
 	</button>
 @overwrite
