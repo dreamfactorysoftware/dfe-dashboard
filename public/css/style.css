@@ -660,3 +660,9 @@ label[for="dsp_name"] {
 		/* padding: 10px 15px; */
 	}
 }
+
+@media (max-width: 1299px) {
+	.hidden-toolbar-button {
+		display: none !important;
+	}
+}

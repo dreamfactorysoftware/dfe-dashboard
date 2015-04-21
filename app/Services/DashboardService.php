@@ -18,7 +18,6 @@ use DreamFactory\Library\Utility\IfSet;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
-use Psr\Log\LogLevel;
 
 class DashboardService extends BaseService
 {
@@ -1248,20 +1247,26 @@ HTML;
         return $_buttons;
     }
 
-    protected function _getToolbarButton( $id, $text, array $options = [] )
+    protected function _makeToolbarButton( $id, $text, array $options = [] )
     {
-        static $_template = ['type' => 'button', 'size' => 'btn-xs', 'context' => 'btn-info', 'icon' => '', 'hint' => ''];
+        static $_template = ['type' => 'button', 'size' => 'btn-xs', 'context' => 'btn-info', 'icon' => '', 'hint' => '', 'data' => []];
 
         if ( isset( $options['icon'] ) )
         {
             $options['icon'] = '<i class="fa fa-fw ' . $options['icon'] . ' instance-toolbar-button"></i>';
         }
 
+        $_action = str_replace( ['_', ' '], '-', trim( strtolower( $text ) ) );
+
         return array_merge(
             $_template,
             [
-                'id'   => $id,
+                'id'   => 'instance-' . $_action . '-' . $id,
                 'text' => $text,
+                'data' => [
+                    'instance-id'     => $id,
+                    'instance-action' => $_action,
+                ],
             ],
             $options
         );
@@ -1271,26 +1276,29 @@ HTML;
      * @param \stdClass|Instance $instance
      *
      * @return array
+     * @todo generate buttons based on provisioner features rather than statically
      */
     protected function _getToolbarButtons( $instance )
     {
+        $_id = $instance->instance_id_text;
+
         if ( GuestLocations::DFE_CLUSTER == $instance->guest_location_nbr )
         {
             $_buttons = [
-                'launch' => $this->_getToolbarButton( 'launch', 'Launch', ['context' => 'btn-success', 'icon' => 'fa-play',] ),
-                'delete' => $this->_getToolbarButton( 'delete', 'Delete', ['context' => 'btn-danger', 'icon' => 'fa-times',] ),
-                'import' => $this->_getToolbarButton( 'import', 'Import', ['context' => 'btn-warning', 'icon' => 'fa-cloud-upload',] ),
-                'export' => $this->_getToolbarButton( 'export', 'Export', ['context' => 'btn-info', 'icon' => 'fa-cloud-download',] ),
+                'launch' => $this->_makeToolbarButton( $_id, 'Launch', ['context' => 'btn-success', 'icon' => 'fa-play'] ),
+                'delete' => $this->_makeToolbarButton( $_id, 'Delete', ['context' => 'btn-danger', 'icon' => 'fa-times'] ),
+                'export' => $this->_makeToolbarButton( $_id, 'Export', ['context' => 'btn-info', 'icon' => 'fa-cloud-download'] ),
+                'import' => $this->_makeToolbarButton( $_id, 'Import', ['context' => 'btn-warning', 'icon' => 'fa-cloud-upload'] ),
             ];
         }
         else
         {
             $_buttons = [
-                'start'     => $this->_getToolbarButton( 'start', 'Start', ['context' => 'btn-success', 'icon' => 'fa-play',] ),
-                'stop'      => $this->_getToolbarButton( 'stop', 'Stop', ['context' => 'btn-warning', 'icon' => 'fa-stop',] ),
-                'terminate' => $this->_getToolbarButton( 'terminate', 'Terminate', ['context' => 'btn-danger', 'icon' => 'fa-times',] ),
-                'import'    => $this->_getToolbarButton( 'import', 'Import', ['context' => 'btn-warning', 'icon' => 'fa-cloud-upload',] ),
-                'export'    => $this->_getToolbarButton( 'export', 'Export', ['context' => 'btn-info', 'icon' => 'fa-cloud-download',] ),
+                'start'     => $this->_makeToolbarButton( $_id, 'Start', ['context' => 'btn-success', 'icon' => 'fa-play',] ),
+                'stop'      => $this->_makeToolbarButton( $_id, 'Stop', ['context' => 'btn-warning', 'icon' => 'fa-stop',] ),
+                'terminate' => $this->_makeToolbarButton( $_id, 'Terminate', ['context' => 'btn-danger', 'icon' => 'fa-times',] ),
+                'export'    => $this->_makeToolbarButton( $_id, 'Export', ['context' => 'btn-info', 'icon' => 'fa-cloud-download',] ),
+                'import'    => $this->_makeToolbarButton( $_id, 'Import', ['context' => 'btn-warning', 'icon' => 'fa-cloud-upload',] ),
             ];
         }
 
