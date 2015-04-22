@@ -6,7 +6,7 @@
  * Our global options
  */
 var _options = {
-	alertHideDelay:      5000,
+	alertHideDelay:      10000,
 	notifyDiv:           'div#request-message',
 	ajaxMessageFadeTime: 6000,
 	enablePushMenu:      false
@@ -17,11 +17,11 @@ var _options = {
 $(function() {
 	if (_options.enablePushMenu) {
 		$(document.body).on('click', function(e) {
-								if (0 != $('.cbp-spmenu-open').length) {
-									$('.cbp-spmenu-push').toggleClass('cbp-spmenu-push-toright');
-									$('#db-menu').toggleClass('cbp-spmenu-open');
-								}
-							});
+			if (0 != $('.cbp-spmenu-open').length) {
+				$('.cbp-spmenu-push').toggleClass('cbp-spmenu-push-toright');
+				$('#db-menu').toggleClass('cbp-spmenu-open');
+			}
+		});
 	} else {
 		$('a.navbar-brand').css({cursor: 'default'});
 	}
@@ -31,9 +31,9 @@ $(function() {
 	 */
 	if (_options.alertHideDelay) {
 		window.setTimeout(function() {
-			$('div.alert').not('.alert-fixed').fadeTo(500, 0).slideUp(500, function() {
-																		  $(this).remove();
-																	  });
+			$('div.alert.alert-dismissable').not('.alert-fixed').fadeTo('fast', 0).slideUp('fast', function() {
+				$(this).remove();
+			});
 		}, _options.alertHideDelay);
 	}
 
@@ -42,18 +42,9 @@ $(function() {
 	 */
 	if (_options.enablePushMenu) {
 		$('a.navbar-brand').on('click', function(e) {
-								   $('.cbp-spmenu-push').toggleClass('cbp-spmenu-push-toright');
-								   $('#db-menu').toggleClass('cbp-spmenu-open');
-								   e.stopPropagation();
-							   });
-	}
-
-	var $_dspList = $('.instance-panel-group .panel-instance');
-	var _count = $_dspList.length;
-
-	if (0 == _count) {
-		$_dspList[0].trigger('click');
-	} else if (1 == _count) {
-		$_dspList[3].trigger('click');
+			$('.cbp-spmenu-push').toggleClass('cbp-spmenu-push-toright');
+			$('#db-menu').toggleClass('cbp-spmenu-open');
+			e.stopPropagation();
+		});
 	}
 });

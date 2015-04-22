@@ -4,12 +4,16 @@
       <w>auth'd</w>
       <w>avenir</w>
       <w>bascom</w>
+      <w>dismissable</w>
       <w>dspcontrol</w>
       <w>marwelln</w>
+      <w>maxlength</w>
       <w>optgroup</w>
       <w>parseable</w>
+      <w>reusables</w>
       <w>sitekey</w>
       <w>siteverify</w>
+      <w>unhighlight</w>
     </words>
   </dictionary>
 </component>

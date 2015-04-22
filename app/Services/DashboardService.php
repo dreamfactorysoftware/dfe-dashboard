@@ -105,36 +105,11 @@ class DashboardService extends BaseService
                 return ErrorPacket::make( null, Response::HTTP_BAD_REQUEST );
             }
 
-            //	Handle the request
-            if ( $this->_requireCaptcha )
-            {
-//                    $_captcha = new Captcha();
-//                    $_captcha->setPrivateKey( config( 'dashboard.recaptcha.private_key' ) );
-//                    $_captcha->timeout = 30;
-            }
-
             switch ( $_command )
             {
+                case 'provision':
+                case 'launch':
                 case 'create':
-                    if ( $this->_requireCaptcha )
-                    {
-//                            try
-//                            {
-//                                //    Check captcha...
-//                                if ( !$_captcha->isValid() )
-//                                {
-//                                    $_captcha->setError();
-//                                    throw new CaptchaException( 'Validation code was not entered correctly.' );
-//                                }
-//                            }
-//                            catch ( CaptchaException $_ex )
-//                            {
-//                                Pii::setFlash( 'dashboard-failure', $_ex->getMessage() );
-//
-//                                return false;
-//                            }
-                    }
-
                     $this->provisionInstance( $id, true, false );
                     break;
 
@@ -144,6 +119,7 @@ class DashboardService extends BaseService
 
                 case 'destroy':
                 case 'delete':
+                case 'deprovision':
                     $this->deprovisionInstance( $id );
                     break;
 
@@ -305,7 +281,7 @@ class DashboardService extends BaseService
      */
     public function deprovisionInstance( $instanceId )
     {
-        $_result = $this->_apiCall( '/ops/destroy', array('instance-id' => $instanceId), true );
+        $_result = $this->_apiCall( '/ops/deprovision', array('instance-id' => $instanceId), true );
 
         if ( $_result->success )
         {
@@ -568,6 +544,7 @@ class DashboardService extends BaseService
 
         return array_merge(
             [
+                'collapse'               => false,
                 'panelType'              => $panel,
                 'panelContext'           => $this->panelConfig( $panel, 'context', DashboardDefaults::PANEL_CONTEXT ),
                 'instanceName'           => $_name,
@@ -1254,6 +1231,11 @@ HTML;
         if ( isset( $options['icon'] ) )
         {
             $options['icon'] = '<i class="fa fa-fw ' . $options['icon'] . ' instance-toolbar-button"></i>';
+        }
+
+        if ( !isset( $options['hint'] ) )
+        {
+            $options['hint'] = $text . ' instance';
         }
 
         $_action = str_replace( ['_', ' '], '-', trim( strtolower( $text ) ) );

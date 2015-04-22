@@ -7,7 +7,7 @@ if ( \Session::has( 'dashboard-success' ) )
 	$_flash = \Session::get( 'dashboard-success' );
 
 	$_message = <<<HTML
-                <div class="alert alert-success fade in">
+                <div class="alert alert-success fade in alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     <h4>Success!</h4>
 
@@ -20,7 +20,7 @@ elseif ( \Session::has( 'dashboard-failure' ) )
 	$_flash = \Session::get( 'dashboard-failure' );
 
 	$_message = <<<HTML
-                <div class="alert alert-danger fade in">
+                <div class="alert alert-danger fade in alert-dismissable alert-fixed">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     <h4>Fail!</h4>
 
@@ -38,16 +38,18 @@ HTML;
 
 	{!! $_message !!}
 
-	<div class="row">
-		<div class="col-md-6">
-			<div class="create-instance">
-				{!! $instanceCreator !!}
+	<div class="panel-group" id="panel-accordion" role="tablist" aria-multiselectable="true">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="create-instance">
+					{!! $instanceCreator !!}
+				</div>
 			</div>
-		</div>
 
-		<div class="col-md-6">
-			<div class="import-snapshot">
-				{!! $snapshotImporter !!}
+			<div class="col-md-6">
+				<div class="import-snapshot">
+					{!! $snapshotImporter !!}
+				</div>
 			</div>
 		</div>
 	</div>
@@ -74,7 +76,7 @@ HTML;
 		</div>
 	</div>
 
-	<form id="_dsp-control" method="POST">
+	<form id="_dsp-control" method="POST" action="/control">
 		<input type="hidden" name="id" value="">
 		<input type="hidden" name="control" value="">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}">

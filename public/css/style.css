@@ -337,7 +337,7 @@ table.dataTable thead th {
 
 .panel-instance .panel-heading .panel-title .fa.fa-fw {
 	/*margin-right: 5px;*/
-	text-align: right;
+	/*text-align: right;*/
 }
 
 .panel-heading-instance .panel-title {
@@ -436,7 +436,7 @@ a[id^="dspcontrol___"]:last-child {
 }
 
 .dsp-stats {
-	margin:      0 0 10px 0;
+	/*margin:      0 0 10px 0;*/
 	min-height:  15px;
 	position:    relative;
 	color:       #7f7e7e;
@@ -525,8 +525,9 @@ label[for="dsp_name"] {
 	font-size: 11px;
 }
 
-#import-file {
-	padding: 10px;
+label[for="import-file"] {
+	/*padding: 10px;*/
+	margin-top: 5px;
 }
 
 .dsp-links > .btn {

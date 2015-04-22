@@ -49,10 +49,10 @@ var _checkProgress = function() {
 				var _parts = _id.split('___');
 
 				if (3 == _parts.length) {
-					$('input[name="id"]', $_form).val(_parts[2]);
+					$('input[name="id"]', $_form).val(id);
 					$('input[name="control"]', $_form).val('status');
 
-					$.post('/status/' + _parts[2], $_form.serialize(), function(data) {
+					$.post('/status/' + id, $_form.serialize(), function(data) {
 							   var $_inner = $("div#" + _id + ".panel-collapse .panel-body");
 
 							   $(item).fadeOut('slow', function() {
@@ -113,123 +113,137 @@ var _checkProgress = function() {
 };
 
 /**
+ * Generates the necessary form data to push an action request to the console
+ * @param {jQuery} $element
+ * @private
+ */
+var _processAction = function($element) {
+	var _id = $element.data('instance-id');
+	var _action = $element.data('instance-action');
+
+	if ('create' == _action) {
+		if (_validator && !_validator.valid()) {
+			return;
+		}
+
+		_id = $('input#instance-name').val();
+
+		if (!_id || !_id.length) {
+			alert('Invalid instance name.');
+		}
+	} else {
+		$element.addClass('disabled').prop('disabled', true);
+	}
+
+	var _result = _makeRequest(_id, $element.data('instance-action'), $element.data('instance-href') || null);
+
+	$element.removeClass('disabled').prop('disabled', false);
+};
+
+/**
+ *
+ * @param id
+ * @param action
+ * @param href
+ * @returns {*}
+ * @private
+ */
+var _makeRequest = function(id, action, href) {
+
+	switch (action) {
+		case 'launch':
+			window.open(href);
+			return;
+		case 'destroy':
+		case 'deprovision':
+		case 'delete':
+			if (!confirm('Permanently delete instance "' + id + '"?')) {
+				return;
+			}
+			break;
+		case 'start':
+			if (!confirm('Start instance "' + id + '"?')) {
+				return;
+			}
+			break;
+		case 'stop':
+			if (!confirm('Stop instance "' + id + '"?')) {
+				return;
+			}
+			break;
+		case 'provision':
+		case 'create':
+		case 'help':
+			break;
+		case 'export':
+			if (!confirm('Export instance "' + id + '"?')) {
+				return;
+			}
+			break;
+		case 'import':
+			//				if ( !confirm('WARNING: Destructive Procedure. This may overwrite existing settings in this DSP.' + "\n\n" + 'Import to DSP "' + id + '"?') ) {
+			//					return;
+			//				}
+
+			$('input[name="id"]', _dso.controlForm).val(id);
+			$('input[name="control"]', _dso.controlForm).val('snapshots');
+			$('body').css('cursor', 'wait');
+
+			$.post('/control', _dso.controlForm.serialize(), function(data) {
+				$('body').css('cursor', 'pointer');
+				if (data) {
+					$('#dsp-snapshot-list').html(data);
+					$('form#_dsp-snapshot-control input[name="id"]').val(id);
+					$('#dsp-import-snapshot').modal('show');
+				} else {
+					alert('No snapshots available for this instance.');
+				}
+			}, 'html');
+			return;
+
+		default:
+			alert('Invalid command "' + action + '"');
+			return;
+	}
+
+	$('input[name="id"]', _dso.controlForm).val(id);
+	$('input[name="control"]', _dso.controlForm).val(action);
+
+	return _dso.controlForm.submit();
+};
+
+/**
  * DR
  */
 jQuery(function($) {
+	//	Reusables...
 	var $_toolbars = $('div[id^="instance-toolbar-"]');
 
+	//	Set form if not already
 	if (!_dso.controlForm) {
 		_dso.controlForm = $('form#_dsp-control');
 	}
 
+	//	Open/close toolbar
 	$_toolbars.on('show.bs.collapse', function() {
 		var $_icon = $(this).prev('.instance-actions').find('.fa-angle-down');
 		$_icon.removeClass('fa-angle-down').addClass('fa-angle-up');
-	});
-
-	$_toolbars.on('hide.bs.collapse', function() {
+	}).on('hide.bs.collapse', function() {
 		var $_icon = $(this).prev('.instance-actions').find('.fa-angle-up');
 		$_icon.removeClass('fa-angle-up').addClass('fa-angle-down');
 	});
 
-	/**
-	 * Panel eye-candy
-	 */
-	$('#dsp_list').on('hide.bs.collapse show.bs.collapse shown.bs.collapse', function(e) {
-		var $_element = $(e.target);
-		var $_heading = $_element.prev();
-
-		switch (e.type) {
-			case 'hide':
-				$_element.removeClass('panel-body-open');
-				$_heading.removeClass('instance-heading-shown');
-				$('.instance-heading-name i.fa-chevron-up', $_heading).removeClass('fa-chevron-up').addClass('fa-chevron-down');
-				break;
-
-			case 'show':
-				$_element.addClass('panel-body-open');
-				$_heading.addClass('instance-heading-shown');
-				$('.instance-heading-name i.fa-chevron-down', $_heading).removeClass('fa-chevron-down').addClass('fa-chevron-up');
-				break;
-
-			case 'shown':
-				$_element.find('form #dsp_name').focus();
-				break;
-		}
+	//	No clicks allowed on disabled stuff
+	$('body').on('click', '.disabled', function(e) {
+		e.preventDefault();
 	});
 
-	//noinspection FunctionWithInconsistentReturnsJS
-	/**
-	 * Dashboard control buttons
-	 */
-	$('span.dsp-controls').on('click', 'a[id^="dspcontrol___"]', function(e) {
+	//	All toolbar button clicks go here...
+	$('.panel-toolbar > button').on('click', function(e) {
 		e.preventDefault();
-
-		if ($(this).hasClass('disabled')) {
-			return false;
-		}
-
-		var _id = $(this).attr('id');
-		var _parts = _id.split('___');
-
-		switch (_parts[1]) {
-			case 'launch':
-				window.open($(this).attr('href'));
-				return;
-
-			case 'delete':
-				if (!confirm('Permanently delete DSP "' + _parts[2] + '"?')) {
-					return;
-				}
-				break;
-			case 'start':
-				if (!confirm('Restart DSP "' + _parts[2] + '"?')) {
-					return;
-				}
-				break;
-			case 'stop':
-				if (!confirm('Stop DSP "' + _parts[2] + '"?')) {
-					return;
-				}
-				break;
-			case 'help':
-				break;
-			case 'export':
-				if (!confirm('Export DSP "' + _parts[2] + '"?')) {
-					return;
-				}
-				break;
-			case 'import':
-				//				if ( !confirm('WARNING: Destructive Procedure. This may overwrite existing settings in this DSP.' + "\n\n" + 'Import to DSP "' + _parts[2] + '"?') ) {
-				//					return;
-				//				}
-
-				$('input[name="id"]', _dso.controlForm).val(_parts[2]);
-				$('input[name="control"]', _dso.controlForm).val('snapshots');
-				$('body').css('cursor', 'wait');
-
-				$.post('/control', _dso.controlForm.serialize(), function(data) {
-					$('body').css('cursor', 'pointer');
-					if (data) {
-						$('#dsp-snapshot-list').html(data);
-						$('form#_dsp-snapshot-control input[name="id"]').val(_parts[2]);
-						$('#dsp-import-snapshot').modal('show');
-					} else {
-						alert('No snapshots available for this instance.');
-					}
-				}, 'html');
-				return;
-
-			default:
-				alert('Invalid command "' + _parts['1'] + '"');
-				return;
-		}
-
-		$('input[name="id"]', _dso.controlForm).val(_parts[2]);
-		$('input[name="control"]', _dso.controlForm).val(_parts[1]);
-		return _dso.controlForm.submit();
+		_processAction($(this));
 	});
 
 	window.setTimeout(_checkProgress, _dso.statusCheckFrequency);
-	_closeAlert('.system-alert', _dso.alertHideTimeout);
+	_closeAlert('.alert-dismissable', _dso.alertHideTimeout);
 });

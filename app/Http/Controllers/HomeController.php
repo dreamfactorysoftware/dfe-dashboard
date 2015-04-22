@@ -4,8 +4,8 @@ use DreamFactory\Enterprise\Common\Http\Controllers\BaseController;
 use DreamFactory\Enterprise\Dashboard\Enums\DashboardDefaults;
 use DreamFactory\Enterprise\Dashboard\Enums\PanelTypes;
 use DreamFactory\Enterprise\Dashboard\Facades\Dashboard;
-use DreamFactory\Library\Fabric\Database\Models\Auth\User;
 use DreamFactory\Library\Fabric\Database\Models\Deploy\Snapshot;
+use DreamFactory\Library\Fabric\Database\Models\Deploy\User;
 use DreamFactory\Library\Utility\Inflector;
 use Illuminate\Http\Request;
 
@@ -47,7 +47,16 @@ class HomeController extends BaseController
 
         $_response = Dashboard::handleRequest( $request, $id );
 
-        return \Redirect::home();
+        if ( true === $_response )
+        {
+            \Session::flash( 'dashboard-success', 'Your request completed successfully.' );
+        }
+        else if ( false === $_response )
+        {
+            \Session::flash( 'dashboard-failure', 'There was a problem with your request.' );
+        }
+
+        return \Redirect::action( 'HomeController@index' );
     }
 
     /**
@@ -80,11 +89,18 @@ class HomeController extends BaseController
                 ) . Inflector::neutralize( str_replace( ' ', '-', \Auth::user()->display_name_text ) ),
         ];
 
-        $_create = Dashboard::renderPanel( 'create', array_merge( $_coreData, ['panelType' => PanelTypes::CREATE] ) );
+        $_create = Dashboard::renderPanel( 'create', array_merge( $_coreData, ['instanceName' => 'create', 'panelType' => PanelTypes::CREATE] ) );
         $_import =
             Dashboard::renderPanel(
                 'import',
-                array_merge( $_coreData, ['panelType' => PanelTypes::IMPORT, 'snapshotList' => $this->_getSnapshotList()] )
+                array_merge(
+                    $_coreData,
+                    [
+                        'panelType'    => PanelTypes::IMPORT,
+                        'snapshotList' => $this->_getSnapshotList(),
+                        'instanceName' => 'import'
+                    ]
+                )
             );
         $_instances = Dashboard::instanceTable( null, true );
 
