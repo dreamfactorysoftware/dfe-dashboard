@@ -1,7 +1,7 @@
 <?php
 /**
  * An helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.0.28 on 2015-04-21.
+ * Generated for Laravel 5.0.28 on 2015-04-22.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -11720,18 +11720,6 @@ namespace {
          */
         public static function buildInstancePanelData($instance, $data = array(), $panel = 'default', $formId = null){
             return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::buildInstancePanelData($instance, $data, $panel, $formId);
-        }
-        
-        /**
-         * 
-         *
-         * @param \stdClass $instance
-         * @param int $how
-         * @return string 
-         * @static 
-         */
-        public static function formatInstance($instance, $how = null){
-            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::formatInstance($instance, $how);
         }
         
         /**
