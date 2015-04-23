@@ -1,6 +1,6 @@
 <?php
 /**
- * An helper file for Laravel 5, to provide autocomplete information to your IDE
+ * A helper file for Laravel 5, to provide autocomplete information to your IDE
  * Generated for Laravel 5.0.28 on 2015-04-22.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
