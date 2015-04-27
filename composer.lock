@@ -633,12 +633,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/fabric-db.git",
-                "reference": "7388c589296aec9121099ee061ea230443bbadf2"
+                "reference": "63ad3283676a5fb248b68d98387d0d13a3e85f68"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/fabric-db/zipball/7388c589296aec9121099ee061ea230443bbadf2",
-                "reference": "7388c589296aec9121099ee061ea230443bbadf2",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/fabric-db/zipball/63ad3283676a5fb248b68d98387d0d13a3e85f68",
+                "reference": "63ad3283676a5fb248b68d98387d0d13a3e85f68",
                 "shasum": ""
             },
             "require": {
@@ -680,7 +680,7 @@
                 "source": "https://github.com/dreamfactorysoftware/fabric-db/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/fabric-db/issues"
             },
-            "time": "2015-04-22 21:41:57"
+            "time": "2015-04-27 20:30:27"
         },
         {
             "name": "dreamfactory/php-utils",
