@@ -84,7 +84,7 @@ class HomeController extends BaseController
             'displayName'         => $_user->display_name_text,
             'defaultInstanceName' =>
                 ( \Auth::user()->admin_ind != 1
-                    ? config( 'dashboard.instance-prefix', DashboardDefaults::INSTANCE_PREFIX )
+                    ? config( 'dfe.common.instance-prefix' )
                     : null
                 ) . Inflector::neutralize( str_replace( ' ', '-', \Auth::user()->display_name_text ) ),
         ];

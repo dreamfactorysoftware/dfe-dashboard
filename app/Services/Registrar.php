@@ -1,6 +1,8 @@
 <?php namespace DreamFactory\Enterprise\Dashboard\Services;
 
-use DreamFactory\Library\Fabric\Database\Models\Auth\User;
+use DreamFactory\Enterprise\Common\Enums\AppKeyEntities;
+use DreamFactory\Library\Fabric\Database\Models\Deploy\AppKey;
+use DreamFactory\Library\Fabric\Database\Models\Deploy\User;
 use Illuminate\Contracts\Auth\Registrar as RegistrarContract;
 use Validator;
 
@@ -22,10 +24,11 @@ class Registrar implements RegistrarContract
         return Validator::make(
             $data,
             [
-                'first_name_text' => 'required|max:64',
-                'last_name_text'  => 'required|max:64',
-                'email_addr_text' => 'required|email|max:320|unique:user_t',
-                'password_text'   => 'required|confirmed|min:6',
+                'first_name_text'   => 'required|max:64',
+                'last_name_text'    => 'required|max:64',
+                'display_name_text' => 'required|max:64',
+                'email_addr_text'   => 'required|email|max:320|unique:user_t',
+                'password_text'     => 'required|confirmed|min:6',
             ]
         );
     }
@@ -39,13 +42,30 @@ class Registrar implements RegistrarContract
      */
     public function create( array $data )
     {
-        return User::create(
-            [
-                'first_name_text' => $data['first_name_text'],
-                'last_name_text'  => $data['last_name_text'],
-                'email_addr_text' => $data['email_addr_text'],
-                'password_text'   => bcrypt( $data['password_text'] ),
-            ]
+        return \DB::transaction(
+            function () use ( $data )
+            {
+                $_user = User::create(
+                    [
+                        'first_name_text'   => $data['first_name_text'],
+                        'last_name_text'    => $data['last_name_text'],
+                        'email_addr_text'   => $data['email_addr_text'],
+                        'display_name_text' => $data['display_name_text'],
+                        'password_text'     => bcrypt( $data['password_text'] ),
+                    ]
+                );
+
+                $_appKey = AppKey::create(
+                    array(
+                        'app_id_text' => AppKeyEntities::USER,
+                        'owner_id'    => $_user->id,
+                    )
+                );
+
+                $_user->update( ['api_token_text' => $_appKey->client_id] );
+
+                return $_user;
+            }
         );
     }
 

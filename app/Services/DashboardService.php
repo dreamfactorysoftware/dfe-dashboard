@@ -1,5 +1,6 @@
 <?php namespace DreamFactory\Enterprise\Dashboard\Services;
 
+use DreamFactory\Enterprise\Common\Enums\AppKeyEntities;
 use DreamFactory\Enterprise\Common\Packets\ErrorPacket;
 use DreamFactory\Enterprise\Common\Packets\SuccessPacket;
 use DreamFactory\Enterprise\Common\Services\BaseService;
@@ -11,9 +12,8 @@ use DreamFactory\Enterprise\Dashboard\Enums\PanelTypes;
 use DreamFactory\Library\Fabric\Database\Enums\GuestLocations;
 use DreamFactory\Library\Fabric\Database\Enums\ProvisionStates;
 use DreamFactory\Library\Fabric\Database\Enums\ServerTypes;
-use DreamFactory\Library\Fabric\Database\Models\Auth\User;
 use DreamFactory\Library\Fabric\Database\Models\Deploy\Instance;
-use DreamFactory\Library\Utility\Curl;
+use DreamFactory\Library\Fabric\Database\Models\Deploy\User;
 use DreamFactory\Library\Utility\IfSet;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -235,9 +235,9 @@ class DashboardService extends BaseService
             $_clusterConfig
         );
 
-        $_result = $this->_apiCall( '/ops/provision', $_payload, true );
+        $_result = $this->_apiCall( 'provision', $_payload, true );
 
-        if ( is_object( $_result ) )
+        if ( $_result && is_object( $_result ) && isset( $_result->success ) )
         {
             if ( $_result->success )
             {
@@ -281,9 +281,9 @@ class DashboardService extends BaseService
      */
     public function deprovisionInstance( $instanceId )
     {
-        $_result = $this->_apiCall( '/ops/deprovision', array('instance-id' => $instanceId), true );
+        $_result = $this->_apiCall( 'deprovision', array('instance-id' => $instanceId), true );
 
-        if ( $_result->success )
+        if ( $_result && is_object( $_result ) && isset( $_result->success ) )
         {
             \Session::flash( 'dashboard-success', 'Instance deprovisioning requested successfully.' );
         }
@@ -302,7 +302,7 @@ class DashboardService extends BaseService
      */
     public function stopInstance( $instanceId )
     {
-        return $this->_apiCall( '/ops/stop/' . $instanceId, [], true );
+        return $this->_apiCall( 'stop' . $instanceId, [], true );
     }
 
     /**
@@ -312,7 +312,7 @@ class DashboardService extends BaseService
      */
     public function startInstance( $instanceId )
     {
-        return $this->_apiCall( '/ops/start/' . $instanceId, [], true );
+        return $this->_apiCall( 'start' . $instanceId, [], true );
     }
 
     /**
@@ -323,7 +323,7 @@ class DashboardService extends BaseService
      */
     public function exportInstance( $instanceId, $trial = true )
     {
-        return $this->_apiCall( '/ops/export/' . $instanceId );
+        return $this->_apiCall( 'export' . $instanceId );
     }
 
     /**
@@ -333,11 +333,11 @@ class DashboardService extends BaseService
      */
     protected function _instanceSnapshots( $instanceId )
     {
-        $_result = $this->_apiCall( '/ops/exports/' . $instanceId );
+        $_result = $this->_apiCall( 'exports' . $instanceId );
 
-        if ( !$_result->success )
+        if ( !$_result || !is_object( $_result ) || !isset( $_result->success ) )
         {
-            \Session::flash( 'dashboard-failure', $_result->message );
+            \Session::flash( 'dashboard-failure', isset( $_result, $_result->message ) ? $_result->message : 'An unknown error occurred.' );
 
             return null;
         }
@@ -402,7 +402,7 @@ class DashboardService extends BaseService
             $_snapshot = $_parts[1];
         }
 
-        return $this->_apiCall( '/ops/import/' . $instanceId, array('snapshot' => $_snapshot), true );
+        return $this->_apiCall( 'import' . $instanceId, array('snapshot' => $_snapshot), true );
     }
 
     /**
@@ -865,8 +865,9 @@ HTML;
      */
     protected function _apiCall( $url, $payload = [], $returnAll = true, $method = Request::METHOD_POST )
     {
-        $_payload = $this->_addTokenToPayload( $payload );
-        $_response = Curl::request( $method, $this->_endpoint . '/' . trim( $url, '/' ), $_payload );
+        /** @type OpsClientService $_service */
+        $_service = app( OpsClientServiceProvider::IOC_NAME );
+        $_response = $_service->any( $url, $payload, [], $method );
 
         if ( $_response && is_object( $_response ) && isset( $_response->success ) )
         {
@@ -954,7 +955,9 @@ HTML;
 
     protected function _addTokenToPayload( $payload )
     {
-        $_id = config( 'dashboard.client-id' );
+        $_user = \Auth::user();
+
+        $_id = $_user->getAppKey( $_user->id, AppKeyEntities::USER );
         $_secret = config( 'dashboard.client-secret' );
 
         return array_merge(

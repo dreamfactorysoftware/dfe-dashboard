@@ -404,12 +404,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/dfe-common.git",
-                "reference": "e90e0442791718326c5e54cb78e4f724b2b45187"
+                "reference": "d34552667fce849042c496b24c69bf44ac21b26b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/e90e0442791718326c5e54cb78e4f724b2b45187",
-                "reference": "e90e0442791718326c5e54cb78e4f724b2b45187",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/d34552667fce849042c496b24c69bf44ac21b26b",
+                "reference": "d34552667fce849042c496b24c69bf44ac21b26b",
                 "shasum": ""
             },
             "require": {
@@ -457,7 +457,7 @@
                 "source": "https://github.com/dreamfactorysoftware/dfe-common/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/dfe-common/issues"
             },
-            "time": "2015-04-22 21:41:39"
+            "time": "2015-04-27 20:07:35"
         },
         {
             "name": "dreamfactory/dfe-ops-client",
@@ -1043,12 +1043,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "9432463efeedfdd1c93c0a067278a4c59a062ed8"
+                "reference": "f9bd8a10a8eba258ad6d42d70a25a0a992f6a6fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/9432463efeedfdd1c93c0a067278a4c59a062ed8",
-                "reference": "9432463efeedfdd1c93c0a067278a4c59a062ed8",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/f9bd8a10a8eba258ad6d42d70a25a0a992f6a6fa",
+                "reference": "f9bd8a10a8eba258ad6d42d70a25a0a992f6a6fa",
                 "shasum": ""
             },
             "require": {
@@ -1161,7 +1161,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2015-04-26 00:54:55"
+            "time": "2015-04-27 18:29:37"
         },
         {
             "name": "league/flysystem",
@@ -2244,12 +2244,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/FrameworkBundle.git",
-                "reference": "d9284b7845b85a5b01a4ce3a8c52a5ee615215d9"
+                "reference": "c461cc883940f748e96a5c7ae068445267661567"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/FrameworkBundle/zipball/d9284b7845b85a5b01a4ce3a8c52a5ee615215d9",
-                "reference": "d9284b7845b85a5b01a4ce3a8c52a5ee615215d9",
+                "url": "https://api.github.com/repos/symfony/FrameworkBundle/zipball/c461cc883940f748e96a5c7ae068445267661567",
+                "reference": "c461cc883940f748e96a5c7ae068445267661567",
                 "shasum": ""
             },
             "require": {
@@ -2319,7 +2319,7 @@
             ],
             "description": "Symfony FrameworkBundle",
             "homepage": "http://symfony.com",
-            "time": "2015-04-27 12:43:05"
+            "time": "2015-04-27 15:32:10"
         },
         {
             "name": "symfony/http-foundation",
@@ -3571,12 +3571,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "f4877a09b4210f4cb087823fd2410aee39bdaf02"
+                "reference": "686513b022b0fe3b5da716e40d7ade759307f31f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/f4877a09b4210f4cb087823fd2410aee39bdaf02",
-                "reference": "f4877a09b4210f4cb087823fd2410aee39bdaf02",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/686513b022b0fe3b5da716e40d7ade759307f31f",
+                "reference": "686513b022b0fe3b5da716e40d7ade759307f31f",
                 "shasum": ""
             },
             "require": {
@@ -3623,7 +3623,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2015-04-25 21:18:56"
+            "time": "2015-04-27 17:45:22"
         },
         {
             "name": "phpunit/php-code-coverage",

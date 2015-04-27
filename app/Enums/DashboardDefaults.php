@@ -44,7 +44,7 @@ class DashboardDefaults extends FactoryEnum
     /**
      * @type string
      */
-    const INSTANCE_PREFIX = 'dsp-';
+    const INSTANCE_PREFIX = 'rave-';
     /**
      * @type string
      */
