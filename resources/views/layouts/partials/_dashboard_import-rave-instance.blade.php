@@ -6,7 +6,7 @@
 use DreamFactory\Library\Fabric\Database\Enums\GuestLocations;
 use DreamFactory\Library\Utility\Inflector;
 
-$_dspName = ( \Auth::user()->admin_ind != 1 ? 'dsp-' : null ) . Inflector::neutralize( str_replace( ' ', '-', \Auth::user()->display_name_text ) );
+$_dspName = ( \Auth::user()->admin_ind != 1 ? 'dsp-' : null ) . Inflector::neutralize( str_replace( ' ', '-', \Auth::user()->nickname_text ) );
 $_token = csrf_token();
 $_guest = GuestLocations::DFE_CLUSTER;
 ?>

@@ -81,12 +81,12 @@ class HomeController extends BaseController
             'defaultDomain'       => $_defaultDomain,
             'message'             => $_message,
             'isAdmin'             => $_user->admin_ind,
-            'displayName'         => $_user->display_name_text,
+            'displayName'         => $_user->nickname_text,
             'defaultInstanceName' =>
                 ( \Auth::user()->admin_ind != 1
                     ? config( 'dfe.common.instance-prefix' )
                     : null
-                ) . Inflector::neutralize( str_replace( ' ', '-', \Auth::user()->display_name_text ) ),
+                ) . Inflector::neutralize( str_replace( ' ', '-', \Auth::user()->nickname_text ) ),
         ];
 
         $_create = Dashboard::renderPanel( 'create', array_merge( $_coreData, ['instanceName' => 'create', 'panelType' => PanelTypes::CREATE] ) );

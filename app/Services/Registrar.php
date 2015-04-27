@@ -24,11 +24,11 @@ class Registrar implements RegistrarContract
         return Validator::make(
             $data,
             [
-                'first_name_text'   => 'required|max:64',
-                'last_name_text'    => 'required|max:64',
-                'display_name_text' => 'required|max:64',
-                'email_addr_text'   => 'required|email|max:320|unique:user_t',
-                'password_text'     => 'required|confirmed|min:6',
+                'first_name_text' => 'required|max:64',
+                'last_name_text'  => 'required|max:64',
+                'nickname_text'   => 'required|max:64',
+                'email_addr_text' => 'required|email|max:320|unique:user_t',
+                'password_text'   => 'required|confirmed|min:6',
             ]
         );
     }
@@ -47,11 +47,11 @@ class Registrar implements RegistrarContract
             {
                 $_user = User::create(
                     [
-                        'first_name_text'   => $data['first_name_text'],
-                        'last_name_text'    => $data['last_name_text'],
-                        'email_addr_text'   => $data['email_addr_text'],
-                        'display_name_text' => $data['display_name_text'],
-                        'password_text'     => bcrypt( $data['password_text'] ),
+                        'first_name_text' => $data['first_name_text'],
+                        'last_name_text'  => $data['last_name_text'],
+                        'email_addr_text' => $data['email_addr_text'],
+                        'nickname_text'   => $data['nickname_text'],
+                        'password_text'   => bcrypt( $data['password_text'] ),
                     ]
                 );
 
