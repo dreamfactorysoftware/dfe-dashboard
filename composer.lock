@@ -404,12 +404,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/dfe-common.git",
-                "reference": "d34552667fce849042c496b24c69bf44ac21b26b"
+                "reference": "0cc3d0400251d393b6ac8d3361a14ad1d54e8583"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/d34552667fce849042c496b24c69bf44ac21b26b",
-                "reference": "d34552667fce849042c496b24c69bf44ac21b26b",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/0cc3d0400251d393b6ac8d3361a14ad1d54e8583",
+                "reference": "0cc3d0400251d393b6ac8d3361a14ad1d54e8583",
                 "shasum": ""
             },
             "require": {
@@ -457,7 +457,7 @@
                 "source": "https://github.com/dreamfactorysoftware/dfe-common/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/dfe-common/issues"
             },
-            "time": "2015-04-27 20:07:35"
+            "time": "2015-04-27 22:18:25"
         },
         {
             "name": "dreamfactory/dfe-ops-client",
@@ -633,12 +633,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/fabric-db.git",
-                "reference": "63ad3283676a5fb248b68d98387d0d13a3e85f68"
+                "reference": "fba760718c6605653bc5fee3ecbcc51134c97389"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/fabric-db/zipball/63ad3283676a5fb248b68d98387d0d13a3e85f68",
-                "reference": "63ad3283676a5fb248b68d98387d0d13a3e85f68",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/fabric-db/zipball/fba760718c6605653bc5fee3ecbcc51134c97389",
+                "reference": "fba760718c6605653bc5fee3ecbcc51134c97389",
                 "shasum": ""
             },
             "require": {
@@ -680,7 +680,7 @@
                 "source": "https://github.com/dreamfactorysoftware/fabric-db/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/fabric-db/issues"
             },
-            "time": "2015-04-27 20:30:27"
+            "time": "2015-04-27 22:26:36"
         },
         {
             "name": "dreamfactory/php-utils",
@@ -3571,12 +3571,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "686513b022b0fe3b5da716e40d7ade759307f31f"
+                "reference": "3132b1f44c7bf2ec4c7eb2d3cb78fdeca760d373"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/686513b022b0fe3b5da716e40d7ade759307f31f",
-                "reference": "686513b022b0fe3b5da716e40d7ade759307f31f",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/3132b1f44c7bf2ec4c7eb2d3cb78fdeca760d373",
+                "reference": "3132b1f44c7bf2ec4c7eb2d3cb78fdeca760d373",
                 "shasum": ""
             },
             "require": {
@@ -3623,7 +3623,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2015-04-27 17:45:22"
+            "time": "2015-04-27 22:15:08"
         },
         {
             "name": "phpunit/php-code-coverage",
