@@ -81,8 +81,7 @@
 		"post-update-cmd":  [
 			"php artisan clear-compiled",
 			"php artisan ide-helper:generate",
-			"php artisan vendor:publish --tag=public",
-			"php artisan vendor:publish",
+			"php artisan vendor:publish --tag=public --force",
 			"php artisan optimize"
 		]
 	},
