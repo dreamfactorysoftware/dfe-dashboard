@@ -1020,6 +1020,7 @@ HTML;
 
         if ( !$this->_useConfigServers )
         {
+            //  Return an empty array allowing the console to decide where to place the instance
             return $_config;
         }
 
