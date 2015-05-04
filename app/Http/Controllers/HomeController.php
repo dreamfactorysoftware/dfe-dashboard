@@ -69,7 +69,9 @@ class HomeController extends BaseController
     public function index( Request $request )
     {
         $_message = isset( $messages ) ? $messages : null;
-        $_defaultDomain = config( 'dashboard.default-domain' );
+        $_defaultDomain = '.' .
+            trim( config( 'dashboard.default-dns-zone' ), '.' ) . '.' .
+            trim( config( 'dashboard.default-dns-domain' ), '.' );
 
         /** @type User $_user */
         $_user = \Auth::user();

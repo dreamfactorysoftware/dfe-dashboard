@@ -45,7 +45,8 @@ class InstancePanel
         $this->_data = $data ?: [];
         $this->_blade = $blade ?: \Config::get( 'dashboard.panels.default.template', DashboardDefaults::SINGLE_INSTANCE_BLADE );
 
-        $this->_defaultDomain = \Config::get( 'dashboard.default-domain' );
+        $this->_defaultDomain =
+            '.' . trim( config( 'dashboard.default-dns-zone' ), '.' ) . '.' . trim( config( 'dashboard.default-dns-domain' ), '.' );
     }
 
     /**

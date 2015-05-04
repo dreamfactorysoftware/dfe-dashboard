@@ -51,7 +51,9 @@ class InstancePanelFactory implements StaticRenderFactory
                 'panelSize'              => $this->_columnClass,
                 'panelContext'           => config( 'dashboard.panel-context', 'panel-info' ),
                 'instanceName'           => $this->_id,
-                'defaultDomain'          => config( 'dashboard.default-domain' ),
+                'defaultDomain'          => '.' .
+                    trim( config( 'dashboard.default-dns-zone' ), '.' ) . '.' .
+                    trim( config( 'dashboard.default-dns-domain' ), '.' ),
                 'headerIconSize'         => 'fa-1x',
                 'instanceDivId'          => $this->createDivId( 'instance', $instance ),
                 'instanceStatusIconSize' => 'fa-3x',

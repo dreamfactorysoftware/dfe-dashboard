@@ -18,7 +18,9 @@ return [
     //******************************************************************************
     //* ui/ux settings
     //******************************************************************************
-    'default-domain'           => env( 'DFE_DEFAULT_DOMAIN', '.cloud.dreamfactory.com' ),
+    //  Instance defaults
+    'default-dns-zone'         => env( 'DFE_DEFAULT_ZONE', 'enterprise' ),
+    'default-dns-domain'       => env( 'DFE_DEFAULT_DOMAIN', 'dreamfactory.com' ),
     'default-domain-protocol'  => 'https',
     'panels'                   => [
         'panels-per-row'    => DashboardDefaults::PANELS_PER_ROW,

@@ -432,7 +432,9 @@ HTML;
     {
         static $_defaultDomain;
 
-        return $_defaultDomain ?: $_defaultDomain = config( 'dashboard.default-domain' );
+        return $_defaultDomain
+            ?: $_defaultDomain =
+                '.' . trim( config( 'dashboard.default-dns-zone' ), '.' ) . '.' . trim( config( 'dashboard.default-dns-domain' ), '.' );
     }
 
     /**

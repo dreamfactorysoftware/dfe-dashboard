@@ -73,7 +73,8 @@ class DashboardService extends BaseService
     {
         parent::__construct( $app );
 
-        $this->_defaultDomain = config( 'dashboard.default-domain' );
+        $this->_defaultDomain =
+            '.' . trim( config( 'dashboard.default-dns-zone' ), '.' ) . '.' . trim( config( 'dashboard.default-dns-domain' ), '.' );
         $this->_endpoint = config( 'dashboard.api-host' ) . '/' . trim( config( 'dashboard.api-endpoint' ), ' /' );
         $this->_apiKey = config( 'dashboard.api-key' );
         $this->_requireCaptcha = config( 'dashboard.require-captcha', true );
