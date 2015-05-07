@@ -10,19 +10,19 @@ return [
     //* general dashboard settings
     //******************************************************************************
     /** The path to our views */
-    'view-path'                => base_path() . '/resources/views',
+    'view-path'                 => base_path() . '/resources/views',
     /** If true, recaptcha is required on new hosted instances */
-    'require-captcha'          => false,
+    'require-captcha'           => false,
     /** The prefix for all non-admin provisioned instances  */
-    'instance-prefix'          => DashboardDefaults::INSTANCE_PREFIX,
+    'instance-prefix'           => DashboardDefaults::INSTANCE_PREFIX,
     //******************************************************************************
     //* ui/ux settings
     //******************************************************************************
     //  Instance defaults
-    'default-dns-zone'         => env( 'DFE_DEFAULT_ZONE', 'enterprise' ),
-    'default-dns-domain'       => env( 'DFE_DEFAULT_DOMAIN', 'dreamfactory.com' ),
-    'default-domain-protocol'  => 'https',
-    'panels'                   => [
+    'default-dns-zone'          => env( 'DFE_DEFAULT_ZONE', 'enterprise' ),
+    'default-dns-domain'        => env( 'DFE_DEFAULT_DOMAIN', 'dreamfactory.com' ),
+    'default-domain-protocol'   => 'https',
+    'panels'                    => [
         'panels-per-row'    => DashboardDefaults::PANELS_PER_ROW,
         'columns-per-panel' => DashboardDefaults::COLUMNS_PER_PANEL,
         'toolbar-size'      => 'btn-group-xs',
@@ -59,20 +59,22 @@ return [
             'form-id'                 => 'form-default',
         ],
     ],
-    'panel-context'            => 'panel-info',
-    'create-panel-context'     => 'panel-success',
-    'import-panel-context'     => 'panel-warning',
-    'help-button-url'          => 'http://www.dreamfactory.com/',
+    'panel-context'             => 'panel-info',
+    'create-panel-context'      => 'panel-success',
+    'import-panel-context'      => 'panel-warning',
+    'help-button-url'           => 'http://www.dreamfactory.com/',
     //******************************************************************************
     //* console api settings
     //******************************************************************************
-    'console-api-url'          => env( 'DFE_CONSOLE_URL', 'http://dfe-console.local/api/v1/ops/' ),
+    'console-api-client-id'     => 'acbab38ec7c7f9eeb97ec957b53857050d8b3b7b753b95ffb31e7161140049ea',
+    'console-api-client-secret' => '97b61eb7ad89bb63b6c575a90ffb86f971a7f0914210f84dcc827cd54fac4f27',
+    'console-api-url'           => env( 'DFE_CONSOLE_URL', 'http://dfe-console.local/api/v1/ops/' ),
     /** This key needs to match the key configured in the console */
-    'console-api-key'          => env( 'DFE_CONSOLE_KEY', '%]3,]~&t,EOxL30[wKw3auju:[+L>eYEVWEP,@3n79Qy' ),
+    'console-api-key'           => env( 'DFE_CONSOLE_KEY', '%]3,]~&t,EOxL30[wKw3auju:[+L>eYEVWEP,@3n79Qy' ),
     /** Provisioners configured on this dashboard */
-    'provisioners'             => ['rave',],
+    'provisioners'              => ['rave',],
     /** FontAwesome icons to use */
-    'icons'                    => [
+    'icons'                     => [
         'import'      => 'fa-cloud-upload',
         'export'      => 'fa-cloud-download',
         'spinner'     => 'fa fa-spinner fa-spin text-info',
@@ -93,9 +95,9 @@ return [
     //* DFE console api overrides
     //******************************************************************************
     /** If true, uses below overrides instead of allowing console placement on guest */
-    'override-cluster-servers' => false,
-    'override-cluster-id'      => false,
-    'override-db-server-id'    => false,
-    'override-app-server-id'   => false,
-    'override-web-server-id'   => false,
+    'override-cluster-servers'  => false,
+    'override-cluster-id'       => false,
+    'override-db-server-id'     => false,
+    'override-app-server-id'    => false,
+    'override-web-server-id'    => false,
 ];
