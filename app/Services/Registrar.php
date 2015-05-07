@@ -1,6 +1,6 @@
 <?php namespace DreamFactory\Enterprise\Dashboard\Services;
 
-use DreamFactory\Enterprise\Common\Enums\AppKeyEntities;
+use DreamFactory\Enterprise\Common\Enums\AppKeyClasses;
 use DreamFactory\Library\Fabric\Database\Models\Deploy\AppKey;
 use DreamFactory\Library\Fabric\Database\Models\Deploy\User;
 use Illuminate\Contracts\Auth\Registrar as RegistrarContract;
@@ -57,8 +57,8 @@ class Registrar implements RegistrarContract
 
                 $_appKey = AppKey::create(
                     array(
-                        'app_id_text' => AppKeyEntities::USER,
-                        'owner_id'    => $_user->id,
+                        'key_class_text' => AppKeyClasses::USER,
+                        'owner_id'       => $_user->id,
                     )
                 );
 

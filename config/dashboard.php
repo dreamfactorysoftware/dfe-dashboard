@@ -66,11 +66,9 @@ return [
     //******************************************************************************
     //* console api settings
     //******************************************************************************
-    'api-host'                 => 'http://dfe-console.local',
-    'api-endpoint'             => '/api/v1',
-    'api-client-id'            => 'acbab38ec7c7f9eeb97ec957b53857050d8b3b7b753b95ffb31e7161140049ea',
-    'api-client-secret'        => '97b61eb7ad89bb63b6c575a90ffb86f971a7f0914210f84dcc827cd54fac4f27',
-    'client-hash-key'          => '%]3,]~&t,EOxL30[wKw3auju:[+L>eYEVWEP,@3n79Qy',
+    'console-api-url'          => env( 'DFE_CONSOLE_URL', 'http://dfe-console.local/api/v1/ops/' ),
+    /** This key needs to match the key configured in the console */
+    'console-api-key'          => env( 'DFE_CONSOLE_KEY', '%]3,]~&t,EOxL30[wKw3auju:[+L>eYEVWEP,@3n79Qy' ),
     /** Provisioners configured on this dashboard */
     'provisioners'             => ['rave',],
     /** FontAwesome icons to use */
