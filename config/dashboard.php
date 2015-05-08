@@ -66,11 +66,11 @@ return [
     //******************************************************************************
     //* console api settings
     //******************************************************************************
-    'console-api-client-id'     => 'acbab38ec7c7f9eeb97ec957b53857050d8b3b7b753b95ffb31e7161140049ea',
-    'console-api-client-secret' => '97b61eb7ad89bb63b6c575a90ffb86f971a7f0914210f84dcc827cd54fac4f27',
-    'console-api-url'           => env( 'DFE_CONSOLE_URL', 'http://dfe-console.local/api/v1/ops/' ),
+    'console-api-client-id'     => env( 'DFE_CONSOLE_API_CLIENT_ID' ),
+    'console-api-client-secret' => env( 'DFE_CONSOLE_API_CLIENT_SECRET' ),
+    'console-api-url'           => env( 'DFE_CONSOLE_API_URL', 'http://localhost/api/v1/ops/' ),
     /** This key needs to match the key configured in the console */
-    'console-api-key'           => env( 'DFE_CONSOLE_KEY', '%]3,]~&t,EOxL30[wKw3auju:[+L>eYEVWEP,@3n79Qy' ),
+    'console-api-key'           => env( 'DFE_CONSOLE_API_KEY', 'some-random-string' ),
     /** Provisioners configured on this dashboard */
     'provisioners'              => ['rave',],
     /** FontAwesome icons to use */
