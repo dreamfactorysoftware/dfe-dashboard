@@ -291,7 +291,7 @@ class DashboardService extends BaseService
         }
         else
         {
-            \Session::flash( 'dashboard-failure', $_result->message );
+            \Session::flash( 'dashboard-failure', 'Garbled response from console.' );
         }
 
         return $_result;
@@ -884,7 +884,7 @@ HTML;
 
         if ( is_string( $_response ) )
         {
-            echo $_response;
+            \Log::error( 'Console API call received unexpected result: ' . $_response );
         }
 
         return false;
