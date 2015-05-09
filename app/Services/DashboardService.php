@@ -40,14 +40,6 @@ class DashboardService extends BaseService
      */
     protected $_requireCaptcha = true;
     /**
-     * @type string
-     */
-    protected $_endpoint;
-    /**
-     * @type string
-     */
-    protected $_apiKey;
-    /**
      * @type Request The request currently being handled
      */
     protected $_request;
@@ -75,10 +67,8 @@ class DashboardService extends BaseService
 
         $this->_defaultDomain =
             '.' . trim( config( 'dashboard.default-dns-zone' ), '.' ) . '.' . trim( config( 'dashboard.default-dns-domain' ), '.' );
-        $this->_endpoint = config( 'dashboard.console-api-url' );
-        $this->_apiKey = config( 'dashboard.console-api-key' );
+        $this->_useConfigServers = config( 'dfe-ops-client.override-cluster-servers', false );
         $this->_requireCaptcha = config( 'dashboard.require-captcha', true );
-        $this->_useConfigServers = config( 'dashboard.override-cluster-servers', false );
         $this->_panelsPerRow = config( 'dashboard.panels-per-row', DashboardDefaults::PANELS_PER_ROW );
 
         $this->_determineGridLayout();

@@ -10,39 +10,22 @@ return [
     //* general dashboard settings
     //******************************************************************************
     /** The path to our views */
-    'view-path'                 => base_path() . '/resources/views',
+    'view-path'               => base_path() . '/resources/views',
     /** If true, recaptcha is required on new hosted instances */
-    'require-captcha'           => false,
+    'require-captcha'         => false,
     /** The prefix for all non-admin provisioned instances  */
-    'instance-prefix'           => DashboardDefaults::INSTANCE_PREFIX,
+    'instance-prefix'         => DashboardDefaults::INSTANCE_PREFIX,
     //  Instance defaults
-    'default-dns-zone'          => env( 'DFE_DEFAULT_DNS_ZONE', 'enterprise' ),
-    'default-dns-domain'        => env( 'DFE_DEFAULT_DNS_DOMAIN', 'dreamfactory.com' ),
-    'default-domain'            => env( 'DFE_DEFAULT_DOMAIN', 'dreamfactory.com' ),
-    'default-domain-protocol'   => 'https',
+    'default-dns-zone'        => env( 'DFE_DEFAULT_DNS_ZONE', 'enterprise' ),
+    'default-dns-domain'      => env( 'DFE_DEFAULT_DNS_DOMAIN', 'dreamfactory.com' ),
+    'default-domain'          => env( 'DFE_DEFAULT_DOMAIN', 'dreamfactory.com' ),
+    'default-domain-protocol' => 'https',
     /** Provisioners configured on this dashboard */
-    'provisioners'              => ['rave',],
-    //******************************************************************************
-    //* console api settings
-    //******************************************************************************
-    'console-api-client-id'     => env( 'DFE_CONSOLE_API_CLIENT_ID' ),
-    'console-api-client-secret' => env( 'DFE_CONSOLE_API_CLIENT_SECRET' ),
-    'console-api-url'           => env( 'DFE_CONSOLE_API_URL', 'http://console.enterprise.dreamfactory.com/api/v1/ops/' ),
-    /** This key needs to match the key configured in the console */
-    'console-api-key'           => env( 'DFE_CONSOLE_API_KEY', 'some-random-string' ),
-    //******************************************************************************
-    //* DFE console api overrides
-    //******************************************************************************
-    /** If true, uses below overrides instead of allowing console placement on guest */
-    'override-cluster-servers'  => false,
-    'override-cluster-id'       => false,
-    'override-db-server-id'     => false,
-    'override-app-server-id'    => false,
-    'override-web-server-id'    => false,
+    'provisioners'            => ['rave',],
     //******************************************************************************
     //* ui/ux settings
     //******************************************************************************
-    'panels'                    => [
+    'panels'                  => [
         'panels-per-row'    => DashboardDefaults::PANELS_PER_ROW,
         'columns-per-panel' => DashboardDefaults::COLUMNS_PER_PANEL,
         'toolbar-size'      => 'btn-group-xs',
@@ -79,12 +62,12 @@ return [
             'form-id'                 => 'form-default',
         ],
     ],
-    'panel-context'             => 'panel-info',
-    'create-panel-context'      => 'panel-success',
-    'import-panel-context'      => 'panel-warning',
-    'help-button-url'           => 'http://www.dreamfactory.com/',
+    'panel-context'           => 'panel-info',
+    'create-panel-context'    => 'panel-success',
+    'import-panel-context'    => 'panel-warning',
+    'help-button-url'         => 'http://www.dreamfactory.com/',
     /** FontAwesome icons to use */
-    'icons'                     => [
+    'icons'                   => [
         'import'      => 'fa-cloud-upload',
         'export'      => 'fa-cloud-download',
         'spinner'     => 'fa fa-spinner fa-spin text-info',
