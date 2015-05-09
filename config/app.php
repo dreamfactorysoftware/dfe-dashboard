@@ -4,13 +4,13 @@ return [
     //* Application Settings
     //******************************************************************************
     'debug'           => env( 'APP_DEBUG' ),
-    'url'             => env( 'APP_URL', 'http://dashboard.local/' ),
+    'url'             => env( 'APP_URL', 'http://dashboard.enterprise.dreamfactory.om/' ),
     'timezone'        => 'America/New_York',
     'locale'          => 'en',
     'fallback_locale' => 'en',
     'key'             => env( 'APP_KEY', 'ngv?hS"qNs5:~Gn%]R(_NCRS#1{l?s@/' ),
     'cipher'          => MCRYPT_RIJNDAEL_128,
-    'log'             => 'daily',
+    'log'             => 'single',
     //******************************************************************************
     //* Autoloaded Providers
     //******************************************************************************
