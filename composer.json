@@ -8,7 +8,9 @@
 		"cloud",
 		"corporate"
 	],
-	"license":           ["proprietary"],
+	"license":           [
+		"proprietary"
+	],
 	"authors":           [
 		{
 			"name":  "Jerry Ablan",
@@ -21,10 +23,6 @@
 	},
 	"minimum-stability": "dev",
 	"repositories":      [
-		{
-			"type": "vcs",
-			"url":  "git@github.com:dreamfactorysoftware/fabric-common.git"
-		},
 		{
 			"type": "vcs",
 			"url":  "git@github.com:dreamfactorysoftware/fabric-db.git"
@@ -46,7 +44,6 @@
 		"guzzlehttp/guzzle":           "~4.0",
 		"marwelln/recaptcha":          "dev-master",
 		"dreamfactory/php-utils":      "*",
-		"dreamfactory/fabric-common":  "dev-develop as dev-master",
 		"dreamfactory/fabric-db":      "dev-develop as dev-master",
 		"dreamfactory/fabric-audit":   "dev-develop as dev-master",
 		"dreamfactory/console-tools":  "dev-develop as dev-master",
