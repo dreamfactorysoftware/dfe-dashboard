@@ -9,7 +9,7 @@ return [
     'connections' => [
         'fabric-deploy' => [
             'driver'    => 'mysql',
-            'host'      => 'localhost',
+            'host'      => 'console.enterprise.dreamfactory.com',
             'port'      => 3306,
             'database'  => 'dfe_local',
             'username'  => 'dfe_user',
@@ -20,7 +20,7 @@ return [
         ],
         'fabric-auth'   => [
             'driver'    => 'mysql',
-            'host'      => 'localhost',
+            'host'      => 'console.enterprise.dreamfactory.com',
             'port'      => 3306,
             'database'  => 'dfe_local',
             'username'  => 'dfe_user',
@@ -31,7 +31,7 @@ return [
         ],
         'dfe-local'     => [
             'driver'    => 'mysql',
-            'host'      => 'localhost',
+            'host'      => 'console.enterprise.dreamfactory.com',
             'port'      => 3306,
             'database'  => 'dfe_local',
             'username'  => 'dfe_user',

@@ -11,6 +11,10 @@ class DashboardDefaults extends FactoryEnum
     /**
      * @type string
      */
+    const SIGNATURE_METHOD = 'sha256';
+    /**
+     * @type string
+     */
     const SPINNING_ICON = 'fa fa-fw fa-spinner fa-spin';
     /**
      * @type int The number of grid columns each instance panel utilizes. Each row consists of 12 utilizable columns. This setting can be from 3 to
