@@ -863,7 +863,7 @@ HTML;
 
         if ( $_response && is_object( $_response ) && isset( $_response->success ) )
         {
-            return $returnAll ? $_response : $_response->details;
+            return $returnAll ? $_response : $_response->response;
         }
 
         //	Error and redirect
