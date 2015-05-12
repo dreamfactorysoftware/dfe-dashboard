@@ -1,6 +1,8 @@
 <?php namespace DreamFactory\Enterprise\Dashboard\Http;
 
+use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Illuminate\Routing\Router;
 
 class Kernel extends HttpKernel
 {
@@ -30,4 +32,22 @@ class Kernel extends HttpKernel
         'guest'      => 'DreamFactory\Enterprise\Dashboard\Http\Middleware\RedirectIfAuthenticated',
     ];
 
+    //******************************************************************************
+    //* Methods
+    //******************************************************************************
+
+    /** @inheritdoc */
+    public function __construct( Application $app, Router $router )
+    {
+        parent::__construct( $app, $router );
+
+        foreach ( $this->bootstrappers as &$_strapper )
+        {
+            if ( $_strapper === 'Illuminate\Foundation\Bootstrap\ConfigureLogging' )
+            {
+                $_strapper = 'DreamFactory\Enterprise\Common\Bootstrap\CommonLoggingConfiguration';
+                break;
+            }
+        }
+    }
 }
