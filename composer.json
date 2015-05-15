@@ -25,7 +25,7 @@
 	"repositories":      [
 		{
 			"type": "vcs",
-			"url":  "git@github.com:dreamfactorysoftware/fabric-db.git"
+			"url":  "git@github.com:dreamfactorysoftware/dfe-database.git"
 		},
 		{
 			"type": "vcs",
@@ -34,6 +34,10 @@
 		{
 			"type": "vcs",
 			"url":  "git@github.com:dreamfactorysoftware/dfe-ops-client.git"
+		},
+		{
+			"type": "vcs",
+			"url":  "git@github.com:dreamfactorysoftware/dfe-audit.git"
 		}
 	],
 	"require":           {
@@ -44,11 +48,11 @@
 		"guzzlehttp/guzzle":           "~4.0",
 		"marwelln/recaptcha":          "dev-master",
 		"dreamfactory/php-utils":      "*",
-		"dreamfactory/fabric-db":      "dev-develop as dev-master",
-		"dreamfactory/fabric-audit":   "dev-develop as dev-master",
 		"dreamfactory/console-tools":  "dev-develop as dev-master",
-		"dreamfactory/dfe-ops-client": "dev-develop as dev-master",
-		"dreamfactory/dfe-common":     "dev-develop as dev-master"
+		"dreamfactory/dfe-common":     "dev-develop as dev-master",
+		"dreamfactory/dfe-database":   "dev-develop as dev-master",
+		"dreamfactory/dfe-audit":      "dev-develop as dev-master",
+		"dreamfactory/dfe-ops-client": "dev-develop as dev-master"
 	},
 	"require-dev":       {
 		"barryvdh/laravel-ide-helper": "~2.0",

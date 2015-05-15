@@ -1,14 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="dashboard.enterprise.dreamfactory.com">
-    <serverData>
-      <paths name="dashboard.enterprise.dreamfactory.com">
-        <serverdata>
-          <mappings>
-            <mapping deploy="/var/www/dashboard" local="$PROJECT_DIR$" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
-    </serverData>
-  </component>
+  <component name="PublishConfigData" serverName="dashboard.enterprise.dreamfactory.com" />
 </project>
