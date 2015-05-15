@@ -15,6 +15,7 @@ use Illuminate\View\View;
  * @method static array buildInstancePanelData( mixed $instance, $data = [], string $panel = 'default', string $formId = null )
  * @method static mixed panelConfig( string $panel, string $key, mixed $default = null )
  * @method static View|string renderPanel( string $panel, array $data = [], boolean $render = true )
+ * @method static array|\stdClass|\stdClass[] getProvisioners()
  */
 class Dashboard extends Facade
 {

@@ -74,7 +74,7 @@ class HomeController extends BaseController
         /** @type User $_user */
         $_user = \Auth::user();
 
-        $_coreData = [
+        $_coreData = array(
             /** General */
             'panelContext'        => config( 'dashboard.panels.default.context', DashboardDefaults::PANEL_CONTEXT ),
             'panelType'           => PanelTypes::SINGLE,
@@ -83,13 +83,14 @@ class HomeController extends BaseController
             'isAdmin'             => $_user->admin_ind,
             'displayName'         => $_user->nickname_text,
             'defaultInstanceName' =>
-                ( \Auth::user()->admin_ind != 1
+                ( 1 != $_user->admin_ind
                     ? config( 'dfe.common.instance-prefix' )
                     : null
                 ) . Inflector::neutralize( str_replace( ' ', '-', \Auth::user()->nickname_text ) ),
-        ];
+        );
 
         $_create = Dashboard::renderPanel( 'create', array_merge( $_coreData, ['instanceName' => 'create', 'panelType' => PanelTypes::CREATE] ) );
+
         $_import =
             Dashboard::renderPanel(
                 'import',
@@ -115,6 +116,7 @@ class HomeController extends BaseController
                     'snapshotImporter' => $_import,
                     /** The instance list */
                     'instances'        => $_instances,
+                    'offerings'        => $_offerings,
                 ]
             )
         );

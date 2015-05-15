@@ -9,6 +9,7 @@ use DreamFactory\Enterprise\Console\Ops\Providers\OpsClientServiceProvider;
 use DreamFactory\Enterprise\Console\Ops\Services\OpsClientService;
 use DreamFactory\Enterprise\Dashboard\Enums\DashboardDefaults;
 use DreamFactory\Enterprise\Dashboard\Enums\PanelTypes;
+use DreamFactory\Enterprise\Dashboard\Facades\Dashboard;
 use DreamFactory\Library\Fabric\Database\Enums\GuestLocations;
 use DreamFactory\Library\Fabric\Database\Enums\ProvisionStates;
 use DreamFactory\Library\Fabric\Database\Enums\ServerTypes;
@@ -405,6 +406,30 @@ class DashboardService extends BaseService
         $_response = $this->_getOpsClient()->instances();
 
         //$this->log( LogLevel::DEBUG, 'instances response: ' . print_r( $_response, true ) );
+
+        return $_response;
+    }
+
+    /**
+     * @return bool|mixed|\stdClass
+     */
+    public function getProvisioners()
+    {
+        $_response = $this->_getOpsClient()->provisioners();
+
+        //$this->log( LogLevel::DEBUG, 'instances response: ' . print_r( $_response, true ) );
+
+        if ( !isset( $_response->response ) )
+        {
+            \Log::debug( '  * Provisioner bogus response: ' . print_r( $_response, true ) );
+
+            return [];
+        }
+
+        foreach ( $_response->response as $_tag => $_provisioner )
+        {
+            \Log::debug( '  * Provisioner: ' . $_tag . ' > ' . print_r( $_provisioner, true ) );
+        }
 
         return $_response;
     }
@@ -1307,6 +1332,61 @@ HTML;
         }
 
         $_blade = $this->panelConfig( $panel, 'template', DashboardDefaults::SINGLE_INSTANCE_BLADE );
+
+        $_hosts = Dashboard::getProvisioners();
+
+        foreach ( $_hosts as $_host )
+        {
+            if ( $_host->id == 'rave' )
+            {
+                if ( isset( $_host->offerings ) )
+                {
+                    foreach ( $_host->offerings as $_tag => $_config )
+                    {
+                        $_data = [
+                            'id' =>
+                        ]
+                        $_html =<<<HTML
+   [id] => rave
+    [offerings] => stdClass Object
+        (
+            [instance-version] => stdClass Object
+                (
+                    [id] => instance-version
+                    [name] => Instance Version
+                    [description] =>
+                    [items] => stdClass Object
+                        (
+                            [1.9.2] => stdClass Object
+                                (
+                                    [document-root] => /var/www/_releases/dsp-core/1.9.2/web
+                                    [description] => 1.9.2
+                                )
+
+                            [1.9.x-dev] => stdClass Object
+                                (
+                                    [document-root] => /var/www/_releases/dsp-core/1.9.x-dev/web
+                                    [description] => 1.9.2
+                                )
+
+                        )
+
+                    [suggested] => 1.9.x-dev
+                    [selection] =>
+                )
+
+
+HTML;
+
+
+                    }
+                }
+            }
+        }
+        if ( isset( $_hosts, $_hosts['rave'] ) )
+        {
+            if ( $_hosts['rave'] )
+        }
 
         $_description = \Lang::get( $this->panelConfig( $panel, 'description' ) );
 
