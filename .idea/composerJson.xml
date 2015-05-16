@@ -8,5 +8,6 @@
         <pattern pattern="league/*" />
       </excludedPackages>
     </unboundedVersionInspectionSettings>
+    <customRepositories />
   </component>
 </project>
