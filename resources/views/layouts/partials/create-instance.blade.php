@@ -1,7 +1,6 @@
 @extends('layouts.partials.single-instance')
 
 @section('panel-body')
-    {{ $offerings }}
     <div class="form-group">
         <label for="instance-name" class="col-md-2 control-label">{{ \Lang::get('dashboard.instance-name-label') }}</label>
         <div class="col-md-10">
@@ -18,6 +17,9 @@
             </div>
         </div>
     </div>
+    @if( !empty( $offerings ) )
+        {!! $offerings !!}
+    @endif
     <input type="hidden" name="control" value="create">
 @overwrite
 

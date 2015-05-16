@@ -1333,59 +1333,90 @@ HTML;
 
         $_blade = $this->panelConfig( $panel, 'template', DashboardDefaults::SINGLE_INSTANCE_BLADE );
 
-        $_hosts = Dashboard::getProvisioners();
+        $_offeringsHtml = null;
 
-        foreach ( $_hosts as $_host )
+        $_dudes = Dashboard::getProvisioners();
+
+        if ( !is_object( $_dudes ) )
         {
-            if ( $_host->id == 'rave' )
+            throw new \RuntimeException( 'Invalid response from the console.' );
+        }
+
+        if ( $_dudes->success )
+        {
+            foreach ( $_dudes->response as $_host )
             {
-                if ( isset( $_host->offerings ) )
+                if ( $_host->id == 'rave' )
                 {
-                    foreach ( $_host->offerings as $_tag => $_config )
+                    if ( isset( $_host->offerings ) )
                     {
-                        $_data = [
-                            'id' =>
-                        ]
-                        $_html =<<<HTML
-   [id] => rave
-    [offerings] => stdClass Object
-        (
-            [instance-version] => stdClass Object
-                (
-                    [id] => instance-version
-                    [name] => Instance Version
-                    [description] =>
-                    [items] => stdClass Object
-                        (
-                            [1.9.2] => stdClass Object
-                                (
-                                    [document-root] => /var/www/_releases/dsp-core/1.9.2/web
-                                    [description] => 1.9.2
-                                )
+                        foreach ( $_host->offerings as $_tag => $_offering )
+                        {
+                            $_data = (array)$_offering;
+                            $_displayName = IfSet::get( $_data, 'name', $_tag );
+                            $_items = IfSet::get( $_data, 'items', [] );
+                            $_suggested = IfSet::get( $_data, 'suggested' );
 
-                            [1.9.x-dev] => stdClass Object
-                                (
-                                    [document-root] => /var/www/_releases/dsp-core/1.9.x-dev/web
-                                    [description] => 1.9.2
-                                )
+                            $_helpBlock =
+                                ( null !== ( $_helpBlock = IfSet::get( $_data, 'help-block' ) ) )
+                                    ? '<p class="help-block">' .$_helpBlock .'</p>'
+                                    : null;
 
-                        )
+                            if ( !empty( $_items ) )
+                            {
+                                $_options = null;
 
-                    [suggested] => 1.9.x-dev
-                    [selection] =>
-                )
+                                foreach ( $_items as $_name => $_config )
+                                {
+                                    $_attributes = $_html = $_selected = null;
 
+                                    $_config = (array)$_config;
 
+                                    if ( null === ( $_description = IfSet::get( $_config, 'description' ) ) )
+                                    {
+                                        $_description = $_name;
+                                    }
+                                    else
+                                    {
+                                        unset( $_config['description'] );
+                                    }
+
+                                    foreach ( $_config as $_key => $_value )
+                                    {
+                                        $_key = str_replace( ['"', '\'', '_', ' ', '.', ','], '-', strtolower( $_key ) );
+                                        $_attributes .= ' data-' . $_key . '="' . $_value . '" ';
+                                    }
+
+                                    $_suggested == $_name && $_selected = ' selected ';
+                                    $_options .= '<option value="' .
+                                        $_name .
+                                        '" ' .
+                                        $_attributes .
+                                        ' ' .
+                                        $_selected .
+                                        '>' .
+                                        $_description .
+                                        '</option>';
+                                }
+
+                                $_html = <<<HTML
+<div class="form-group">
+    <label for="{$_tag}" class="col-md-2 control-label" style="white-space: nowrap; text-end-overflow:  hidden;">{$_displayName}</label>
+    <div class="col-md-6">
+    <select id="{$_tag}" name="{$_tag}" class="form-control">
+        {$_options}
+    </select>
+    </div>
+    {$_helpBlock}
+</div>
 HTML;
 
-
+                                $_offeringsHtml .= $_html;
+                            }
+                        }
                     }
                 }
             }
-        }
-        if ( isset( $_hosts, $_hosts['rave'] ) )
-        {
-            if ( $_hosts['rave'] )
         }
 
         $_description = \Lang::get( $this->panelConfig( $panel, 'description' ) );
@@ -1411,6 +1442,7 @@ HTML;
                     'panelContext'     => $this->panelConfig( $panel, 'context' ),
                     'headerIcon'       => $this->panelConfig( $panel, 'header-icon' ),
                     'panelDescription' => $_description,
+                    'offerings'        => $_offeringsHtml,
                 ]
             )
         );

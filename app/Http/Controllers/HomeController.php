@@ -116,7 +116,6 @@ class HomeController extends BaseController
                     'snapshotImporter' => $_import,
                     /** The instance list */
                     'instances'        => $_instances,
-                    'offerings'        => $_offerings,
                 ]
             )
         );
