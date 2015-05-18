@@ -1,7 +1,7 @@
 <?php namespace DreamFactory\Enterprise\Dashboard\Support;
 
-use DreamFactory\Library\Fabric\Database\Enums\GuestLocations;
-use DreamFactory\Library\Fabric\Database\Enums\ProvisionStates;
+use DreamFactory\Enterprise\Database\Enums\GuestLocations;
+use DreamFactory\Enterprise\Database\Enums\ProvisionStates;
 use DreamFactory\Library\Utility\IfSet;
 
 /**

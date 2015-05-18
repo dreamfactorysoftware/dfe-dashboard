@@ -3,7 +3,7 @@
  * @var bool $_requireCaptcha
  */
 
-use DreamFactory\Library\Fabric\Database\Enums\GuestLocations;
+use DreamFactory\Enterprise\Database\Enums\GuestLocations;
 use DreamFactory\Library\Utility\Inflector;
 
 $_dspName = ( \Auth::user()->admin_ind != 1 ? 'dsp-' : null ) . Inflector::neutralize( str_replace( ' ', '-', \Auth::user()->nickname_text ) );

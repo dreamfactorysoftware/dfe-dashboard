@@ -2,7 +2,6 @@
 
 use DreamFactory\Enterprise\Common\Contracts\StaticRenderFactory;
 use DreamFactory\Enterprise\Dashboard\Enums\DashboardDefaults;
-use DreamFactory\Library\Fabric\Database\Models\Deploy\Instance;
 
 /**
  * A single instance panel on the dashboard

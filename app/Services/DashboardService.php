@@ -452,7 +452,7 @@ class DashboardService extends BaseService
         }
         else
         {
-            if ( isset( $_result->response ) )
+            if ( isset( $_result->response ) && !empty( $_result->response ) )
             {
                 /** @var \stdClass $_model */
                 foreach ( $_result->response as $_dspName => $_model )
@@ -1359,7 +1359,7 @@ HTML;
 
                             $_helpBlock =
                                 ( null !== ( $_helpBlock = IfSet::get( $_data, 'help-block' ) ) )
-                                    ? '<p class="help-block">' .$_helpBlock .'</p>'
+                                    ? '<p class="help-block">' . $_helpBlock . '</p>'
                                     : null;
 
                             if ( !empty( $_items ) )

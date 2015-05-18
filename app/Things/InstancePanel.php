@@ -1,8 +1,8 @@
 <?php namespace DreamFactory\Enterprise\Dashboard\Things;
 
 use DreamFactory\Enterprise\Dashboard\Enums\DashboardDefaults;
-use DreamFactory\Library\Fabric\Database\Enums\ProvisionStates;
-use DreamFactory\Library\Fabric\Database\Models\Deploy\Instance;
+use DreamFactory\Enterprise\Database\Enums\ProvisionStates;
+use DreamFactory\Enterprise\Database\Models\Instance;
 
 /**
  * An object that represents a single instance panel/thumbnail on the dashboard
