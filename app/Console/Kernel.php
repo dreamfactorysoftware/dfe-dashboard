@@ -14,6 +14,10 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [];
 
+    //******************************************************************************
+    //* Methods
+    //******************************************************************************
+
     /**
      * @param  \Illuminate\Console\Scheduling\Schedule $schedule
      *
@@ -25,5 +29,4 @@ class Kernel extends ConsoleKernel
          * nothing scheduled yet
          */
     }
-
 }
