@@ -1,8 +1,8 @@
 <?php namespace DreamFactory\Enterprise\Dashboard\Services;
 
 use DreamFactory\Enterprise\Common\Enums\AppKeyClasses;
-use DreamFactory\Library\Fabric\Database\Models\Deploy\AppKey;
-use DreamFactory\Library\Fabric\Database\Models\Deploy\User;
+use DreamFactory\Enterprise\Database\Models\AppKey;
+use DreamFactory\Enterprise\Database\Models\User;
 use Illuminate\Contracts\Auth\Registrar as RegistrarContract;
 use Validator;
 

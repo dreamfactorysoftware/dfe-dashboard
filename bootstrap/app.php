@@ -1,10 +1,24 @@
 <?php
-//  Create the application container
-$app = new Illuminate\Foundation\Application( realpath( __DIR__ . '/../' ) );
+/**
+ * Bootstrap application
+ */
+if ( !function_exists( '__bootstrap' ) )
+{
+    /**
+     * @return \Illuminate\Foundation\Application
+     */
+    function __bootstrap()
+    {
+        //  Create the application container
+        $_app = new Illuminate\Foundation\Application( realpath( __DIR__ . '/../' ) );
 
-//  Bind bootstrap interfaces and return
-$app->singleton( 'Illuminate\Contracts\Http\Kernel', 'DreamFactory\Enterprise\Dashboard\Http\Kernel' );
-$app->singleton( 'Illuminate\Contracts\Console\Kernel', 'DreamFactory\Enterprise\Dashboard\Console\Kernel' );
-$app->singleton( 'Illuminate\Contracts\Debug\ExceptionHandler', 'DreamFactory\Enterprise\Dashboard\Exceptions\Handler' );
+        //  Bind bootstrap interfaces and return
+        $_app->singleton( 'Illuminate\Contracts\Http\Kernel', 'DreamFactory\Enterprise\Dashboard\Http\Kernel' );
+        $_app->singleton( 'Illuminate\Contracts\Console\Kernel', 'DreamFactory\Enterprise\Dashboard\Console\Kernel' );
+        $_app->singleton( 'Illuminate\Contracts\Debug\ExceptionHandler', 'DreamFactory\Enterprise\Dashboard\Exceptions\Handler' );
 
-return $app;
+        return $_app;
+    }
+}
+
+return __bootstrap();

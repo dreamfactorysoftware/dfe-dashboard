@@ -4,8 +4,8 @@ use DreamFactory\Enterprise\Common\Http\Controllers\BaseController;
 use DreamFactory\Enterprise\Dashboard\Enums\DashboardDefaults;
 use DreamFactory\Enterprise\Dashboard\Enums\PanelTypes;
 use DreamFactory\Enterprise\Dashboard\Facades\Dashboard;
-use DreamFactory\Library\Fabric\Database\Models\Deploy\Snapshot;
-use DreamFactory\Library\Fabric\Database\Models\Deploy\User;
+use DreamFactory\Enterprise\Database\Models\Snapshot;
+use DreamFactory\Enterprise\Database\Models\User;
 use DreamFactory\Library\Utility\Inflector;
 use Illuminate\Http\Request;
 

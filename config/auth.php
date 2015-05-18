@@ -5,7 +5,7 @@
 
 return [
     'driver'   => 'dashboard',
-    'model'    => 'DreamFactory\\Library\\Fabric\\Database\\Models\\Deploy\\User',
+    'model'    => 'DreamFactory\\Enterprise\\Database\\Models\\User',
     'table'    => 'user_t',
     'password' => [
         'email'  => 'dfe-common::emails.password',
