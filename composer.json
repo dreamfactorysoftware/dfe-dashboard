@@ -42,6 +42,7 @@
 	],
 	"require":           {
 		"laravel/framework":           "5.0.*",
+		"predis/predis":               "~1.1",
 		"league/flysystem-sftp":       "*",
 		"league/flysystem-ziparchive": "*",
 		"wpb/string-blade-compiler":   "2.*@dev",
@@ -55,6 +56,7 @@
 		"dreamfactory/dfe-ops-client": "dev-develop as dev-master"
 	},
 	"require-dev":       {
+		"illuminate/html":             "5.0.*",
 		"barryvdh/laravel-ide-helper": "~2.0",
 		"doctrine/dbal":               "~2.3",
 		"phpspec/phpspec":             "~2.1",
