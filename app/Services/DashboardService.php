@@ -228,7 +228,7 @@ class DashboardService extends BaseService
             $_clusterConfig
         );
 
-        $_result = $this->_apiCall( 'provision', $_payload, true );
+        $_result = $this->_apiCall( 'provision', $_payload );
 
         if ( $_result && is_object( $_result ) && isset( $_result->success ) )
         {
@@ -274,7 +274,7 @@ class DashboardService extends BaseService
      */
     public function deprovisionInstance( $instanceId )
     {
-        $_result = $this->_apiCall( 'deprovision', array('instance-id' => $instanceId), true );
+        $_result = $this->_apiCall( 'deprovision', ['instance-id' => $instanceId] );
 
         if ( $_result && is_object( $_result ) && isset( $_result->success ) )
         {
@@ -295,7 +295,7 @@ class DashboardService extends BaseService
      */
     public function stopInstance( $instanceId )
     {
-        return $this->_apiCall( 'stop' . $instanceId, [], true );
+        return $this->_apiCall( 'stop', ['instance-id' => $instanceId] );
     }
 
     /**
@@ -305,7 +305,7 @@ class DashboardService extends BaseService
      */
     public function startInstance( $instanceId )
     {
-        return $this->_apiCall( 'start' . $instanceId, [], true );
+        return $this->_apiCall( 'start', ['instance-id' => $instanceId] );
     }
 
     /**
@@ -314,9 +314,9 @@ class DashboardService extends BaseService
      *
      * @return bool|mixed|\stdClass
      */
-    public function exportInstance( $instanceId, $trial = true )
+    public function exportInstance( $instanceId )
     {
-        return $this->_apiCall( 'export' . $instanceId );
+        return $this->_apiCall( 'export', ['instance-id' => $instanceId] );
     }
 
     /**
@@ -326,7 +326,7 @@ class DashboardService extends BaseService
      */
     protected function _instanceSnapshots( $instanceId )
     {
-        $_result = $this->_apiCall( 'exports' . $instanceId );
+        $_result = $this->_apiCall( 'exports', ['instance-id' => $instanceId] );
 
         if ( !$_result || !is_object( $_result ) || !isset( $_result->success ) )
         {
@@ -395,7 +395,7 @@ class DashboardService extends BaseService
             $_snapshot = $_parts[1];
         }
 
-        return $this->_apiCall( 'import' . $instanceId, array('snapshot' => $_snapshot), true );
+        return $this->_apiCall( 'import', ['instance-id' => $instanceId, 'snapshot' => $_snapshot] );
     }
 
     /**
