@@ -12,12 +12,17 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-common.setdev-on" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-common/.idea" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-common/vendor" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-database.setdev-on" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-database/.idea" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-ops-client.setdev-on" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-ops-client/.idea" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-ops-client/vendor" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/fabric-db.setdev-on" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/fabric-db/.idea" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/fabric-db/vendor" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/php-utils.setdev-on" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/php-utils/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/php-utils/vendor" />
       <excludeFolder url="file://$MODULE_DIR$/yii.config" />
     </content>
     <orderEntry type="inheritedJdk" />
@@ -25,9 +30,11 @@
     <orderEntry type="module-library">
       <library name="PHARS">
         <CLASSES>
+          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/dfe-database/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar" />
           <root url="phar://$MODULE_DIR$/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar" />
         </CLASSES>
         <SOURCES>
+          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/dfe-database/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar" />
           <root url="phar://$MODULE_DIR$/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar" />
         </SOURCES>
       </library>
