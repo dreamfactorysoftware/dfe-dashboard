@@ -1,11 +1,31 @@
 <?php namespace DreamFactory\Enterprise\Dashboard\Http;
 
+use DreamFactory\Enterprise\Common\Traits\CustomLogPath;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Illuminate\Routing\Router;
 
 class Kernel extends HttpKernel
 {
+    //******************************************************************************
+    //* Constants
+    //******************************************************************************
+
+    /**
+     * @type string
+     */
+    const CLASS_TO_REPLACE = 'Illuminate\Foundation\Bootstrap\ConfigureLogging';
+    /**
+     * @type string
+     */
+    const REPLACEMENT_CLASS = 'DreamFactory\Enterprise\Common\Bootstrap\CommonLoggingConfiguration';
+
+    //******************************************************************************
+    //* Traits
+    //******************************************************************************
+
+    use CustomLogPath;
+
     //******************************************************************************
     //* Members
     //******************************************************************************
@@ -33,15 +53,8 @@ class Kernel extends HttpKernel
     /** @inheritdoc */
     public function __construct( Application $app, Router $router )
     {
-        parent::__construct( $app, $router );
+        $this->_replaceLoggingConfigurationClass( static::CLASS_TO_REPLACE, static::REPLACEMENT_CLASS );
 
-        foreach ( $this->bootstrappers as &$_strapper )
-        {
-            if ( $_strapper === 'Illuminate\Foundation\Bootstrap\ConfigureLogging' )
-            {
-                $_strapper = 'DreamFactory\Enterprise\Common\Bootstrap\CommonLoggingConfiguration';
-                break;
-            }
-        }
+        parent::__construct( $app, $router );
     }
 }
