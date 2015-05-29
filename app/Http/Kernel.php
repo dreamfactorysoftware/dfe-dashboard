@@ -10,11 +10,7 @@ class Kernel extends HttpKernel
     //* Members
     //******************************************************************************
 
-    /**
-     *
-     *
-     * @var array HTTP middleware
-     */
+    /** @inheritdoc */
     protected $middleware = [
         'Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode',
         'Illuminate\Cookie\Middleware\EncryptCookies',
@@ -23,9 +19,7 @@ class Kernel extends HttpKernel
         'Illuminate\View\Middleware\ShareErrorsFromSession',
         'DreamFactory\Enterprise\Dashboard\Http\Middleware\VerifyCsrfToken',
     ];
-    /**
-     * @var array Route middleware
-     */
+    /** @inheritdoc */
     protected $routeMiddleware = [
         'auth'       => 'DreamFactory\Enterprise\Dashboard\Http\Middleware\Authenticate',
         'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
