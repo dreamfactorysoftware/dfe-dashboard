@@ -421,14 +421,9 @@ class DashboardService extends BaseService
 
         if ( !isset( $_response->response ) )
         {
-            \Log::debug( '  * Provisioner bogus response: ' . print_r( $_response, true ) );
+            \Log::error( '  * Provisioner bogus response: ' . print_r( $_response, true ) );
 
             return [];
-        }
-
-        foreach ( $_response->response as $_tag => $_provisioner )
-        {
-            \Log::debug( '  * Provisioner: ' . $_tag . ' > ' . print_r( $_provisioner, true ) );
         }
 
         return $_response;
