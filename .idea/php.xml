@@ -5,6 +5,7 @@
       <list>
         <option value="config" />
         <option value="Illuminate\Container\Container-&gt;make" />
+        <option value="Composer\Autoload\ClassLoader-&gt;loadClass" />
       </list>
     </option>
   </component>

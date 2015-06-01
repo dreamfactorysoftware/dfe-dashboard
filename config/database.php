@@ -7,31 +7,9 @@ return [
     //* Connections
     //******************************************************************************
     'connections' => [
-        'fabric-deploy' => [
+       'dfe-local'     => [
             'driver'    => 'mysql',
-            'host'      => 'console.enterprise.dreamfactory.com',
-            'port'      => 3306,
-            'database'  => 'dfe_local',
-            'username'  => 'dfe_user',
-            'password'  => 'dfe_user',
-            'charset'   => 'utf8',
-            'collation' => 'utf8_unicode_ci',
-            'prefix'    => '',
-        ],
-        'fabric-auth'   => [
-            'driver'    => 'mysql',
-            'host'      => 'console.enterprise.dreamfactory.com',
-            'port'      => 3306,
-            'database'  => 'dfe_local',
-            'username'  => 'dfe_user',
-            'password'  => 'dfe_user',
-            'charset'   => 'utf8',
-            'collation' => 'utf8_unicode_ci',
-            'prefix'    => '',
-        ],
-        'dfe-local'     => [
-            'driver'    => 'mysql',
-            'host'      => 'console.enterprise.dreamfactory.com',
+            'host'      => 'localhost',
             'port'      => 3306,
             'database'  => 'dfe_local',
             'username'  => 'dfe_user',

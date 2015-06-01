@@ -36,6 +36,15 @@ class HomeController extends BaseController
     }
 
     /**
+     * @param \Illuminate\Http\Request $request
+     */
+    public function logout( Request $request )
+    {
+        !\Auth::guest() && \Auth::logout();
+        \Redirect::to( 'auth/login' );
+    }
+
+    /**
      * @param Request $request
      * @param string  $id
      *
