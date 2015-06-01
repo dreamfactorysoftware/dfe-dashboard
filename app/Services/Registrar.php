@@ -1,6 +1,7 @@
 <?php namespace DreamFactory\Enterprise\Dashboard\Services;
 
 use DreamFactory\Enterprise\Common\Enums\AppKeyClasses;
+use DreamFactory\Enterprise\Database\Enums\OwnerTypes;
 use DreamFactory\Enterprise\Database\Models\AppKey;
 use DreamFactory\Enterprise\Database\Models\User;
 use Illuminate\Contracts\Auth\Registrar as RegistrarContract;
@@ -59,6 +60,7 @@ class Registrar implements RegistrarContract
                     array(
                         'key_class_text' => AppKeyClasses::USER,
                         'owner_id'       => $_user->id,
+                        'owner_type_nbr' => OwnerTypes::USER,
                     )
                 );
 
