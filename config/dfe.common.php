@@ -2,7 +2,6 @@
 /**
  * Configuration file for the dfe-common library
  */
-use DreamFactory\Enterprise\Dashboard\Enums\DashboardDefaults;
 
 return [
     /** Global options */
