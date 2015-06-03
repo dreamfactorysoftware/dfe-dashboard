@@ -48,7 +48,7 @@ class InstancePanelFactory implements StaticRenderFactory
         return array_merge(
             [
                 'panelSize'              => $this->_columnClass,
-                'panelContext'           => config( 'dashboard.panel-context', 'panel-info' ),
+                'panelContext'           => config( 'dfe.dashboard.panel-context', 'panel-info' ),
                 'instanceName'           => $this->_id,
                 'defaultDomain'          => '.' .
                     trim( config( 'dashboard.default-dns-zone' ), '.' ) . '.' .
