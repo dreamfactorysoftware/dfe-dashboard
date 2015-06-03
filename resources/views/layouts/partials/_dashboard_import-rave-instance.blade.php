@@ -12,7 +12,7 @@ $_guest = GuestLocations::DFE_CLUSTER;
 ?>
 <div class="panel {{ $panelContext }} panel-instance">
 	<div class="panel-heading" role="tab">
-		<h4 class="panel-title"><i class="fa fa-fw {{ config('dashboard.icons.import') }}"></i>{{ \Lang::get('dashboard.instance-import-title') }}</h4>
+		<h4 class="panel-title"><i class="fa fa-fw {{ config('dfe.icons.import') }}"></i>{{ \Lang::get('dashboard.instance-import-title') }}</h4>
 	</div>
 
 	<div class="panel-body">
@@ -55,7 +55,7 @@ $_guest = GuestLocations::DFE_CLUSTER;
 				<div class="dsp-links">
 					<hr class="hr" />
 
-					<button type="submit" class="btn btn-primary btn-success"><i class="fa fa-fw {{ config('dashboard.icons.import') }}"
+					<button type="submit" class="btn btn-primary btn-success"><i class="fa fa-fw {{ config('dfe.icons.import') }}"
 																				 style="margin-right: 8px;"></i> {{ \Lang::get('dashboard.instance-import-button-text') }}
 					</button>
 				</div>

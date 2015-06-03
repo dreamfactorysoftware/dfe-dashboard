@@ -6,7 +6,7 @@
 use DreamFactory\Enterprise\Database\Enums\GuestLocations;
 use DreamFactory\Library\Utility\Inflector;
 
-$_requireCaptcha = config( 'dashboard.require-captcha' );
+$_requireCaptcha = config( 'dfe.dashboard.require-captcha' );
 
 if ( $_requireCaptcha )
 {
@@ -37,7 +37,7 @@ $_guest = GuestLocations::DFE_CLUSTER;
 ?>
 <div class="panel {{ $panelContext }} panel-instance">
 	<div class="panel-heading" role="tab">
-		<h4 class="panel-title"><i class="fa fa-fw {{ config('dashboard.icons.create') }}"></i>{{ \Lang::get('dashboard.instance-create-title') }}</h4>
+		<h4 class="panel-title"><i class="fa fa-fw {{ config('dfe.icons.create') }}"></i>{{ \Lang::get('dashboard.instance-create-title') }}</h4>
 	</div>
 	<div id="dsp_new"
 		 class="panel-body-open"

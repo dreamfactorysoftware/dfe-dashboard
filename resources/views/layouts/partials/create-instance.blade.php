@@ -25,6 +25,6 @@
 
 @section('panel-body-links')
     <button id="btn-create-instance" type="submit" class="btn btn-primary btn-success btn-sm" data-instance-action="create">
-        <i class="fa fa-fw {{ config('dashboard.icons.create') }}" style="margin-right: 8px;"></i> {{ \Lang::get('dashboard.instance-create-button-text') }}
+        <i class="fa fa-fw {{ config('dfe.icons.create') }}" style="margin-right: 8px;"></i> {{ \Lang::get('dashboard.instance-create-button-text') }}
     </button>
 @overwrite

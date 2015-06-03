@@ -1,5 +1,6 @@
 <?php namespace DreamFactory\Enterprise\Dashboard\Support;
 
+use DreamFactory\Enterprise\Dashboard\Enums\DashboardDefaults;
 use DreamFactory\Enterprise\Database\Enums\GuestLocations;
 use DreamFactory\Enterprise\Database\Enums\ProvisionStates;
 use DreamFactory\Library\Utility\IfSet;
@@ -227,7 +228,7 @@ HTML
             '<a class="btn btn-xs btn-info dsp-help-button" id="dspcontrol-' .
             $instance->instanceName .
             '" data-placement="left" title="Help" target="_blank" href="' .
-            config( 'dashboard.help-button-url' ) .
+            config( 'dfe.dashboard.help-button-url' ) .
             '"><i class="fa fa-question-circle"></i></a>';
 
         list( $_icon, $_statusIcon, $_message, $_running ) = $this->getStatusIcon( $instance );
@@ -404,7 +405,7 @@ HTML;
 
             if ( ( !isset( $instance->vendor_id ) || GuestLocations::DFE_CLUSTER == $instance->vendor_id ) && $_buttonName == 'start' )
             {
-                $_href = config( 'dashboard.default-domain-protocol', 'https' ) . '://' . $instance->instance_name_text . $this->_defaultDomain;
+                $_href = config( 'dfe.dashboard.default-domain-protocol', 'https' ) . '://' . $instance->instance_name_text . $this->_defaultDomain;
                 $_button['text'] = 'Launch!';
                 $_disabled = $_disabledClass = null;
                 $_buttonName = 'launch';
@@ -434,7 +435,7 @@ HTML;
 
         return $_defaultDomain
             ?: $_defaultDomain =
-                '.' . trim( config( 'dashboard.default-dns-zone' ), '.' ) . '.' . trim( config( 'dashboard.default-dns-domain' ), '.' );
+                '.' . trim( config( 'dfe.dashboard.default-dns-zone' ), '.' ) . '.' . trim( config( 'dfe.dashboard.default-dns-domain' ), '.' );
     }
 
     /**
@@ -463,12 +464,16 @@ HTML;
      */
     public function hashId( $valueToHash )
     {
+        static $_key;
+
         if ( null === $valueToHash )
         {
             return null;
         }
 
-        return hash( 'sha256', config( 'dashboard.api-key' ) . $valueToHash );
+        null === $_key && ( $_key = config( 'app.key' ) );
+
+        return hash( DashboardDefaults::SIGNATURE_METHOD, config( 'app.key' ) . $valueToHash );
     }
 
     /**

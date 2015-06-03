@@ -42,7 +42,7 @@
                         @show
 
                         @section('panel-captcha')
-                            @if ( config('dashboard.require-captcha') )
+                            @if ( config('dfe.dashboard.require-captcha') )
                                 <div class="form-group form-group-recaptcha">
                                     <label for="{{ $captchaId or 'rc-text-input' }}" class="col-md-2 control-label"></label>
                                     <div class="col-md-10">

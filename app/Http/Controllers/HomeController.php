@@ -78,14 +78,14 @@ class HomeController extends BaseController
     public function index( Request $request )
     {
         $_message = isset( $messages ) ? $messages : null;
-        $_defaultDomain = '.' . trim( config( 'dashboard.default-domain' ), '. ' );
+        $_defaultDomain = '.' . trim( config( 'dfe.dashboard.default-domain' ), '. ' );
 
         /** @type User $_user */
         $_user = \Auth::user();
 
         $_coreData = array(
             /** General */
-            'panelContext'        => config( 'dashboard.panels.default.context', DashboardDefaults::PANEL_CONTEXT ),
+            'panelContext'        => config( 'dfe.panels.default.context', DashboardDefaults::PANEL_CONTEXT ),
             'panelType'           => PanelTypes::SINGLE,
             'defaultDomain'       => $_defaultDomain,
             'message'             => $_message,
@@ -93,7 +93,7 @@ class HomeController extends BaseController
             'displayName'         => $_user->nickname_text,
             'defaultInstanceName' =>
                 ( 1 != $_user->admin_ind
-                    ? config( 'dfe.common.instance-prefix' )
+                    ? config( 'dfe.dashboard.instance-prefix' )
                     : null
                 ) . Inflector::neutralize( str_replace( ' ', '-', \Auth::user()->nickname_text ) ),
         );
@@ -161,7 +161,7 @@ class HomeController extends BaseController
     protected function _validateCaptcha( $request )
     {
         //  If captcha is on, check it...
-        if ( config( 'dashboard.require-captcha' ) && $request->isMethod( Request::METHOD_POST ) )
+        if ( config( 'dfe.dashboard.require-captcha' ) && $request->isMethod( Request::METHOD_POST ) )
         {
             $_validator = \Validator::make(
                 \Input::all(),
@@ -180,25 +180,5 @@ class HomeController extends BaseController
         }
 
         return true;
-    }
-
-    /**
-     * Retrieves a dashboard configuration item
-     *
-     * @param string $key
-     * @param mixed  $default
-     *
-     * @return mixed
-     */
-    public function getConfig( $key = null, $default = null )
-    {
-        if ( null === $key )
-        {
-            return config( 'dashboard', [] );
-        }
-
-        $key = 'dashboard.' . $key;
-
-        return \Config::has( $key ) ? config( $key ) : $default;
     }
 }

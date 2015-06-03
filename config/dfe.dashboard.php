@@ -3,8 +3,6 @@
 //* DFE Dashboard Settings
 //******************************************************************************
 
-use DreamFactory\Enterprise\Dashboard\Enums\DashboardDefaults;
-
 return [
     //******************************************************************************
     //* general dashboard settings
@@ -13,8 +11,6 @@ return [
     'view-path'                => base_path() . '/resources/views',
     /** If true, recaptcha is required on new hosted instances */
     'require-captcha'          => false,
-    /** The prefix for all non-admin provisioned instances  */
-    'instance-prefix'          => DashboardDefaults::INSTANCE_PREFIX,
     //  Instance defaults
     'default-dns-zone'         => env( 'DFE_DEFAULT_DNS_ZONE', 'enterprise' ),
     'default-dns-domain'       => env( 'DFE_DEFAULT_DNS_DOMAIN', 'dreamfactory.com' ),

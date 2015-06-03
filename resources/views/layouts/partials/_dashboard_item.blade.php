@@ -1,4 +1,4 @@
-<div class="panel {{ config('dashboard.panel-context','info') }} panel-instance">
+<div class="panel {{ config('dfe.dashboard.panel-context','info') }} panel-instance">
     <div class="panel-heading panel-heading-instance" role="tab" id="heading-{{ $groupId }}">
         <h4 class="panel-title">
             <span class="instance-heading-name" data-instance-name="{{ $instanceName }}">{{ $instanceName }}

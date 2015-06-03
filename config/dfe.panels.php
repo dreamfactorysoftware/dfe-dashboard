@@ -6,6 +6,7 @@
 use DreamFactory\Enterprise\Dashboard\Enums\DashboardDefaults;
 
 return [
+    /** If true, uses below overrides instead of allowing console placement on guest */
     'panels-per-row'    => DashboardDefaults::PANELS_PER_ROW,
     'columns-per-panel' => DashboardDefaults::COLUMNS_PER_PANEL,
     'toolbar-size'      => 'btn-group-xs',

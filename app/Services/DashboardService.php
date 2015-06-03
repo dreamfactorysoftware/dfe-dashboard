@@ -1,6 +1,5 @@
 <?php namespace DreamFactory\Enterprise\Dashboard\Services;
 
-use DreamFactory\Enterprise\Common\Enums\AppKeyClasses;
 use DreamFactory\Enterprise\Common\Packets\ErrorPacket;
 use DreamFactory\Enterprise\Common\Packets\SuccessPacket;
 use DreamFactory\Enterprise\Common\Services\BaseService;
@@ -67,10 +66,10 @@ class DashboardService extends BaseService
         parent::__construct( $app );
 
         $this->_defaultDomain =
-            '.' . trim( config( 'dashboard.default-dns-zone' ), '.' ) . '.' . trim( config( 'dashboard.default-dns-domain' ), '.' );
-        $this->_useConfigServers = config( 'dfe.ops-client.override-cluster-servers', false );
-        $this->_requireCaptcha = config( 'dashboard.require-captcha', true );
-        $this->_panelsPerRow = config( 'dashboard.panels-per-row', DashboardDefaults::PANELS_PER_ROW );
+            '.' . trim( config( 'dfe.dashboard.default-dns-zone' ), '.' ) . '.' . trim( config( 'dfe.dashboard.default-dns-domain' ), '.' );
+        $this->_useConfigServers = config( 'dfe.dashboard.override-cluster-servers', false );
+        $this->_requireCaptcha = config( 'dfe.dashboard.require-captcha', true );
+        $this->_panelsPerRow = config( 'dfe.panels.panels-per-row', DashboardDefaults::PANELS_PER_ROW );
 
         $this->_determineGridLayout();
     }
@@ -310,9 +309,10 @@ class DashboardService extends BaseService
 
     /**
      * @param string $instanceId
-     * @param bool   $trial
      *
      * @return bool|mixed|\stdClass
+     * @internal param bool $trial
+     *
      */
     public function exportInstance( $instanceId )
     {
@@ -574,7 +574,7 @@ class DashboardService extends BaseService
                 'instanceStatusIcon'     => $this->panelConfig( $panel, 'status-icon' ),
                 'instanceStatusIconSize' => $this->panelConfig( $panel, 'status-icon-size' ),
                 'instanceStatusContext'  => $this->panelConfig( $panel, 'status-icon-context' ),
-                'instanceUrl'            => config( 'dashboard.default-domain-protocol', 'https' ) .
+                'instanceUrl'            => config( 'dfe.dashboard.default-domain-protocol', 'https' ) .
                     '://' .
                     $_name .
                     $this->_defaultDomain,
@@ -592,7 +592,7 @@ class DashboardService extends BaseService
      */
     protected function _getInstanceStatus( $instance )
     {
-        $_spinner = config( 'dashboard.icons.spinner', DashboardDefaults::SPINNING_ICON );
+        $_spinner = config( 'dfe.icons.spinner', DashboardDefaults::SPINNING_ICON );
 
         switch ( $instance->state_nbr )
         {
@@ -609,7 +609,7 @@ class DashboardService extends BaseService
                 break;
 
             case ProvisionStates::PROVISIONED:
-                $_icon = config( 'dashboard.icons.up' );
+                $_icon = config( 'dfe.icons.up' );
                 $_context = 'text-success';
                 $_text = \Lang::get( 'dashboard.status-up' );
                 break;
@@ -621,7 +621,7 @@ class DashboardService extends BaseService
                 break;
 
             case ProvisionStates::DEPROVISIONED:
-                $_icon = config( 'dashboard.icons.terminating' );
+                $_icon = config( 'dfe.icons.terminating' );
                 $_context = 'text-warning';
                 $_text = \Lang::get( 'dashboard.status-terminating' );
                 break;
@@ -629,13 +629,13 @@ class DashboardService extends BaseService
             case ProvisionStates::PROVISIONING_ERROR:
             case ProvisionStates::DEPROVISIONING_ERROR:
             case ProvisionStates::CREATION_ERROR:
-                $_icon = config( 'dashboard.icons.dead' );
+                $_icon = config( 'dfe.icons.dead' );
                 $_context = 'text-danger';
                 $_text = \Lang::get( 'dashboard.status-dead' );
                 break;
 
             default:
-                $_icon = config( 'dashboard.icons.unknown' );
+                $_icon = config( 'dfe.icons.unknown' );
                 $_context = 'text-warning';
                 $_text = \Lang::get( 'dashboard.status-dead' );
                 break;
@@ -780,7 +780,7 @@ class DashboardService extends BaseService
                 ProvisionStates::PROVISIONED == $instance->state_nbr
             )
             {
-                $_href = config( 'dashboard.default-domain-protocol', 'https' ) . '://' . $instance->instance_name_text . $this->_defaultDomain;
+                $_href = config( 'dfe.dashboard.default-domain-protocol', 'https' ) . '://' . $instance->instance_name_text . $this->_defaultDomain;
                 $_button['text'] = 'Launch!';
                 $_disabled = $_disabledClass = null;
                 $_buttonName = 'launch';
@@ -799,7 +799,7 @@ HTML;
             '<a class="btn btn-xs btn-info col-xs-2 col-sm-2 dsp-help-button" id="dspcontrol-' .
             $instance->instance_name_text .
             '" data-placement="middle" title="Help" target="_blank" href="' .
-            config( 'dashboard.help-button-url' ) .
+            config( 'dfe.dashboard.help-button-url' ) .
             '"><i style="margin-right: 0;" class="fa fa-question-circle"></i></a>';
 
         $_html = <<<HTML
@@ -820,7 +820,7 @@ HTML;
      */
     public function getStatusIcon( $status, $key = false )
     {
-        $_spinner = config( 'dashboard.icons.spinner' );
+        $_spinner = config( 'dfe.icons.spinner' );
         $_message = null;
         $_running = false;
 
@@ -848,17 +848,17 @@ HTML;
             case ProvisionStates::DEPROVISIONING_ERROR:
                 $_message =
                     'There was an error completing your request. Our engineers have been notified. Maybe go take a stroll?';
-                $_statusIcon = $_icon = config( 'dashboard.icons.dead' );
+                $_statusIcon = $_icon = config( 'dfe.icons.dead' );
                 break;
 
             case ProvisionStates::PROVISIONED:
                 $_message = 'Your instance is up and running.';
                 $_running = true;
-                $_statusIcon = $_icon = config( 'dashboard.icons.up' );
+                $_statusIcon = $_icon = config( 'dfe.icons.up' );
                 break;
 
             case ProvisionStates::DEPROVISIONED:
-                $_statusIcon = $_icon = config( 'dashboard.icons.dead' );;
+                $_statusIcon = $_icon = config( 'dfe.icons.dead' );;
                 $_message = 'This DSP is terminated. All you can do is destroy it.';
                 break;
         }
@@ -929,7 +929,7 @@ HTML;
             return null;
         }
 
-        return hash( 'sha256', config( 'dashboard.api-key' ) . $valueToHash );
+        return hash( DashboardDefaults::SIGNATURE_METHOD, config( 'app.key' ) . $valueToHash );
     }
 
     /**
@@ -965,21 +965,6 @@ HTML;
         return $this->_requireCaptcha;
     }
 
-    protected function _addTokenToPayload( $payload )
-    {
-        $_user = \Auth::user();
-        $_key = $_user->getAppKey( $_user->id, AppKeyClasses::USER );
-
-        return array_merge(
-            array(
-                'client-id'    => $_key->client_id,
-                'access-token' => hash_hmac( 'sha256', $_key->client_id, $_key->client_secret )
-            ),
-            $payload ?: []
-        );
-
-    }
-
     /**
      * @return OpsClientService
      */
@@ -989,7 +974,7 @@ HTML;
             ?: function ()
             {
                 throw new \RuntimeException(
-                    'The enterprise console api service is not available.'
+                    'DFE Console services are not available.'
                 );
             };
     }
@@ -1034,7 +1019,7 @@ HTML;
         }
 
         //  Check for a cluster override
-        $_clusterId = config( 'dashboard.override-cluster-id' );
+        $_clusterId = config( 'dfe.dashboard.override-cluster-id' );
 
         if ( !empty( $_clusterId ) )
         {
@@ -1050,7 +1035,7 @@ HTML;
         }
 
         //  Check cluster server overrides
-        $_dbServerId = config( 'dashboard.override-db-server-id' );
+        $_dbServerId = config( 'dfe.dashboard.override-db-server-id' );
 
         if ( false === ( $_serverId = $this->_ensureServer( $_dbServerId, ServerTypes::DB, true ) ) )
         {
@@ -1061,7 +1046,7 @@ HTML;
             $_config['db-server-id'] = $_serverId;
         }
 
-        $_appServerId = config( 'dashboard.override-app-server-id' );
+        $_appServerId = config( 'dfe.dashboard.override-app-server-id' );
 
         if ( false === ( $_serverId = $this->_ensureServer( $_appServerId, ServerTypes::APP, true ) ) )
         {
@@ -1072,7 +1057,7 @@ HTML;
             $_config['app-server-id'] = $_serverId;
         }
 
-        $_webServerId = config( 'dashboard.override-web-server-id' );
+        $_webServerId = config( 'dfe.dashboard.override-web-server-id' );
 
         if ( false === ( $_serverId = $this->_ensureServer( $_webServerId, ServerTypes::WEB, true ) ) )
         {
@@ -1171,14 +1156,14 @@ HTML;
     protected function _getPanelIcons( $status )
     {
         $_message = null;
-        $_spinner = config( 'dashboard.icons.spinner', DashboardDefaults::SPINNING_ICON );
+        $_spinner = config( 'dfe.icons.spinner', DashboardDefaults::SPINNING_ICON );
 
         switch ( $status->state_nbr )
         {
             case ProvisionStates::CREATION_ERROR:
             case ProvisionStates::PROVISIONING_ERROR:
             case ProvisionStates::DEPROVISIONING_ERROR:
-                $_icon = config( 'dashboard.icons.dead' );
+                $_icon = config( 'dfe.icons.dead' );
                 $_message = \Lang::get( 'dashboard.status-error' );
                 break;
 
@@ -1194,12 +1179,12 @@ HTML;
                 break;
 
             case ProvisionStates::PROVISIONED:
-                $_icon = config( 'dashboard.icons.up' );
+                $_icon = config( 'dfe.icons.up' );
                 $_message = \Lang::get( 'dashboard.status-up' );
                 break;
 
             case ProvisionStates::DEPROVISIONED:
-                $_icon = config( 'dashboard.icons.dead' );;
+                $_icon = config( 'dfe.icons.dead' );;
                 $_message = \Lang::get( 'dashboard.status-dead' );
                 break;
 
@@ -1309,7 +1294,7 @@ HTML;
      */
     public function panelConfig( $panel, $key, $default = null )
     {
-        return config( 'dashboard.panels.' . $panel . '.' . $key, $default );
+        return config( 'dfe.panels.' . $panel . '.' . $key, $default );
     }
 
     /**
