@@ -68,7 +68,7 @@ class DashboardService extends BaseService
 
         $this->_defaultDomain =
             '.' . trim( config( 'dashboard.default-dns-zone' ), '.' ) . '.' . trim( config( 'dashboard.default-dns-domain' ), '.' );
-        $this->_useConfigServers = config( 'dfe-ops-client.override-cluster-servers', false );
+        $this->_useConfigServers = config( 'dfe.ops-client.override-cluster-servers', false );
         $this->_requireCaptcha = config( 'dashboard.require-captcha', true );
         $this->_panelsPerRow = config( 'dashboard.panels-per-row', DashboardDefaults::PANELS_PER_ROW );
 
