@@ -1,6 +1,7 @@
 vendor/
 node_modules/
 /.env
+/.env.copy
 /.env.local
 /.idea/workspace.xml
 /.idea/tasks.xml
