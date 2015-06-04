@@ -77,6 +77,8 @@ class HomeController extends BaseController
      */
     public function index( Request $request )
     {
+        \Log::debug( 'dfe config: ' . print_r( config( 'dfe' ), true ) );
+
         $_message = isset( $messages ) ? $messages : null;
         $_defaultDomain = '.' . trim( config( 'dfe.dashboard.default-domain' ), '. ' );
 

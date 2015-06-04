@@ -17,7 +17,7 @@ return [
     'signature-method'  => env( 'DFE_SIGNATURE_METHOD', EnterpriseDefaults::DEFAULT_SIGNATURE_METHOD ),
     //  If true, users may self-register. Otherwise, admins must create users */
     'open-registration' => env( 'DFE_OPEN_REGISTRATION', true ),
-    'panels'            => [
+    'panels2'            => [
         /** If true, uses below overrides instead of allowing console placement on guest */
         'panels-per-row'    => DashboardDefaults::PANELS_PER_ROW,
         'columns-per-panel' => DashboardDefaults::COLUMNS_PER_PANEL,
