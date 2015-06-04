@@ -1,6 +1,6 @@
 <?php namespace DreamFactory\Enterprise\Dashboard\Http;
 
-use DreamFactory\Enterprise\Common\Traits\CustomLogPath;
+use DreamFactory\Enterprise\Common\Traits\CommonLogging;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -9,7 +9,7 @@ class Kernel extends HttpKernel
     //* Traits
     //******************************************************************************
 
-    use CustomLogPath;
+    use CommonLogging;
 
     //******************************************************************************
     //* Members
