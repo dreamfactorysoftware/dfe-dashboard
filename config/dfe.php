@@ -15,5 +15,5 @@ return [
     'instance-prefix'   => env( 'DFE_DEFAULT_INSTANCE_PREFIX' ),
     'signature-method'  => env( 'DFE_SIGNATURE_METHOD', EnterpriseDefaults::DEFAULT_SIGNATURE_METHOD ),
     //  If true, users may self-register. Otherwise, admins must create users */
-    'open-registration' => true,
+    'open-registration' => env( 'DFE_OPEN_REGISTRATION', true ),
 ];

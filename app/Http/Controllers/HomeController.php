@@ -93,7 +93,7 @@ class HomeController extends BaseController
             'displayName'         => $_user->nickname_text,
             'defaultInstanceName' =>
                 ( 1 != $_user->admin_ind
-                    ? config( 'dfe.dashboard.instance-prefix' )
+                    ? config( 'dfe.instance-prefix' )
                     : null
                 ) . Inflector::neutralize( str_replace( ' ', '-', \Auth::user()->nickname_text ) ),
         );
