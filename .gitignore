@@ -9,10 +9,11 @@ node_modules/
 /temp
 /composer.lock
 /.dfe.cluster.json
-/storage/framework/cache/*
-/storage/framework/sessions/*
-/storage/framework/views/*
-/storage/logs/*
+/storage
+!/storage/framework/cache/
+!/storage/framework/sessions/
+!/storage/framework/views/
+!/storage/logs/
 /tests/storage/*
 /_ide_*.php
 /original

@@ -1,18 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PhpProjectServersManager">
-    <servers>
-      <server host="dashboard.enterprise.dreamfactory.com" id="9dfef8fb-fda2-444c-b862-39018bab77cb" name="dashboard.enterprise.dreamfactory.com" use_path_mappings="true">
-        <path_mappings>
-          <mapping local-root="$PROJECT_DIR$" remote-root="/var/www/_releases/dashboard/1.0.x-dev" />
-          <mapping local-root="$PROJECT_DIR$/public" remote-root="/var/www/_releases/dashboard/1.0.x-dev/public" />
-          <mapping local-root="$PROJECT_DIR$/vendor/dreamfactory/dfe-common" remote-root="/opt/dreamfactory/dfe/dfe-common" />
-          <mapping local-root="$PROJECT_DIR$/vendor/dreamfactory/dfe-ops-client" remote-root="/opt/dreamfactory/dfe/dfe-ops-client" />
-          <mapping local-root="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate" remote-root="/opt/dreamfactory/dfe/dfe-dashboard/vendor/laravel/framework/src/Illuminate" />
-        </path_mappings>
-      </server>
-    </servers>
-  </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="5.4.0" />
   <component name="PhpStepFilterConfiguration">
     <option name="skippedFunctions">
