@@ -7,7 +7,8 @@ return [
     'driver'            => 'dashboard',
     'model'             => 'DreamFactory\\Enterprise\\Database\\Models\\User',
     'table'             => 'user_t',
-    'open-registration' => true,
+    //  If true, users may self-register. Otherwise, admins must create users */
+    'open-registration' => false,
     'password'          => [
         'email'  => 'dfe-common::emails.password',
         'table'  => 'auth_reset_t',

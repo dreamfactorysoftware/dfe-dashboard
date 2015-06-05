@@ -11,16 +11,15 @@ return [
     //* General
     //******************************************************************************
     //  The id of THIS cluster
-    'cluster-id'        => env( 'DFE_CLUSTER_ID' ),
+    'cluster-id'       => env( 'DFE_CLUSTER_ID' ),
     //  A string to be pre-pended to instance names for non-admin users
-    'instance-prefix'   => env( 'DFE_DEFAULT_INSTANCE_PREFIX' ),
-    'signature-method'  => env( 'DFE_SIGNATURE_METHOD', EnterpriseDefaults::DEFAULT_SIGNATURE_METHOD ),
-    //  If true, users may self-register. Otherwise, admins must create users */
-    'open-registration' => env( 'DFE_OPEN_REGISTRATION', true ),
+    'instance-prefix'  => env( 'DFE_DEFAULT_INSTANCE_PREFIX' ),
+    //  This is the algorithm used for signing API transactions. Defaults to 'sha256'
+    'signature-method' => env( 'DFE_SIGNATURE_METHOD', EnterpriseDefaults::DEFAULT_SIGNATURE_METHOD ),
     //******************************************************************************
     //* Common across all DFE apps
     //******************************************************************************
-    'common'            => [
+    'common'           => [
         //******************************************************************************
         //* Global Options
         //******************************************************************************
@@ -37,7 +36,7 @@ return [
     //******************************************************************************
     //* Dashboard specific settings
     //******************************************************************************
-    'dashboard'         => [
+    'dashboard'        => [
         //******************************************************************************
         //* general dashboard settings
         //******************************************************************************
@@ -62,18 +61,24 @@ return [
         'override-app-server-id'   => false,
         'override-web-server-id'   => false,
     ],
-    'security'          => [
-        'console-api-url'           => env( 'DFE_CONSOLE_API_URL' ),
+    'security'         => [
         /** This key needs to match the key configured in the console */
         'console-api-key'           => env( 'DFE_CONSOLE_API_KEY' ),
+        /** This is the full url to the DFE Console API endpoint */
+        'console-api-url'           => env( 'DFE_CONSOLE_API_URL', 'http://localhost/api/v1/ops/' ),
+        /** These keys are assigned during system installation */
         'console-api-client-id'     => env( 'DFE_CONSOLE_API_CLIENT_ID' ),
         'console-api-client-secret' => env( 'DFE_CONSOLE_API_CLIENT_SECRET' ),
     ],
-    'panels'            => [
+    //******************************************************************************
+    //* Dashboard UI Layout/Panel Settings
+    //******************************************************************************
+    'panels'           => [
         /** If true, uses below overrides instead of allowing console placement on guest */
         'panels-per-row'    => DashboardDefaults::PANELS_PER_ROW,
         'columns-per-panel' => DashboardDefaults::COLUMNS_PER_PANEL,
         'toolbar-size'      => 'btn-group-xs',
+        /** This is the create from scratch panel **/
         'create'            => [
             'context'          => 'panel-success',
             'template'         => DashboardDefaults::CREATE_INSTANCE_BLADE,
@@ -83,6 +88,7 @@ return [
             'description'      => 'dashboard.instance-create',
             'form-id'          => 'form-create',
         ],
+        /** This is the create via import panel **/
         'import'            => [
             'context'          => 'panel-warning',
             'template'         => DashboardDefaults::IMPORT_INSTANCE_BLADE,
@@ -92,6 +98,7 @@ return [
             'description'      => 'dashboard.instance-import',
             'form-id'          => 'form-import',
         ],
+        /** This is the default panel for an existing instance **/
         'default'           => [
             'context'                 => DashboardDefaults::PANEL_CONTEXT,
             'template'                => DashboardDefaults::DEFAULT_INSTANCE_BLADE,
@@ -107,7 +114,10 @@ return [
             'form-id'                 => 'form-default',
         ],
     ],
-    'icons'             => [
+    //******************************************************************************
+    //* Dashboard UI Icon Settings
+    //******************************************************************************
+    'icons'            => [
         'import'      => 'fa-cloud-upload',
         'export'      => 'fa-cloud-download',
         'spinner'     => 'fa fa-spinner fa-spin text-info',
