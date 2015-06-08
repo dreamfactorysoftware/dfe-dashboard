@@ -25,6 +25,10 @@
 	"repositories":      [
 		{
 			"type": "vcs",
+			"url":  "git@github.com:dreamfactorysoftware/dfe-storage.git"
+		},
+		{
+			"type": "vcs",
 			"url":  "git@github.com:dreamfactorysoftware/dfe-database.git"
 		},
 		{
