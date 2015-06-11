@@ -64,7 +64,10 @@ class Registrar implements RegistrarContract
                     )
                 );
 
-                $_user->update( ['api_token_text' => $_appKey->client_id, 'active_ind' => 1] );
+                //  Update the user with the key info and activate
+                $_user->api_token_text = $_appKey->client_id;
+                $_user->active_ind = 1;
+                $_user->save();
 
                 return $_user;
             }
