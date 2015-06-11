@@ -44,8 +44,7 @@ class Registrar implements RegistrarContract
     public function create( array $data )
     {
         return \DB::transaction(
-            function () use ( $data )
-            {
+            function () use ( $data ){
                 $_user = User::create(
                     [
                         'first_name_text' => $data['first_name_text'],
@@ -61,10 +60,11 @@ class Registrar implements RegistrarContract
                         'key_class_text' => AppKeyClasses::USER,
                         'owner_id'       => $_user->id,
                         'owner_type_nbr' => OwnerTypes::USER,
+                        'server_secret'  => config( 'dfe.security.console-api-key' ),
                     )
                 );
 
-                $_user->update( ['api_token_text' => $_appKey->client_id] );
+                $_user->update( ['api_token_text' => $_appKey->client_id, 'active_ind' => 1] );
 
                 return $_user;
             }
