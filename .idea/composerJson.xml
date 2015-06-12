@@ -4,8 +4,8 @@
     <unboundedVersionInspectionSettings>
       <excludedPackages>
         <pattern pattern="dreamfactory/*" />
-        <pattern pattern="league/*" />
         <pattern pattern="marwelln/recaptcha" />
+        <pattern pattern="league/*" />
       </excludedPackages>
     </unboundedVersionInspectionSettings>
     <customRepositories />
