@@ -1,103 +1,102 @@
 {
-	"name":              "dreamfactory/dfe-dashboard",
-	"description":       "DreamFactory Enterprise(tm) Dashboard",
-	"homepage":          "https://www.dreamfactory.com/enterprise/",
-	"keywords":          [
-		"dreamfactory",
-		"enterprise",
-		"cloud",
-		"corporate"
-	],
-	"license":           [
-		"proprietary"
-	],
-	"authors":           [
-		{
-			"name":  "Jerry Ablan",
-			"email": "jerryablan@dreamfactory.com",
-			"role":  "Executive Chef"
-		}
-	],
-	"support":           {
-		"email": "support@dreamfactory.com"
-	},
-	"minimum-stability": "dev",
-	"repositories":      [
-		{
-			"type": "vcs",
-			"url":  "git@github.com:dreamfactorysoftware/dfe-storage.git"
-		},
-		{
-			"type": "vcs",
-			"url":  "git@github.com:dreamfactorysoftware/dfe-database.git"
-		},
-		{
-			"type": "vcs",
-			"url":  "git@github.com:dreamfactorysoftware/dfe-common.git"
-		},
-		{
-			"type": "vcs",
-			"url":  "git@github.com:dreamfactorysoftware/dfe-ops-client.git"
-		},
-		{
-			"type": "vcs",
-			"url":  "git@github.com:dreamfactorysoftware/dfe-audit.git"
-		}
-	],
-	"require":           {
-		"laravel/framework":           "5.0.*",
-		"predis/predis":               "~1.1",
-		"league/flysystem-sftp":       "*",
-		"league/flysystem-ziparchive": "*",
-		"wpb/string-blade-compiler":   "2.*@dev",
-		"guzzlehttp/guzzle":           "~4.0",
-		"marwelln/recaptcha":          "dev-master",
-		"dreamfactory/php-utils":      "*",
-		"dreamfactory/console-tools":  "dev-develop as dev-master",
-		"dreamfactory/dfe-common":     "dev-develop as dev-master",
-		"dreamfactory/dfe-database":   "dev-develop as dev-master",
-		"dreamfactory/dfe-audit":      "dev-develop as dev-master",
-		"dreamfactory/dfe-ops-client": "dev-develop as dev-master"
-	},
-	"require-dev":       {
-		"illuminate/html":             "5.0.*",
-		"barryvdh/laravel-ide-helper": "~2.0",
-		"doctrine/dbal":               "~2.3",
-		"phpspec/phpspec":             "~2.1",
-		"phpunit/phpunit":             "~4.0",
-		"way/generators":              "~3.0"
-	},
-	"autoload":          {
-		"psr-4": {
-			"DreamFactory\\Enterprise\\Dashboard\\": "app/"
-		}
-	},
-	"autoload-dev":      {
-		"classmap": [
-			"tests/TestCase.php",
-			"tests/CommandTestCase.php"
-		]
-	},
-	"scripts":           {
-		"post-install-cmd": [
-			"php artisan clear-compiled",
-			"php artisan ide-helper:generate",
-			"php artisan vendor:publish",
-			"php artisan optimize"
-		],
-		"post-update-cmd":  [
-			"php artisan clear-compiled",
-			"php artisan ide-helper:generate",
-			"php artisan vendor:publish --tag=public --force",
-			"php artisan optimize"
-		]
-	},
-	"config":            {
-		"preferred-install": "dist"
-	},
-	"extra":             {
-		"branch-alias": {
-			"dev-develop": "1.x-dev"
-		}
-	}
+  "name":              "dreamfactory/dfe-dashboard",
+  "description":       "DreamFactory Enterprise(tm) Dashboard",
+  "homepage":          "https://www.dreamfactory.com/enterprise/",
+  "keywords":          [
+    "dreamfactory",
+    "enterprise",
+    "cloud",
+    "corporate"
+  ],
+  "license":           [
+    "proprietary"
+  ],
+  "authors":           [
+    {
+      "name":  "Jerry Ablan",
+      "email": "jerryablan@dreamfactory.com",
+      "role":  "Executive Chef"
+    }
+  ],
+  "support":           {
+    "email": "support@dreamfactory.com"
+  },
+  "minimum-stability": "dev",
+  "repositories":      [
+    {
+      "type": "vcs",
+      "url":  "git@github.com:dreamfactorysoftware/dfe-storage.git"
+    },
+    {
+      "type": "vcs",
+      "url":  "git@github.com:dreamfactorysoftware/dfe-database.git"
+    },
+    {
+      "type": "vcs",
+      "url":  "git@github.com:dreamfactorysoftware/dfe-common.git"
+    },
+    {
+      "type": "vcs",
+      "url":  "git@github.com:dreamfactorysoftware/dfe-ops-client.git"
+    },
+    {
+      "type": "vcs",
+      "url":  "git@github.com:dreamfactorysoftware/dfe-audit.git"
+    }
+  ],
+  "require":           {
+    "laravel/framework":           "5.1.*",
+    "predis/predis":               "~1.1",
+    "league/flysystem-sftp":       "*",
+    "league/flysystem-ziparchive": "*",
+    "wpb/string-blade-compiler":   "2.*@dev",
+    "guzzlehttp/guzzle":           "~4.0",
+    "marwelln/recaptcha":          "dev-master",
+    "dreamfactory/php-utils":      "*",
+    "dreamfactory/console-tools":  "dev-develop as dev-master",
+    "dreamfactory/dfe-common":     "dev-develop as dev-master",
+    "dreamfactory/dfe-database":   "dev-develop as dev-master",
+    "dreamfactory/dfe-audit":      "dev-develop as dev-master",
+    "dreamfactory/dfe-ops-client": "dev-develop as dev-master"
+  },
+  "require-dev":       {
+    "barryvdh/laravel-ide-helper": "~2.0",
+    "doctrine/dbal":               "~2.3",
+    "phpspec/phpspec":             "~2.1",
+    "phpunit/phpunit":             "~4.0",
+    "way/generators":              "~3.0"
+  },
+  "autoload":          {
+    "psr-4": {
+      "DreamFactory\\Enterprise\\Dashboard\\": "app/"
+    }
+  },
+  "autoload-dev":      {
+    "classmap": [
+      "tests/TestCase.php",
+      "tests/CommandTestCase.php"
+    ]
+  },
+  "scripts":           {
+    "post-install-cmd": [
+      "php artisan clear-compiled",
+      "php artisan ide-helper:generate",
+      "php artisan vendor:publish",
+      "php artisan optimize"
+    ],
+    "post-update-cmd":  [
+      "php artisan clear-compiled",
+      "php artisan ide-helper:generate",
+      "php artisan vendor:publish --tag=public --force",
+      "php artisan optimize"
+    ]
+  },
+  "config":            {
+    "preferred-install": "dist"
+  },
+  "extra":             {
+    "branch-alias": {
+      "dev-develop": "1.x-dev"
+    }
+  }
 }
