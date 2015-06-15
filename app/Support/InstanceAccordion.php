@@ -37,30 +37,24 @@ class InstanceAccordion
      *
      * @return array|null|string
      */
-    public function instanceTable( $instances, $asString = true )
+    public function userInstanceTable($instances, $asString = true)
     {
         $_html = $asString ? null : [];
 
         /** @var \stdClass $_model */
-        foreach ( $instances as $_dspName => $_model )
-        {
-            if ( !isset( $_model, $_model->id ) )
-            {
+        foreach ($instances as $_dspName => $_model) {
+            if (!isset($_model, $_model->id)) {
                 continue;
             }
 
-            if ( $asString )
-            {
-                $_html .= $this->addInstanceSection( $_model, true );
-            }
-            else
-            {
-                $_html[] = $this->addInstanceSection( $_model, false );
+            if ($asString) {
+                $_html .= $this->addInstanceSection($_model, true);
+            } else {
+                $_html[] = $this->addInstanceSection($_model, false);
             }
         }
 
         return $_html;
-
     }
 
     /**
@@ -69,13 +63,13 @@ class InstanceAccordion
      *
      * @return \Illuminate\View\View|string
      */
-    public function addInstanceSection( $instance, $asString = true )
+    public function addInstanceSection($instance, $asString = true)
     {
         $_domain = $this->getDefaultDomain();
 
-        list( $_divId, $_instanceHtml, $_statusIcon ) = $this->decorateInstance( $instance );
+        list($_divId, $_instanceHtml, $_statusIcon) = $this->decorateInstance($instance);
 
-        $_item = array(
+        $_item = [
             'instance'       => $instance,
             'groupId'        => 'dsp_list',
             'targetId'       => $_divId,
@@ -87,12 +81,11 @@ class InstanceAccordion
 HTML
             ,
             'targetContent'  => $_instanceHtml,
-        );
+        ];
 
-        $_view = \View::make( 'layouts.partials._dashboard_item', $_item );
+        $_view = view('layouts.partials._dashboard_item', $_item);
 
-        if ( $asString )
-        {
+        if ($asString) {
             return $_view->render();
         }
 
@@ -105,12 +98,10 @@ HTML
 
     public function addImportSection()
     {
-
     }
 
-    public function renderSingleItem( $item )
+    public function renderSingleItem($item)
     {
-
     }
 
     /**
@@ -119,25 +110,20 @@ HTML
      *
      * @return array
      */
-    public function getStatusIcon( $status, $key = false )
+    public function getStatusIcon($status, $key = false)
     {
         $_statusIcon = 'fa-rocket';
         $_icon = 'fa-rocket';
         $_message = null;
         $_running = false;
 
-        if ( $key )
-        {
+        if ($key) {
             $_statusIcon = 'fa-key';
             $_message = null;
-        }
-        else
-        {
+        } else {
 
-            if ( isset( $status->vendorStateName ) && null !== $status->vendorStateName )
-            {
-                switch ( $status->vendorStateName )
-                {
+            if (isset($status->vendorStateName) && null !== $status->vendorStateName) {
+                switch ($status->vendorStateName) {
                     case 'stopped':
                         $_statusIcon = $_icon = 'fa-stop';
                         $_message = 'This DSP is stopped. Click the Start button to restart.';
@@ -165,11 +151,8 @@ HTML
                         $_running = true;
                         break;
                 }
-            }
-            else
-            {
-                switch ( $status->state_nbr )
-                {
+            } else {
+                switch ($status->state_nbr) {
                     case ProvisionStates::CREATED:
                         $_statusIcon = $_icon = static::SPINNING_ICON;
                         $_message = 'This DSP request has been received and is queued for creation.';
@@ -183,8 +166,7 @@ HTML
 
                     case ProvisionStates::PROVISIONED:
                         //	Queued for deprovisioning
-                        if ( 1 == $status->deprovision_ind )
-                        {
+                        if (1 == $status->deprovision_ind) {
                             $_statusIcon = $_icon = static::SPINNING_ICON;
                         }
                         $_message = 'This DSP is alive and well. Click on the name above to launch.';
@@ -214,7 +196,7 @@ HTML
             }
         }
 
-        return array($_icon, $_statusIcon, $_message, $_running);
+        return [$_icon, $_statusIcon, $_message, $_running];
     }
 
     /**
@@ -222,29 +204,27 @@ HTML
      *
      * @return array
      */
-    public function decorateInstance( $instance )
+    public function decorateInstance($instance)
     {
         $_gettingStartedButton =
             '<a class="btn btn-xs btn-info dsp-help-button" id="dspcontrol-' .
             $instance->instanceName .
             '" data-placement="left" title="Help" target="_blank" href="' .
-            config( 'dfe.dashboard.help-button-url' ) .
+            config('dfe.dashboard.help-button-url') .
             '"><i class="fa fa-question-circle"></i></a>';
 
-        list( $_icon, $_statusIcon, $_message, $_running ) = $this->getStatusIcon( $instance );
+        list($_icon, $_statusIcon, $_message, $_running) = $this->getStatusIcon($instance);
 
-        if ( empty( $instance->instanceId ) )
-        {
+        if (empty($instance->instanceId)) {
             $instance->instanceId = 'NEW';
         }
 
-        $_divId = static::divId( 'dsp', $instance );
+        $_divId = static::divId('dsp', $instance);
 
         $_instanceLinkText = $_linkLink = null;
-        $_html = static::getDspControls( $instance, $_buttons );
+        $_html = static::getDspControls($instance, $_buttons);
 
-        if ( $instance->instanceState == 2 )
-        {
+        if ($instance->instanceState == 2) {
             $_instanceLinkText = 'https://' . $instance->instanceName . $this->getDefaultDomain();
             $_instanceLink =
                 '<a href="' .
@@ -253,14 +233,11 @@ HTML
                 $instance->instanceName .
                 '</a>';
             $_linkLink = '<a href="' . $_instanceLinkText . '" target="_blank">' . $_instanceLinkText . '</a>';
-        }
-        else
-        {
+        } else {
             $_instanceLink = $instance->instanceName;
         }
 
-        if ( static::_isIconClass( $_icon ) )
-        {
+        if (static::_isIconClass($_icon)) {
             $_icon = '<i class="fa ' . $_icon . ' fa-3x"></i>';
         }
 
@@ -276,7 +253,7 @@ HTML
 	</div>
 HTML;
 
-        return array($_divId, $_html, $_statusIcon, $_instanceLinkText);
+        return [$_divId, $_html, $_statusIcon, $_instanceLinkText];
     }
 
     /**
@@ -287,51 +264,49 @@ HTML;
      *
      * @return string
      */
-    public function getDspControls( $instance, &$buttons = null )
+    public function getDspControls($instance, &$buttons = null)
     {
-        $_buttons = array(
-            'start'  => array(
+        $_buttons = [
+            'start'  => [
                 'enabled' => false,
                 'hint'    => 'Start this DSP',
                 'color'   => 'success',
                 'icon'    => 'play',
-                'text'    => 'Start'
-            ),
-            'stop'   => array(
+                'text'    => 'Start',
+            ],
+            'stop'   => [
                 'enabled' => false,
                 'hint'    => 'Stop this DSP',
                 'color'   => 'warning',
                 'icon'    => 'pause',
-                'text'    => 'Stop'
-            ),
-            'export' => array(
+                'text'    => 'Stop',
+            ],
+            'export' => [
                 'enabled' => false,
                 'hint'    => 'Make a portable DSP backup',
                 'color'   => 'info',
                 'icon'    => 'cloud-download',
-                'text'    => 'Backup'
-            ),
-            'import' => array(
+                'text'    => 'Backup',
+            ],
+            'import' => [
                 'enabled' => false,
                 'hint'    => 'Restore a portable backup',
                 'color'   => 'warning',
                 'icon'    => 'cloud-upload',
                 'text'    => 'Restore',
                 'href'    => '#dsp-import-snapshot',
-            ),
-            'delete' => array(
+            ],
+            'delete' => [
                 'enabled' => false,
                 'hint'    => 'Delete this DSP permanently',
                 'color'   => 'danger',
                 'icon'    => 'trash',
-                'text'    => 'Destroy!'
-            ),
-        );
+                'text'    => 'Destroy!',
+            ],
+        ];
 
-        if ( isset( $instance->vendorStateName ) && !empty( $instance->vendorStateName ) )
-        {
-            switch ( $instance->vendorStateName )
-            {
+        if (isset($instance->vendorStateName) && !empty($instance->vendorStateName)) {
+            switch ($instance->vendorStateName) {
                 case 'terminated':
                     $_buttons['start']['enabled'] = false;
                     $_buttons['stop']['enabled'] = false;
@@ -356,15 +331,11 @@ HTML;
                     $_buttons['import']['enabled'] = true;
                     break;
             }
-        }
-        else
-        {
-            switch ( $instance->state_nbr )
-            {
+        } else {
+            switch ($instance->state_nbr) {
                 case ProvisionStates::PROVISIONED:
                     //	Not queued for deprovisioning
-                    if ( 1 != $instance->deprovision_ind )
-                    {
+                    if (1 != $instance->deprovision_ind) {
                         $_buttons['stop']['enabled'] = true;
                         $_buttons['export']['enabled'] = true;
                         $_buttons['import']['enabled'] = true;
@@ -374,8 +345,7 @@ HTML;
 
                 case ProvisionStates::DEPROVISIONED:
                     //	Not queued for reprovisioning
-                    if ( 1 != $instance->provision_ind )
-                    {
+                    if (1 != $instance->provision_ind) {
                         $_buttons['start']['enabled'] = true;
                         $_buttons['export']['enabled'] = true;
                         $_buttons['delete']['enabled'] = true;
@@ -390,29 +360,25 @@ HTML;
         $_html = null;
 
         //	No stop for hosted instances...
-        unset( $_buttons['stop'] );
+        unset($_buttons['stop']);
 
-        foreach ( $_buttons as $_buttonName => $_button )
-        {
+        foreach ($_buttons as $_buttonName => $_button) {
             $_hint = null;
             $_disabledClass = 'disabled';
-            $_disabled = ( !$_button['enabled'] ? 'disabled="disabled"' : $_disabledClass = null );
+            $_disabled = (!$_button['enabled'] ? 'disabled="disabled"' : $_disabledClass = null);
 
-            if ( !$_disabled && null !== ( $_hint = IfSet::get( $_button, 'hint' ) ) )
-            {
+            if (!$_disabled && null !== ($_hint = IfSet::get($_button, 'hint'))) {
                 $_hint = 'data-toggle="tooltip" title="' . $_hint . '"';
             }
 
-            if ( ( !isset( $instance->vendor_id ) || GuestLocations::DFE_CLUSTER == $instance->vendor_id ) && $_buttonName == 'start' )
-            {
-                $_href = config( 'dfe.dashboard.default-domain-protocol', 'https' ) . '://' . $instance->instance_name_text . $this->_defaultDomain;
+            if ((!isset($instance->vendor_id) || GuestLocations::DFE_CLUSTER == $instance->vendor_id) && $_buttonName == 'start') {
+                $_href = config('dfe.dashboard.default-domain-protocol',
+                        'https') . '://' . $instance->instance_name_text . $this->_defaultDomain;
                 $_button['text'] = 'Launch!';
                 $_disabled = $_disabledClass = null;
                 $_buttonName = 'launch';
-            }
-            else
-            {
-                $_href = isset( $_button['href'] ) ? $_button['href'] : '#';
+            } else {
+                $_href = isset($_button['href']) ? $_button['href'] : '#';
             }
 
             $_html .= <<<HTML
@@ -435,7 +401,8 @@ HTML;
 
         return $_defaultDomain
             ?: $_defaultDomain =
-                '.' . trim( config( 'dfe.dashboard.default-dns-zone' ), '.' ) . '.' . trim( config( 'dfe.dashboard.default-dns-domain' ), '.' );
+                '.' . trim(config('dfe.dashboard.default-dns-zone'),
+                    '.') . '.' . trim(config('dfe.dashboard.default-dns-domain'), '.');
     }
 
     /**
@@ -445,14 +412,14 @@ HTML;
      *
      * @return string
      */
-    public function divId( $prefix, $instance, $key = false )
+    public function divId($prefix, $instance, $key = false)
     {
         return
             $prefix .
             '___' .
-            $this->hashId( $instance->id ) .
+            $this->hashId($instance->id) .
             '___' .
-            ( $key ? $instance->label : $instance->instance_name_text );
+            ($key ? $instance->label : $instance->instance_name_text);
     }
 
     /**
@@ -462,18 +429,17 @@ HTML;
      *
      * @return string
      */
-    public function hashId( $valueToHash )
+    public function hashId($valueToHash)
     {
         static $_key;
 
-        if ( null === $valueToHash )
-        {
+        if (null === $valueToHash) {
             return null;
         }
 
-        null === $_key && ( $_key = config( 'app.key' ) );
+        null === $_key && ($_key = config('app.key'));
 
-        return hash( DashboardDefaults::SIGNATURE_METHOD, config( 'app.key' ) . $valueToHash );
+        return hash(DashboardDefaults::SIGNATURE_METHOD, config('app.key') . $valueToHash);
     }
 
     /**
@@ -483,11 +449,11 @@ HTML;
      *
      * @return bool
      */
-    protected function _isIconClass( $class )
+    protected function _isIconClass($class)
     {
-        return ( 'icon-' == substr( $class, 0, 5 ) ||
-            'fa-' == substr( $class, 0, 3 ) ||
-            $class == static::SPINNING_ICON );
+        return ('icon-' == substr($class, 0, 5) ||
+            'fa-' == substr($class, 0, 3) ||
+            $class == static::SPINNING_ICON);
     }
 
 }

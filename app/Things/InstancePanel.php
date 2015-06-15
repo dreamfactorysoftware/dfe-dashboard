@@ -39,14 +39,15 @@ class InstancePanel
      * @param array  $data  An array of data used to render the panel
      * @param string $blade The name of the blade to use for rendering. If null, the dashboard.instance-panel-template config value is used.
      */
-    public function __construct( $id, $data = [], $blade = null )
+    public function __construct($id, $data = [], $blade = null)
     {
         $this->_id = $id;
         $this->_data = $data ?: [];
-        $this->_blade = $blade ?: config( 'dfe.panels.default.template', DashboardDefaults::SINGLE_INSTANCE_BLADE );
+        $this->_blade = $blade ?: config('dfe.panels.default.template', DashboardDefaults::SINGLE_INSTANCE_BLADE);
 
         $this->_defaultDomain =
-            '.' . trim( config( 'dfe.dashboard.default-dns-zone' ), '.' ) . '.' . trim( config( 'dfe.dashboard.default-dns-domain' ), '.' );
+            '.' . trim(config('dfe.dashboard.default-dns-zone'),
+                '.') . '.' . trim(config('dfe.dashboard.default-dns-domain'), '.');
     }
 
     /**
@@ -54,10 +55,10 @@ class InstancePanel
      *
      * @return \Illuminate\View\View
      */
-    public function buildPanel( $mergeData = [] )
+    public function buildPanel($mergeData = [])
     {
         return
-            \View::make( $this->_blade, $this->_data, $mergeData );
+            \View::make($this->_blade, $this->_data, $mergeData);
     }
 
     /**
@@ -66,9 +67,9 @@ class InstancePanel
      *
      * @return string
      */
-    public function renderPanel( $mergeData = [], \Closure $callback = null )
+    public function renderPanel($mergeData = [], \Closure $callback = null)
     {
-        return $this->buildPanel( $mergeData )->render( $callback );
+        return $this->buildPanel($mergeData)->render($callback);
     }
 
     /**
@@ -76,23 +77,23 @@ class InstancePanel
      *
      * @return array
      */
-    protected function _prepareViewData( $instance )
+    protected function _prepareViewData($instance)
     {
         return array_merge(
             [
-                'panelContext'           => config( 'dfe.dashboard.panel-context', 'panel-info' ),
+                'panelContext'           => config('dfe.dashboard.panel-context', 'panel-info'),
                 'instanceName'           => $this->_id,
                 'defaultDomain'          => $this->_defaultDomain,
                 'headerIconSize'         => 'fa-1x',
-                'instanceDivId'          => $this->_htmlId( 'instance', $instance->instance_name_text ),
+                'instanceDivId'          => $this->_htmlId('instance', $instance->instance_name_text),
                 'instanceStatusIconSize' => 'fa-3x',
-                'instanceUrl'            => config( 'dfe.dashboard.default-domain-protocol', 'https' ) .
+                'instanceUrl'            => config('dfe.dashboard.default-domain-protocol', 'https') .
                     '://' .
                     $instance->instance_name_text .
                     $this->_defaultDomain,
-                'panelButtons'           => $this->_getPanelButtons( $instance ),
+                'panelButtons'           => $this->_getPanelButtons($instance),
             ],
-            $this->_getStatusData( $instance )
+            $this->_getStatusData($instance)
         );
     }
 
@@ -105,9 +106,9 @@ class InstancePanel
      *
      * @return string
      */
-    protected function _htmlId( $prefix, $name, $delimiter = '___' )
+    protected function _htmlId($prefix, $name, $delimiter = '___')
     {
-        return implode( $delimiter, [$prefix, $this->_id, $name] );
+        return implode($delimiter, [$prefix, $this->_id, $name]);
     }
 
     /**
@@ -115,54 +116,53 @@ class InstancePanel
      *
      * @return array
      */
-    protected function _getStatusData( $instance )
+    protected function _getStatusData($instance)
     {
-        $_spinner = config( 'dfe.icons.spinner', DashboardDefaults::SPINNING_ICON );
+        $_spinner = config('dfe.icons.spinner', DashboardDefaults::SPINNING_ICON);
 
-        switch ( $instance->state_nbr )
-        {
+        switch ($instance->state_nbr) {
             case ProvisionStates::CREATED:
                 $_icon = $_spinner;
                 $_context = 'btn-success';
-                $_text = \Lang::get( 'dashboard.status-started' );
+                $_text = \Lang::get('dashboard.status-started');
                 break;
 
             case ProvisionStates::PROVISIONING:
                 $_icon = $_spinner;
                 $_context = 'btn-info';
-                $_text = \Lang::get( 'dashboard.status-started' );
+                $_text = \Lang::get('dashboard.status-started');
                 break;
 
             case ProvisionStates::PROVISIONED:
-                $_icon = config( 'dfe.icons.up' );
+                $_icon = config('dfe.icons.up');
                 $_context = 'btn-success';
-                $_text = \Lang::get( 'dashboard.status-up' );
+                $_text = \Lang::get('dashboard.status-up');
                 break;
 
             case ProvisionStates::DEPROVISIONING:
                 $_icon = $_spinner;
                 $_context = 'btn-info';
-                $_text = \Lang::get( 'dashboard.status-stopping' );
+                $_text = \Lang::get('dashboard.status-stopping');
                 break;
 
             case ProvisionStates::DEPROVISIONED:
-                $_icon = config( 'dfe.icons.instance-terminating' );
+                $_icon = config('dfe.icons.instance-terminating');
                 $_context = 'btn-warning';
-                $_text = \Lang::get( 'dashboard.status-terminating' );
+                $_text = \Lang::get('dashboard.status-terminating');
                 break;
 
             case ProvisionStates::PROVISIONING_ERROR:
             case ProvisionStates::DEPROVISIONING_ERROR:
             case ProvisionStates::CREATION_ERROR:
-                $_icon = config( 'dfe.icons.instance-dead' );
+                $_icon = config('dfe.icons.instance-dead');
                 $_context = 'btn-danger';
-                $_text = \Lang::get( 'dashboard.status-dead' );
+                $_text = \Lang::get('dashboard.status-dead');
                 break;
 
             default:
-                $_icon = config( 'dfe.icons.instance-unknown' );
+                $_icon = config('dfe.icons.instance-unknown');
                 $_context = 'btn-warning';
-                $_text = \Lang::get( 'dashboard.status-dead' );
+                $_text = \Lang::get('dashboard.status-dead');
                 break;
         }
 
@@ -172,7 +172,6 @@ class InstancePanel
             'instanceStatusContext' => $_context,
             'instanceStatusText'    => $_text,
         ];
-
     }
 
     /**
@@ -180,21 +179,56 @@ class InstancePanel
      *
      * @return array
      */
-    protected function _getPanelButtons( $instance )
+    protected function _getPanelButtons($instance)
     {
         $_buttons = [
-            'launch' => ['id' => '', 'size' => '', 'context' => 'btn-success', 'icon' => 'fa-play', 'hint' => '', 'text' => 'Launch'],
-            'stop'   => ['id' => '', 'size' => '', 'context' => 'btn-warning', 'icon' => 'fa-stop', 'hint' => '', 'text' => 'Stop'],
-            'import' => ['id' => '', 'size' => '', 'context' => 'btn-warning', 'icon' => 'fa-cloud-upload', 'hint' => '', 'text' => 'Import'],
-            'export' => ['id' => '', 'size' => '', 'context' => 'btn-info', 'icon' => 'fa-cloud-download', 'hint' => '', 'text' => 'Export'],
-            'delete' => ['id' => '', 'size' => '', 'context' => 'btn-danger', 'icon' => 'fa-times', 'hint' => '', 'text' => 'Destroy'],
+            'launch' => [
+                'id'      => '',
+                'size'    => '',
+                'context' => 'btn-success',
+                'icon'    => 'fa-play',
+                'hint'    => '',
+                'text'    => 'Launch',
+            ],
+            'stop'   => [
+                'id'      => '',
+                'size'    => '',
+                'context' => 'btn-warning',
+                'icon'    => 'fa-stop',
+                'hint'    => '',
+                'text'    => 'Stop',
+            ],
+            'import' => [
+                'id'      => '',
+                'size'    => '',
+                'context' => 'btn-warning',
+                'icon'    => 'fa-cloud-upload',
+                'hint'    => '',
+                'text'    => 'Import',
+            ],
+            'export' => [
+                'id'      => '',
+                'size'    => '',
+                'context' => 'btn-info',
+                'icon'    => 'fa-cloud-download',
+                'hint'    => '',
+                'text'    => 'Export',
+            ],
+            'delete' => [
+                'id'      => '',
+                'size'    => '',
+                'context' => 'btn-danger',
+                'icon'    => 'fa-times',
+                'hint'    => '',
+                'text'    => 'Destroy',
+            ],
             'help'   => [
                 'id'      => 'instance-control-' . $this->_id,
                 'size'    => '',
                 'context' => 'btn-danger',
                 'icon'    => 'fa-times',
                 'hint'    => '',
-                'text'    => 'Destroy'
+                'text'    => 'Destroy',
             ],
         ];
 

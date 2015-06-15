@@ -7,9 +7,9 @@
         </h4>
     </div>
     <div id="{{ $targetId }}"
-        class="panel-collapse collapse in panel-body-open"
-        role="tabpanel"
-        aria-labelledby="heading-{{ $groupId }}">
+         class="panel-collapse collapse in panel-body-open"
+         role="tabpanel"
+         aria-labelledby="heading-{{ $groupId }}">
         <div class="panel-body">{!! $targetContent !!}</div>
     </div>
 </div>

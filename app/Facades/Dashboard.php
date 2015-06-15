@@ -9,7 +9,7 @@ use Illuminate\View\View;
  * Dashboard
  *
  * @method static mixed handleRequest( Request $request, string $id = null );
- * @method static array|null|string instanceTable( array $data = null, bool $render = false )
+ * @method static array|null|string userInstanceTable( array $data = null, bool $render = false )
  * @method static string renderInstance( $view, array $data = [], string $panel = 'default' )
  * @method static string|array renderInstances( array $instances = [], string $panel = 'default', $asArray = true )
  * @method static array buildInstancePanelData( mixed $instance, $data = [], string $panel = 'default', string $formId = null )

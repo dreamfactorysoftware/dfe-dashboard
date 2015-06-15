@@ -14,7 +14,6 @@ use DreamFactory\Enterprise\Database\Enums\ProvisionStates;
 use DreamFactory\Enterprise\Database\Enums\ServerTypes;
 use DreamFactory\Enterprise\Database\Models\Instance;
 use DreamFactory\Enterprise\Database\Models\User;
-use DreamFactory\Library\Utility\IfSet;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
@@ -61,15 +60,15 @@ class DashboardService extends BaseService
     //*************************************************************************
 
     /** @inheritdoc */
-    public function __construct( $app = null )
+    public function __construct($app = null)
     {
-        parent::__construct( $app );
+        parent::__construct($app);
 
-        $this->_defaultDomain =
-            '.' . trim( config( 'dfe.dashboard.default-dns-zone' ), '.' ) . '.' . trim( config( 'dfe.dashboard.default-dns-domain' ), '.' );
-        $this->_useConfigServers = config( 'dfe.dashboard.override-cluster-servers', false );
-        $this->_requireCaptcha = config( 'dfe.dashboard.require-captcha', true );
-        $this->_panelsPerRow = config( 'dfe.panels.panels-per-row', DashboardDefaults::PANELS_PER_ROW );
+        $this->_defaultDomain = '.' . trim(config('dfe.dashboard.default-dns-zone'),
+                '.') . '.' . trim(config('dfe.dashboard.default-dns-domain'), '.');
+        $this->_useConfigServers = config('dfe.dashboard.override-cluster-servers', false);
+        $this->_requireCaptcha = config('dfe.dashboard.require-captcha', true);
+        $this->_panelsPerRow = config('dfe.panels.panels-per-row', DashboardDefaults::PANELS_PER_ROW);
 
         $this->_determineGridLayout();
     }
@@ -80,65 +79,62 @@ class DashboardService extends BaseService
      *
      * @return bool|mixed|\stdClass|void
      */
-    public function handleRequest( Request $request, $id = null )
+    public function handleRequest(Request $request, $id = null)
     {
         $this->_request = $request;
 
-        $id = $id ?: $request->input( 'id' );
-        $_command = $request->input( 'control' );
+        $id = $id ?: $request->input('id');
+        $_command = $request->input('control');
 
-        if ( $request->isMethod( Request::METHOD_POST ) )
-        {
-            if ( empty( $id ) || empty( $_command ) )
-            {
+        if ($request->isMethod(Request::METHOD_POST)) {
+            if (empty($id) || empty($_command)) {
 
                 $this->_request = null;
 
-                return ErrorPacket::make( null, Response::HTTP_BAD_REQUEST );
+                return ErrorPacket::make(null, Response::HTTP_BAD_REQUEST);
             }
 
-            switch ( $_command )
-            {
+            switch ($_command) {
                 case 'provision':
                 case 'launch':
                 case 'create':
-                    $this->provisionInstance( $id, true, false );
+                    $this->provisionInstance($id, true, false);
                     break;
 
                 case 'create-remote':
-                    $this->provisionInstance( $id, false, true );
+                    $this->provisionInstance($id, false, true);
                     break;
 
                 case 'destroy':
                 case 'delete':
                 case 'deprovision':
-                    $this->deprovisionInstance( $id );
+                    $this->deprovisionInstance($id);
                     break;
 
                 case 'start':
-                    $this->startInstance( $id );
+                    $this->startInstance($id);
                     break;
 
                 case 'stop':
-                    $this->stopInstance( $id );
+                    $this->stopInstance($id);
                     break;
 
                 case 'export':
                 case 'snapshot':
-                    $this->exportInstance( $id );
+                    $this->exportInstance($id);
                     break;
 
                 case 'snapshots':
-                    $this->_instanceSnapshots( $id );
+                    $this->_instanceSnapshots($id);
                     break;
 
                 case 'migrate':
                 case 'import':
-                    $this->importInstance( $id );
+                    $this->importInstance($id);
                     break;
 
                 case 'status':
-                    return $this->_instanceStatus( $id );
+                    return $this->_instanceStatus($id);
             }
         }
 
@@ -150,30 +146,26 @@ class DashboardService extends BaseService
      *
      * @return array|\stdClass
      */
-    protected function _instanceStatus( $id )
+    protected function _instanceStatus($id)
     {
-        $_response = $this->_getOpsClient()->status( $id );
+        $_response = $this->_getOpsClient()->status($id);
 
-        if ( $_response->success )
-        {
+        if ($_response->success) {
             $_status = $_response->response;
-        }
-        else
-        {
+        } else {
             $_status = new \stdClass();
             $_status->deleted = false;
-            $_status->state_nbr = ProvisionStates::CREATION_ERROR;
+            $_status->state_nbr = ProvisionStates::UNKNOWN;
             $_status->instance_name_text = $id;
         }
 
         $_status->deleted = false;
-        $_status->icons = $this->getStatusIcon( $_status );
-        $_status->buttons = $this->getDspControls( $_status );
-        $_status->panelIcons = $this->_getPanelIcons( $_status );
+        $_status->icons = $this->getStatusIcon($_status);
+        $_status->buttons = $this->getDspControls($_status);
+        $_status->panelIcons = $this->_getPanelIcons($_status);
 
-        if ( ProvisionStates::PROVISIONED == $_status->state_nbr )
-        {
-            $_status->link = $this->_buildInstanceLink( $_status );
+        if (ProvisionStates::PROVISIONED == $_status->state_nbr) {
+            $_status->link = $this->_buildInstanceLink($_status);
         }
 
         return $_status;
@@ -186,29 +178,27 @@ class DashboardService extends BaseService
      *
      * @return bool|mixed|\stdClass
      */
-    public function provisionInstance( $instanceId, $trial = false, $remote = false )
+    public function provisionInstance($instanceId, $trial = false, $remote = false)
     {
-        $_provisioner = $this->_request->input( '_provisioner', GuestLocations::DFE_CLUSTER );
+        $_provisioner = $this->_request->input('_provisioner', GuestLocations::DFE_CLUSTER);
 
         //	Check the name here for quicker UI response...
-        if ( false === ( $_instanceName = Instance::isNameAvailable( $instanceId ) ) || is_numeric( $_instanceName[0] ) )
-        {
+        if (false === ($_instanceName = Instance::isNameAvailable($instanceId)) || is_numeric($_instanceName[0])) {
             \Session::flash(
                 'dashboard-failure',
                 'The name of your instance cannot be "' . $instanceId . '".  It is either currently in-use, or otherwise invalid.'
             );
 
-            return ErrorPacket::make( null, Response::HTTP_BAD_REQUEST, 'Invalid instance name.' );
+            return ErrorPacket::make(null, Response::HTTP_BAD_REQUEST, 'Invalid instance name.');
         }
 
-        if ( false === ( $_clusterConfig = $this->_getClusterConfig() ) )
-        {
+        if (false === ($_clusterConfig = $this->_getClusterConfig())) {
             \Session::flash(
                 'dashboard-failure',
                 'Provisioning is not possible at this time. The configured enterprise console for this dashboard is not currently available. Please try your request later.'
             );
 
-            return ErrorPacket::make( null, Response::HTTP_INTERNAL_SERVER_ERROR, 'Cluster server configuration error.' );
+            return ErrorPacket::make(null, Response::HTTP_INTERNAL_SERVER_ERROR, 'Cluster server configuration error.');
         }
 
         $_payload = array_merge(
@@ -216,10 +206,10 @@ class DashboardService extends BaseService
                 'instance-id'        => $_instanceName,
                 'trial'              => $trial,
                 'remote'             => $remote,
-                'ram-size'           => $this->_request->input( 'ram-size' ),
-                'disk-size'          => $this->_request->input( 'disk-size' ),
-                'vendor-id'          => $this->_request->input( 'vendor-id' ),
-                'vendor-secret'      => $this->_request->input( 'vendor-secret' ),
+                'ram-size'           => $this->_request->input('ram-size'),
+                'disk-size'          => $this->_request->input('disk-size'),
+                'vendor-id'          => $this->_request->input('vendor-id'),
+                'vendor-secret'      => $this->_request->input('vendor-secret'),
                 'owner-id'           => \Auth::user()->id,
                 'guest-location-nbr' => $_provisioner,
 
@@ -227,43 +217,34 @@ class DashboardService extends BaseService
             $_clusterConfig
         );
 
-        $_result = $this->_apiCall( 'provision', $_payload );
+        $_result = $this->_apiCall('provision', $_payload);
 
-        if ( $_result && is_object( $_result ) && isset( $_result->success ) )
-        {
-            if ( $_result->success )
-            {
-                \Session::flash( 'dashboard-success', 'Instance provisioning requested successfully.' );
-            }
-            else
-            {
-                if ( isset( $_result->error ) )
-                {
-                    $_message = isset( $_result->error->message ) ? $_result->error->message : 'Unknown error';
-                }
-                else
-                {
+        if ($_result && is_object($_result) && isset($_result->success)) {
+            if ($_result->success) {
+                \Session::flash('dashboard-success', 'Instance provisioning requested successfully.');
+            } else {
+                if (isset($_result->error)) {
+                    $_message = isset($_result->error->message) ? $_result->error->message : 'Unknown error';
+                } else {
                     $_message = 'Unknown server error';
                 }
 
-                \Session::flash( 'dashboard-failure', $_message );
+                \Session::flash('dashboard-failure', $_message);
 
-                return ErrorPacket::make( null, Response::HTTP_INTERNAL_SERVER_ERROR, 'Provisioning error.' );
+                return ErrorPacket::make(null, Response::HTTP_INTERNAL_SERVER_ERROR, 'Provisioning error.');
             }
-        }
-        else
-        {
+        } else {
             \Session::flash(
                 'dashboard-failure',
                 'Provisioning is not possible at this time. The configured enterprise console for this dashboard is not currently available. Please try your request later.'
             );
 
-            $this->error( 'Error calling ops console api: ' . print_r( $_result, true ) );
+            $this->error('Error calling ops console api: ' . print_r($_result, true));
 
-            return ErrorPacket::make( null, Response::HTTP_INTERNAL_SERVER_ERROR, 'Cannot connect to ops console.' );
+            return ErrorPacket::make(null, Response::HTTP_INTERNAL_SERVER_ERROR, 'Cannot connect to ops console.');
         }
 
-        return SuccessPacket::make( $_result );
+        return SuccessPacket::make($_result);
     }
 
     /**
@@ -271,17 +252,14 @@ class DashboardService extends BaseService
      *
      * @return bool|mixed|\stdClass
      */
-    public function deprovisionInstance( $instanceId )
+    public function deprovisionInstance($instanceId)
     {
-        $_result = $this->_apiCall( 'deprovision', ['instance-id' => $instanceId] );
+        $_result = $this->_apiCall('deprovision', ['instance-id' => $instanceId]);
 
-        if ( $_result && is_object( $_result ) && isset( $_result->success ) )
-        {
-            \Session::flash( 'dashboard-success', 'Instance deprovisioning requested successfully.' );
-        }
-        else
-        {
-            \Session::flash( 'dashboard-failure', 'Garbled response from console.' );
+        if ($_result && is_object($_result) && isset($_result->success)) {
+            \Session::flash('dashboard-success', 'Instance deprovisioning requested successfully.');
+        } else {
+            \Session::flash('dashboard-failure', 'Garbled response from console.');
         }
 
         return $_result;
@@ -292,9 +270,9 @@ class DashboardService extends BaseService
      *
      * @return bool|mixed|\stdClass
      */
-    public function stopInstance( $instanceId )
+    public function stopInstance($instanceId)
     {
-        return $this->_apiCall( 'stop', ['instance-id' => $instanceId] );
+        return $this->_apiCall('stop', ['instance-id' => $instanceId]);
     }
 
     /**
@@ -302,9 +280,9 @@ class DashboardService extends BaseService
      *
      * @return bool|mixed|\stdClass
      */
-    public function startInstance( $instanceId )
+    public function startInstance($instanceId)
     {
-        return $this->_apiCall( 'start', ['instance-id' => $instanceId] );
+        return $this->_apiCall('start', ['instance-id' => $instanceId]);
     }
 
     /**
@@ -314,9 +292,9 @@ class DashboardService extends BaseService
      * @internal param bool $trial
      *
      */
-    public function exportInstance( $instanceId )
+    public function exportInstance($instanceId)
     {
-        return $this->_apiCall( 'export', ['instance-id' => $instanceId] );
+        return $this->_apiCall('export', ['instance-id' => $instanceId]);
     }
 
     /**
@@ -324,27 +302,25 @@ class DashboardService extends BaseService
      *
      * @return bool|mixed|\stdClass
      */
-    protected function _instanceSnapshots( $instanceId )
+    protected function _instanceSnapshots($instanceId)
     {
-        $_result = $this->_apiCall( 'exports', ['instance-id' => $instanceId] );
+        $_result = $this->_apiCall('exports', ['instance-id' => $instanceId]);
 
-        if ( !$_result || !is_object( $_result ) || !isset( $_result->success ) )
-        {
-            \Session::flash( 'dashboard-failure', isset( $_result, $_result->message ) ? $_result->message : 'An unknown error occurred.' );
+        if (!$_result || !is_object($_result) || !isset($_result->success)) {
+            \Session::flash('dashboard-failure',
+                isset($_result, $_result->message) ? $_result->message : 'An unknown error occurred.');
 
             return null;
         }
 
         $_html = null;
 
-        foreach ( $_result->details as $_name => $_snapshots )
-        {
+        foreach ($_result->details as $_name => $_snapshots) {
             $_html .= '<optgroup label="' . $_name . '">';
 
             /** @var $_snapshots \stdClass[] */
-            foreach ( $_snapshots as $_snapshot )
-            {
-                $_date = date( 'F j, Y @ H:i:s', strtotime( $_snapshot->date ) );
+            foreach ($_snapshots as $_snapshot) {
+                $_date = date('F j, Y @ H:i:s', strtotime($_snapshot->date));
 
                 $_html .=
                     '<option id="' .
@@ -369,25 +345,22 @@ class DashboardService extends BaseService
      *
      * @return bool|mixed|\stdClass
      */
-    public function importInstance( $instanceId )
+    public function importInstance($instanceId)
     {
-        $_snapshot = $this->_request->input( 'dsp-snapshot-list' );
+        $_snapshot = $this->_request->input('dsp-snapshot-list');
 
-        if ( empty( $_snapshot ) )
-        {
-            \Session::flash( 'dashboard-failure', 'No snapshot selected to import.' );
+        if (empty($_snapshot)) {
+            \Session::flash('dashboard-failure', 'No snapshot selected to import.');
 
             return false;
         }
 
         //	Strip off the name if there...
-        if ( false !== strpos( $_snapshot, '.' ) )
-        {
-            $_parts = explode( '.', $_snapshot );
+        if (false !== strpos($_snapshot, '.')) {
+            $_parts = explode('.', $_snapshot);
 
-            if ( 2 != count( $_parts ) || false === strtotime( $_parts[1] ) )
-            {
-                \Session::flash( 'dashboard-failure', 'Invalid snapshot ID' );
+            if (2 != count($_parts) || false === strtotime($_parts[1])) {
+                \Session::flash('dashboard-failure', 'Invalid snapshot ID');
 
                 return false;
             }
@@ -395,7 +368,7 @@ class DashboardService extends BaseService
             $_snapshot = $_parts[1];
         }
 
-        return $this->_apiCall( 'import', ['instance-id' => $instanceId, 'snapshot' => $_snapshot] );
+        return $this->_apiCall('import', ['instance-id' => $instanceId, 'snapshot' => $_snapshot]);
     }
 
     /**
@@ -403,11 +376,7 @@ class DashboardService extends BaseService
      */
     public function getInstances()
     {
-        $_response = $this->_getOpsClient()->instances();
-
-        //$this->log( LogLevel::DEBUG, 'instances response: ' . print_r( $_response, true ) );
-
-        return $_response;
+        return $this->_getOpsClient()->instances();
     }
 
     /**
@@ -415,96 +384,52 @@ class DashboardService extends BaseService
      */
     public function getProvisioners()
     {
-        $_response = $this->_getOpsClient()->provisioners();
-
-        //$this->log( LogLevel::DEBUG, 'instances response: ' . print_r( $_response, true ) );
-
-        if ( !isset( $_response->response ) )
-        {
-            \Log::error( '  * Provisioner bogus response: ' . print_r( $_response, true ) );
-
-            return [];
-        }
-
-        return $_response;
+        return $this->_getOpsClient()->provisioners();
     }
 
     /**
+     * Builds the table of user instances
+     *
      * @param array $data   Any data needed to build the table
      * @param bool  $render If true, the rendered HTML is returned as a string
      *
      * @return array|null|string
      */
-    public function instanceTable( $data = [], $render = false )
+    public function userInstanceTable($data = [], $render = false)
     {
-        $_html = null;
         $_result = $this->getInstances();
 
-        if ( !is_object( $_result ) || !$_result->success )
-        {
-            \Log::error( 'Error pulling instance list: ' . print_r( $_result, true ) );
-            \Session::flash( 'dashboard-failure', 'Error connecting to operations console.' );
+        if (!is_object($_result) || !is_bool($_result->success)) {
+            \Log::error('Error pulling instance list: ' . print_r($_result, true));
+            \Session::flash('dashboard-failure', 'Error connecting to operations console.');
+
+            return null;
         }
-        else
-        {
-            if ( isset( $_result->response ) && !empty( $_result->response ) )
-            {
-                /** @var \stdClass $_model */
-                foreach ( $_result->response as $_dspName => $_model )
-                {
-                    if ( !isset( $_model, $_model->id ) )
-                    {
-                        continue;
-                    }
 
-                    $_instance = $this->_buildInstancePanel( $_model, $data, PanelTypes::SINGLE );
+        if (!isset($_result->response) || empty($_result->response)) {
+            return null;
+        }
 
-                    if ( $render )
-                    {
-                        $_html .= $_instance->render();
-                    }
-                    else
-                    {
-                        $_html[] = $_instance;
-                    }
+        $_html = null;
 
-                    unset( $_model );
-                }
+        /** @var \stdClass $_model */
+        foreach ($_result->response as $_dspName => $_model) {
+            if (!isset($_model, $_model->id)) {
+                continue;
             }
+
+            $_instance = $this->_buildInstancePanel($_model, $data, PanelTypes::SINGLE);
+
+            if ($render) {
+                $_html .= $_instance->render();
+            } else {
+                $_html[] = $_instance;
+            }
+
+            unset($_model, $_dspName);
         }
 
         return $_html;
-    }
-
-    /**
-     * Create an HTML <A> with a link to the given instance
-     *
-     * @param \stdClass|Instance $status
-     *
-     * @return string
-     */
-    protected function _buildInstanceLink( $status )
-    {
-        return
-            '<a href="https://' . $status->instance_name_text . $this->_defaultDomain . '" ' .
-            'target="_blank" class="dsp-launch-link">' . $status->instance_name_text . '</a>';
-    }
-
-    /**
-     * @param \stdClass|Instance $instance
-     * @param array              $data
-     * @param string             $panel The panel to use if not "default"
-     * @param bool               $rendered
-     *
-     * @return \Illuminate\View\View|string
-     */
-    protected function _buildInstancePanel( $instance, $data = [], $panel = 'default', $rendered = false )
-    {
-        $_viewData = $this->buildInstancePanelData( $instance, $data, $panel );
-        $_viewName = $this->panelConfig( $panel, 'template', DashboardDefaults::DEFAULT_INSTANCE_BLADE );
-        $_view = \View::make( $_viewName, $_viewData, ['instance' => $instance] );
-
-        return $rendered ? $_view->render() : $_view;
     }
 
     /**
@@ -512,76 +437,55 @@ class DashboardService extends BaseService
      *
      * @param \stdClass|Instance $instance
      * @param array              $data
-     * @param string             $formId The id of the inner panel form
-     * @param string             $panel  The type panel. Can be "default", "create", or "import"
+     * @param string             $formId    The id of the inner panel form
+     * @param string             $panelType The type panel. Can be "default", "create", or "import"
      *
      * @return array
      */
-    public function buildInstancePanelData( $instance, $data = [], $panel = 'default', $formId = null )
+    public function buildInstancePanelData($instance, $data = [], $panelType = 'default', $formId = null)
     {
-        $_overrides = [];
+        (empty($data) || !is_array($data)) && $data = [];
+        empty($panelType) && $panelType = 'default';
+        empty($formId) && $formId = $this->panelConfig($panelType, 'form-id', 'form-' . $panelType);
 
-        if ( empty( $data ) || !is_array( $data ) )
-        {
-            $data = [];
-        }
-
-        if ( empty( $panel ) )
-        {
-            $panel = 'default';
-        }
-
-        if ( empty( $formId ) )
-        {
-            $formId = $this->panelConfig( $panel, 'form-id', 'form-' . $panel );
-        }
-
-        $_name = is_object( $instance ) ? $instance->instance_name_text : 'NEW';
-        $_id = is_object( $instance ) ? $instance->id : 0;
-
-        $_overrides['headerIcon'] = $this->panelConfig( $panel, 'header-icon' );
-        $_overrides['headerIconSize'] = $this->panelConfig( $panel, 'header-icon-size', 'fa-1x' );
-        $_overrides['headerStatusIcon'] = $this->panelConfig( $panel, 'header-status-icon' );
-        $_overrides['headerStatusIconSize'] = $this->panelConfig( $panel, 'header-status-icon-size' );
-        $_overrides['instanceStatusIcon'] = $this->panelConfig( $panel, 'status-icon' );
-        $_overrides['instanceStatusIconSize'] = $this->panelConfig( $panel, 'status-icon-size' );
-        $_overrides['instanceStatusIconContext'] = $this->panelConfig( $panel, 'status-icon-context' );
-
-        $_key = $this->panelConfig( $panel, 'description' );
-
-        if ( $_key != ( $_panelDescription = \Lang::get( $_key ) ) )
-        {
-            $_overrides['panelDescription'] = $_panelDescription;
-        }
+        $_name = is_object($instance) ? $instance->instance_name_text : 'NEW';
+        $_id = is_object($instance) ? $instance->id : 0;
+        $_overrides = $this->_getPanelOverrides($panelType);
 
         return array_merge(
             [
-                'collapse'               => false,
-                'panelType'              => $panel,
-                'panelContext'           => $this->panelConfig( $panel, 'context', DashboardDefaults::PANEL_CONTEXT ),
-                'instanceName'           => $_name,
-                'panelTitle'             => $_name,
-                'headerIcon'             => IfSet::get( $data, 'header-icon' ),
-                'headerIconSize'         => IfSet::get( $data, 'header-icon-size' ),
-                'formId'                 => $formId,
-                'captchaId'              => 'dfe-rc-' . $_name,
-                'panelSize'              => $this->_columnClass,
-                'toolbarButtons'         => $this->_getToolbarButtons( $instance ),
-                'panelButtons'           => $this->_getToolbarButtons( $instance ),
+                //  Defaults
+                'headerIcon'             => array_get($data, 'header-icon'),
+                'headerIconSize'         => array_get($data, 'header-icon-size'),
                 'instanceLinks'          => [],//$this->_getInstanceLinks( $instance ),
-                'defaultDomain'          => $this->_defaultDomain,
-                'instanceDivId'          => $this->createDivId( 'instance', $_id, $_name ),
-                'instanceStatusIcon'     => $this->panelConfig( $panel, 'status-icon' ),
-                'instanceStatusIconSize' => $this->panelConfig( $panel, 'status-icon-size' ),
-                'instanceStatusContext'  => $this->panelConfig( $panel, 'status-icon-context' ),
-                'instanceUrl'            => config( 'dfe.dashboard.default-domain-protocol', 'https' ) .
+                'toolbarButtons'         => $this->_getToolbarButtons($instance),
+                'panelButtons'           => $this->_getToolbarButtons($instance),
+                'instanceDivId'          => $this->createDivId('instance', $_id, $_name),
+                'instanceStatusIcon'     => $this->panelConfig($panelType, 'status-icon'),
+                'instanceStatusIconSize' => $this->panelConfig($panelType, 'status-icon-size'),
+                'instanceStatusContext'  => $this->panelConfig($panelType, 'status-icon-context'),
+                'instanceUrl'            => config('dfe.dashboard.default-domain-protocol', 'https') .
                     '://' .
                     $_name .
                     $this->_defaultDomain,
             ],
-            $this->_getInstanceStatus( $instance ),
+            //  Instance status
+            $this->_getInstanceStatus($instance),
+            //  Merge data
             $data,
-            $_overrides
+            //  Overrides
+            $_overrides,
+            //  ENSURE!
+            [
+                'captchaId'     => 'dfe-rc-' . $_name,
+                'formId'        => $formId,
+                'defaultDomain' => $this->_defaultDomain,
+                'panelSize'     => $this->_columnClass,
+                'panelTitle'    => $_name,
+                'panelType'     => $panelType,
+                'collapse'      => false,
+                'instanceName'  => $_name,
+            ]
         );
     }
 
@@ -590,54 +494,53 @@ class DashboardService extends BaseService
      *
      * @return array
      */
-    protected function _getInstanceStatus( $instance )
+    protected function _getInstanceStatus($instance)
     {
-        $_spinner = config( 'dfe.icons.spinner', DashboardDefaults::SPINNING_ICON );
+        $_spinner = config('dfe.icons.spinner', DashboardDefaults::SPINNING_ICON);
 
-        switch ( $instance->state_nbr )
-        {
+        switch ($instance->state_nbr) {
             case ProvisionStates::CREATED:
                 $_icon = $_spinner;
                 $_context = 'text-success';
-                $_text = \Lang::get( 'dashboard.status-started' );
+                $_text = \Lang::get('dashboard.status-started');
                 break;
 
             case ProvisionStates::PROVISIONING:
                 $_icon = $_spinner;
                 $_context = 'text-info';
-                $_text = \Lang::get( 'dashboard.status-started' );
+                $_text = \Lang::get('dashboard.status-started');
                 break;
 
             case ProvisionStates::PROVISIONED:
-                $_icon = config( 'dfe.icons.up' );
+                $_icon = config('dfe.icons.up');
                 $_context = 'text-success';
-                $_text = \Lang::get( 'dashboard.status-up' );
+                $_text = \Lang::get('dashboard.status-up');
                 break;
 
             case ProvisionStates::DEPROVISIONING:
                 $_icon = $_spinner;
                 $_context = 'text-info';
-                $_text = \Lang::get( 'dashboard.status-stopping' );
+                $_text = \Lang::get('dashboard.status-stopping');
                 break;
 
             case ProvisionStates::DEPROVISIONED:
-                $_icon = config( 'dfe.icons.terminating' );
+                $_icon = config('dfe.icons.terminating');
                 $_context = 'text-warning';
-                $_text = \Lang::get( 'dashboard.status-terminating' );
+                $_text = \Lang::get('dashboard.status-terminating');
                 break;
 
             case ProvisionStates::PROVISIONING_ERROR:
             case ProvisionStates::DEPROVISIONING_ERROR:
             case ProvisionStates::CREATION_ERROR:
-                $_icon = config( 'dfe.icons.dead' );
+                $_icon = config('dfe.icons.dead');
                 $_context = 'text-danger';
-                $_text = \Lang::get( 'dashboard.status-dead' );
+                $_text = \Lang::get('dashboard.status-dead');
                 break;
 
             default:
-                $_icon = config( 'dfe.icons.unknown' );
+                $_icon = config('dfe.icons.unknown');
                 $_context = 'text-warning';
-                $_text = \Lang::get( 'dashboard.status-dead' );
+                $_text = \Lang::get('dashboard.status-dead');
                 break;
         }
 
@@ -647,7 +550,6 @@ class DashboardService extends BaseService
             'instanceStatusContext' => $_context,
             'instanceStatusText'    => $_text,
         ];
-
     }
 
     /**
@@ -658,51 +560,49 @@ class DashboardService extends BaseService
      *
      * @return string
      */
-    public function getDspControls( $instance, &$buttons = null )
+    public function getDspControls($instance, &$buttons = null)
     {
-        $_buttons = array(
-            'start'  => array(
+        $_buttons = [
+            'start'  => [
                 'enabled' => false,
                 'hint'    => 'Start this DSP',
                 'color'   => 'success',
                 'icon'    => 'play',
                 'text'    => 'Start',
-            ),
-            'stop'   => array(
+            ],
+            'stop'   => [
                 'enabled' => false,
                 'hint'    => 'Stop this DSP',
                 'color'   => 'warning',
                 'icon'    => 'pause',
-                'text'    => 'Stop'
-            ),
-            'export' => array(
+                'text'    => 'Stop',
+            ],
+            'export' => [
                 'enabled' => ProvisionStates::PROVISIONED == $instance->state_nbr,
                 'hint'    => 'Make an instance snapshot',
                 'color'   => 'info',
                 'icon'    => 'cloud-download',
-                'text'    => 'Export'
-            ),
-            'import' => array(
+                'text'    => 'Export',
+            ],
+            'import' => [
                 'enabled' => false,
                 'hint'    => 'Restore a snapshot',
                 'color'   => 'warning',
                 'icon'    => 'cloud-upload',
                 'text'    => 'Import',
                 'href'    => '#dsp-import-snapshot',
-            ),
-            'delete' => array(
+            ],
+            'delete' => [
                 'enabled' => false,
                 'hint'    => 'Delete instance permanently',
                 'color'   => 'danger',
                 'icon'    => 'trash',
-                'text'    => 'Destroy!'
-            ),
-        );
+                'text'    => 'Destroy!',
+            ],
+        ];
 
-        if ( isset( $instance->vendorStateName ) && !empty( $instance->vendorStateName ) )
-        {
-            switch ( $instance->vendorStateName )
-            {
+        if (isset($instance->vendorStateName) && !empty($instance->vendorStateName)) {
+            switch ($instance->vendorStateName) {
                 case 'terminated':
                     $_buttons['start']['enabled'] = false;
                     $_buttons['stop']['enabled'] = false;
@@ -727,15 +627,11 @@ class DashboardService extends BaseService
                     $_buttons['import']['enabled'] = false;
                     break;
             }
-        }
-        else
-        {
-            switch ( $instance->state_nbr )
-            {
+        } else {
+            switch ($instance->state_nbr) {
                 case ProvisionStates::PROVISIONED:
                     //	Not queued for deprovisioning
-                    if ( 1 != $instance->deprovision_ind )
-                    {
+                    if (1 != $instance->deprovision_ind) {
                         $_buttons['stop']['enabled'] = true;
                         $_buttons['export']['enabled'] = true;
                         $_buttons['import']['enabled'] = true;
@@ -746,8 +642,7 @@ class DashboardService extends BaseService
 
                 case ProvisionStates::DEPROVISIONED:
                     //	Not queued for reprovisioning
-                    if ( 1 != $instance->provision_ind )
-                    {
+                    if (1 != $instance->provision_ind) {
                         $_buttons['start']['enabled'] = true;
                         $_buttons['export']['enabled'] = true;
                         $_buttons['delete']['enabled'] = true;
@@ -762,32 +657,28 @@ class DashboardService extends BaseService
         $_html = null;
 
         //	No stop for hosted instances...
-        unset( $_buttons['stop'] );
+        unset($_buttons['stop']);
 
-        foreach ( $_buttons as $_buttonName => $_button )
-        {
+        foreach ($_buttons as $_buttonName => $_button) {
             $_hint = null;
             $_disabledClass = 'disabled';
-            $_disabled = ( !$_button['enabled'] ? 'disabled="disabled"' : $_disabledClass = null );
+            $_disabled = (!$_button['enabled'] ? 'disabled="disabled"' : $_disabledClass = null);
 
-            if ( !$_disabled && null !== ( $_hint = IfSet::get( $_button, 'hint' ) ) )
-            {
+            if (!$_disabled && null !== ($_hint = array_get($_button, 'hint'))) {
                 $_hint = 'data-toggle="tooltip" title="' . $_hint . '"';
             }
 
-            if ( GuestLocations::DFE_CLUSTER == $instance->guest_location_nbr &&
+            if (GuestLocations::DFE_CLUSTER == $instance->guest_location_nbr &&
                 'start' == $_buttonName &&
                 ProvisionStates::PROVISIONED == $instance->state_nbr
-            )
-            {
-                $_href = config( 'dfe.dashboard.default-domain-protocol', 'https' ) . '://' . $instance->instance_name_text . $this->_defaultDomain;
+            ) {
+                $_href = config('dfe.dashboard.default-domain-protocol',
+                        'https') . '://' . $instance->instance_name_text . $this->_defaultDomain;
                 $_button['text'] = 'Launch!';
                 $_disabled = $_disabledClass = null;
                 $_buttonName = 'launch';
-            }
-            else
-            {
-                $_href = isset( $_button['href'] ) ? $_button['href'] : '#';
+            } else {
+                $_href = isset($_button['href']) ? $_button['href'] : '#';
             }
 
             $_html .= <<<HTML
@@ -799,7 +690,7 @@ HTML;
             '<a class="btn btn-xs btn-info col-xs-2 col-sm-2 dsp-help-button" id="dspcontrol-' .
             $instance->instance_name_text .
             '" data-placement="middle" title="Help" target="_blank" href="' .
-            config( 'dfe.dashboard.help-button-url' ) .
+            config('dfe.dashboard.help-button-url') .
             '"><i style="margin-right: 0;" class="fa fa-question-circle"></i></a>';
 
         $_html = <<<HTML
@@ -818,14 +709,13 @@ HTML;
      *
      * @return array
      */
-    public function getStatusIcon( $status, $key = false )
+    public function getStatusIcon($status, $key = false)
     {
-        $_spinner = config( 'dfe.icons.spinner' );
+        $_spinner = config('dfe.icons.spinner');
         $_message = null;
         $_running = false;
 
-        switch ( $status->state_nbr )
-        {
+        switch ($status->state_nbr) {
             default:
                 $_statusIcon = $_icon = $_spinner;
                 $_message =
@@ -848,22 +738,22 @@ HTML;
             case ProvisionStates::DEPROVISIONING_ERROR:
                 $_message =
                     'There was an error completing your request. Our engineers have been notified. Maybe go take a stroll?';
-                $_statusIcon = $_icon = config( 'dfe.icons.dead' );
+                $_statusIcon = $_icon = config('dfe.icons.dead');
                 break;
 
             case ProvisionStates::PROVISIONED:
                 $_message = 'Your instance is up and running.';
                 $_running = true;
-                $_statusIcon = $_icon = config( 'dfe.icons.up' );
+                $_statusIcon = $_icon = config('dfe.icons.up');
                 break;
 
             case ProvisionStates::DEPROVISIONED:
-                $_statusIcon = $_icon = config( 'dfe.icons.dead' );;
+                $_statusIcon = $_icon = config('dfe.icons.dead');;
                 $_message = 'This DSP is terminated. All you can do is destroy it.';
                 break;
         }
 
-        return array($_icon, $_statusIcon, $_message, $_running);
+        return [$_icon, $_statusIcon, $_message, $_running];
     }
 
     /**
@@ -875,14 +765,13 @@ HTML;
      *
      * @return bool|mixed|\stdClass
      */
-    protected function _apiCall( $url, $payload = [], $returnAll = true, $method = Request::METHOD_POST )
+    protected function _apiCall($url, $payload = [], $returnAll = true, $method = Request::METHOD_POST)
     {
         /** @type OpsClientService $_service */
-        $_service = app( OpsClientServiceProvider::IOC_NAME );
-        $_response = $_service->any( $url, $payload, [], $method );
+        $_service = app(OpsClientServiceProvider::IOC_NAME);
+        $_response = $_service->any($url, $payload, [], $method);
 
-        if ( $_response && is_object( $_response ) && isset( $_response->success ) )
-        {
+        if ($_response && is_object($_response) && isset($_response->success)) {
             return $returnAll ? $_response : $_response->response;
         }
 
@@ -892,9 +781,8 @@ HTML;
             'An unexpected situation has occurred with your request. Please try again in a few minutes, or email <a href="mailto:support@dreamfactory.com">support@dreamfactory.com</a>.'
         );
 
-        if ( is_string( $_response ) )
-        {
-            \Log::error( 'Console API call received unexpected result: ' . $_response );
+        if (is_string($_response)) {
+            \Log::error('Console API call received unexpected result: ' . $_response);
         }
 
         return false;
@@ -910,9 +798,9 @@ HTML;
      * @internal param bool $key
      *
      */
-    public function createDivId( $prefix, $id, $name )
+    public function createDivId($prefix, $id, $name)
     {
-        return implode( '___', [$prefix, $id, $name] );
+        return implode('___', [$prefix, $id, $name]);
     }
 
     /**
@@ -922,14 +810,13 @@ HTML;
      *
      * @return string
      */
-    public function hashId( $valueToHash )
+    public function hashId($valueToHash)
     {
-        if ( empty( $valueToHash ) )
-        {
+        if (empty($valueToHash)) {
             return null;
         }
 
-        return hash( DashboardDefaults::SIGNATURE_METHOD, config( 'app.key' ) . $valueToHash );
+        return hash(DashboardDefaults::SIGNATURE_METHOD, config('app.key') . $valueToHash);
     }
 
     /**
@@ -971,8 +858,7 @@ HTML;
     protected function _getOpsClient()
     {
         return $this->app[OpsClientServiceProvider::IOC_NAME]
-            ?: function ()
-            {
+            ?: function () {
                 throw new \RuntimeException(
                     'DFE Console services are not available.'
                 );
@@ -986,14 +872,12 @@ HTML;
      *
      * @return bool
      */
-    protected function _ensureServer( $serverId, $expectedType = null, $onlyId = true )
+    protected function _ensureServer($serverId, $expectedType = null, $onlyId = true)
     {
-        if ( !empty( $serverId ) )
-        {
-            $_server = $this->_findServer( $serverId );
+        if (!empty($serverId)) {
+            $_server = $this->_findServer($serverId);
 
-            if ( $expectedType && $_server->server_type_id != $expectedType )
-            {
+            if ($expectedType && $_server->server_type_id != $expectedType) {
                 return false;
             }
 
@@ -1012,19 +896,16 @@ HTML;
     {
         $_config = [];
 
-        if ( !$this->_useConfigServers )
-        {
+        if (!$this->_useConfigServers) {
             //  Return an empty array allowing the console to decide where to place the instance
             return $_config;
         }
 
         //  Check for a cluster override
-        $_clusterId = config( 'dfe.dashboard.override-cluster-id' );
+        $_clusterId = config('dfe.dashboard.override-cluster-id');
 
-        if ( !empty( $_clusterId ) )
-        {
-            if ( false === ( $_server = $this->_findCluster( $_clusterId ) ) )
-            {
+        if (!empty($_clusterId)) {
+            if (false === ($_server = $this->_findCluster($_clusterId))) {
                 return false;
             }
 
@@ -1035,36 +916,27 @@ HTML;
         }
 
         //  Check cluster server overrides
-        $_dbServerId = config( 'dfe.dashboard.override-db-server-id' );
+        $_dbServerId = config('dfe.dashboard.override-db-server-id');
 
-        if ( false === ( $_serverId = $this->_ensureServer( $_dbServerId, ServerTypes::DB, true ) ) )
-        {
+        if (false === ($_serverId = $this->_ensureServer($_dbServerId, ServerTypes::DB, true))) {
             return false;
-        }
-        else if ( $_serverId )
-        {
+        } else if ($_serverId) {
             $_config['db-server-id'] = $_serverId;
         }
 
-        $_appServerId = config( 'dfe.dashboard.override-app-server-id' );
+        $_appServerId = config('dfe.dashboard.override-app-server-id');
 
-        if ( false === ( $_serverId = $this->_ensureServer( $_appServerId, ServerTypes::APP, true ) ) )
-        {
+        if (false === ($_serverId = $this->_ensureServer($_appServerId, ServerTypes::APP, true))) {
             return false;
-        }
-        else if ( $_serverId )
-        {
+        } else if ($_serverId) {
             $_config['app-server-id'] = $_serverId;
         }
 
-        $_webServerId = config( 'dfe.dashboard.override-web-server-id' );
+        $_webServerId = config('dfe.dashboard.override-web-server-id');
 
-        if ( false === ( $_serverId = $this->_ensureServer( $_webServerId, ServerTypes::WEB, true ) ) )
-        {
+        if (false === ($_serverId = $this->_ensureServer($_webServerId, ServerTypes::WEB, true))) {
             return false;
-        }
-        else if ( $_serverId )
-        {
+        } else if ($_serverId) {
             $_config['web-server-id'] = $_serverId;
         }
 
@@ -1075,36 +947,35 @@ HTML;
      * Renders an instance view
      *
      * @param array|\stdClass|Instance $instance
-     * @param array                    $data  Any data needed to build the table
-     * @param string                   $panel The type panel. Can be "default", "create", or "import"
+     * @param array                    $data      Any data needed to build the table
+     * @param string                   $panelType The type panel. Can be "default", "create", or "import"
      *
      * @return string
      */
-    public function renderInstance( $instance, $data = [], $panel = 'default' )
+    public function renderInstance($instance, $data = [], $panelType = 'default')
     {
-        return $this->_buildInstancePanel( $instance, $data, $panel, true );
+        return $this->_buildInstancePanel($instance, $data, $panelType, true);
     }
 
     /**
      * Renders multiple instance views
      *
      * @param array  $instances
-     * @param array  $data    Any data needed to build the table
-     * @param string $panel   The type panel. Can be "default", "create", or "import"
-     * @param bool   $asArray If true, the instances are returned rendered into an array. If false, a single string is returned
+     * @param array  $data      Any data needed to build the table
+     * @param string $panelType The type panel. Can be "default", "create", or "import"
+     * @param bool   $asArray   If true, the instances are returned rendered into an array. If false, a single string is returned
      *
      * @return array|string
      */
-    public function renderInstances( $instances = [], $data = [], $panel = 'default', $asArray = true )
+    public function renderInstances($instances = [], $data = [], $panelType = 'default', $asArray = true)
     {
         $_rendered = [];
 
-        foreach ( $instances as $_instance )
-        {
-            $_rendered[] = $this->renderInstance( $_instance, $data, $panel );
+        foreach ($instances as $_instance) {
+            $_rendered[] = $this->renderInstance($_instance, $data, $panelType);
         }
 
-        return $asArray ? $_rendered : implode( PHP_EOL, $_rendered );
+        return $asArray ? $_rendered : implode(PHP_EOL, $_rendered);
     }
 
     /**
@@ -1112,17 +983,13 @@ HTML;
      */
     protected function _determineGridLayout()
     {
-        if ( $this->_panelsPerRow < 1 )
-        {
+        if ($this->_panelsPerRow < 1) {
             $this->_panelsPerRow = 1;
-        }
-        else if ( $this->_panelsPerRow > 6 )
-        {
+        } else if ($this->_panelsPerRow > 6) {
             $this->_panelsPerRow = 6;
         }
 
-        switch ( $this->_panelsPerRow )
-        {
+        switch ($this->_panelsPerRow) {
             case 1:
                 $this->_columnClass = 'col-xs-12 col-sm-12 col-md-12';
                 break;
@@ -1153,48 +1020,47 @@ HTML;
      *
      * @return array [:icon, :message]
      */
-    protected function _getPanelIcons( $status )
+    protected function _getPanelIcons($status)
     {
         $_message = null;
-        $_spinner = config( 'dfe.icons.spinner', DashboardDefaults::SPINNING_ICON );
+        $_spinner = config('dfe.icons.spinner', DashboardDefaults::SPINNING_ICON);
 
-        switch ( $status->state_nbr )
-        {
+        switch ($status->state_nbr) {
             case ProvisionStates::CREATION_ERROR:
             case ProvisionStates::PROVISIONING_ERROR:
             case ProvisionStates::DEPROVISIONING_ERROR:
-                $_icon = config( 'dfe.icons.dead' );
-                $_message = \Lang::get( 'dashboard.status-error' );
+                $_icon = config('dfe.icons.dead');
+                $_message = \Lang::get('dashboard.status-error');
                 break;
 
             case ProvisionStates::CREATED:
             case ProvisionStates::PROVISIONING:
                 $_icon = $_spinner;
-                $_message = \Lang::get( 'dashboard.status-starting' );
+                $_message = \Lang::get('dashboard.status-starting');
                 break;
 
             case ProvisionStates::DEPROVISIONING:
                 $_icon = $_spinner;
-                $_message = \Lang::get( 'dashboard.status-stopping' );
+                $_message = \Lang::get('dashboard.status-stopping');
                 break;
 
             case ProvisionStates::PROVISIONED:
-                $_icon = config( 'dfe.icons.up' );
-                $_message = \Lang::get( 'dashboard.status-up' );
+                $_icon = config('dfe.icons.up');
+                $_message = \Lang::get('dashboard.status-up');
                 break;
 
             case ProvisionStates::DEPROVISIONED:
-                $_icon = config( 'dfe.icons.dead' );;
-                $_message = \Lang::get( 'dashboard.status-dead' );
+                $_icon = config('dfe.icons.dead');;
+                $_message = \Lang::get('dashboard.status-dead');
                 break;
 
             default:
                 $_icon = $_spinner;
-                $_message = \Lang::get( 'dashboard.status-other' );
+                $_message = \Lang::get('dashboard.status-other');
                 break;
         }
 
-        return array('icon' => $_icon, 'message' => $_message);
+        return ['icon' => $_icon, 'message' => $_message];
     }
 
     /**
@@ -1202,14 +1068,34 @@ HTML;
      *
      * @return array
      */
-    protected function _getPanelButtons( $instance )
+    protected function _getPanelButtons($instance)
     {
         $_buttons = [
-            'launch' => ['context' => 'btn-success', 'icon' => 'fa-play', 'hint' => 'Launch your instance', 'text' => 'Launch'],
+            'launch' => [
+                'context' => 'btn-success',
+                'icon'    => 'fa-play',
+                'hint'    => 'Launch your instance',
+                'text'    => 'Launch',
+            ],
             //            'stop'   => ['context' => 'btn-warning', 'icon' => 'fa-stop', 'hint' => 'Stop your instance', 'text' => 'Stop'],
-            'export' => ['context' => 'btn-info', 'icon' => 'fa-cloud-download', 'hint' => 'Create an export of your instance', 'text' => 'Export'],
-            'import' => ['context' => 'btn-warning', 'icon' => 'fa-cloud-upload', 'hint' => 'Import a prior export', 'text' => 'Import'],
-            'delete' => ['context' => 'btn-danger', 'icon' => 'fa-times', 'hint' => 'Permanently destroy this instance', 'text' => 'Destroy'],
+            'export' => [
+                'context' => 'btn-info',
+                'icon'    => 'fa-cloud-download',
+                'hint'    => 'Create an export of your instance',
+                'text'    => 'Export',
+            ],
+            'import' => [
+                'context' => 'btn-warning',
+                'icon'    => 'fa-cloud-upload',
+                'hint'    => 'Import a prior export',
+                'text'    => 'Import',
+            ],
+            'delete' => [
+                'context' => 'btn-danger',
+                'icon'    => 'fa-times',
+                'hint'    => 'Permanently destroy this instance',
+                'text'    => 'Destroy',
+            ],
             'help'   => [
                 'id'      => 'instance-control-' . $instance->instance_name_text,
                 'context' => 'btn-danger',
@@ -1222,21 +1108,26 @@ HTML;
         return $_buttons;
     }
 
-    protected function _makeToolbarButton( $id, $text, array $options = [] )
+    protected function _makeToolbarButton($id, $text, array $options = [])
     {
-        static $_template = ['type' => 'button', 'size' => 'btn-xs', 'context' => 'btn-info', 'icon' => '', 'hint' => '', 'data' => []];
+        static $_template = [
+            'type'    => 'button',
+            'size'    => 'btn-xs',
+            'context' => 'btn-info',
+            'icon'    => '',
+            'hint'    => '',
+            'data'    => [],
+        ];
 
-        if ( isset( $options['icon'] ) )
-        {
+        if (isset($options['icon'])) {
             $options['icon'] = '<i class="fa fa-fw ' . $options['icon'] . ' instance-toolbar-button"></i>';
         }
 
-        if ( !isset( $options['hint'] ) )
-        {
+        if (!isset($options['hint'])) {
             $options['hint'] = $text . ' instance';
         }
 
-        $_action = str_replace( ['_', ' '], '-', trim( strtolower( $text ) ) );
+        $_action = str_replace(['_', ' '], '-', trim(strtolower($text)));
 
         return array_merge(
             $_template,
@@ -1258,27 +1149,33 @@ HTML;
      * @return array
      * @todo generate buttons based on provisioner features rather than statically
      */
-    protected function _getToolbarButtons( $instance )
+    protected function _getToolbarButtons($instance)
     {
         $_id = $instance->instance_id_text;
 
-        if ( GuestLocations::DFE_CLUSTER == $instance->guest_location_nbr )
-        {
+        if (GuestLocations::DFE_CLUSTER == $instance->guest_location_nbr) {
             $_buttons = [
-                'launch' => $this->_makeToolbarButton( $_id, 'Launch', ['context' => 'btn-success', 'icon' => 'fa-play'] ),
-                'delete' => $this->_makeToolbarButton( $_id, 'Delete', ['context' => 'btn-danger', 'icon' => 'fa-times'] ),
-                'export' => $this->_makeToolbarButton( $_id, 'Export', ['context' => 'btn-info', 'icon' => 'fa-cloud-download'] ),
-                'import' => $this->_makeToolbarButton( $_id, 'Import', ['context' => 'btn-warning', 'icon' => 'fa-cloud-upload'] ),
+                'launch' => $this->_makeToolbarButton($_id, 'Launch',
+                    ['context' => 'btn-success', 'icon' => 'fa-play']),
+                'delete' => $this->_makeToolbarButton($_id, 'Delete',
+                    ['context' => 'btn-danger', 'icon' => 'fa-times']),
+                'export' => $this->_makeToolbarButton($_id, 'Export',
+                    ['context' => 'btn-info', 'icon' => 'fa-cloud-download']),
+                'import' => $this->_makeToolbarButton($_id, 'Import',
+                    ['context' => 'btn-warning', 'icon' => 'fa-cloud-upload']),
             ];
-        }
-        else
-        {
+        } else {
             $_buttons = [
-                'start'     => $this->_makeToolbarButton( $_id, 'Start', ['context' => 'btn-success', 'icon' => 'fa-play',] ),
-                'stop'      => $this->_makeToolbarButton( $_id, 'Stop', ['context' => 'btn-warning', 'icon' => 'fa-stop',] ),
-                'terminate' => $this->_makeToolbarButton( $_id, 'Terminate', ['context' => 'btn-danger', 'icon' => 'fa-times',] ),
-                'export'    => $this->_makeToolbarButton( $_id, 'Export', ['context' => 'btn-info', 'icon' => 'fa-cloud-download',] ),
-                'import'    => $this->_makeToolbarButton( $_id, 'Import', ['context' => 'btn-warning', 'icon' => 'fa-cloud-upload',] ),
+                'start'     => $this->_makeToolbarButton($_id, 'Start',
+                    ['context' => 'btn-success', 'icon' => 'fa-play',]),
+                'stop'      => $this->_makeToolbarButton($_id, 'Stop',
+                    ['context' => 'btn-warning', 'icon' => 'fa-stop',]),
+                'terminate' => $this->_makeToolbarButton($_id, 'Terminate',
+                    ['context' => 'btn-danger', 'icon' => 'fa-times',]),
+                'export'    => $this->_makeToolbarButton($_id, 'Export',
+                    ['context' => 'btn-info', 'icon' => 'fa-cloud-download',]),
+                'import'    => $this->_makeToolbarButton($_id, 'Import',
+                    ['context' => 'btn-warning', 'icon' => 'fa-cloud-upload',]),
             ];
         }
 
@@ -1286,129 +1183,63 @@ HTML;
     }
 
     /**
-     * @param string $panel
+     * @param string $panelType
      * @param string $key
      * @param mixed  $default
      *
      * @return mixed
      */
-    public function panelConfig( $panel, $key, $default = null )
+    public function panelConfig($panelType, $key, $default = null)
     {
-        return config( 'dfe.panels.' . $panel . '.' . $key, $default );
+        static $_config = [];
+
+        if (empty($_config)) {
+            $_config = config('dfe.panels');
+        }
+
+        return array_get($_config, $panelType . '.' . $key, $default);
     }
 
     /**
-     * @param string $panel  The panel to render
-     * @param array  $data   Any additional view data
-     * @param bool   $render If true, view is rendered and html is returned
+     * @param string $panelType The panel to render
+     * @param array  $data      Any additional view data
+     * @param bool   $render    If true, view is rendered and html is returned
      *
      * @return View|string
      */
-    public function renderPanel( $panel, $data = [], $render = true )
+    public function renderPanel($panelType, $data = [], $render = true)
     {
-        if ( !PanelTypes::contains( $panel = $panel ?: DashboardDefaults::DEFAULT_PANEL ) )
-        {
-            throw new \InvalidArgumentException( 'The panel type "' . $panel . '" is invalid.' );
+        if (!PanelTypes::contains($panelType = $panelType ?: DashboardDefaults::DEFAULT_PANEL)) {
+            throw new \InvalidArgumentException('The panel type "' . $panelType . '" is invalid.');
         }
 
-        $_blade = $this->panelConfig( $panel, 'template', DashboardDefaults::SINGLE_INSTANCE_BLADE );
+        $_blade = $this->panelConfig($panelType, 'template', DashboardDefaults::SINGLE_INSTANCE_BLADE);
 
         $_offeringsHtml = null;
 
         $_dudes = Dashboard::getProvisioners();
 
-        if ( !is_object( $_dudes ) )
-        {
-            throw new \RuntimeException( 'Invalid response from the console.' );
+        if (!is_object($_dudes)) {
+            throw new \RuntimeException('Invalid response from the console.');
         }
 
-        if ( $_dudes->success )
-        {
-            foreach ( $_dudes->response as $_host )
-            {
-                if ( $_host->id == 'rave' )
-                {
-                    if ( isset( $_host->offerings ) )
-                    {
-                        foreach ( $_host->offerings as $_tag => $_offering )
-                        {
-                            $_data = (array)$_offering;
-                            $_displayName = IfSet::get( $_data, 'name', $_tag );
-                            $_items = IfSet::get( $_data, 'items', [] );
-                            $_suggested = IfSet::get( $_data, 'suggested' );
-
-                            $_helpBlock =
-                                ( null !== ( $_helpBlock = IfSet::get( $_data, 'help-block' ) ) )
-                                    ? '<p class="help-block">' . $_helpBlock . '</p>'
-                                    : null;
-
-                            if ( !empty( $_items ) )
-                            {
-                                $_options = null;
-
-                                foreach ( $_items as $_name => $_config )
-                                {
-                                    $_attributes = $_html = $_selected = null;
-
-                                    $_config = (array)$_config;
-
-                                    if ( null === ( $_description = IfSet::get( $_config, 'description' ) ) )
-                                    {
-                                        $_description = $_name;
-                                    }
-                                    else
-                                    {
-                                        unset( $_config['description'] );
-                                    }
-
-                                    foreach ( $_config as $_key => $_value )
-                                    {
-                                        $_key = str_replace( ['"', '\'', '_', ' ', '.', ','], '-', strtolower( $_key ) );
-                                        $_attributes .= ' data-' . $_key . '="' . $_value . '" ';
-                                    }
-
-                                    $_suggested == $_name && $_selected = ' selected ';
-                                    $_options .= '<option value="' .
-                                        $_name .
-                                        '" ' .
-                                        $_attributes .
-                                        ' ' .
-                                        $_selected .
-                                        '>' .
-                                        $_description .
-                                        '</option>';
-                                }
-
-                                $_html = <<<HTML
-<div class="form-group">
-    <label for="{$_tag}" class="col-md-2 control-label" style="white-space: nowrap; text-end-overflow:  hidden;">{$_displayName}</label>
-    <div class="col-md-6">
-    <select id="{$_tag}" name="{$_tag}" class="form-control">
-        {$_options}
-    </select>
-    </div>
-    {$_helpBlock}
-</div>
-HTML;
-
-                                $_offeringsHtml .= $_html;
-                            }
-                        }
-                    }
+        if ($_dudes->success) {
+            foreach ($_dudes->response as $_host) {
+                if ($_host->id == 'rave') {
+                    $_offeringsHtml = $this->_buildOfferingsInput($_host);
+                    break;
                 }
             }
         }
 
-        $_description = \Lang::get( $this->panelConfig( $panel, 'description' ) );
+        $_description = \Lang::get($this->panelConfig($panelType, 'description'));
 
-        if ( empty( $_description ) )
-        {
+        if (empty($_description)) {
             $_description = null;
         }
 
-        if ( PanelTypes::SINGLE == $panel )
-        {
-            $data['panelSize'] = IfSet::get( $data, 'panelSize', $this->_columnClass );
+        if (PanelTypes::SINGLE == $panelType) {
+            $data['panelSize'] = array_get($data, 'panelSize', $this->_columnClass);
         }
 
         $_view = view(
@@ -1416,17 +1247,151 @@ HTML;
             array_merge(
                 $data,
                 [
-                    'panelTitle'       => \Lang::get( 'dashboard.instance-' . $panel . '-title' ),
-                    'panelType'        => $panel,
-                    'formId'           => 'form-' . $panel,
-                    'panelContext'     => $this->panelConfig( $panel, 'context' ),
-                    'headerIcon'       => $this->panelConfig( $panel, 'header-icon' ),
+                    'formId'           => 'form-' . $panelType,
                     'panelDescription' => $_description,
                     'offerings'        => $_offeringsHtml,
+                    'panelTitle'       => \Lang::get('dashboard.instance-' . $panelType . '-title'),
+                    'panelType'        => $panelType,
+                    'panelContext'     => $this->panelConfig($panelType, 'context'),
+                    'headerIcon'       => $this->panelConfig($panelType, 'header-icon'),
                 ]
             )
         );
 
         return $render ? $_view->render() : $_view;
     }
+
+    /**
+     * @param \stdClass $host
+     *
+     * @return string|null
+     */
+    protected function _buildOfferingsInput($host)
+    {
+        if (!isset($host->offerings)) {
+            return null;
+        }
+
+        $_html = null;
+
+        foreach ($host->offerings as $_tag => $_offering) {
+            $_data = (array)$_offering;
+            $_displayName = array_get($_data, 'name', $_tag);
+            $_items = array_get($_data, 'items', []);
+            $_suggested = array_get($_data, 'suggested');
+
+            $_helpBlock =
+                (null !== ($_helpBlock = array_get($_data, 'help-block')))
+                    ? '<p class="help-block">' . $_helpBlock . '</p>'
+                    : null;
+
+            if (!empty($_items)) {
+                $_options = null;
+
+                foreach ($_items as $_name => $_config) {
+                    $_attributes = $_html = $_selected = null;
+
+                    $_config = (array)$_config;
+
+                    if (null === ($_description = array_get($_config, 'description'))) {
+                        $_description = $_name;
+                    } else {
+                        unset($_config['description']);
+                    }
+
+                    foreach ($_config as $_key => $_value) {
+                        $_key = str_replace(['"', '\'', '_', ' ', '.', ','], '-', strtolower($_key));
+                        $_attributes .= ' data-' . $_key . '="' . $_value . '" ';
+                    }
+
+                    $_suggested == $_name && $_selected = ' selected ';
+                    $_options .= '<option value="' .
+                        $_name .
+                        '" ' .
+                        $_attributes .
+                        ' ' .
+                        $_selected .
+                        '>' .
+                        $_description .
+                        '</option>';
+                }
+
+                $_html .= view('layouts.partials.offerings', [
+                    'tag'         => $_tag,
+                    'displayName' => $_displayName,
+                    'options'     => $_options,
+                    'helpBlock'   => $_helpBlock,
+                ])->render();
+            }
+        }
+
+        return $_html;
+    }
+
+    /**
+     * Create an HTML <A> with a link to the given instance
+     *
+     * @param \stdClass|Instance $status
+     *
+     * @return string
+     */
+    protected function _buildInstanceLink($status)
+    {
+        return
+            '<a href="https://' . $status->instance_name_text . $this->_defaultDomain . '" ' .
+            'target="_blank" class="dsp-launch-link">' . $status->instance_name_text . '</a>';
+    }
+
+    /**
+     * @param \stdClass|Instance $instance
+     * @param array              $data
+     * @param string             $panelType The panel to use if not "default"
+     * @param bool               $rendered
+     *
+     * @return \Illuminate\View\View|string
+     */
+    protected function _buildInstancePanel($instance, $data = [], $panelType = 'default', $rendered = false)
+    {
+        $_viewData = $this->buildInstancePanelData($instance, $data, $panelType);
+        $_viewName = $this->panelConfig($panelType, 'template', DashboardDefaults::DEFAULT_INSTANCE_BLADE);
+        $_view = \View::make($_viewName, $_viewData, ['instance' => $instance]);
+
+        return $rendered ? $_view->render() : $_view;
+    }
+
+    /**
+     * Returns a panel override section
+     *
+     * @param string $panelType
+     *
+     * @return mixed
+     */
+    protected function _getPanelOverrides($panelType = PanelTypes::SINGLE)
+    {
+        static $_panels = [];
+
+        if (empty($_panels)) {
+            foreach (PanelTypes::getDefinedConstants() as $_index => $_panelType) {
+                $_panels[$_panelType] = [
+                    'headerIcon'                => $this->panelConfig($_panelType, 'header-icon'),
+                    'headerIconSize'            => $this->panelConfig($_panelType, 'header-icon-size', 'fa-1x'),
+                    'headerStatusIcon'          => $this->panelConfig($_panelType, 'header-status-icon'),
+                    'headerStatusIconSize'      => $this->panelConfig($_panelType, 'header-status-icon-size'),
+                    'instanceStatusIcon'        => $this->panelConfig($_panelType, 'status-icon'),
+                    'instanceStatusIconSize'    => $this->panelConfig($_panelType, 'status-icon-size'),
+                    'instanceStatusIconContext' => $this->panelConfig($_panelType, 'status-icon-context'),
+                    'panelContext'              => $this->panelConfig($_panelType, 'context', 'panel-info'),
+                ];
+
+                $_key = $this->panelConfig($panelType, 'description');
+
+                if ($_key != ($_panelDescription = \Lang::get($_key))) {
+                    $_panels[$_panelType]['panelDescription'] = $_panelDescription;
+                }
+            }
+        }
+
+        return $_panels[$panelType];
+    }
+
 }

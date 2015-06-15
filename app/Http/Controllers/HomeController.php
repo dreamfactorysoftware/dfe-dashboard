@@ -4,8 +4,10 @@ use DreamFactory\Enterprise\Common\Http\Controllers\BaseController;
 use DreamFactory\Enterprise\Dashboard\Enums\DashboardDefaults;
 use DreamFactory\Enterprise\Dashboard\Enums\PanelTypes;
 use DreamFactory\Enterprise\Dashboard\Facades\Dashboard;
+use DreamFactory\Enterprise\Dashboard\Partners\PoC;
 use DreamFactory\Enterprise\Database\Models\Snapshot;
 use DreamFactory\Enterprise\Database\Models\User;
+use DreamFactory\Enterprise\Partner\Facades\Partner;
 use DreamFactory\Library\Utility\Inflector;
 use Illuminate\Http\Request;
 
@@ -16,10 +18,10 @@ class HomeController extends BaseController
     //******************************************************************************
 
     /** @inheritdoc */
-    public function __construct( Request $request )
+    public function __construct(Request $request)
     {
         //  require auth'd users
-        $this->middleware( 'auth' );
+        $this->middleware('auth');
     }
 
     /**
@@ -28,20 +30,20 @@ class HomeController extends BaseController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function status( Request $request, $id )
+    public function status(Request $request, $id)
     {
-        $_status = Dashboard::handleRequest( $request, $id );
+        $_status = Dashboard::handleRequest($request, $id);
 
-        return response()->json( $_status );
+        return response()->json($_status);
     }
 
     /**
      * @param \Illuminate\Http\Request $request
      */
-    public function logout( Request $request )
+    public function logout(Request $request)
     {
         !\Auth::guest() && \Auth::logout();
-        \Redirect::to( 'auth/login' );
+        \Redirect::to('auth/login');
     }
 
     /**
@@ -50,22 +52,19 @@ class HomeController extends BaseController
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function control( Request $request, $id = null )
+    public function control(Request $request, $id = null)
     {
-        $this->_validateCaptcha( $request );
+        $this->_validateCaptcha($request);
 
-        $_response = Dashboard::handleRequest( $request, $id );
+        $_response = Dashboard::handleRequest($request, $id);
 
-        if ( true === $_response )
-        {
-            \Session::flash( 'dashboard-success', 'Your request completed successfully.' );
-        }
-        else if ( false === $_response )
-        {
-            \Session::flash( 'dashboard-failure', 'There was a problem with your request.' );
+        if (true === $_response) {
+            \Session::flash('dashboard-success', 'Your request completed successfully.');
+        } else if (false === $_response) {
+            \Session::flash('dashboard-failure', 'There was a problem with your request.');
         }
 
-        return \Redirect::action( 'HomeController@index' );
+        return \Redirect::action('HomeController@index');
     }
 
     /**
@@ -75,32 +74,31 @@ class HomeController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index( Request $request )
+    public function index(Request $request)
     {
-        \Log::debug( 'dfe config: ' . print_r( config( 'dfe' ), true ) );
-
-        $_message = isset( $messages ) ? $messages : null;
-        $_defaultDomain = '.' . trim( config( 'dfe.dashboard.default-domain' ), '. ' );
+        $_message = isset($messages) ? $messages : null;
+        $_defaultDomain = '.' . trim(config('dfe.dashboard.default-domain'), '. ');
 
         /** @type User $_user */
         $_user = \Auth::user();
 
-        $_coreData = array(
+        $_coreData = [
             /** General */
-            'panelContext'        => config( 'dfe.panels.default.context', DashboardDefaults::PANEL_CONTEXT ),
+            'panelContext'        => config('dfe.panels.default.context', DashboardDefaults::PANEL_CONTEXT),
             'panelType'           => PanelTypes::SINGLE,
             'defaultDomain'       => $_defaultDomain,
             'message'             => $_message,
             'isAdmin'             => $_user->admin_ind,
             'displayName'         => $_user->nickname_text,
             'defaultInstanceName' =>
-                ( 1 != $_user->admin_ind
-                    ? config( 'dfe.instance-prefix' )
+                (1 != $_user->admin_ind
+                    ? config('dfe.instance-prefix')
                     : null
-                ) . Inflector::neutralize( str_replace( ' ', '-', \Auth::user()->nickname_text ) ),
-        );
+                ) . Inflector::neutralize(str_replace(' ', '-', \Auth::user()->nickname_text)),
+        ];
 
-        $_create = Dashboard::renderPanel( 'create', array_merge( $_coreData, ['instanceName' => 'create', 'panelType' => PanelTypes::CREATE] ) );
+        $_create = Dashboard::renderPanel('create',
+            array_merge($_coreData, ['instanceName' => PanelTypes::CREATE, 'panelType' => PanelTypes::CREATE]));
 
         $_import =
             Dashboard::renderPanel(
@@ -108,13 +106,19 @@ class HomeController extends BaseController
                 array_merge(
                     $_coreData,
                     [
-                        'panelType'    => PanelTypes::IMPORT,
                         'snapshotList' => $this->_getSnapshotList(),
-                        'instanceName' => 'import'
+                        'instanceName' => PanelTypes::IMPORT,
+                        'panelType'    => PanelTypes::IMPORT,
                     ]
                 )
             );
-        $_instances = Dashboard::instanceTable( null, true );
+
+        $_instances = Dashboard::userInstanceTable(null, true);
+
+        //  The name of the site partner, if any.
+        if (null !== ($_partnerId = config('dfe.partner'))) {
+            Partner::register($_partnerId, new PoC($_partnerId, config('partner.' . $_partnerId)));
+        }
 
         return view(
             'app.home',
@@ -127,6 +131,7 @@ class HomeController extends BaseController
                     'snapshotImporter' => $_import,
                     /** The instance list */
                     'instances'        => $_instances,
+                    'partner'          => $_partnerId ? Partner::resolve($_partnerId) : null,
                 ]
             )
         );
@@ -138,13 +143,11 @@ class HomeController extends BaseController
     protected function _getSnapshotList()
     {
         $_result = [];
-        $_rows = Snapshot::where( 'user_id', \Auth::user()->id )->get();
+        $_rows = Snapshot::where('user_id', \Auth::user()->id)->get();
 
-        if ( !empty( $_rows ) )
-        {
+        if (!empty($_rows)) {
             /** @var Snapshot[] $_rows */
-            foreach ( $_rows as $_row )
-            {
+            foreach ($_rows as $_row) {
                 $_result[] = [
                     'id'   => $_row->id,
                     'name' => $_row->snapshot_id_text,
@@ -160,22 +163,20 @@ class HomeController extends BaseController
      *
      * @return bool
      */
-    protected function _validateCaptcha( $request )
+    protected function _validateCaptcha($request)
     {
         //  If captcha is on, check it...
-        if ( config( 'dfe.dashboard.require-captcha' ) && $request->isMethod( Request::METHOD_POST ) )
-        {
+        if (config('dfe.dashboard.require-captcha') && $request->isMethod(Request::METHOD_POST)) {
             $_validator = \Validator::make(
                 \Input::all(),
                 [
-                    'g-recaptcha-response' => 'required|recaptcha'
+                    'g-recaptcha-response' => 'required|recaptcha',
                 ]
             );
 
-            if ( !$_validator->passes() )
-            {
-                \Log::error( 'recaptcha failure: ' . print_r( $_validator->errors()->all(), true ) );
-                \Session::flash( 'dashboard-failure', 'There was a problem with your request.' );
+            if (!$_validator->passes()) {
+                \Log::error('recaptcha failure: ' . print_r($_validator->errors()->all(), true));
+                \Session::flash('dashboard-failure', 'There was a problem with your request.');
 
                 return false;
             }

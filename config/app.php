@@ -3,12 +3,12 @@ return [
     //******************************************************************************
     //* Application Settings
     //******************************************************************************
-    'debug'           => env( 'APP_DEBUG' ),
-    'url'             => env( 'APP_URL' ),
+    'debug'           => env('APP_DEBUG'),
+    'url'             => env('APP_URL'),
     'timezone'        => 'America/New_York',
     'locale'          => 'en',
     'fallback_locale' => 'en',
-    'key'             => env( 'APP_KEY' ),
+    'key'             => env('APP_KEY'),
     'cipher'          => MCRYPT_RIJNDAEL_128,
     'log'             => 'single',
     //******************************************************************************
@@ -50,6 +50,8 @@ return [
         'DreamFactory\Enterprise\Common\Providers\Auth\DashboardAuthProvider',
         /** DreamFactory Ops Client Provider */
         'DreamFactory\Enterprise\Console\Ops\Providers\OpsClientServiceProvider',
+        /** DreamFactory Partner Services Provider */
+        'DreamFactory\Enterprise\Partner\Providers\PartnerServiceProvider',
         /** 3rd-party Service Providers */
         'Marwelln\Recaptcha\RecaptchaServiceProvider',
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
@@ -92,6 +94,7 @@ return [
         'View'      => 'Illuminate\Support\Facades\View',
         /** Third-party aliases */
         'Dashboard' => 'DreamFactory\\Enterprise\\Dashboard\\Facades\\Dashboard',
+        'Partner'   => 'DreamFactory\\Enterprise\\Partner\\Facades\\Partner',
     ],
 
 ];

@@ -29,6 +29,10 @@
     },
     {
       "type": "vcs",
+      "url":  "git@github.com:dreamfactorysoftware/dfe-partner.git"
+    },
+    {
+      "type": "vcs",
       "url":  "git@github.com:dreamfactorysoftware/dfe-database.git"
     },
     {
@@ -54,10 +58,11 @@
     "marwelln/recaptcha":          "dev-master",
     "dreamfactory/php-utils":      "*",
     "dreamfactory/console-tools":  "dev-develop as dev-master",
+    "dreamfactory/dfe-audit":      "dev-develop as dev-master",
     "dreamfactory/dfe-common":     "dev-develop as dev-master",
     "dreamfactory/dfe-database":   "dev-develop as dev-master",
-    "dreamfactory/dfe-audit":      "dev-develop as dev-master",
-    "dreamfactory/dfe-ops-client": "dev-develop as dev-master"
+    "dreamfactory/dfe-ops-client": "dev-develop as dev-master",
+    "dreamfactory/dfe-partner":    "dev-develop as dev-master"
   },
   "require-dev":       {
     "barryvdh/laravel-ide-helper": "~2.0",
@@ -73,8 +78,7 @@
   },
   "autoload-dev":      {
     "classmap": [
-      "tests/TestCase.php",
-      "tests/CommandTestCase.php"
+      "tests/TestCase.php"
     ]
   },
   "scripts":           {

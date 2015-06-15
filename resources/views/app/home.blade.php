@@ -1,9 +1,9 @@
 @extends('layouts.app')
 <?php
-$_message = null;
 
-if ( \Session::has( 'dashboard-success' ) )
-{
+use DreamFactory\Enterprise\Partner\SitePartner;$_message = null;
+
+if ( \Session::has( 'dashboard-success' ) ) {
 	$_flash = \Session::get( 'dashboard-success' );
 
 	$_message = <<<HTML
@@ -15,8 +15,7 @@ if ( \Session::has( 'dashboard-success' ) )
                 </div>
 HTML;
 }
-elseif ( \Session::has( 'dashboard-failure' ) )
-{
+elseif ( \Session::has( 'dashboard-failure' ) ) {
 	$_flash = \Session::get( 'dashboard-failure' );
 
 	$_message = <<<HTML
@@ -28,6 +27,8 @@ elseif ( \Session::has( 'dashboard-failure' ) )
                 </div>
 HTML;
 }
+
+$_partnerContent = ( isset($partner) && $partner instanceof SitePartner) ? $partner->getWebsiteContent() : null;
 ?>
 
 @section('content')
@@ -37,6 +38,8 @@ HTML;
 	</div>
 
 	{!! $_message !!}
+
+	{!! $_partnerContent !!}
 
 	<div class="panel-group" id="panel-accordion" role="tablist" aria-multiselectable="true">
 		<div class="row">

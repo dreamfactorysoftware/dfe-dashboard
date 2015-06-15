@@ -11,11 +11,13 @@ return [
     //* General
     //******************************************************************************
     //  The id of THIS cluster
-    'cluster-id'       => env( 'DFE_CLUSTER_ID' ),
+    'cluster-id'       => env('DFE_CLUSTER_ID'),
     //  A string to be pre-pended to instance names for non-admin users
-    'instance-prefix'  => env( 'DFE_DEFAULT_INSTANCE_PREFIX' ),
+    'instance-prefix'  => env('DFE_DEFAULT_INSTANCE_PREFIX'),
     //  This is the algorithm used for signing API transactions. Defaults to 'sha256'
-    'signature-method' => env( 'DFE_SIGNATURE_METHOD', EnterpriseDefaults::DEFAULT_SIGNATURE_METHOD ),
+    'signature-method' => env('DFE_SIGNATURE_METHOD', EnterpriseDefaults::DEFAULT_SIGNATURE_METHOD),
+    //  The name of the site partner, if any.
+    'partner'          => 'vz',
     //******************************************************************************
     //* Common across all DFE apps
     //******************************************************************************
@@ -25,13 +27,25 @@ return [
         //******************************************************************************
         'display-name'      => 'DreamFactory Enterprise&trade; Dashboard',
         'display-version'   => 'v1.0.x-alpha',
-        'display-copyright' => '© DreamFactory Software, Inc. 2012-' . date( 'Y' ) . '. All Rights Reserved.',
+        'display-copyright' => '© DreamFactory Software, Inc. 2012-' . date('Y') . '. All Rights Reserved.',
         /**
          * Theme selection -- a bootswatch theme name
          * Included are cerulean, darkly, flatly, paper, and superhero.
          * You may also install other compatible themes and use them as well.
          */
         'themes'            => ['auth' => 'darkly', 'page' => 'flatly'],
+    ],
+    //******************************************************************************
+    //* Logging configuration
+    //******************************************************************************
+    'log'              => [
+        'base-path'        => env('DFE_BASE_LOG_PATH', storage_path('logs')),
+        'log-app-name'     => env('DFE_LOG_APP_NAME', 'dashboard'),
+        'default-log-name' => env('DFE_DEFAULT_LOG_NAME', 'default.log'),
+        'log-name-pattern' => env('DFE_LOG_NAME_PATTERN', '{stream}.log'),
+        'streams'          => [
+            ['driver' => 'single', 'name' => null],
+        ],
     ],
     //******************************************************************************
     //* Dashboard specific settings
@@ -45,9 +59,9 @@ return [
         /** If true, recaptcha is required on new hosted instances */
         'require-captcha'          => false,
         //  Instance defaults
-        'default-dns-zone'         => env( 'DFE_DEFAULT_DNS_ZONE', 'enterprise' ),
-        'default-dns-domain'       => env( 'DFE_DEFAULT_DNS_DOMAIN', 'dreamfactory.com' ),
-        'default-domain'           => env( 'DFE_DEFAULT_DOMAIN', 'dreamfactory.com' ),
+        'default-dns-zone'         => env('DFE_DEFAULT_DNS_ZONE', 'enterprise'),
+        'default-dns-domain'       => env('DFE_DEFAULT_DNS_DOMAIN', 'dreamfactory.com'),
+        'default-domain'           => env('DFE_DEFAULT_DOMAIN', 'dreamfactory.com'),
         'default-domain-protocol'  => 'https',
         //  UI defaults
         'panel-context'            => 'panel-info',
@@ -63,12 +77,12 @@ return [
     ],
     'security'         => [
         /** This key needs to match the key configured in the console */
-        'console-api-key'           => env( 'DFE_CONSOLE_API_KEY' ),
+        'console-api-key'           => env('DFE_CONSOLE_API_KEY'),
         /** This is the full url to the DFE Console API endpoint */
-        'console-api-url'           => env( 'DFE_CONSOLE_API_URL', 'http://localhost/api/v1/ops/' ),
+        'console-api-url'           => env('DFE_CONSOLE_API_URL', 'http://localhost/api/v1/ops/'),
         /** These keys are assigned during system installation */
-        'console-api-client-id'     => env( 'DFE_CONSOLE_API_CLIENT_ID' ),
-        'console-api-client-secret' => env( 'DFE_CONSOLE_API_CLIENT_SECRET' ),
+        'console-api-client-id'     => env('DFE_CONSOLE_API_CLIENT_ID'),
+        'console-api-client-secret' => env('DFE_CONSOLE_API_CLIENT_SECRET'),
     ],
     //******************************************************************************
     //* Dashboard UI Layout/Panel Settings
@@ -128,7 +142,7 @@ return [
         'terminating' => 'fa fa-spinner fa-spin text-danger',
         'dead'        => 'fa-ambulance',
         'unknown'     => 'fa-question',
-        'hel'         => 'fa-question',
+        'help'        => 'fa-question',
         'launch'      => 'fa-rocket',
         'create'      => 'fa-rocket',
         'start'       => 'fa-play',
