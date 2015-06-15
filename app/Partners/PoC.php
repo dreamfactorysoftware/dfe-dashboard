@@ -1,6 +1,7 @@
 <?php namespace DreamFactory\Enterprise\Dashboard\Partners;
 
 use DreamFactory\Enterprise\Partner\SitePartner;
+use Illuminate\Http\Request;
 
 class PoC extends SitePartner
 {
@@ -28,4 +29,19 @@ class PoC extends SitePartner
 </div>
 HTML;
     }
+
+    /** @inheritdoc */
+    public function getPartnerResponse(Request $request)
+    {
+        switch ($request->input('command')) {
+            case 'utc_post':
+                //  do utc shit here
+
+                break;
+        }
+
+        //  redirect home
+        \Redirect::home();
+    }
+
 }
