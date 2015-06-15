@@ -33,15 +33,22 @@ HTML;
     /** @inheritdoc */
     public function getPartnerResponse(Request $request)
     {
-        switch ($request->input('command')) {
-            case 'utc_post':
-                //  do utc shit here
+        //  Do stuff here
+        //  Stop doing stuff here...
 
-                break;
+        //  either redirect somewhere else
+        if (null !== ($_redirect = $this->get('redirect-uri'))) {
+            return \Redirect::to($_redirect);
         }
 
-        //  redirect home
-        \Redirect::home();
+        //  or redirect home
+        return \Redirect::home();
+
+        //  or return success in JSON
+        //return SuccessPacket::make(['stuff' => 'value'], Response::HTTP_OK);
+
+        //  or return error in JSON
+        //return ErrorPacket::create(Response::HTTP_BAD_REQUEST, 'You did something naughty.');
     }
 
 }
