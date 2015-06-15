@@ -39,9 +39,15 @@ $_partnerContent = ( isset($partner) && $partner instanceof SitePartner) ? $part
 
 	{!! $_message !!}
 
-	{!! $_partnerContent !!}
-
 	<div class="panel-group" id="panel-accordion" role="tablist" aria-multiselectable="true">
+		@if($_partnerContent)
+			<div class="row">
+				<div class="col-md-12 col-sm-12">
+					{!! $_partnerContent !!}
+				</div>
+			</div>
+		@endif
+
 		<div class="row">
 			<div class="col-md-6">
 				<div class="create-instance">

@@ -18,14 +18,13 @@ class PoC extends SitePartner
     public function getWebsiteContent($minimal = false)
     {
         $_brand = $this->getPartnerBrand();
+        $_icon = '<img src="' . $_brand->getLogo(true) . '" class="partner-brand">';
 
         return <<<HTML
-<div class="row">
-    <div class="well">
-    <h3>{$_brand->getLogo(true)} {$this->getPartnerDetail('name')}</h3>
+<div class="alert alert-fixed alert-dismissable well partner-well" role="alert">
+    <button type="button" class="close" style="padding-right: 5px;" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h3>{$_icon} {$this->getPartnerDetail('name')} <small>{$_brand->getCopyright($minimal)}</small></h3>
     <p>{$_brand->getCopy($minimal)}</p>
-    <p>{$_brand->getCopyright($minimal)}</p>
-</div>
 </div>
 HTML;
     }
