@@ -4,7 +4,6 @@ use DreamFactory\Enterprise\Common\Http\Controllers\BaseController;
 use DreamFactory\Enterprise\Dashboard\Enums\DashboardDefaults;
 use DreamFactory\Enterprise\Dashboard\Enums\PanelTypes;
 use DreamFactory\Enterprise\Dashboard\Facades\Dashboard;
-use DreamFactory\Enterprise\Dashboard\Partners\PoC;
 use DreamFactory\Enterprise\Database\Models\Snapshot;
 use DreamFactory\Enterprise\Database\Models\User;
 use DreamFactory\Enterprise\Partner\Facades\Partner;
@@ -116,9 +115,7 @@ class HomeController extends BaseController
         $_instances = Dashboard::userInstanceTable(null, true);
 
         //  The name of the site partner, if any.
-        if (null !== ($_partnerId = config('dfe.partner'))) {
-            Partner::register($_partnerId, new PoC($_partnerId, config('partner.' . $_partnerId)));
-        }
+        $_partnerId = config('dfe.partner');
 
         return view(
             'app.home',
