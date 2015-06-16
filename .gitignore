@@ -1,7 +1,7 @@
-/vendor
-/public/vendor
-!/public/vendor/dfe-partner/assets/
-resources/views/vendor
+/vendor/
+/resources/views/vendor/
+/public/vendor/
+!/public/vendor/dfe-partner/*
 node_modules/
 /.env
 /.env.copy
