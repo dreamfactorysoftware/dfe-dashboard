@@ -7,6 +7,7 @@ use DreamFactory\Enterprise\Dashboard\Facades\Dashboard;
 use DreamFactory\Enterprise\Database\Models\Snapshot;
 use DreamFactory\Enterprise\Database\Models\User;
 use DreamFactory\Enterprise\Partner\Facades\Partner;
+use DreamFactory\Library\Utility\Curl;
 use DreamFactory\Library\Utility\Inflector;
 use Illuminate\Http\Request;
 
@@ -21,10 +22,27 @@ class HomeController extends BaseController
     {
         //  require auth'd users
         $this->middleware('auth');
+
+        if (null !== ($_subGuid = $request->input('submissionGuid'))) {
+            $_user = $this->getHubSpotUser($_subGuid);
+        }
+    }
+
+    protected function getHubSpotUser($subGuid)
+    {
+        $_url = 'https://api.hubapi.com/forms/v2/fields/' . $subGuid . '?hapikey=' . config('dfe.hubspot.api-key');
+
+        if (false === ($_response = Curl::get($_url)))
+            return false;
+
+        if (empty($_response))
+            return false;
+
+
     }
 
     /**
-     * @param Request    $request
+     * @param Request $request
      * @param string|int $id
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -47,7 +65,7 @@ class HomeController extends BaseController
 
     /**
      * @param Request $request
-     * @param string  $id
+     * @param string $id
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -83,12 +101,12 @@ class HomeController extends BaseController
 
         $_coreData = [
             /** General */
-            'panelContext'        => config('dfe.panels.default.context', DashboardDefaults::PANEL_CONTEXT),
-            'panelType'           => PanelTypes::SINGLE,
-            'defaultDomain'       => $_defaultDomain,
-            'message'             => $_message,
-            'isAdmin'             => $_user->admin_ind,
-            'displayName'         => $_user->nickname_text,
+            'panelContext' => config('dfe.panels.default.context', DashboardDefaults::PANEL_CONTEXT),
+            'panelType' => PanelTypes::SINGLE,
+            'defaultDomain' => $_defaultDomain,
+            'message' => $_message,
+            'isAdmin' => $_user->admin_ind,
+            'displayName' => $_user->nickname_text,
             'defaultInstanceName' =>
                 (1 != $_user->admin_ind
                     ? config('dfe.instance-prefix')
@@ -107,7 +125,7 @@ class HomeController extends BaseController
                     [
                         'snapshotList' => $this->_getSnapshotList(),
                         'instanceName' => PanelTypes::IMPORT,
-                        'panelType'    => PanelTypes::IMPORT,
+                        'panelType' => PanelTypes::IMPORT,
                     ]
                 )
             );
@@ -123,12 +141,12 @@ class HomeController extends BaseController
                 $_coreData,
                 [
                     /** The instance create panel */
-                    'instanceCreator'  => $_create,
+                    'instanceCreator' => $_create,
                     /** The instance import panel */
                     'snapshotImporter' => $_import,
                     /** The instance list */
-                    'instances'        => $_instances,
-                    'partner'          => $_partnerId ? Partner::resolve($_partnerId) : null,
+                    'instances' => $_instances,
+                    'partner' => $_partnerId ? Partner::resolve($_partnerId) : null,
                 ]
             )
         );
@@ -146,7 +164,7 @@ class HomeController extends BaseController
             /** @var Snapshot[] $_rows */
             foreach ($_rows as $_row) {
                 $_result[] = [
-                    'id'   => $_row->id,
+                    'id' => $_row->id,
                     'name' => $_row->snapshot_id_text,
                 ];
             }
