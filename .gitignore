@@ -1,4 +1,7 @@
-vendor/
+/vendor
+/public/vendor
+!/public/vendor/dfe-partner/assets/
+resources/views/vendor
 node_modules/
 /.env
 /.env.copy
