@@ -9,6 +9,7 @@ use DreamFactory\Enterprise\Database\Models\User;
 use DreamFactory\Enterprise\Partner\Facades\Partner;
 use DreamFactory\Library\Utility\Curl;
 use DreamFactory\Library\Utility\Inflector;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class HomeController extends BaseController
@@ -24,25 +25,17 @@ class HomeController extends BaseController
         $this->middleware('auth');
 
         if (null !== ($_subGuid = $request->input('submissionGuid'))) {
-            $_user = $this->getHubSpotUser($_subGuid);
+            //  Make sure the request is from hubspot...
+            if (false !== stripos($_ref = $request->get('http-referrer'), 'info.dreamfactory.com')) {
+                \Log::notice('bogus referrer on inbound from landing page: ' . $_ref);
+            }
+            
+            $this->autoLoginRegistrant($_subGuid);
         }
     }
 
-    protected function getHubSpotUser($subGuid)
-    {
-        $_url = 'https://api.hubapi.com/forms/v2/fields/' . $subGuid . '?hapikey=' . config('dfe.hubspot.api-key');
-
-        if (false === ($_response = Curl::get($_url)))
-            return false;
-
-        if (empty($_response))
-            return false;
-h
-
-    }
-
     /**
-     * @param Request $request
+     * @param Request    $request
      * @param string|int $id
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -65,7 +58,7 @@ h
 
     /**
      * @param Request $request
-     * @param string $id
+     * @param string  $id
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -101,12 +94,12 @@ h
 
         $_coreData = [
             /** General */
-            'panelContext' => config('dfe.panels.default.context', DashboardDefaults::PANEL_CONTEXT),
-            'panelType' => PanelTypes::SINGLE,
-            'defaultDomain' => $_defaultDomain,
-            'message' => $_message,
-            'isAdmin' => $_user->admin_ind,
-            'displayName' => $_user->nickname_text,
+            'panelContext'        => config('dfe.panels.default.context', DashboardDefaults::PANEL_CONTEXT),
+            'panelType'           => PanelTypes::SINGLE,
+            'defaultDomain'       => $_defaultDomain,
+            'message'             => $_message,
+            'isAdmin'             => $_user->admin_ind,
+            'displayName'         => $_user->nickname_text,
             'defaultInstanceName' =>
                 (1 != $_user->admin_ind
                     ? config('dfe.instance-prefix')
@@ -125,7 +118,7 @@ h
                     [
                         'snapshotList' => $this->_getSnapshotList(),
                         'instanceName' => PanelTypes::IMPORT,
-                        'panelType' => PanelTypes::IMPORT,
+                        'panelType'    => PanelTypes::IMPORT,
                     ]
                 )
             );
@@ -141,12 +134,12 @@ h
                 $_coreData,
                 [
                     /** The instance create panel */
-                    'instanceCreator' => $_create,
+                    'instanceCreator'  => $_create,
                     /** The instance import panel */
                     'snapshotImporter' => $_import,
                     /** The instance list */
-                    'instances' => $_instances,
-                    'partner' => $_partnerId ? Partner::resolve($_partnerId) : null,
+                    'instances'        => $_instances,
+                    'partner'          => $_partnerId ? Partner::resolve($_partnerId) : null,
                 ]
             )
         );
@@ -164,7 +157,7 @@ h
             /** @var Snapshot[] $_rows */
             foreach ($_rows as $_row) {
                 $_result[] = [
-                    'id' => $_row->id,
+                    'id'   => $_row->id,
                     'name' => $_row->snapshot_id_text,
                 ];
             }
@@ -199,4 +192,71 @@ h
 
         return true;
     }
+
+    /**
+     * Given a HubSpot "submissionGuid", locate a registrant with the same conversion-id
+     *
+     * @param string $subGuid
+     *
+     * @return bool Returns false if nothing found otherwise logs user in and redirects to home page
+     */
+    protected function autoLoginRegistrant($subGuid)
+    {
+        $_url = 'https://api.hubapi.com/contacts/v1/lists/recently_updated/contacts/recent/?hapikey=' . config('dfe.hubspot.api-key') . '&count=50';
+
+        if (false === ($_response = Curl::get($_url))) {
+            return false;
+        }
+
+        if (empty($_response) || !($_response instanceof \stdClass) || !isset($_response->contacts) || empty($_response->contacts)) {
+            //  Methinks thine guid is bogus
+            return false;
+        }
+
+        //  Mine for gold...
+        $_email = null;
+
+        /**
+         * GHA 2015-06-16
+         * This has to be the most ridiculous way to get a contact's email address that I've ever seen.
+         */
+        foreach ($_response->contacts as $_contact) {
+            if (isset($_contact->{'form-submissions'})) {
+                foreach ($_contact->{'form-submissions'} as $_sub) {
+                    if (isset($_sub->{'conversion-id'}) && $subGuid == $_sub->{'conversion-id'}) {
+                        if (isset($_contact->{'identity-profiles'})) {
+                            foreach ($_contact->{'identity-profiles'} as $_profile) {
+                                if (isset($_profile->identities)) {
+                                    foreach ($_profile->identities as $_identity) {
+                                        if (isset($_identity->type) && 'EMAIL' == $_identity->type && isset($_identity->value)) {
+                                            $_email = $_identity->value;
+                                            break 4;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        //  Didn't find this person out of the last 50? how could he just have been redirected??
+        if (empty($_email)) {
+            return false;
+        }
+
+        //  Lookup email address
+        try {
+            $_user = User::byEmail($_email)->firstOrFail();
+        } catch (ModelNotFoundException $_ex) {
+            return false;
+        }
+
+        //  Ok, now we have a user, we need to log his ass in...
+        \Auth::login($_user);
+
+        return \Redirect::to('/');
+    }
+
 }
