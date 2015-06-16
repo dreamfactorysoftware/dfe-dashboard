@@ -68,24 +68,6 @@ class HomeController extends BaseController
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param string                   $pid The partner ID
-     *
-     * @return mixed
-     */
-    public function partner(Request $request, $pid)
-    {
-        try {
-            return \Partner::request($pid, $request);
-        } catch (\Exception $_ex) {
-            abort(404);
-        }
-
-        //  Go back home
-        return \Redirect::home();
-    }
-
-    /**
      * Show the application dashboard to the user.
      *
      * @param Request $request
