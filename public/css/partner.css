@@ -1,0 +1,37 @@
+.partner-alert {
+    padding: 5px 25px 20px 25px;
+}
+
+.vz-red {
+    background-color: #ef1d1d;
+    color:            #ef1d1d;
+}
+
+.partner-row {
+    padding-top:   5px;
+    margin-bottom: -10px;
+}
+
+.partner-row form button {
+    margin-top: 30px;
+}
+
+.partner-row > .partner-brand {
+    margin-top: 5px;
+}
+
+.partner-copy h3 {
+    padding: 0;
+    margin:  35px 0 0;
+}
+
+.partner-button {
+    background-color: #d2212a;
+}
+
+@media (max-width: 1000px) {
+    .partner-copy h3 {
+        padding: 0;
+        margin:  10px 0 0;
+    }
+}
