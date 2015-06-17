@@ -30,14 +30,13 @@ class Verizon extends AlertPartner
                 ],
             ];
 
-            $_url = 'https://dsp-dev-vzw.cloud.dreamfactory.com/rest/db/customer'; // UTC URL
+            //  UTC url
+            $_url = 'https://dsp-dev-vzw.cloud.dreamfactory.com/rest/db/customer?app_name=DBAccess';
 
-            $_response = Curl::post($_url, $_data,
-                [
-                    CURLOPT_USERPWD    => 'dev.vzw@utcassociates.com:Devp@ss2',
-                    CURLOPT_HTTPHEADER => ['X-DreamFactory-Application-Name: DBAccess',],
-                ]
-            );
+            Curl::setUserName('dev.vzw@utcassociates.com');
+            Curl::setPassword('Devp@ss2');
+
+            $_response = Curl::post($_url, json_encode($_data));
 
             //  Log it
             file_put_contents(storage_path() . '/logs/utc_post.log',
@@ -47,15 +46,16 @@ class Verizon extends AlertPartner
             //  Redirect
             if (null !== ($_redirect = $this->getPartnerDetail('redirect-uri'))) {
                 \Log::debug('[partner.vz] redirect after utc post to ' . $_redirect);
-                \Redirect::to($_redirect);
+
+                return \Redirect::to($_redirect);
             }
+
+            \Log::debug('[partner.vz] no redirect for partner, going home.');
         } catch (\Exception $_ex) {
             \Log::error('[partner.vz] exception calling UTC during partner redirect: ' . $_ex->getMessage());
         }
 
-        \Log::debug('[partner.vz] no redirect, going home.');
-
-        \Redirect::to('/');
+        return \Redirect::to('/');
     }
 
     /**
