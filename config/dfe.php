@@ -17,7 +17,7 @@ return [
     //  This is the algorithm used for signing API transactions. Defaults to 'sha256'
     'signature-method' => env('DFE_SIGNATURE_METHOD', EnterpriseDefaults::DEFAULT_SIGNATURE_METHOD),
     //  The name of the site partner, if any.
-    'partner' => 'vz',
+    'partner' => env('DFE_PARTNER_ID'),
     //******************************************************************************
     //* Common across all DFE apps
     //******************************************************************************
