@@ -9,6 +9,7 @@ use DreamFactory\Enterprise\Console\Ops\Services\OpsClientService;
 use DreamFactory\Enterprise\Dashboard\Enums\DashboardDefaults;
 use DreamFactory\Enterprise\Dashboard\Enums\PanelTypes;
 use DreamFactory\Enterprise\Dashboard\Facades\Dashboard;
+use DreamFactory\Enterprise\Dashboard\Things\InstancePanel;
 use DreamFactory\Enterprise\Database\Enums\GuestLocations;
 use DreamFactory\Enterprise\Database\Enums\ProvisionStates;
 use DreamFactory\Enterprise\Database\Enums\ServerTypes;
@@ -54,6 +55,10 @@ class DashboardService extends BaseService
      * @type string The class to wrap columns in
      */
     protected $_columnClass;
+    /**
+     * @type InstancePanel[] The panel stack
+     */
+    protected $_panels = [];
 
     //*************************************************************************
     //* Methods
@@ -68,7 +73,6 @@ class DashboardService extends BaseService
                 '.') . '.' . trim(config('dfe.dashboard.default-dns-domain'), '.');
         $this->_useConfigServers = config('dfe.dashboard.override-cluster-servers', false);
         $this->_requireCaptcha = config('dfe.dashboard.require-captcha', true);
-        $this->_panelsPerRow = config('dfe.panels.panels-per-row', DashboardDefaults::PANELS_PER_ROW);
 
         $this->_determineGridLayout();
     }
@@ -983,6 +987,8 @@ HTML;
      */
     protected function _determineGridLayout()
     {
+        $this->_panelsPerRow = config('dfe.panels.panels-per-row', DashboardDefaults::PANELS_PER_ROW);
+
         if ($this->_panelsPerRow < 1) {
             $this->_panelsPerRow = 1;
         } else if ($this->_panelsPerRow > 6) {
@@ -1394,4 +1400,37 @@ HTML;
         return $_panels[$panelType];
     }
 
+    /**
+     * @param \DreamFactory\Enterprise\Dashboard\Things\InstancePanel $panel
+     *
+     * @return int
+     */
+    public function push(InstancePanel $panel)
+    {
+        return array_push($this->_panels, $panel);
+    }
+
+    /**
+     * @return InstancePanel|null
+     */
+    public function pop()
+    {
+        return array_pop($this->_panels);
+    }
+
+    /**
+     * @param array $mergeData
+     *
+     * @return null|string
+     */
+    public function renderStack($mergeData = [])
+    {
+        $_html = null;
+
+        foreach ($this->_panels as $_panel) {
+            $_html .= $_panel->renderPanel($mergeData);
+        }
+
+        return $_html;
+    }
 }

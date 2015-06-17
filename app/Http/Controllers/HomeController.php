@@ -29,7 +29,7 @@ class HomeController extends BaseController
             if (false !== stripos($_ref = $request->get('http-referrer'), 'info.dreamfactory.com')) {
                 \Log::notice('bogus referrer on inbound from landing page: ' . $_ref);
             }
-            
+
             $this->autoLoginRegistrant($_subGuid);
         }
     }
@@ -255,6 +255,8 @@ class HomeController extends BaseController
 
         //  Ok, now we have a user, we need to log his ass in...
         \Auth::login($_user);
+
+        \Log::info('[auth] auto-login user "' . $_email . '" from landing-page registration redirect.');
 
         return \Redirect::to('/');
     }
