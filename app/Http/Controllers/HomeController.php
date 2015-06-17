@@ -24,7 +24,7 @@ class HomeController extends BaseController
         //  require auth'd users
         $this->middleware('auth');
 
-        if (null !== ($_subGuid = $request->input('submissionGuid'))) {
+        if (null !== ($_subGuid = $request->input('submissionGuid')) && \Auth::guest()) {
             //  Make sure the request is from hubspot...
             if (false !== stripos($_ref = $request->get('http-referrer'), 'info.dreamfactory.com')) {
                 \Log::notice('bogus referrer on inbound from landing page: ' . $_ref);
@@ -35,7 +35,7 @@ class HomeController extends BaseController
     }
 
     /**
-     * @param Request    $request
+     * @param Request $request
      * @param string|int $id
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -58,7 +58,7 @@ class HomeController extends BaseController
 
     /**
      * @param Request $request
-     * @param string  $id
+     * @param string $id
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -94,12 +94,12 @@ class HomeController extends BaseController
 
         $_coreData = [
             /** General */
-            'panelContext'        => config('dfe.panels.default.context', DashboardDefaults::PANEL_CONTEXT),
-            'panelType'           => PanelTypes::SINGLE,
-            'defaultDomain'       => $_defaultDomain,
-            'message'             => $_message,
-            'isAdmin'             => $_user->admin_ind,
-            'displayName'         => $_user->nickname_text,
+            'panelContext' => config('dfe.panels.default.context', DashboardDefaults::PANEL_CONTEXT),
+            'panelType' => PanelTypes::SINGLE,
+            'defaultDomain' => $_defaultDomain,
+            'message' => $_message,
+            'isAdmin' => $_user->admin_ind,
+            'displayName' => $_user->nickname_text,
             'defaultInstanceName' =>
                 (1 != $_user->admin_ind
                     ? config('dfe.instance-prefix')
@@ -118,7 +118,7 @@ class HomeController extends BaseController
                     [
                         'snapshotList' => $this->_getSnapshotList(),
                         'instanceName' => PanelTypes::IMPORT,
-                        'panelType'    => PanelTypes::IMPORT,
+                        'panelType' => PanelTypes::IMPORT,
                     ]
                 )
             );
@@ -134,12 +134,12 @@ class HomeController extends BaseController
                 $_coreData,
                 [
                     /** The instance create panel */
-                    'instanceCreator'  => $_create,
+                    'instanceCreator' => $_create,
                     /** The instance import panel */
                     'snapshotImporter' => $_import,
                     /** The instance list */
-                    'instances'        => $_instances,
-                    'partner'          => $_partnerId ? Partner::resolve($_partnerId) : null,
+                    'instances' => $_instances,
+                    'partner' => $_partnerId ? Partner::resolve($_partnerId) : null,
                 ]
             )
         );
@@ -157,7 +157,7 @@ class HomeController extends BaseController
             /** @var Snapshot[] $_rows */
             foreach ($_rows as $_row) {
                 $_result[] = [
-                    'id'   => $_row->id,
+                    'id' => $_row->id,
                     'name' => $_row->snapshot_id_text,
                 ];
             }
@@ -202,14 +202,16 @@ class HomeController extends BaseController
      */
     protected function autoLoginRegistrant($subGuid)
     {
-        $_url = 'https://api.hubapi.com/contacts/v1/lists/recently_updated/contacts/recent/?hapikey=' . config('dfe.hubspot.api-key') . '&count=50';
+        $_url = 'https://api.hubapi.com/contacts/v1/lists/recently_updated/contacts/recent/?hapikey=' . config('dfe.hubspot.api-key') . '&count=150';
 
         if (false === ($_response = Curl::get($_url))) {
+            \Log::debug('[auth.landing-page] recent contact pull failed.');
             return false;
         }
 
         if (empty($_response) || !($_response instanceof \stdClass) || !isset($_response->contacts) || empty($_response->contacts)) {
             //  Methinks thine guid is bogus
+            \Log::debug('[auth.landing-page] recent contacts empty or invalid.');
             return false;
         }
 
@@ -243,20 +245,25 @@ class HomeController extends BaseController
 
         //  Didn't find this person out of the last 50? how could he just have been redirected??
         if (empty($_email)) {
+            \Log::debug('[auth.landing-page] subGuid "' . $subGuid . '" not found in recents');
             return false;
         }
+
+        \Log::debug('[auth.landing-page] subGuid "' . $subGuid . '" attached with email "' . $_email . '"');
 
         //  Lookup email address
         try {
             $_user = User::byEmail($_email)->firstOrFail();
+            \Log::debug('[auth.landing-page] subGuid "' . $subGuid . '"/"' . $_email . '" user id#' . $_user->id);
         } catch (ModelNotFoundException $_ex) {
+            \Log::debug('[auth.landing-page] subGuid "' . $subGuid . '"/"' . $_email . '" no related user.');
             return false;
         }
 
         //  Ok, now we have a user, we need to log his ass in...
         \Auth::login($_user);
 
-        \Log::info('[auth] auto-login user "' . $_email . '" from landing-page registration redirect.');
+        \Log::info('[auth.landing-page] auto-login user "' . $_email . '"');
 
         return \Redirect::to('/');
     }
