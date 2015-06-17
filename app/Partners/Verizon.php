@@ -10,67 +10,52 @@ class Verizon extends AlertPartner
     /**
      * Handle a partner event/request.
      *
-     * @param array $request
+     * @param Request $request
      *
      * @return mixed
      */
     public function getPartnerResponse(Request $request)
     {
-        $user = app('auth')->user();
+        try {
+            $_user = \Auth::user();
 
-        $data =
-            [
-                'first_name' => $user->first_name_text,
-                'last_name' => $user->last_name_text,
-                'email' => $user->email_addr_text,
-                'company_name' => $user->company_name_text,
-                'phone_number' => $user->phone_text
-            ]; // Build up user data for posting to UTC
+            // Build up user data for posting to UTC
+            $_data = [
+                'record' => [
+                    'first_name'   => $_user->first_name_text,
+                    'last_name'    => $_user->last_name_text,
+                    'email'        => $_user->email_addr_text,
+                    'company_name' => $_user->company_name_text ?: 'DreamFactory Software, Inc.',
+                    'phone_number' => $_user->phone_text ?: '',
+                ],
+            ];
 
-        if (empty($user->company_name_text) === true) {
-            $data['company_name'] = 'DreamFactory Software';
-        }
+            $_url = 'https://dsp-dev-vzw.cloud.dreamfactory.com/rest/db/customer'; // UTC URL
 
-        if (empty($user->phone_text) === true) {
-            $data['phone_number'] = '';
-        }
-
-        //$json = json_encode($data);
-
-        $url = 'https://dsp-dev-vzw.cloud.dreamfactory.com/rest/db/customer'; // UTC URL
-
-        $response = Curl::post($url, $data,
-            [
-                CURLOPT_USERPWD => 'dev.vzw@utcassociates.com:Devp@ss2',
-                CURLOPT_HTTPHEADER => ['X-DreamFactory-Application-Name: DBAccess'
+            $_response = Curl::post($_url, $_data,
+                [
+                    CURLOPT_USERPWD    => 'dev.vzw@utcassociates.com:Devp@ss2',
+                    CURLOPT_HTTPHEADER => ['X-DreamFactory-Application-Name: DBAccess',],
                 ]
-            ]
-        );
+            );
 
-//        $ch = curl_init($url);
-//        curl_setopt($ch, CURLOPT_POST, 1);
-//        curl_setopt(
-//            $ch,
-//            CURLOPT_HTTPHEADER,
-//            array(
-//                'X-DreamFactory-Application-Name: DBAccess'
-//            )
-//        );
-//        curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
-//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-//        curl_setopt($ch, CURLOPT_USERPWD, "dev.vzw@utcassociates.com:Devp@ss2");
-//
-//        $result = curl_exec($ch);
-//        $response = json_decode($result);
-//        curl_close($ch);
+            //  Log it
+            file_put_contents(storage_path() . '/logs/utc_post.log',
+                date('Y-m-d H:i:s') . 'URL: ' . $_url . ' payload: ' .
+                print_r($_data, true) . ' response: ' . print_r($_response, true) . PHP_EOL, FILE_APPEND);
 
-        $logMsg = date('Y-m-d H:i:s') . 'URL: ' . $url . ' payload: ' . print_r($data, true) . ' response: ' . print_r($response, true) . "\n";
-
-        file_put_contents(storage_path() . "/logs/utc_post.log", $logMsg, FILE_APPEND);
-
-        if (null !== ($_redirect = $this->get('redirect-uri'))) {
-            \Redirect::to($_redirect);
+            //  Redirect
+            if (null !== ($_redirect = $this->getPartnerDetail('redirect-uri'))) {
+                \Log::debug('[partner.vz] redirect after utc post to ' . $_redirect);
+                \Redirect::to($_redirect);
+            }
+        } catch (\Exception $_ex) {
+            \Log::error('[partner.vz] exception calling UTC during partner redirect: ' . $_ex->getMessage());
         }
+
+        \Log::debug('[partner.vz] no redirect, going home.');
+
+        \Redirect::to('/');
     }
 
     /**
