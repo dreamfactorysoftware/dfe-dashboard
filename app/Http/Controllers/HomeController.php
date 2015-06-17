@@ -212,7 +212,8 @@ class HomeController extends BaseController
     protected function autoLoginRegistrant($subGuid)
     {
         for ($_i = 0; $_i < static::MAX_LOOKUP_RETRIES; $_i++) {
-            $this->locateContactBySubmissionGuid($subGuid);
+            if ($this->locateContactBySubmissionGuid($subGuid))
+                break;
 
             //  Take a nap
             sleep(1);
@@ -288,7 +289,9 @@ class HomeController extends BaseController
 
         \Log::info('[auth.landing-page] auto-login user "' . $_email . '"');
 
-        return \Redirect::to('/');
+        \Redirect::to('/');
+
+        return true;
     }
 
 }
