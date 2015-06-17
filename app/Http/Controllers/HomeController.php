@@ -15,6 +15,15 @@ use Illuminate\Http\Request;
 class HomeController extends BaseController
 {
     //******************************************************************************
+    //* Constants
+    //******************************************************************************
+
+    /**
+     * @type int
+     */
+    const MAX_LOOKUP_RETRIES = 5;
+
+    //******************************************************************************
     //* Methods
     //******************************************************************************
 
@@ -202,7 +211,21 @@ class HomeController extends BaseController
      */
     protected function autoLoginRegistrant($subGuid)
     {
-        $_url = 'https://api.hubapi.com/contacts/v1/lists/recently_updated/contacts/recent/?hapikey=' . config('dfe.hubspot.api-key') . '&count=150';
+        for ($_i = 0; $_i < static::MAX_LOOKUP_RETRIES; $_i++) {
+            $this->locateContactBySubmissionGuid($subGuid);
+
+            //  Take a nap
+            sleep(1);
+        }
+    }
+
+    /**
+     * @param string $subGuid
+     * @return bool|\Illuminate\Http\RedirectResponse
+     */
+    protected function locateContactBySubmissionGuid($subGuid)
+    {
+        $_url = 'https://api.hubapi.com/contacts/v1/lists/recently_updated/contacts/recent/?hapikey=' . config('dfe.hubspot.api-key') . '&count=50';
 
         if (false === ($_response = Curl::get($_url))) {
             \Log::debug('[auth.landing-page] recent contact pull failed.');

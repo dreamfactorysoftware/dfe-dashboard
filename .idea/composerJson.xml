@@ -3,9 +3,9 @@
   <component name="ComposerJsonPluginSettings">
     <unboundedVersionInspectionSettings>
       <excludedPackages>
-        <pattern pattern="league/*" />
-        <pattern pattern="marwelln/recaptcha" />
         <pattern pattern="dreamfactory/*" />
+        <pattern pattern="marwelln/recaptcha" />
+        <pattern pattern="league/*" />
       </excludedPackages>
     </unboundedVersionInspectionSettings>
     <customRepositories />
