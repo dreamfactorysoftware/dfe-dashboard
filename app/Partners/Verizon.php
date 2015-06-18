@@ -1,6 +1,7 @@
 <?php
 namespace DreamFactory\Enterprise\Dashboard\Partners;
 
+use DreamFactory\Enterprise\Common\Facades\Scalpel;
 use DreamFactory\Enterprise\Partner\AlertPartner;
 use DreamFactory\Library\Utility\Curl;
 use Illuminate\Http\Request;
