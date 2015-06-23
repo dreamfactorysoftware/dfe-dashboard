@@ -39,7 +39,7 @@ class Verizon extends AlertPartner
 
             $_response = Curl::post($_url, json_encode($_data));
 
-            //  Log it
+            //  Log itit's all
             file_put_contents(storage_path() . '/logs/utc_post.log',
                 date('Y-m-d H:i:s') . 'URL: ' . $_url . ' payload: ' .
                 print_r($_data, true) . ' response: ' . print_r($_response, true) . PHP_EOL, FILE_APPEND);

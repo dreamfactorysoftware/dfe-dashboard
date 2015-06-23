@@ -1,5 +1,17 @@
-.partner-alert {
-    padding: 5px 25px 20px 25px;
+.alert-partner {
+    background-color: #ecedee;
+    color:            #333333;
+    border-color:     #dcddde;
+    border-radius:    0 0 0 10px;
+}
+
+.partner-button {
+    border-radius: 0 0 0 10px;
+}
+
+.modal-content > button.close {
+    margin-right: 5px;
+    margin-top:   5px;
 }
 
 .vz-red {
@@ -7,9 +19,29 @@
     color:            #ef1d1d;
 }
 
+.partner-brand > h3 {
+    display:     inline-block;
+    margin-left: 14px;
+}
+
+.partner-copy {
+}
+
+.partner-copy h3 {
+    /*padding: 0;*/
+    /*margin:  35px 0 0;*/
+}
+
+.partner-action > .partner-button {
+    margin: 15% auto 0 auto;
+}
+
+.partner-action {
+    float:      right;
+    text-align: right;
+}
+
 .partner-row {
-    padding-top:   5px;
-    margin-bottom: -10px;
 }
 
 .partner-row form button {
@@ -17,21 +49,16 @@
 }
 
 .partner-row > .partner-brand {
-    margin-top: 5px;
 }
 
-.partner-copy h3 {
-    padding: 0;
-    margin:  35px 0 0;
-}
-
-.partner-button {
-    background-color: #d2212a;
+.partner-row .partner-button .fa-fw {
+    text-align: right;
 }
 
 @media (max-width: 1000px) {
     .partner-copy h3 {
-        padding: 0;
-        margin:  10px 0 0;
+        /*padding: 0;*/
+        /*margin:  10px 0 0;*/
     }
 }
+
