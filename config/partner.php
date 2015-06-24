@@ -21,7 +21,7 @@ HTML
             'copy'      => <<< HTML
 <div class="row partner-row">
     <div class="col-md-2 col-sm-2" style="padding-left: 0;"><img src="/vendor/dfe-partner/assets/img/verizon_left.png" class="partner-brand"></div>
-    <div class="col-md-8 col-sm-8 partner-copy"><h3>Deploy DreamFactory to your own virtual server hosted on a Verizon Cloud Space.</h3></div>
+    <div class="col-md-8 col-sm-8 partner-copy"><h3>Deploy DreamFactory to your own virtual server hosted on a Verizon CloudSpace.</h3></div>
     <div class="col-md-2 col-sm-2">
         <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#vzLearnMore" style="background-color: #ED1C24; margin-top: 10%; margin-right: 0;">Learn More &gt;&gt;</button>
         <div style="clear: both"></div>
@@ -35,7 +35,7 @@ HTML
         <div class="partner-copy" style="background-color: #ECEDEE; color: #333333; border-color: #ECEDEE"><img src="/vendor/dfe-partner/assets/img/verizon_left.png" class="partner-brand">DreamFactory on Verizon Cloud</div>
       </div>
       <div class="modal-body">
-        <p>Signing up for Verizon Cloud services allows you to deploy a DreamFactory instance to your own virtual server on a Verizon Cloud Space, outside of the free sandbox environment you are currently in.</p>
+        <p>Signing up for Verizon Cloud services allows you to deploy a DreamFactory instance to your own virtual server on a Verizon CloudSpace, outside of the free sandbox environment you are currently in.</p>
 
         <p id="signup">When you click the 'Sign up now!' button you'll be redirected to the Verizon Cloud Registration page where you can purchase the cloud services for your new server.</p>
 
