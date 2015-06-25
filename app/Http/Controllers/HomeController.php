@@ -213,7 +213,7 @@ class HomeController extends BaseController
     protected function autoLoginRegistrant($subGuid, $partnerEmail = null)
     {
         for ($_i = 0; $_i < static::MAX_LOOKUP_RETRIES; $_i++) {
-            if ($this->locateContactBySubmissionGuid($subGuid, $partnerEmail)) {
+            if ($this->locateContactBySubmissionGuid($subGuid, $partnerEmail) || null != $partnerEmail) {
                 break;
             }
 
