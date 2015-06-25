@@ -39,7 +39,7 @@ class HomeController extends BaseController
                 \Log::notice('bogus referrer on inbound from landing page: ' . $_ref);
             }
 
-            $this->autoLoginRegistrant($_subGuid);
+            $this->autoLoginRegistrant($_subGuid, $request->input('pem'));
         }
     }
 
@@ -205,14 +205,15 @@ class HomeController extends BaseController
     /**
      * Given a HubSpot "submissionGuid", locate a registrant with the same conversion-id
      *
-     * @param string $subGuid
+     * @param string      $subGuid      The form submission GUID
+     * @param string|null $partnerEmail Partner registrant email address
      *
      * @return bool Returns false if nothing found otherwise logs user in and redirects to home page
      */
-    protected function autoLoginRegistrant($subGuid)
+    protected function autoLoginRegistrant($subGuid, $partnerEmail = null)
     {
         for ($_i = 0; $_i < static::MAX_LOOKUP_RETRIES; $_i++) {
-            if ($this->locateContactBySubmissionGuid($subGuid)) {
+            if ($this->locateContactBySubmissionGuid($subGuid, $partnerEmail)) {
                 break;
             }
 
@@ -222,56 +223,59 @@ class HomeController extends BaseController
     }
 
     /**
-     * @param string $subGuid
+     * @param string      $subGuid
+     * @param string|null $partnerEmail Partner registrant email address
      *
      * @return bool|\Illuminate\Http\RedirectResponse
      */
-    protected function locateContactBySubmissionGuid($subGuid)
+    protected function locateContactBySubmissionGuid($subGuid, $partnerEmail)
     {
-        $_url =
-            'https://api.hubapi.com/contacts/v1/lists/recently_updated/contacts/recent/?hapikey=' .
-            config('dfe.hubspot.api-key') .
-            '&count=50';
+        if ('false' !== $subGuid && empty($partnerEmail)) {
+            $_url =
+                'https://api.hubapi.com/contacts/v1/lists/recently_updated/contacts/recent/?hapikey=' .
+                config('dfe.hubspot.api-key') .
+                '&count=50';
 
-        if (false === ($_response = Curl::get($_url))) {
-            \Log::debug('[auth.landing-page] recent contact pull failed.');
+            if (false === ($_response = Curl::get($_url))) {
+                \Log::debug('[auth.landing-page] recent contact pull failed.');
 
-            return false;
-        }
+                return false;
+            }
 
-        if (empty($_response) ||
-            !($_response instanceof \stdClass) ||
-            !isset($_response->contacts) ||
-            empty($_response->contacts)
-        ) {
-            //  Methinks thine guid is bogus
-            \Log::debug('[auth.landing-page] recent contacts empty or invalid.');
-            \Log::debug('[auth.landing-page] * response: ' . print_r($_response, true));
+            if (empty($_response) ||
+                !($_response instanceof \stdClass) ||
+                !isset($_response->contacts) ||
+                empty($_response->contacts)
+            ) {
+                //  Methinks thine guid is bogus
+                \Log::debug('[auth.landing-page] recent contacts empty or invalid.');
+                \Log::debug('[auth.landing-page] * response: ' . print_r($_response, true));
 
-            return false;
-        }
+                return false;
+            }
 
-        //  Mine for gold...
-        $_email = null;
+            //  Mine for gold...
+            $_email = null;
 
-        /**
-         * GHA 2015-06-16
-         * This has to be the most ridiculous way to get a contact's email address that I've ever seen.
-         */
-        foreach ($_response->contacts as $_contact) {
-            if (isset($_contact->{'form-submissions'})) {
-                foreach ($_contact->{'form-submissions'} as $_sub) {
-                    if (isset($_sub->{'conversion-id'}) && $subGuid == $_sub->{'conversion-id'}) {
-                        if (isset($_contact->{'identity-profiles'})) {
-                            foreach ($_contact->{'identity-profiles'} as $_profile) {
-                                if (isset($_profile->identities)) {
-                                    foreach ($_profile->identities as $_identity) {
-                                        if (isset($_identity->type) &&
-                                            'EMAIL' == $_identity->type &&
-                                            isset($_identity->value)
-                                        ) {
-                                            $_email = $_identity->value;
-                                            break 4;
+            /**
+             * GHA 2015-06-16
+             * This has to be the most ridiculous way to get a contact's email address that I've ever seen.
+             */
+            foreach ($_response->contacts as $_contact) {
+                if (isset($_contact->{'form-submissions'})) {
+                    foreach ($_contact->{'form-submissions'} as $_sub) {
+                        if (isset($_sub->{'conversion-id'}) && $subGuid == $_sub->{'conversion-id'}) {
+                            if (isset($_contact->{'identity-profiles'})) {
+                                foreach ($_contact->{'identity-profiles'} as $_profile) {
+                                    if (isset($_profile->identities)) {
+                                        foreach ($_profile->identities as $_identity) {
+                                            if (isset($_identity->type) &&
+                                                'EMAIL' == $_identity->type &&
+                                                isset($_identity->value)
+                                            ) {
+                                                $_email = $_identity->value;
+                                                break 4;
+                                            }
                                         }
                                     }
                                 }
@@ -280,16 +284,28 @@ class HomeController extends BaseController
                     }
                 }
             }
+
+            //  Didn't find this person out of the last 50? how could he just have been redirected??
+            if (empty($_email)) {
+                \Log::debug('[auth.landing-page] subGuid "' . $subGuid . '" not found in recents');
+
+                return false;
+            }
+
+            \Log::debug('[auth.landing-page] subGuid "' . $subGuid . '" attached with email "' . $_email . '"');
+        } else {
+            //  Make sure it came from our domain...
+            if (null === ($_referrer = \Request::server('HTTP_REFERER')) || false === stripos($_referrer,
+                    'verizon.dreamfactory.com')
+            ) {
+                \Log::debug('[auth.landing-page] bad referrer "' . $_referrer . '" in auto-login request.');
+
+                return false;
+            }
+
+            $_email = $partnerEmail;
+            \Log::debug('[auth.landing-page] using partner supplied email "' . $_email . '"');
         }
-
-        //  Didn't find this person out of the last 50? how could he just have been redirected??
-        if (empty($_email)) {
-            \Log::debug('[auth.landing-page] subGuid "' . $subGuid . '" not found in recents');
-
-            return false;
-        }
-
-        \Log::debug('[auth.landing-page] subGuid "' . $subGuid . '" attached with email "' . $_email . '"');
 
         //  Lookup email address
         try {
@@ -306,7 +322,7 @@ class HomeController extends BaseController
 
         \Log::info('[auth.landing-page] auto-login user "' . $_email . '"');
 
-        \Redirect::to('/');
+        \Redirect::home();
 
         return true;
     }
