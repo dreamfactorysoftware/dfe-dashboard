@@ -322,7 +322,7 @@ class HomeController extends BaseController
 
         \Log::info('[auth.landing-page] auto-login user "' . $_email . '"');
 
-        \Redirect::home();
+        \Redirect::to('/auth/login');
 
         return true;
     }
