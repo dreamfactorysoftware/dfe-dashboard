@@ -729,7 +729,8 @@ HTML;
             case ProvisionStates::CREATED:
             case ProvisionStates::PROVISIONING:
                 $_statusIcon = $_icon = $_spinner;
-                $_message = 'Your instance is being created, with lots of love! You will receive an email when it is ready.';
+                $_message =
+                    'Your instance is being created, with lots of love! You will receive an email when it is ready.';
                 break;
 
             case ProvisionStates::DEPROVISIONING:
@@ -1161,26 +1162,35 @@ HTML;
 
         if (GuestLocations::DFE_CLUSTER == $instance->guest_location_nbr) {
             $_buttons = [
-                'launch' => $this->_makeToolbarButton($_id, 'Launch',
+                'launch' => $this->_makeToolbarButton($_id,
+                    'Launch',
                     ['context' => 'btn-success', 'icon' => 'fa-play']),
-                'delete' => $this->_makeToolbarButton($_id, 'Delete',
+                'delete' => $this->_makeToolbarButton($_id,
+                    'Delete',
                     ['context' => 'btn-danger', 'icon' => 'fa-times']),
-                'export' => $this->_makeToolbarButton($_id, 'Export',
+                'export' => $this->_makeToolbarButton($_id,
+                    'Export',
                     ['context' => 'btn-info', 'icon' => 'fa-cloud-download']),
-                'import' => $this->_makeToolbarButton($_id, 'Import',
+                'import' => $this->_makeToolbarButton($_id,
+                    'Import',
                     ['context' => 'btn-warning', 'icon' => 'fa-cloud-upload']),
             ];
         } else {
             $_buttons = [
-                'start'     => $this->_makeToolbarButton($_id, 'Start',
+                'start'     => $this->_makeToolbarButton($_id,
+                    'Start',
                     ['context' => 'btn-success', 'icon' => 'fa-play',]),
-                'stop'      => $this->_makeToolbarButton($_id, 'Stop',
+                'stop'      => $this->_makeToolbarButton($_id,
+                    'Stop',
                     ['context' => 'btn-warning', 'icon' => 'fa-stop',]),
-                'terminate' => $this->_makeToolbarButton($_id, 'Terminate',
+                'terminate' => $this->_makeToolbarButton($_id,
+                    'Terminate',
                     ['context' => 'btn-danger', 'icon' => 'fa-times',]),
-                'export'    => $this->_makeToolbarButton($_id, 'Export',
+                'export'    => $this->_makeToolbarButton($_id,
+                    'Export',
                     ['context' => 'btn-info', 'icon' => 'fa-cloud-download',]),
-                'import'    => $this->_makeToolbarButton($_id, 'Import',
+                'import'    => $this->_makeToolbarButton($_id,
+                    'Import',
                     ['context' => 'btn-warning', 'icon' => 'fa-cloud-upload',]),
             ];
         }
@@ -1280,54 +1290,57 @@ HTML;
 
         $_html = null;
 
-        foreach ($host->offerings as $_tag => $_offering) {
-            $_data = (array)$_offering;
-            $_displayName = array_get($_data, 'name', $_tag);
-            $_items = array_get($_data, 'items', []);
-            $_suggested = array_get($_data, 'suggested');
+        if (!empty($host->offerings)) {
+            foreach ($host->offerings as $_tag => $_offering) {
+                $_data = (array)$_offering;
+                $_displayName = array_get($_data, 'name', $_tag);
+                $_items = array_get($_data, 'items', []);
+                $_suggested = array_get($_data, 'suggested');
 
-            $_helpBlock =
-                (null !== ($_helpBlock = array_get($_data, 'help-block')))
-                    ? '<p class="help-block">' . $_helpBlock . '</p>'
-                    : null;
+                $_helpBlock =
+                    (null !== ($_helpBlock = array_get($_data, 'help-block')))
+                        ? '<p class="help-block">' . $_helpBlock . '</p>'
+                        : null;
 
-            if (!empty($_items)) {
-                $_options = null;
+                if (!empty($_items)) {
+                    $_options = null;
 
-                foreach ($_items as $_name => $_config) {
-                    $_attributes = $_html = $_selected = null;
+                    foreach ($_items as $_name => $_config) {
+                        $_attributes = $_html = $_selected = null;
 
-                    $_config = (array)$_config;
+                        $_config = (array)$_config;
 
-                    if (null === ($_description = array_get($_config, 'description'))) {
-                        $_description = $_name;
-                    } else {
-                        unset($_config['description']);
+                        if (null === ($_description = array_get($_config, 'description'))) {
+                            $_description = $_name;
+                        } else {
+                            unset($_config['description']);
+                        }
+
+                        foreach ($_config as $_key => $_value) {
+                            $_key = str_replace(['"', '\'', '_', ' ', '.', ','], '-', strtolower($_key));
+                            $_attributes .= ' data-' . $_key . '="' . $_value . '" ';
+                        }
+
+                        $_suggested == $_name && $_selected = ' selected ';
+                        $_options .= '<option value="' .
+                            $_name .
+                            '" ' .
+                            $_attributes .
+                            ' ' .
+                            $_selected .
+                            '>' .
+                            $_description .
+                            '</option>';
                     }
 
-                    foreach ($_config as $_key => $_value) {
-                        $_key = str_replace(['"', '\'', '_', ' ', '.', ','], '-', strtolower($_key));
-                        $_attributes .= ' data-' . $_key . '="' . $_value . '" ';
-                    }
-
-                    $_suggested == $_name && $_selected = ' selected ';
-                    $_options .= '<option value="' .
-                        $_name .
-                        '" ' .
-                        $_attributes .
-                        ' ' .
-                        $_selected .
-                        '>' .
-                        $_description .
-                        '</option>';
+                    $_html .= view('layouts.partials.offerings',
+                        [
+                            'tag'         => $_tag,
+                            'displayName' => $_displayName,
+                            'options'     => $_options,
+                            'helpBlock'   => $_helpBlock,
+                        ])->render();
                 }
-
-                $_html .= view('layouts.partials.offerings', [
-                    'tag'         => $_tag,
-                    'displayName' => $_displayName,
-                    'options'     => $_options,
-                    'helpBlock'   => $_helpBlock,
-                ])->render();
             }
         }
 
