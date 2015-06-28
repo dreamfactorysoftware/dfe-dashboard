@@ -8,7 +8,7 @@
 					id="import-id"
 					class="form-control" {{ 0 == count($snapshotList) ? 'disabled style="pointer-events: none;"' : null }}>
 				@forelse( $snapshotList as $snapshot )
-					<option value="{{ $snapshot->snapshot_id }}">{{ $snapshot->snapshot_name}}</option>
+					<option value="{{ $snapshot['id'] }}">{{ $snapshot['name']}}</option>
 				@empty
 					<option value=>No snapshots found</option>
 				@endforelse
