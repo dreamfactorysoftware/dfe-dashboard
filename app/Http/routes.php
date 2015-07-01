@@ -3,6 +3,8 @@
 //* Routes
 //******************************************************************************
 
+use DreamFactory\Enterprise\Database\Models\Snapshot;
+
 \Route::any('/', ['uses' => 'HomeController@index']);
 \Route::any('home', ['uses' => 'HomeController@index']);
 \Route::post('status/{id}', ['uses' => 'HomeController@status']);
@@ -13,4 +15,11 @@
         'auth'     => 'Auth\AuthController',
         'password' => 'Auth\PasswordController',
     ]
+);
+
+/** Snapshot download handler */
+\Route::get('/snapshot/{snapshotId}',
+    function ($snapshotId) {
+        return Snapshot::downloadFromHash($snapshotId);
+    }
 );

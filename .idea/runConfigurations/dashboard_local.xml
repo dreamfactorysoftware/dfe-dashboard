@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="dashboard.local" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" singleton="true" server_name="dashboard.local" start_url="/?submissionGuid=7ba71efd-9f3d-446a-b776-2ed35bede721">
+  <configuration default="false" name="dashboard.local" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" singleton="true" server_name="dashboard.local" start_url="/snapshot/61436942c7f1debf482ccf31d5d2067617029468">
     <method />
   </configuration>
 </component>

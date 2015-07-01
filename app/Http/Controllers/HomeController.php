@@ -4,6 +4,7 @@ use DreamFactory\Enterprise\Common\Http\Controllers\BaseController;
 use DreamFactory\Enterprise\Dashboard\Enums\DashboardDefaults;
 use DreamFactory\Enterprise\Dashboard\Enums\PanelTypes;
 use DreamFactory\Enterprise\Dashboard\Facades\Dashboard;
+use DreamFactory\Enterprise\Database\Models\RouteHash;
 use DreamFactory\Enterprise\Database\Models\Snapshot;
 use DreamFactory\Enterprise\Database\Models\User;
 use DreamFactory\Enterprise\Partner\Facades\Partner;
@@ -11,6 +12,8 @@ use DreamFactory\Library\Utility\Curl;
 use DreamFactory\Library\Utility\Inflector;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use League\Flysystem\Filesystem;
 
 class HomeController extends BaseController
 {
@@ -40,6 +43,19 @@ class HomeController extends BaseController
             }
 
             $this->autoLoginRegistrant($_subGuid, $request->input('pem'));
+        }
+    }
+
+    public function download($snapshotId)
+    {
+        try {
+            /** @type RouteHash $_hash */
+            $_hash = RouteHash::with(['snapshot'])->byHash($snapshotId)->firstOrFail();
+            /** @type Filesystem $_fs */
+            $_fs = $_hash->snapshot->instance->getSnapshotMount();
+            $_fs->readStream($_hash->actual_path_text);
+        } catch (\Exception $_ex) {
+            abort(Response::HTTP_NOT_FOUND);
         }
     }
 
