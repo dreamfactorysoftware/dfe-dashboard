@@ -58,6 +58,7 @@ return [
         /** 3rd-party Service Providers */
         'Marwelln\Recaptcha\RecaptchaServiceProvider',
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
+        'GrahamCampbell\Flysystem\FlysystemServiceProvider',
     ],
     //******************************************************************************
     //* Aliases
@@ -101,6 +102,7 @@ return [
         'Mounter'         => 'DreamFactory\Enterprise\Storage\Facades\Mounter',
         'Partner'         => 'DreamFactory\Enterprise\Partner\Facades\Partner',
         /** Third-party aliases */
+        'Flysystem'       => 'GrahamCampbell\Flysystem\Facades\Flysystem',
     ],
 
 ];
