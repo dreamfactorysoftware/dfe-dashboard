@@ -2,6 +2,8 @@
 //******************************************************************************
 //* Dashboard specific settings
 //******************************************************************************
+use DreamFactory\Enterprise\Common\Enums\ServerTypes;
+
 return [
     //******************************************************************************
     //* general dashboard settings
@@ -26,4 +28,10 @@ return [
     'override-db-server-id'    => false,
     'override-app-server-id'   => false,
     'override-web-server-id'   => false,
+    'button-contexts'          => [
+        ServerTypes::DB  => 'primary',
+        ServerTypes::WEB => 'success',
+        ServerTypes::APP => 'warning',
+    ],
+
 ];
