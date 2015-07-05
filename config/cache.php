@@ -3,7 +3,7 @@
 //* Application Cache Settings
 //******************************************************************************
 return [
-    'default' => env( 'CACHE_DRIVER', 'file' ),
+    'default' => env('CACHE_DRIVER', 'file'),
     'prefix'  => 'dfe',
     'stores'  => [
         'database'  => [
@@ -13,7 +13,7 @@ return [
         ],
         'file'      => [
             'driver' => 'file',
-            'path'   => storage_path() . '/framework/cache',
+            'path'   => __DIR__ . '/../bootstrap/cache',
         ],
         'memcached' => [
             'driver'  => 'memcached',
@@ -21,7 +21,7 @@ return [
                 [
                     'host'   => '127.0.0.1',
                     'port'   => 11211,
-                    'weight' => 100
+                    'weight' => 100,
                 ],
             ],
         ],

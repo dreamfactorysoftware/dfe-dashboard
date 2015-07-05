@@ -1,5 +1,6 @@
 <?php namespace DreamFactory\Enterprise\Dashboard\Services;
 
+use DreamFactory\Enterprise\Common\Enums\ServerTypes;
 use DreamFactory\Enterprise\Common\Packets\ErrorPacket;
 use DreamFactory\Enterprise\Common\Packets\SuccessPacket;
 use DreamFactory\Enterprise\Common\Services\BaseService;
@@ -11,8 +12,8 @@ use DreamFactory\Enterprise\Dashboard\Enums\PanelTypes;
 use DreamFactory\Enterprise\Dashboard\Facades\Dashboard;
 use DreamFactory\Enterprise\Dashboard\Things\InstancePanel;
 use DreamFactory\Enterprise\Database\Enums\GuestLocations;
+use DreamFactory\Enterprise\Database\Enums\OwnerTypes;
 use DreamFactory\Enterprise\Database\Enums\ProvisionStates;
-use DreamFactory\Enterprise\Database\Enums\ServerTypes;
 use DreamFactory\Enterprise\Database\Models\Instance;
 use DreamFactory\Enterprise\Database\Models\User;
 use Illuminate\Http\Request;
@@ -69,10 +70,15 @@ class DashboardService extends BaseService
     {
         parent::__construct($app);
 
-        $this->_defaultDomain = '.' . trim(config('dfe.dashboard.default-dns-zone'),
-                '.') . '.' . trim(config('dfe.dashboard.default-dns-domain'), '.');
         $this->_useConfigServers = config('dfe.dashboard.override-cluster-servers', false);
         $this->_requireCaptcha = config('dfe.dashboard.require-captcha', true);
+        $this->setDefaultDomain(
+            implode('.',
+                [
+                    trim(config('dfe.dashboard.default-dns-zone'), '.'),
+                    trim(config('dfe.dashboard.default-dns-domain'), '.'),
+                ])
+        );
 
         $this->_determineGridLayout();
     }
@@ -109,9 +115,9 @@ class DashboardService extends BaseService
                     $this->provisionInstance($id, false, true);
                     break;
 
+                case 'deprovision':
                 case 'destroy':
                 case 'delete':
-                case 'deprovision':
                     $this->deprovisionInstance($id);
                     break;
 
@@ -132,10 +138,10 @@ class DashboardService extends BaseService
                     $this->_instanceSnapshots($id);
                     break;
 
-                case 'migrate':
-                case 'import':
-                    $this->importInstance($id);
-                    break;
+//                case 'migrate':
+//                case 'import':
+//                    $this->importInstance($id);
+//                    break;
 
                 case 'status':
                     return $this->_instanceStatus($id);
@@ -215,6 +221,7 @@ class DashboardService extends BaseService
                 'vendor-id'          => $this->_request->input('vendor-id'),
                 'vendor-secret'      => $this->_request->input('vendor-secret'),
                 'owner-id'           => \Auth::user()->id,
+                'owner-type'         => OwnerTypes::USER,
                 'guest-location-nbr' => $_provisioner,
 
             ],
@@ -388,7 +395,9 @@ class DashboardService extends BaseService
      */
     public function getProvisioners()
     {
-        return $this->_getOpsClient()->provisioners();
+        static $_provisioners;
+
+        return $_provisioners ?: $_provisioners = $this->_getOpsClient()->provisioners();
     }
 
     /**
@@ -468,10 +477,7 @@ class DashboardService extends BaseService
                 'instanceStatusIcon'     => $this->panelConfig($panelType, 'status-icon'),
                 'instanceStatusIconSize' => $this->panelConfig($panelType, 'status-icon-size'),
                 'instanceStatusContext'  => $this->panelConfig($panelType, 'status-icon-context'),
-                'instanceUrl'            => config('dfe.dashboard.default-domain-protocol', 'https') .
-                    '://' .
-                    $_name .
-                    $this->_defaultDomain,
+                'instanceUrl'            => $this->buildInstanceUrl($instance->instance_name_text),
             ],
             //  Instance status
             $this->_getInstanceStatus($instance),
@@ -588,14 +594,14 @@ class DashboardService extends BaseService
                 'icon'    => 'cloud-download',
                 'text'    => 'Export',
             ],
-            'import' => [
-                'enabled' => false,
-                'hint'    => 'Restore a snapshot',
-                'color'   => 'warning',
-                'icon'    => 'cloud-upload',
-                'text'    => 'Import',
-                'href'    => '#dsp-import-snapshot',
-            ],
+            //            'import' => [
+            //                'enabled' => false,
+            //                'hint'    => 'Restore a snapshot',
+            //                'color'   => 'warning',
+            //                'icon'    => 'cloud-upload',
+            //                'text'    => 'Import',
+            //                'href'    => '#dsp-import-snapshot',
+            //            ],
             'delete' => [
                 'enabled' => false,
                 'hint'    => 'Delete instance permanently',
@@ -611,7 +617,7 @@ class DashboardService extends BaseService
                     $_buttons['start']['enabled'] = false;
                     $_buttons['stop']['enabled'] = false;
                     $_buttons['export']['enabled'] = false;
-                    $_buttons['import']['enabled'] = false;
+//                    $_buttons['import']['enabled'] = false;
                     $_buttons['delete']['enabled'] = false;
                     break;
 
@@ -620,7 +626,7 @@ class DashboardService extends BaseService
                     $_buttons['stop']['enabled'] = true;
                     $_buttons['export']['enabled'] = false;
                     $_buttons['delete']['enabled'] = true;
-                    $_buttons['import']['enabled'] = false;
+//                    $_buttons['import']['enabled'] = false;
                     break;
 
                 case 'running':
@@ -628,7 +634,7 @@ class DashboardService extends BaseService
                     $_buttons['stop']['enabled'] = true;
                     $_buttons['export']['enabled'] = true;
                     $_buttons['delete']['enabled'] = true;
-                    $_buttons['import']['enabled'] = false;
+//                    $_buttons['import']['enabled'] = false;
                     break;
             }
         } else {
@@ -638,7 +644,7 @@ class DashboardService extends BaseService
                     if (1 != $instance->deprovision_ind) {
                         $_buttons['stop']['enabled'] = true;
                         $_buttons['export']['enabled'] = true;
-                        $_buttons['import']['enabled'] = true;
+//                        $_buttons['import']['enabled'] = true;
                         $_buttons['delete']['enabled'] = true;
                         $_buttons['start']['enabled'] = false;
                     }
@@ -650,7 +656,7 @@ class DashboardService extends BaseService
                         $_buttons['start']['enabled'] = true;
                         $_buttons['export']['enabled'] = true;
                         $_buttons['delete']['enabled'] = true;
-                        $_buttons['import']['enabled'] = false;
+//                        $_buttons['import']['enabled'] = false;
                     }
                     break;
             }
@@ -676,8 +682,8 @@ class DashboardService extends BaseService
                 'start' == $_buttonName &&
                 ProvisionStates::PROVISIONED == $instance->state_nbr
             ) {
-                $_href = config('dfe.dashboard.default-domain-protocol',
-                        'https') . '://' . $instance->instance_name_text . $this->_defaultDomain;
+                $_href = $this->buildInstanceUrl($instance->instance_name_text);
+
                 $_button['text'] = 'Launch!';
                 $_disabled = $_disabledClass = null;
                 $_buttonName = 'launch';
@@ -847,6 +853,18 @@ HTML;
     public function getDefaultDomain()
     {
         return $this->_defaultDomain;
+    }
+
+    /**
+     * Sets default domain and ensures leading period
+     *
+     * @param string $defaultDomain
+     *
+     * @return string
+     */
+    protected function setDefaultDomain($defaultDomain)
+    {
+        return $this->_defaultDomain = '.' . trim($defaultDomain, '. ');
     }
 
     /**
@@ -1091,12 +1109,12 @@ HTML;
                 'hint'    => 'Create an export of your instance',
                 'text'    => 'Export',
             ],
-            'import' => [
-                'context' => 'btn-warning',
-                'icon'    => 'fa-cloud-upload',
-                'hint'    => 'Import a prior export',
-                'text'    => 'Import',
-            ],
+            //            'import' => [
+            //                'context' => 'btn-warning',
+            //                'icon'    => 'fa-cloud-upload',
+            //                'hint'    => 'Import a prior export',
+            //                'text'    => 'Import',
+            //            ],
             'delete' => [
                 'context' => 'btn-danger',
                 'icon'    => 'fa-times',
@@ -1171,11 +1189,9 @@ HTML;
                 'export' => $this->_makeToolbarButton($_id,
                     'Export',
                     ['context' => 'btn-info', 'icon' => 'fa-cloud-download']),
-                'import' => $this->_makeToolbarButton($_id,
-                    'Import',
-                    ['context' => 'btn-warning', 'icon' => 'fa-cloud-upload']),
             ];
         } else {
+            //@todo make dynamic call to provisioner to find out supported operations
             $_buttons = [
                 'start'     => $this->_makeToolbarButton($_id,
                     'Start',
@@ -1189,9 +1205,6 @@ HTML;
                 'export'    => $this->_makeToolbarButton($_id,
                     'Export',
                     ['context' => 'btn-info', 'icon' => 'fa-cloud-download',]),
-                'import'    => $this->_makeToolbarButton($_id,
-                    'Import',
-                    ['context' => 'btn-warning', 'icon' => 'fa-cloud-upload',]),
             ];
         }
 
@@ -1357,7 +1370,7 @@ HTML;
     protected function _buildInstanceLink($status)
     {
         return
-            '<a href="https://' . $status->instance_name_text . $this->_defaultDomain . '" ' .
+            '<a href="https://' . $this->getDefaultDomain($status->instance_name_text) . '" ' .
             'target="_blank" class="dsp-launch-link">' . $status->instance_name_text . '</a>';
     }
 
@@ -1445,5 +1458,19 @@ HTML;
         }
 
         return $_html;
+    }
+
+    /**
+     * Constructs and returns the fully qualified host name of an instance
+     *
+     * @param string $instanceName
+     *
+     * @return string
+     */
+    protected function buildInstanceUrl($instanceName)
+    {
+        return
+            config('dfe.dashboard.default-domain-protocol',
+                'https') . '://' . $instanceName . $this->getDefaultDomain();
     }
 }
