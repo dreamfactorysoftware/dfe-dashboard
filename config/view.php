@@ -1,7 +1,8 @@
 <?php
 return [
     'paths'    => [
-        realpath( base_path( 'resources/views' ) )
+        realpath(base_path('resources/views')),
     ],
-    'compiled' => storage_path() . '/framework/views',
+    'compiled' => __DIR__ . '/../bootstrap/cache/views',
+
 ];

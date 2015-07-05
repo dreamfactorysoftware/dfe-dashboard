@@ -19,6 +19,6 @@
 
 @section('panel-body-links')
 	<button type="submit" class="btn btn-primary btn-warning btn-sm">
-		<i class="fa fa-fw {{ config('dfe.icons.import') }}" style="margin-right: 8px;"></i> {{ \Lang::get('dashboard.instance-import-button-text') }}
+		<i class="fa fa-fw {{ config('icons.import') }}" style="margin-right: 8px;"></i> {{ \Lang::get('dashboard.instance-import-button-text') }}
 	</button>
 @overwrite

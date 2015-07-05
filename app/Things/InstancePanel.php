@@ -43,11 +43,11 @@ class InstancePanel
     {
         $this->_id = $id;
         $this->_data = $data ?: [];
-        $this->_blade = $blade ?: config('dfe.panels.default.template', DashboardDefaults::SINGLE_INSTANCE_BLADE);
+        $this->_blade = $blade ?: config('panels.default.template', DashboardDefaults::SINGLE_INSTANCE_BLADE);
 
         $this->_defaultDomain =
-            '.' . trim(config('dfe.dashboard.default-dns-zone'),
-                '.') . '.' . trim(config('dfe.dashboard.default-dns-domain'), '.');
+            '.' . trim(config('dashboard.default-dns-zone'),
+                '.') . '.' . trim(config('dashboard.default-dns-domain'), '.');
     }
 
     /**
@@ -81,13 +81,13 @@ class InstancePanel
     {
         return array_merge(
             [
-                'panelContext'           => config('dfe.dashboard.panel-context', 'panel-info'),
+                'panelContext'           => config('dashboard.panel-context', 'panel-info'),
                 'instanceName'           => $this->_id,
                 'defaultDomain'          => $this->_defaultDomain,
                 'headerIconSize'         => 'fa-1x',
                 'instanceDivId'          => $this->_htmlId('instance', $instance->instance_name_text),
                 'instanceStatusIconSize' => 'fa-3x',
-                'instanceUrl'            => config('dfe.dashboard.default-domain-protocol', 'https') .
+                'instanceUrl'            => config('dashboard.default-domain-protocol', 'https') .
                     '://' .
                     $instance->instance_name_text .
                     $this->_defaultDomain,
@@ -118,7 +118,7 @@ class InstancePanel
      */
     protected function _getStatusData($instance)
     {
-        $_spinner = config('dfe.icons.spinner', DashboardDefaults::SPINNING_ICON);
+        $_spinner = config('icons.spinner', DashboardDefaults::SPINNING_ICON);
 
         switch ($instance->state_nbr) {
             case ProvisionStates::CREATED:
@@ -134,7 +134,7 @@ class InstancePanel
                 break;
 
             case ProvisionStates::PROVISIONED:
-                $_icon = config('dfe.icons.up');
+                $_icon = config('icons.up');
                 $_context = 'btn-success';
                 $_text = \Lang::get('dashboard.status-up');
                 break;
@@ -146,7 +146,7 @@ class InstancePanel
                 break;
 
             case ProvisionStates::DEPROVISIONED:
-                $_icon = config('dfe.icons.instance-terminating');
+                $_icon = config('icons.instance-terminating');
                 $_context = 'btn-warning';
                 $_text = \Lang::get('dashboard.status-terminating');
                 break;
@@ -154,13 +154,13 @@ class InstancePanel
             case ProvisionStates::PROVISIONING_ERROR:
             case ProvisionStates::DEPROVISIONING_ERROR:
             case ProvisionStates::CREATION_ERROR:
-                $_icon = config('dfe.icons.instance-dead');
+                $_icon = config('icons.instance-dead');
                 $_context = 'btn-danger';
                 $_text = \Lang::get('dashboard.status-dead');
                 break;
 
             default:
-                $_icon = config('dfe.icons.instance-unknown');
+                $_icon = config('icons.instance-unknown');
                 $_context = 'btn-warning';
                 $_text = \Lang::get('dashboard.status-dead');
                 break;

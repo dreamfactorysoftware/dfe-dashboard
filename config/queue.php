@@ -2,7 +2,7 @@
 
 return [
     //  Default Queue Driver
-    'default'     => env( 'QUEUE_DRIVER', 'sync' ),
+    'default'     => env('QUEUE_DRIVER', 'sync'),
     //  Queue Connections
     'connections' => [
         'sync'     => [

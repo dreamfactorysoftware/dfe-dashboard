@@ -14,6 +14,6 @@ return [
         'hosted' => [
             'driver' => 'local',
             'root'   => '/data/storage',
-        ]
+        ],
     ],
 ];

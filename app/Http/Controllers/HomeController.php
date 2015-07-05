@@ -112,14 +112,14 @@ class HomeController extends BaseController
     public function index(Request $request)
     {
         $_message = isset($messages) ? $messages : null;
-        $_defaultDomain = '.' . trim(config('dfe.dashboard.default-domain'), '. ');
+        $_defaultDomain = '.' . trim(config('dashboard.default-domain'), '. ');
 
         /** @type User $_user */
         $_user = \Auth::user();
 
         $_coreData = [
             /** General */
-            'panelContext'        => config('dfe.panels.default.context', DashboardDefaults::PANEL_CONTEXT),
+            'panelContext'        => config('panels.default.context', DashboardDefaults::PANEL_CONTEXT),
             'panelType'           => PanelTypes::SINGLE,
             'defaultDomain'       => $_defaultDomain,
             'message'             => $_message,
@@ -199,7 +199,7 @@ class HomeController extends BaseController
     protected function _validateCaptcha($request)
     {
         //  If captcha is on, check it...
-        if (config('dfe.dashboard.require-captcha') && $request->isMethod(Request::METHOD_POST)) {
+        if (config('dashboard.require-captcha') && $request->isMethod(Request::METHOD_POST)) {
             $_validator = \Validator::make(
                 \Input::all(),
                 [
@@ -249,7 +249,7 @@ class HomeController extends BaseController
         if ('false' !== $subGuid && empty($partnerEmail)) {
             $_url =
                 'https://api.hubapi.com/contacts/v1/lists/recently_updated/contacts/recent/?hapikey=' .
-                config('dfe.hubspot.api-key') .
+                config('marketing.hubspot.api-key') .
                 '&count=50';
 
             if (false === ($_response = Curl::get($_url))) {

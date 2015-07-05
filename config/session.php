@@ -1,14 +1,14 @@
 <?php
 return [
     //  Default Session Driver
-    'driver'          => env( 'SESSION_DRIVER', 'file' ),
+    'driver'          => env('SESSION_DRIVER', 'file'),
     //  Session Lifetime
     'lifetime'        => 120,
     'expire_on_close' => false,
     //  Session Encryption
     'encrypt'         => false,
     //  Session File Location
-    'files'           => storage_path() . '/framework/sessions',
+    'files'           => __DIR__ . '/../bootstrap/cache/sessions',
     //  Session Database Connection
     'connection'      => null,
     //  Session Database Table
