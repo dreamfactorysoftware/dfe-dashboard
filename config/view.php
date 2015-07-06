@@ -3,6 +3,6 @@ return [
     'paths'    => [
         realpath(base_path('resources/views')),
     ],
-    'compiled' => __DIR__ . '/../bootstrap/cache/views',
+    'compiled' => base_path() . '/bootstrap/cache/views',
 
 ];
