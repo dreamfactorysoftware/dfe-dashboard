@@ -101,7 +101,7 @@ class DashboardService extends BaseService
 
                 $this->_request = null;
 
-                return ErrorPacket::make(null, Response::HTTP_BAD_REQUEST);
+                return ErrorPacket::create(null, Response::HTTP_BAD_REQUEST);
             }
 
             switch ($_command) {
@@ -199,7 +199,7 @@ class DashboardService extends BaseService
                 'The name of your instance cannot be "' . $instanceId . '".  It is either currently in-use, or otherwise invalid.'
             );
 
-            return ErrorPacket::make(null, Response::HTTP_BAD_REQUEST, 'Invalid instance name.');
+            return ErrorPacket::create(null, Response::HTTP_BAD_REQUEST, 'Invalid instance name.');
         }
 
         if (false === ($_clusterConfig = $this->_getClusterConfig())) {
@@ -208,7 +208,9 @@ class DashboardService extends BaseService
                 'Provisioning is not possible at this time. The configured enterprise console for this dashboard is not currently available. Please try your request later.'
             );
 
-            return ErrorPacket::make(null, Response::HTTP_INTERNAL_SERVER_ERROR, 'Cluster server configuration error.');
+            return ErrorPacket::create(null,
+                Response::HTTP_INTERNAL_SERVER_ERROR,
+                'Cluster server configuration error.');
         }
 
         $_payload = array_merge(
@@ -242,7 +244,7 @@ class DashboardService extends BaseService
 
                 \Session::flash('dashboard-failure', $_message);
 
-                return ErrorPacket::make(null, Response::HTTP_INTERNAL_SERVER_ERROR, 'Provisioning error.');
+                return ErrorPacket::create(null, Response::HTTP_INTERNAL_SERVER_ERROR, 'Provisioning error.');
             }
         } else {
             \Session::flash(
@@ -252,10 +254,10 @@ class DashboardService extends BaseService
 
             $this->error('Error calling ops console api: ' . print_r($_result, true));
 
-            return ErrorPacket::make(null, Response::HTTP_INTERNAL_SERVER_ERROR, 'Cannot connect to ops console.');
+            return ErrorPacket::create(null, Response::HTTP_INTERNAL_SERVER_ERROR, 'Cannot connect to ops console.');
         }
 
-        return SuccessPacket::make($_result);
+        return SuccessPacket::create($_result);
     }
 
     /**
