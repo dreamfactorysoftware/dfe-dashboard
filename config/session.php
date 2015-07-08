@@ -8,7 +8,7 @@ return [
     //  Session Encryption
     'encrypt'         => false,
     //  Session File Location
-    'files'           => base_path() . '/bootstrap/cache/sessions',
+    'files'           => storage_path('framework/sessions'),
     //  Session Database Connection
     'connection'      => null,
     //  Session Database Table
