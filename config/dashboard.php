@@ -16,7 +16,7 @@ return [
     'default-dns-zone'         => env('DFE_DEFAULT_DNS_ZONE', 'enterprise'),
     'default-dns-domain'       => env('DFE_DEFAULT_DNS_DOMAIN', 'dreamfactory.com'),
     'default-domain'           => env('DFE_DEFAULT_DOMAIN', 'dreamfactory.com'),
-    'default-domain-protocol'  => 'https',
+    'default-domain-protocol'  => env('DFE_DEFAULT_DOMAIN_PROTOCOL', 'https'),
     //  UI defaults
     'panel-context'            => 'panel-info',
     'create-panel-context'     => 'panel-success',
