@@ -33,7 +33,7 @@ class DashboardService extends BaseService
     //*************************************************************************
 
     /**
-     * @var string The default sub-domain for new DSPs
+     * @var string The default sub-domain for new instances
      */
     protected $_defaultDomain;
     /**
@@ -73,10 +73,10 @@ class DashboardService extends BaseService
         $this->_useConfigServers = config('dashboard.override-cluster-servers', false);
         $this->_requireCaptcha = config('dashboard.require-captcha', true);
         $this->setDefaultDomain(implode('.',
-                [
-                    trim(config('dashboard.default-dns-zone'), '.'),
-                    trim(config('dashboard.default-dns-domain'), '.'),
-                ]));
+            [
+                trim(config('dashboard.default-dns-zone'), '.'),
+                trim(config('dashboard.default-dns-domain'), '.'),
+            ]));
 
         $this->_determineGridLayout();
     }
@@ -222,7 +222,7 @@ class DashboardService extends BaseService
         ],
             $_clusterConfig);
 
-        $_result = $this->_apiCall('provision', $_payload);
+        $_result = $this->callConsole('provision', $_payload);
 
         if ($_result && is_object($_result) && isset($_result->success)) {
             if ($_result->success) {
@@ -257,7 +257,7 @@ class DashboardService extends BaseService
      */
     public function deprovisionInstance($instanceId)
     {
-        $_result = $this->_apiCall('deprovision', ['instance-id' => $instanceId]);
+        $_result = $this->callConsole('deprovision', ['instance-id' => $instanceId]);
 
         if ($_result && is_object($_result) && isset($_result->success)) {
             \Session::flash('dashboard-success', 'Instance deprovisioning requested successfully.');
@@ -275,7 +275,7 @@ class DashboardService extends BaseService
      */
     public function stopInstance($instanceId)
     {
-        return $this->_apiCall('stop', ['instance-id' => $instanceId]);
+        return $this->callConsole('stop', ['instance-id' => $instanceId]);
     }
 
     /**
@@ -285,7 +285,7 @@ class DashboardService extends BaseService
      */
     public function startInstance($instanceId)
     {
-        return $this->_apiCall('start', ['instance-id' => $instanceId]);
+        return $this->callConsole('start', ['instance-id' => $instanceId]);
     }
 
     /**
@@ -297,7 +297,7 @@ class DashboardService extends BaseService
      */
     public function exportInstance($instanceId)
     {
-        return $this->_apiCall('export', ['instance-id' => $instanceId]);
+        return $this->callConsole('export', ['instance-id' => $instanceId]);
     }
 
     /**
@@ -307,7 +307,7 @@ class DashboardService extends BaseService
      */
     protected function _instanceSnapshots($instanceId)
     {
-        $_result = $this->_apiCall('exports', ['instance-id' => $instanceId]);
+        $_result = $this->callConsole('exports', ['instance-id' => $instanceId]);
 
         if (!$_result || !is_object($_result) || !isset($_result->success)) {
             \Session::flash('dashboard-failure',
@@ -362,7 +362,7 @@ class DashboardService extends BaseService
             $_snapshot = $_parts[1];
         }
 
-        return $this->_apiCall('import', ['instance-id' => $instanceId, 'snapshot' => $_snapshot]);
+        return $this->callConsole('import', ['instance-id' => $instanceId, 'snapshot' => $_snapshot]);
     }
 
     /**
@@ -409,7 +409,7 @@ class DashboardService extends BaseService
         $_html = null;
 
         /** @var \stdClass $_model */
-        foreach ($_result->response as $_dspName => $_model) {
+        foreach ($_result->response as $_instanceName => $_model) {
             if (!isset($_model, $_model->id)) {
                 continue;
             }
@@ -422,7 +422,7 @@ class DashboardService extends BaseService
                 $_html[] = $_instance;
             }
 
-            unset($_model, $_dspName);
+            unset($_model, $_instanceName);
         }
 
         return $_html;
@@ -544,7 +544,7 @@ class DashboardService extends BaseService
     }
 
     /**
-     * Formats the button panel for an individual DSP
+     * Formats the button panel for an individual instance
      *
      * @param \stdClass $instance
      * @param array     $buttons
@@ -556,14 +556,14 @@ class DashboardService extends BaseService
         $_buttons = [
             'start'  => [
                 'enabled' => false,
-                'hint'    => 'Start this DSP',
+                'hint'    => 'Start this instance',
                 'color'   => 'success',
                 'icon'    => 'play',
                 'text'    => 'Start',
             ],
             'stop'   => [
                 'enabled' => false,
-                'hint'    => 'Stop this DSP',
+                'hint'    => 'Stop this instance',
                 'color'   => 'warning',
                 'icon'    => 'pause',
                 'text'    => 'Stop',
@@ -733,7 +733,7 @@ HTML;
 
             case ProvisionStates::DEPROVISIONED:
                 $_statusIcon = $_icon = config('icons.dead');;
-                $_message = 'This DSP is terminated. All you can do is destroy it.';
+                $_message = 'This instance is terminated. All you can do is destroy it.';
                 break;
         }
 
@@ -749,7 +749,7 @@ HTML;
      *
      * @return bool|mixed|\stdClass
      */
-    protected function _apiCall($url, $payload = [], $returnAll = true, $method = Request::METHOD_POST)
+    protected function callConsole($url, $payload = [], $returnAll = true, $method = Request::METHOD_POST)
     {
         /** @type OpsClientService $_service */
         $_service = app(OpsClientServiceProvider::IOC_NAME);
@@ -823,7 +823,7 @@ HTML;
      */
     public function getDefaultDomain()
     {
-        return $this->_defaultDomain;
+        return '.' . trim($this->_defaultDomain, '. ');
     }
 
     /**
@@ -835,7 +835,9 @@ HTML;
      */
     protected function setDefaultDomain($defaultDomain)
     {
-        return $this->_defaultDomain = '.' . trim($defaultDomain, '. ');
+        $this->_defaultDomain = '.' . trim($defaultDomain, '. ');
+
+        return $this;
     }
 
     /**
@@ -1323,7 +1325,7 @@ HTML;
      */
     protected function _buildInstanceLink($status)
     {
-        return '<a href="https://' . $this->getDefaultDomain($status->instance_name_text) . '" ' . 'target="_blank" class="dsp-launch-link">' . $status->instance_name_text . '</a>';
+        return '<a href="' . $this->buildInstanceUrl($status->instance_name_text) . '" ' . 'target="_blank" class="dsp-launch-link">' . $status->instance_name_text . '</a>';
     }
 
     /**
@@ -1422,6 +1424,6 @@ HTML;
     protected function buildInstanceUrl($instanceName)
     {
         return config('dashboard.default-domain-protocol',
-            'https') . '://' . $instanceName . $this->getDefaultDomain();
+            DashboardDefaults::DEFAULT_DOMAIN_PROTOCOL) . '://' . $instanceName . $this->getDefaultDomain();
     }
 }

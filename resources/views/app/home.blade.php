@@ -3,25 +3,24 @@
 
 use DreamFactory\Enterprise\Partner\SitePartner;$_message = null;
 
-if ( \Session::has( 'dashboard-success' ) ) {
-	$_flash = \Session::get( 'dashboard-success' );
-
-	$_message = <<<HTML
-                <div class="alert alert-success fade in alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <h4>Success!</h4>
-
-                    <p>{$_flash}</p>
-                </div>
-HTML;
-}
-elseif ( \Session::has( 'dashboard-failure' ) ) {
+if ( \Session::has( 'dashboard-failure' ) ) {
 	$_flash = \Session::get( 'dashboard-failure' );
 
 	$_message = <<<HTML
                 <div class="alert alert-danger fade in alert-dismissable alert-fixed">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     <h4>Fail!</h4>
+
+                    <p>{$_flash}</p>
+                </div>
+HTML;
+} elseif ( \Session::has( 'dashboard-success' ) ) {
+	$_flash = \Session::get( 'dashboard-success' );
+
+	$_message = <<<HTML
+                <div class="alert alert-success fade in alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4>Success!</h4>
 
                     <p>{$_flash}</p>
                 </div>

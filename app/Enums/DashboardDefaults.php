@@ -1,5 +1,6 @@
 <?php namespace DreamFactory\Enterprise\Dashboard\Enums;
 
+use DreamFactory\Library\Utility\Enums\EnterpriseDefaults;
 use DreamFactory\Library\Utility\Enums\FactoryEnum;
 
 class DashboardDefaults extends FactoryEnum
@@ -57,5 +58,8 @@ class DashboardDefaults extends FactoryEnum
      * @type string
      */
     const PANEL_CREATE_TITLE = 'Create a New Instance';
-
+    /**
+     * @type string
+     */
+    const DEFAULT_DOMAIN_PROTOCOL = EnterpriseDefaults::DEFAULT_DOMAIN_PROTOCOL;
 }

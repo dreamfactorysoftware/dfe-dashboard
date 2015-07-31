@@ -46,6 +46,11 @@ class HomeController extends BaseController
         }
     }
 
+    /**
+     * Request a download of a snapshot by id/hash
+     *
+     * @param string $snapshotId The snapshot-id
+     */
     public function download($snapshotId)
     {
         try {
@@ -125,38 +130,28 @@ class HomeController extends BaseController
             'message'             => $_message,
             'isAdmin'             => $_user->admin_ind,
             'displayName'         => $_user->nickname_text,
-            'defaultInstanceName' =>
-                (1 != $_user->admin_ind
-                    ? config('dfe.instance-prefix')
-                    : null
-                ) . Inflector::neutralize(str_replace(' ', '-', \Auth::user()->nickname_text)),
+            'defaultInstanceName' => (1 != $_user->admin_ind ? config('dfe.instance-prefix')
+                    : null) . Inflector::neutralize(str_replace(' ', '-', \Auth::user()->nickname_text)),
         ];
 
         $_create = Dashboard::renderPanel('create',
             array_merge($_coreData, ['instanceName' => PanelTypes::CREATE, 'panelType' => PanelTypes::CREATE]));
 
-        $_import =
-            Dashboard::renderPanel(
-                'import',
-                array_merge(
-                    $_coreData,
-                    [
-                        'snapshotList' => $this->_getSnapshotList(),
-                        'instanceName' => PanelTypes::IMPORT,
-                        'panelType'    => PanelTypes::IMPORT,
-                    ]
-                )
-            );
+        $_import = Dashboard::renderPanel('import',
+            array_merge($_coreData,
+                [
+                    'snapshotList' => $this->_getSnapshotList(),
+                    'instanceName' => PanelTypes::IMPORT,
+                    'panelType'    => PanelTypes::IMPORT,
+                ]));
 
         $_instances = Dashboard::userInstanceTable(null, true);
 
         //  The name of the site partner, if any.
         $_partnerId = config('dfe.partner');
 
-        return view(
-            'app.home',
-            array_merge(
-                $_coreData,
+        return view('app.home',
+            array_merge($_coreData,
                 [
                     /** The instance create panel */
                     'instanceCreator'  => $_create,
@@ -165,9 +160,7 @@ class HomeController extends BaseController
                     /** The instance list */
                     'instances'        => $_instances,
                     'partner'          => $_partnerId ? Partner::resolve($_partnerId) : null,
-                ]
-            )
-        );
+                ]));
     }
 
     /**
@@ -200,12 +193,10 @@ class HomeController extends BaseController
     {
         //  If captcha is on, check it...
         if (config('dashboard.require-captcha') && $request->isMethod(Request::METHOD_POST)) {
-            $_validator = \Validator::make(
-                \Input::all(),
+            $_validator = \Validator::make(\Input::all(),
                 [
                     'g-recaptcha-response' => 'required|recaptcha',
-                ]
-            );
+                ]);
 
             if (!$_validator->passes()) {
                 \Log::error('recaptcha failure: ' . print_r($_validator->errors()->all(), true));
@@ -248,9 +239,7 @@ class HomeController extends BaseController
     {
         if ('false' !== $subGuid && empty($partnerEmail)) {
             $_url =
-                'https://api.hubapi.com/contacts/v1/lists/recently_updated/contacts/recent/?hapikey=' .
-                config('marketing.hubspot.api-key') .
-                '&count=50';
+                'https://api.hubapi.com/contacts/v1/lists/recently_updated/contacts/recent/?hapikey=' . config('marketing.hubspot.api-key') . '&count=50';
 
             if (false === ($_response = Curl::get($_url))) {
                 \Log::debug('[auth.landing-page] recent contact pull failed.');
@@ -258,11 +247,7 @@ class HomeController extends BaseController
                 return false;
             }
 
-            if (empty($_response) ||
-                !($_response instanceof \stdClass) ||
-                !isset($_response->contacts) ||
-                empty($_response->contacts)
-            ) {
+            if (empty($_response) || !($_response instanceof \stdClass) || !isset($_response->contacts) || empty($_response->contacts)) {
                 //  Methinks thine guid is bogus
                 \Log::debug('[auth.landing-page] recent contacts empty or invalid.');
                 \Log::debug('[auth.landing-page] * response: ' . print_r($_response, true));
@@ -285,10 +270,7 @@ class HomeController extends BaseController
                                 foreach ($_contact->{'identity-profiles'} as $_profile) {
                                     if (isset($_profile->identities)) {
                                         foreach ($_profile->identities as $_identity) {
-                                            if (isset($_identity->type) &&
-                                                'EMAIL' == $_identity->type &&
-                                                isset($_identity->value)
-                                            ) {
+                                            if (isset($_identity->type) && 'EMAIL' == $_identity->type && isset($_identity->value)) {
                                                 $_email = $_identity->value;
                                                 break 4;
                                             }
