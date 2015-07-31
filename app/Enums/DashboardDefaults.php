@@ -1,6 +1,6 @@
 <?php namespace DreamFactory\Enterprise\Dashboard\Enums;
 
-use DreamFactory\Library\Utility\Enums\EnterpriseDefaults;
+use DreamFactory\Enterprise\Common\Enums\EnterpriseDefaults;
 use DreamFactory\Library\Utility\Enums\FactoryEnum;
 
 class DashboardDefaults extends FactoryEnum
