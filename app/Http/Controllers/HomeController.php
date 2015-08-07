@@ -74,6 +74,8 @@ class HomeController extends BaseController
     {
         $_status = Dashboard::handleRequest($request, $id);
 
+        /** @noinspection PhpUndefinedMethodInspection */
+
         return response()->json($_status);
     }
 
@@ -96,13 +98,7 @@ class HomeController extends BaseController
     {
         $this->_validateCaptcha($request);
 
-        $_response = Dashboard::handleRequest($request, $id);
-
-        if (true === $_response) {
-            \Session::flash('dashboard-success', 'Your request completed successfully.');
-        } else if (false === $_response) {
-            \Session::flash('dashboard-failure', 'There was a problem with your request.');
-        }
+        Dashboard::handleRequest($request, $id);
 
         return \Redirect::action('HomeController@index');
     }
