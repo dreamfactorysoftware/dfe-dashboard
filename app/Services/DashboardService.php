@@ -203,16 +203,16 @@ class DashboardService extends BaseService
         }
 
         $_payload = array_merge([
-            'instance-id'        => $_instanceName,
-            'trial'              => $trial,
-            'remote'             => $remote,
-            'ram-size'           => $this->request->input('ram-size'),
-            'disk-size'          => $this->request->input('disk-size'),
-            'vendor-id'          => $this->request->input('vendor-id'),
-            'vendor-secret'      => $this->request->input('vendor-secret'),
-            'owner-id'           => \Auth::user()->id,
-            'owner-type'         => OwnerTypes::USER,
-            'guest-location-nbr' => $_provisioner,
+            'instance-id'    => $_instanceName,
+            'trial'          => $trial,
+            'remote'         => $remote,
+            'ram-size'       => $this->request->input('ram-size'),
+            'disk-size'      => $this->request->input('disk-size'),
+            'vendor-id'      => $this->request->input('vendor-id'),
+            'vendor-secret'  => $this->request->input('vendor-secret'),
+            'owner-id'       => \Auth::user()->id,
+            'owner-type'     => OwnerTypes::USER,
+            'guest-location' => $_provisioner,
 
         ],
             $_clusterConfig);
