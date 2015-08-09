@@ -1361,16 +1361,15 @@ HTML;
 
         //  An array?
         if (is_array($result)) {
-
             if (array_key_exists('error', $result)) {
                 $this->flashIf(false,
-                    array_get($result['error'], 'message') ?: 'An error occurred during the request.');
+                    data_get($result['error'], 'message', 'An error occurred during the request.'));
 
-                return ErrorPacket::create($result['error'], array_get($result['error'], 'code'));
+                return ErrorPacket::create($result['error'], data_get($result['error'], 'code'));
             }
 
             if (array_key_exists('response', $result)) {
-                if (false === array_get($result, 'success')) {
+                if (false === data_get($result, 'success')) {
                     $this->flashIf(false, 'The request failed to complete.');
 
                     return ErrorPacket::create($result['response']);
