@@ -284,7 +284,13 @@ class DashboardService extends BaseService
      */
     public function exportInstance($instanceId)
     {
-        return $this->createResponseFromCallResult($this->callConsole('export', ['instance-id' => $instanceId]));
+        $_response = $this->createResponseFromCallResult($this->callConsole('export', ['instance-id' => $instanceId]));
+        $_success = (!isset($_response['success']) || true === $_response['success']);
+        $_which = $_success ? 'success' : 'failure';
+
+        \Session::flash('dashboard-' . $_which, \Lang::get('dashboard.export-' . $_which));
+
+        return $_response;
     }
 
     /**

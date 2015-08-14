@@ -27,6 +27,7 @@ return [
     'instance-create-help'        => <<<HTML
 <p class="help-block" style="margin-top:2px;font-size: 13px;color:#888;">We will send you an email when your platform is ready.</p>
 HTML
+
     ,
     'instance-import-heading'     => 'Import Existing',
     'instance-import-title'       => 'Have an existing snapshot?',
@@ -37,11 +38,17 @@ HTML
     'instance-create'             => <<<HTML
 <p>Please choose a name for your new instance below. Once the creation process has completed, you will receive an email with access details.</p><p>Letters, numbers, and dashes are the only characters allowed.</p>
 HTML
+
     ,
     'instance-import'             => <<<HTML
 <p>Please choose a snapshot to import from the drop-down below. You will receive an email once the process completes.</p>
 <p class="help-block" style="margin-top:2px; font-size: 13px; color:#888;">Currently, only exports created by this dashboard are supported.</p>
 HTML
-    ,
 
+    ,
+    //******************************************************************************
+    //* Instance operational messages
+    //******************************************************************************
+    'export-success'              => 'Your export is queued and you will receive an email with instructions for access.',
+    'export-failure'              => 'Your export request failed. Please try again later.',
 ];

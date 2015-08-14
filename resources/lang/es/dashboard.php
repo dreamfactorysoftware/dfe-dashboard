@@ -27,16 +27,24 @@ return [
     'instance-create-help'        => <<<HTML
 <p class="help-block" style="margin-top:2px; font-size: 13px; color:#888;">Nosotros le enviaremos un correo electrónico cuando su plataforma está lista.</p>
 HTML
+
     ,
     'instance-create'             => <<<HTML
 <p>Por favor, introduzca el nombre de la nueva servidor de abajo. Letras, números, y guiones son los únicos caracteres permitidos.</p>
 HTML
+
     ,
     'instance-import-title'       => 'Tener una exportación existente?',
     'instance-import'             => <<<HTML
 <p>Por favor, elija una exportación de la lista de abajo. Alternativamente, puede subir su propio con su navegador haciendo clic en el botón <strong>Tu Propia Upload</strong>.</p>
 <p class="help-block" style="margin-top:2px; font-size: 13px; color:#888;">Actualmente, sólo se admiten las exportaciones creadas por el Dashboard DreamFactory Enterprise.</p>
 HTML
+
     ,
+    //******************************************************************************
+    //* Instance operational messages
+    //******************************************************************************
+    'export-success'              => 'Su exportación se pone en cola. Usted recibirá un correo electrónico cuando se ha completado.',
+    'export-failure'              => 'Su solicitud de exportación fracasó. Por favor, inténtelo de nuevo más tarde.',
 
 ];
