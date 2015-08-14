@@ -213,7 +213,6 @@ class DashboardService extends BaseService
             'owner-id'       => \Auth::user()->id,
             'owner-type'     => OwnerTypes::USER,
             'guest-location' => $_provisioner,
-
         ],
             $_clusterConfig);
 
