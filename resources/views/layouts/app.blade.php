@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('page-title', 'Welcome!') | {!! config('dfe.common.display-name') !!}</title>
     @section('page-theme')
-        <link href="/vendor/dfe-common/static/bootswatch-3.3.4/flatly.min.css" rel="stylesheet">
+        <link href="/static/bootswatch-3.3.5/yeti.min.css" rel="stylesheet">
     @show
-    <link href="/static/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/static/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Oswald|Montserrat' rel='stylesheet' type='text/css'>
     <link href="/css/style.css" rel="stylesheet">
     <link href="/css/partner.css" rel="stylesheet">
@@ -25,7 +25,7 @@
         var _rcCallback = function () {
             var _gr = {
                 'sitekey': '{{ config('recaptcha.siteKey') }}',
-                'theme': 'light'
+                'theme':   'light'
             };
 
             $('.g-recaptcha').each(function () {
@@ -53,15 +53,15 @@
             <ul class="list-inline">
                 <li>
                     <a target="_blank"
-                       href="http://facebook.com/dfsoftwareinc"><i class="fa fa fa-facebook-square fa-2x"></i></a>
+                       href="https://github.com/dreamfactorysoftware/"><i class="fa fa-github-square fa-2x"></i></a>
                 </li>
                 <li>
                     <a target="_blank"
-                       href="https://twitter.com/dfsoftwareinc"><i class="fa fa-twitter-square fa-2x"></i></a>
+                       href="https://facebook.com/dfsoftwareinc/"><i class="fa fa fa-facebook-square fa-2x"></i></a>
                 </li>
                 <li>
                     <a target="_blank"
-                       href="http://dreamfactorysoftware.github.io/"><i class="fa fa-github-square fa-2x"></i></a>
+                       href="https://twitter.com/dfsoftwareinc/"><i class="fa fa-twitter-square fa-2x"></i></a>
                 </li>
             </ul>
         </div>
@@ -79,7 +79,7 @@
 @show
 
 <script src="/static/jquery-2.1.4/jquery.min.js"></script>
-<script src="/static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+<script src="/static/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="/js/app.jquery.js"></script>
 <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
 <script src="/js/instance.validate.js"></script>

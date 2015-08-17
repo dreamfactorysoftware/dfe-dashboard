@@ -32,7 +32,7 @@ return [
          * Included are cerulean, darkly, flatly, paper, and superhero.
          * You may also install other compatible themes and use them as well.
          */
-        'themes'            => ['auth' => 'darkly', 'page' => 'flatly'],
+        'themes'            => ['auth' => 'darkly', 'page' => 'yeti'],
     ],
     'security'         => [
         /** This key needs to match the key configured in the console */

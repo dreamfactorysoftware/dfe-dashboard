@@ -165,14 +165,15 @@ class HomeController extends BaseController
     protected function _getSnapshotList()
     {
         $_result = [];
-        $_rows = Snapshot::where('user_id', \Auth::user()->id)->get();
+        $_rows = Snapshot::byUserId(\Auth::user()->id)->get();
 
         if (!empty($_rows)) {
             /** @var Snapshot[] $_rows */
             foreach ($_rows as $_row) {
                 $_result[] = [
-                    'id'   => $_row->id,
-                    'name' => $_row->snapshot_id_text,
+                    'id'          => $_row->id,
+                    'name'        => $_row->snapshot_id_text,
+                    'instance-id' => $_row->instance_id,
                 ];
             }
         }

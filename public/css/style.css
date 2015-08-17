@@ -4,7 +4,7 @@
 /* Move down content because we have a fixed navbar that is 40px tall */
 body {
     padding-top:   40px;
-    font-family:   "Lato", "Open Sans", Arial, Helvetica, sans-serif;
+    /*font-family:   "Lato", "Open Sans", Arial, Helvetica, sans-serif;*/
     /*background-color: #eeeeee;*/
     min-width:     960px;
     min-height:    100%;
