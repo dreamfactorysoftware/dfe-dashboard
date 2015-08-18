@@ -353,10 +353,11 @@
         <fetch-block-size value="100" />
         <execution-timeout value="20" />
         <debug-execution-timeout value="600" />
-        <focus-result value="false" />
+        <prompt-execution value="false" />
       </statement-execution>
       <script-execution>
         <command-line-interfaces />
+        <execution-timeout value="300" />
       </script-execution>
       <method-execution>
         <execution-timeout value="30" />
@@ -386,6 +387,10 @@
         <compile-dependencies value="ASK" />
         <always-show-controls value="false" />
       </compiler>
+      <debugger>
+        <debugger-type value="JDBC" />
+        <use-generic-runners value="true" />
+      </debugger>
     </operation-settings>
     <ddl-file-settings>
       <extensions>
