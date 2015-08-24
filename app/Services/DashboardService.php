@@ -407,14 +407,14 @@ class DashboardService extends BaseService
             return null;
         }
 
-        if (!isset($_result->response) || empty($_result->response) || !is_array($_result->response)) {
+        if (!isset($_result->response) || empty($_result->response)) {
             return null;
         }
 
         $_html = null;
 
         /** @var \stdClass $_model */
-        foreach ($_result->response as $_instanceName => $_model) {
+        foreach ((array)$_result->response as $_instanceName => $_model) {
             if (!isset($_model, $_model->id)) {
                 continue;
             }
