@@ -14,4 +14,6 @@ node_modules/
 /_ide_*.php
 /original
 .env.work
-/.idea
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/composerJson.xml
