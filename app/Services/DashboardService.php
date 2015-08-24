@@ -373,7 +373,9 @@ class DashboardService extends BaseService
      */
     public function getInstances()
     {
-        return $this->getOpsClient()->instances();
+        $_response = $this->getOpsClient()->instances();
+
+        return $_response;
     }
 
     /**
@@ -405,7 +407,7 @@ class DashboardService extends BaseService
             return null;
         }
 
-        if (!isset($_result->response) || empty($_result->response)) {
+        if (!isset($_result->response) || empty($_result->response) || !is_array($_result->response)) {
             return null;
         }
 
