@@ -58,7 +58,7 @@
     "wpb/string-blade-compiler":             "2.*@dev",
     "guzzlehttp/guzzle":                     "~4.0",
     "marwelln/recaptcha":                    "dev-master",
-    "dreamfactory/php-utils":                "*",
+    "dreamfactory/php-utils":                "1.1.*",
     "dreamfactory/console-tools":            "dev-develop as dev-master",
     "dreamfactory/dfe-audit":                "dev-develop as dev-master",
     "dreamfactory/dfe-common":               "dev-develop as dev-master",
