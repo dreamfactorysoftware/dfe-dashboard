@@ -188,7 +188,9 @@ class DashboardService extends BaseService
         //	Check the name here for quicker UI response...
         if (false === ($_instanceName = Instance::isNameAvailable($instanceId)) || is_numeric($_instanceName[0])) {
             $this->flashIf(false,
-                'The name of your instance cannot be "' . $instanceId . '".  It is either currently in-use, or otherwise invalid.');
+                'The name of your instance cannot be "' .
+                $instanceId .
+                '".  It is either currently in-use, or otherwise invalid.');
 
             return ErrorPacket::create(null, Response::HTTP_BAD_REQUEST, 'Invalid instance name.');
         }
@@ -317,7 +319,15 @@ class DashboardService extends BaseService
             foreach ($_snapshots as $_snapshot) {
                 $_date = date('F j, Y @ H:i:s', strtotime($_snapshot->date));
 
-                $_html .= '<option id="' . $_snapshot->snapshot_id . '" value="' . $_snapshot->snapshot_id . '" name="' . $_snapshot->snapshot_id . '">' . $_date . '</option>';
+                $_html .= '<option id="' .
+                    $_snapshot->snapshot_id .
+                    '" value="' .
+                    $_snapshot->snapshot_id .
+                    '" name="' .
+                    $_snapshot->snapshot_id .
+                    '">' .
+                    $_date .
+                    '</option>';
             }
 
             $_html .= '</optgroup>';
@@ -652,7 +662,10 @@ class DashboardService extends BaseService
                 $_hint = 'data-toggle="tooltip" title="' . $_hint . '"';
             }
 
-            if (GuestLocations::DFE_CLUSTER == $instance->guest_location_nbr && 'start' == $_buttonName && ProvisionStates::PROVISIONED == $instance->state_nbr) {
+            if (GuestLocations::DFE_CLUSTER == $instance->guest_location_nbr &&
+                'start' == $_buttonName &&
+                ProvisionStates::PROVISIONED == $instance->state_nbr
+            ) {
                 $_href = $this->buildInstanceUrl($instance->instance_name_text);
 
                 $_button['text'] = 'Launch!';
@@ -668,7 +681,11 @@ HTML;
         }
 
         $_gettingStartedButton =
-            '<a class="btn btn-xs btn-info col-xs-2 col-sm-2 dsp-help-button" id="dspcontrol-' . $instance->instance_name_text . '" data-placement="middle" title="Help" target="_blank" href="' . config('dashboard.help-button-url') . '"><i style="margin-right: 0;" class="fa fa-question-circle"></i></a>';
+            '<a class="btn btn-xs btn-info col-xs-2 col-sm-2 dsp-help-button" id="dspcontrol-' .
+            $instance->instance_name_text .
+            '" data-placement="middle" title="Help" target="_blank" href="' .
+            config('dashboard.help-button-url') .
+            '"><i style="margin-right: 0;" class="fa fa-question-circle"></i></a>';
 
         $_html = <<<HTML
 <div class="btn2-group row">
@@ -1169,7 +1186,15 @@ HTML;
                         }
 
                         $_suggested == $_name && $_selected = ' selected ';
-                        $_options .= '<option value="' . $_name . '" ' . $_attributes . ' ' . $_selected . '>' . $_description . '</option>';
+                        $_options .= '<option value="' .
+                            $_name .
+                            '" ' .
+                            $_attributes .
+                            ' ' .
+                            $_selected .
+                            '>' .
+                            $_description .
+                            '</option>';
                     }
 
                     $_html .= view('layouts.partials.offerings',
@@ -1195,7 +1220,12 @@ HTML;
      */
     protected function buildInstanceLink($status)
     {
-        return '<a href="' . $this->buildInstanceUrl($status->instance_name_text) . '" ' . 'target="_blank" class="dsp-launch-link">' . $status->instance_name_text . '</a>';
+        return '<a href="' .
+        $this->buildInstanceUrl($status->instance_name_text) .
+        '" ' .
+        'target="_blank" class="dsp-launch-link">' .
+        $status->instance_name_text .
+        '</a>';
     }
 
     /**
@@ -1341,7 +1371,7 @@ HTML;
     protected function getOpsClient()
     {
         return $this->app[OpsClientServiceProvider::IOC_NAME]
-            ?: function () {
+            ?: function (){
                 throw new \RuntimeException('DFE Console services are not available.');
             };
     }
