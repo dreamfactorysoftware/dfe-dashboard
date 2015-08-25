@@ -1,12 +1,15 @@
 <?php namespace DreamFactory\Enterprise\Dashboard\Http\Controllers;
 
+use Carbon\Carbon;
 use DreamFactory\Enterprise\Common\Http\Controllers\BaseController;
+use DreamFactory\Enterprise\Common\Traits\EntityLookup;
 use DreamFactory\Enterprise\Dashboard\Enums\DashboardDefaults;
 use DreamFactory\Enterprise\Dashboard\Enums\PanelTypes;
 use DreamFactory\Enterprise\Dashboard\Facades\Dashboard;
 use DreamFactory\Enterprise\Database\Models\RouteHash;
 use DreamFactory\Enterprise\Database\Models\Snapshot;
 use DreamFactory\Enterprise\Database\Models\User;
+use DreamFactory\Enterprise\Partner\Contracts\WebsitePartner;
 use DreamFactory\Enterprise\Partner\Facades\Partner;
 use DreamFactory\Library\Utility\Curl;
 use DreamFactory\Library\Utility\Inflector;
@@ -25,6 +28,12 @@ class HomeController extends BaseController
      * @type int
      */
     const MAX_LOOKUP_RETRIES = 5;
+
+    //******************************************************************************
+    //* Traits
+    //******************************************************************************
+
+    use EntityLookup;
 
     //******************************************************************************
     //* Methods
@@ -126,55 +135,72 @@ class HomeController extends BaseController
             'message'             => $_message,
             'isAdmin'             => $_user->admin_ind,
             'displayName'         => $_user->nickname_text,
-            'defaultInstanceName' => (1 != $_user->admin_ind ? config('dfe.instance-prefix')
-                    : null) . Inflector::neutralize(str_replace(' ', '-', \Auth::user()->nickname_text)),
+            'defaultInstanceName' => (1 != $_user->admin_ind ? config('dfe.instance-prefix') : null) .
+                Inflector::neutralize(str_replace(' ', '-', \Auth::user()->nickname_text)),
         ];
 
         $_create = Dashboard::renderPanel('create',
-            array_merge($_coreData, ['instanceName' => PanelTypes::CREATE, 'panelType' => PanelTypes::CREATE]));
-
-        $_import = Dashboard::renderPanel('import',
             array_merge($_coreData,
                 [
-                    'snapshotList' => $this->_getSnapshotList(),
-                    'instanceName' => PanelTypes::IMPORT,
-                    'panelType'    => PanelTypes::IMPORT,
+                    'instanceName' => PanelTypes::CREATE,
+                    'panelType'    => PanelTypes::CREATE,
+                    'importables'  => $this->getUserImportables(),
                 ]));
 
         $_instances = Dashboard::userInstanceTable(null, true);
 
+        /** @type WebsitePartner $_partner */
         //  The name of the site partner, if any.
-        $_partnerId = config('dfe.partner');
+        $_partner = null;
+
+        if (!empty($_partnerId = config('dfe.partner'))) {
+            $_partner = Partner::resolve($_partnerId);
+        }
 
         return view('app.home',
             array_merge($_coreData,
                 [
                     /** The instance create panel */
-                    'instanceCreator'  => $_create,
-                    /** The instance import panel */
-                    'snapshotImporter' => $_import,
+                    'instanceCreator' => $_create,
                     /** The instance list */
-                    'instances'        => $_instances,
-                    'partner'          => $_partnerId ? Partner::resolve($_partnerId) : null,
+                    'instances'       => $_instances,
+                    /** Partner junk */
+                    'partner'         => $_partner ?: null,
+                    'partnerContent'  => $_partner ? $_partner->getWebsiteContent() : null,
                 ]));
     }
 
     /**
-     * @return array A list of available snapshots for this user
+     * @return array A list of available exports for this user
      */
-    protected function _getSnapshotList()
+    protected function getUserImportables()
     {
         $_result = [];
-        $_rows = Snapshot::byUserId(\Auth::user()->id)->get();
+        $_rows = Snapshot::byUserId(\Auth::user()->id)->orderBy('create_date', 'desc')->get([
+            'id',
+            'instance_id',
+            'snapshot_id_text',
+        ]);
 
         if (!empty($_rows)) {
             /** @var Snapshot[] $_rows */
             foreach ($_rows as $_row) {
-                $_result[] = [
-                    'id'          => $_row->id,
-                    'name'        => $_row->snapshot_id_text,
-                    'instance-id' => $_row->instance_id,
-                ];
+                list($_date, $_instanceName) = explode('.', $_row->snapshot_id_text, 2);
+
+                try {
+                    //  Find instance, dead or alive!
+                    $_instance = $this->_findInstance($_instanceName);
+
+                    $_result[] = [
+                        'id'            => $_row->id,
+                        'name'          => $_row->snapshot_id_text,
+                        'instance-id'   => $_instance->instance_id_text,
+                        'export-date'   => Carbon::create($_row->create_date)->toFormattedDateString(),
+                        'instance-name' => $_instanceName,
+                    ];
+                } catch (ModelNotFoundException $_ex) {
+                    //  ignored on purpose
+                }
             }
         }
 
@@ -236,7 +262,9 @@ class HomeController extends BaseController
     {
         if ('false' !== $subGuid && empty($partnerEmail)) {
             $_url =
-                'https://api.hubapi.com/contacts/v1/lists/recently_updated/contacts/recent/?hapikey=' . config('marketing.hubspot.api-key') . '&count=50';
+                'https://api.hubapi.com/contacts/v1/lists/recently_updated/contacts/recent/?hapikey=' .
+                config('marketing.hubspot.api-key') .
+                '&count=50';
 
             if (false === ($_response = Curl::get($_url))) {
                 \Log::debug('[auth.landing-page] recent contact pull failed.');
@@ -244,7 +272,11 @@ class HomeController extends BaseController
                 return false;
             }
 
-            if (empty($_response) || !($_response instanceof \stdClass) || !isset($_response->contacts) || empty($_response->contacts)) {
+            if (empty($_response) ||
+                !($_response instanceof \stdClass) ||
+                !isset($_response->contacts) ||
+                empty($_response->contacts)
+            ) {
                 //  Methinks thine guid is bogus
                 \Log::debug('[auth.landing-page] recent contacts empty or invalid.');
                 \Log::debug('[auth.landing-page] * response: ' . print_r($_response, true));
@@ -267,7 +299,10 @@ class HomeController extends BaseController
                                 foreach ($_contact->{'identity-profiles'} as $_profile) {
                                     if (isset($_profile->identities)) {
                                         foreach ($_profile->identities as $_identity) {
-                                            if (isset($_identity->type) && 'EMAIL' == $_identity->type && isset($_identity->value)) {
+                                            if (isset($_identity->type) &&
+                                                'EMAIL' == $_identity->type &&
+                                                isset($_identity->value)
+                                            ) {
                                                 $_email = $_identity->value;
                                                 break 4;
                                             }

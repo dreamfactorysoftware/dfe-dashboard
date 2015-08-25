@@ -567,6 +567,28 @@ label[for="import-file"] {
     text-align: center;
 }
 
+.pull-center {
+    text-align: center;
+}
+
+.no-instances {
+    padding:          10px;
+    border:           1px dotted #efefef;
+    background-color: rgba(255, 191, 115, .10);
+    width:            auto;
+    text-align:       center;
+    border-radius:    10px;
+}
+
+.either-or {
+    display:     block;
+    font-size:   18pt;
+    font-weight: bold;
+    padding:     0;
+    text-align:  left;
+    margin:      -5px 0 10px;
+}
+
 /*------------------------------------------------------------------------------*/
 /* Media Queries                                                                */
 /*------------------------------------------------------------------------------*/

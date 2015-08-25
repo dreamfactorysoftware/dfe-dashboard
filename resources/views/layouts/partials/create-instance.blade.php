@@ -20,6 +20,27 @@
     @if( !empty( $offerings ) )
         {!! $offerings !!}
     @endif
+
+    @if( !empty( $importables ) )
+        <div class="row">
+            <div class="col-md-offset-2 col-md-1"><h3 class="either-or">Or</h3></div>
+        </div>
+
+        <div class="form-group">
+            <label for="import-id"
+                   class="col-md-2 control-label">{{ \Lang::get('dashboard.instance-import-label') }}</label>
+
+            <div class="col-md-10">
+                <select name="import-id"
+                        id="import-id"
+                        class="form-control">
+                    @foreach( $importables as $importable )
+                        <option data-instance-id="{{ $importable['instance-id'] }}" value="{{ $importable['name'] }}">{{ $importable['instance-name']}} ({{ $importable['export-date'] }})</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+    @endif
     <input type="hidden" name="control" value="create">
 @overwrite
 

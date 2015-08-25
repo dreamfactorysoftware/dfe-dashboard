@@ -4,6 +4,11 @@
  */
 return [
     //******************************************************************************
+    //* Operation results
+    //******************************************************************************
+    'success'                     => ['title' => 'Yay!',],
+    'failure'                     => ['title' => 'There was a problem!',],
+    //******************************************************************************
     //* Instance status
     //******************************************************************************
     'status-error'                => 'There was an error completing your request.',
@@ -17,8 +22,8 @@ return [
     //******************************************************************************
     //* Instance panel text
     //******************************************************************************
-    'instance-name-label'         => 'Name',
-    'instance-import-label'       => 'Choose',
+    'instance-name-label'         => 'New Name',
+    'instance-import-label'       => 'Choose Export',
     'instance-import-button-text' => 'Import',
     'instance-proof-text'         => 'This is just to prove you are actually an organic being.',
     'instance-create-heading'     => 'Create New',
