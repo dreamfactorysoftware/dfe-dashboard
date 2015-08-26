@@ -139,9 +139,7 @@ class HomeController extends BaseController
                 Inflector::neutralize(str_replace(' ', '-', \Auth::user()->nickname_text)),
         ];
 
-        $_create = Dashboard::renderPanel('create',
-            array_merge($_coreData,
-                [
+        $_create = Dashboard::renderPanel('create', array_merge($_coreData, [
                     'instanceName' => PanelTypes::CREATE,
                     'panelType'    => PanelTypes::CREATE,
                     'importables'  => $this->getUserImportables(),
@@ -157,9 +155,7 @@ class HomeController extends BaseController
             $_partner = Partner::resolve($_partnerId);
         }
 
-        return view('app.home',
-            array_merge($_coreData,
-                [
+        return view('app.home', array_merge($_coreData, [
                     /** The instance create panel */
                     'instanceCreator' => $_create,
                     /** The instance list */
@@ -216,8 +212,7 @@ class HomeController extends BaseController
     {
         //  If captcha is on, check it...
         if (config('dashboard.require-captcha') && $request->isMethod(Request::METHOD_POST)) {
-            $_validator = \Validator::make(\Input::all(),
-                [
+            $_validator = \Validator::make(\Input::all(), [
                     'g-recaptcha-response' => 'required|recaptcha',
                 ]);
 
@@ -325,8 +320,8 @@ class HomeController extends BaseController
             \Log::debug('[auth.landing-page] subGuid "' . $subGuid . '" attached with email "' . $_email . '"');
         } else {
             //  Make sure it came from our domain...
-            if (null === ($_referrer = \Request::server('HTTP_REFERER')) || false === stripos($_referrer,
-                    'verizon.dreamfactory.com')
+            if (null === ($_referrer = \Request::server('HTTP_REFERER')) ||
+                false === stripos($_referrer, 'verizon.dreamfactory.com')
             ) {
                 \Log::debug('[auth.landing-page] bad referrer "' . $_referrer . '" in auto-login request.');
 

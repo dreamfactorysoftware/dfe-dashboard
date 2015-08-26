@@ -2,7 +2,7 @@
 use Carbon\Carbon;
 use DreamFactory\Enterprise\Common\Utility\Yo;
 
-$_message = Yo::alert('dashboard-');
+$_message = Yo::alert('dashboard');
 
 $_psa = Yo::psa(
     'Alert',
