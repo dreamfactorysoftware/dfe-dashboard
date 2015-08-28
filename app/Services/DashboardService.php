@@ -15,6 +15,7 @@ use DreamFactory\Enterprise\Database\Enums\OwnerTypes;
 use DreamFactory\Enterprise\Database\Enums\ProvisionStates;
 use DreamFactory\Enterprise\Database\Models\Instance;
 use DreamFactory\Enterprise\Database\Models\User;
+use DreamFactory\Library\Utility\Flasher;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
@@ -73,13 +74,14 @@ class DashboardService extends BaseService
         $this->requireCaptcha = config('dashboard.require-captcha', true);
         $this->panelsPerRow = config('panels.panels-per-row', DashboardDefaults::PANELS_PER_ROW);
 
-        $this->setDefaultDomain(implode('.',
-            [
-                trim(config('dashboard.default-dns-zone'), '. '),
-                trim(config('dashboard.default-dns-domain'), '. '),
-            ]));
+        $this->setDefaultDomain(implode('.', [
+            trim(config('dashboard.default-dns-zone'), '. '),
+            trim(config('dashboard.default-dns-domain'), '. '),
+        ]));
 
         $this->determineGridLayout();
+
+        Flasher::setPrefix('dashboard');
     }
 
     /**
@@ -181,26 +183,23 @@ class DashboardService extends BaseService
      */
     public function provisionInstance($instanceId, $trial = false, $remote = false)
     {
-        \Session::forget(['dashboard-success', 'dashboard-failure']);
+        Flasher::forget();
 
         $_provisioner = $this->request->input('_provisioner', GuestLocations::DFE_CLUSTER);
 
         //	Check the name here for quicker UI response...
         if (false === ($_instanceName = Instance::isNameAvailable($instanceId)) || is_numeric($_instanceName[0])) {
-            $this->flashIf(false,
-                'The name of your instance cannot be "' .
+            Flasher::flashIf('The name of your instance cannot be "' .
                 $instanceId .
-                '".  It is either currently in-use, or otherwise invalid.');
+                '".  It is either currently in-use, or otherwise invalid.', false);
 
             return ErrorPacket::create(null, Response::HTTP_BAD_REQUEST, 'Invalid instance name.');
         }
 
         if (false === ($_clusterConfig = $this->getClusterConfig())) {
-            $this->flashIf(false,
-                'Provisioning is not possible at this time. The configured enterprise console for this dashboard is not currently available. Please try your request later.');
+            Flasher::flashIf('The DFE Console is not currently available. Please try your request later.', false);
 
-            return ErrorPacket::create(null,
-                Response::HTTP_INTERNAL_SERVER_ERROR,
+            return ErrorPacket::create(null, Response::HTTP_INTERNAL_SERVER_ERROR,
                 'Cluster server configuration error.');
         }
 
@@ -212,17 +211,16 @@ class DashboardService extends BaseService
             'disk-size'      => $this->request->input('disk-size'),
             'vendor-id'      => $this->request->input('vendor-id'),
             'vendor-secret'  => $this->request->input('vendor-secret'),
-            'owner-id'       => \Auth::user()->id,
+            'owner-id'       => \Auth::id(),
             'owner-type'     => OwnerTypes::USER,
             'guest-location' => $_provisioner,
-        ],
-            $_clusterConfig);
+        ], $_clusterConfig);
 
         $_result = $this->callConsole('provision', $_payload);
 
         if ($_result && is_object($_result) && isset($_result->success)) {
             if ($_result->success) {
-                $this->flashIf(true, 'Instance provisioning requested successfully.');
+                Flasher::flashIf('Instance provisioning requested successfully.');
             } else {
                 if (isset($_result->error)) {
                     $_message = isset($_result->error->message) ? $_result->error->message : 'Unknown error';
@@ -230,13 +228,12 @@ class DashboardService extends BaseService
                     $_message = 'Unknown server error';
                 }
 
-                $this->flashIf(false, $_message);
+                Flasher::flashIf($_message, false);
 
                 return ErrorPacket::create(null, Response::HTTP_INTERNAL_SERVER_ERROR, 'Provisioning error.');
             }
         } else {
-            $this->flashIf(false,
-                'Provisioning is not possible at this time. The configured enterprise console for this dashboard is not currently available. Please try your request later.');
+            Flasher::flashIf('The DFE Console is not currently available. Please try your request later.', false);
 
             $this->error('Error calling ops console api: ' . print_r($_result, true));
 
@@ -289,7 +286,7 @@ class DashboardService extends BaseService
         $_success = (!isset($_response['success']) || true === $_response['success']);
         $_which = $_success ? 'success' : 'failure';
 
-        \Session::flash('dashboard-' . $_which, \Lang::get('dashboard.export-' . $_which));
+        Flasher::flash(\Lang::get('dashboard.export-' . $_which), $_success);
 
         return $_response;
     }
@@ -304,8 +301,8 @@ class DashboardService extends BaseService
         $_result = $this->callConsole('exports', ['instance-id' => $instanceId]);
 
         if (!$_result || !is_object($_result) || !isset($_result->success)) {
-            \Session::flash('dashboard-failure',
-                isset($_result, $_result->message) ? $_result->message : 'An unknown error occurred.');
+            Flasher::flash(isset($_result, $_result->message) ? $_result->message : 'An unknown error occurred.',
+                false);
 
             return null;
         }
@@ -346,7 +343,7 @@ class DashboardService extends BaseService
         $_snapshot = $this->request->input('dsp-snapshot-list');
 
         if (empty($_snapshot)) {
-            \Session::flash('dashboard-failure', 'No snapshot selected to import.');
+            Flasher::flash('No snapshot selected to import.', false);
 
             return false;
         }
@@ -356,7 +353,7 @@ class DashboardService extends BaseService
             $_parts = explode('.', $_snapshot);
 
             if (2 != count($_parts) || false === strtotime($_parts[1])) {
-                \Session::flash('dashboard-failure', 'Invalid snapshot ID');
+                Flasher::flash('Invalid snapshot ID', false);
 
                 return false;
             }
@@ -402,7 +399,7 @@ class DashboardService extends BaseService
 
         if (!is_object($_result) || !is_bool($_result->success)) {
             \Log::error('Error pulling instance list: ' . print_r($_result, true));
-            \Session::flash('dashboard-failure', 'Error connecting to operations console.');
+            Flasher::flash('Error connecting to operations console.', false);
 
             return null;
         }
@@ -465,14 +462,10 @@ class DashboardService extends BaseService
             'instanceStatusIconSize' => $this->panelConfig($panelType, 'status-icon-size'),
             'instanceStatusContext'  => $this->panelConfig($panelType, 'status-icon-context'),
             'instanceUrl'            => $this->buildInstanceUrl($instance->instance_name_text),
-        ],
-            //  Instance status
-            $this->_getInstanceStatus($instance),
-            //  Merge data
-            $data,
-            //  Overrides
-            $_overrides,
-            //  ENSURE!
+        ], //  Instance status
+            $this->_getInstanceStatus($instance), //  Merge data
+            $data, //  Overrides
+            $_overrides, //  ENSURE!
             [
                 'captchaId'     => 'dfe-rc-' . $_name,
                 'formId'        => $formId,
@@ -771,8 +764,8 @@ HTML;
         }
 
         //	Error and redirect
-        \Session::flash('dashboard-failure',
-            'An unexpected situation has occurred with your request. Please try again in a few minutes, or email <a href="mailto:support@dreamfactory.com">support@dreamfactory.com</a>.');
+        Flasher::flash('An unexpected situation has occurred with your request. Please try again in a few minutes, or email <a href="mailto:support@dreamfactory.com">support@dreamfactory.com</a>.',
+            false);
 
         if (is_string($_response)) {
             \Log::error('Console API call received unexpected result: ' . $_response);
@@ -998,30 +991,21 @@ HTML;
 
         if (GuestLocations::DFE_CLUSTER == $instance->guest_location_nbr) {
             $_buttons = [
-                'launch' => $this->makeToolbarButton($_id,
-                    'Launch',
-                    ['context' => 'btn-success', 'icon' => 'fa-play']),
-                'delete' => $this->makeToolbarButton($_id,
-                    'Delete',
-                    ['context' => 'btn-danger', 'icon' => 'fa-times']),
-                'export' => $this->makeToolbarButton($_id,
-                    'Export',
+                'launch' => $this->makeToolbarButton($_id, 'Launch', ['context' => 'btn-success', 'icon' => 'fa-play']),
+                'delete' => $this->makeToolbarButton($_id, 'Delete', ['context' => 'btn-danger', 'icon' => 'fa-times']),
+                'export' => $this->makeToolbarButton($_id, 'Export',
                     ['context' => 'btn-info', 'icon' => 'fa-cloud-download']),
             ];
         } else {
             //@todo make dynamic call to provisioner to find out supported operations
             $_buttons = [
-                'start'     => $this->makeToolbarButton($_id,
-                    'Start',
+                'start'     => $this->makeToolbarButton($_id, 'Start',
                     ['context' => 'btn-success', 'icon' => 'fa-play',]),
-                'stop'      => $this->makeToolbarButton($_id,
-                    'Stop',
+                'stop'      => $this->makeToolbarButton($_id, 'Stop',
                     ['context' => 'btn-warning', 'icon' => 'fa-stop',]),
-                'terminate' => $this->makeToolbarButton($_id,
-                    'Terminate',
+                'terminate' => $this->makeToolbarButton($_id, 'Terminate',
                     ['context' => 'btn-danger', 'icon' => 'fa-times',]),
-                'export'    => $this->makeToolbarButton($_id,
-                    'Export',
+                'export'    => $this->makeToolbarButton($_id, 'Export',
                     ['context' => 'btn-info', 'icon' => 'fa-cloud-download',]),
             ];
         }
@@ -1057,16 +1041,14 @@ HTML;
 
         $_action = str_replace(['_', ' '], '-', trim(strtolower($text)));
 
-        return array_merge($_template,
-            [
-                'id'   => 'instance-' . $_action . '-' . $id,
-                'text' => $text,
-                'data' => [
-                    'instance-id'     => $id,
-                    'instance-action' => $_action,
-                ],
+        return array_merge($_template, [
+            'id'   => 'instance-' . $_action . '-' . $id,
+            'text' => $text,
+            'data' => [
+                'instance-id'     => $id,
+                'instance-action' => $_action,
             ],
-            $options);
+        ], $options);
     }
 
     /**
@@ -1129,17 +1111,15 @@ HTML;
             $data['panelSize'] = array_get($data, 'panelSize', $this->columnClass);
         }
 
-        $_view = view($_blade,
-            array_merge($data,
-                [
-                    'formId'           => 'form-' . $panelType,
-                    'panelDescription' => $_description,
-                    'offerings'        => $_offeringsHtml,
-                    'panelTitle'       => \Lang::get('dashboard.instance-' . $panelType . '-title'),
-                    'panelType'        => $panelType,
-                    'panelContext'     => $this->panelConfig($panelType, 'context'),
-                    'headerIcon'       => $this->panelConfig($panelType, 'header-icon'),
-                ]));
+        $_view = view($_blade, array_merge($data, [
+            'formId'           => 'form-' . $panelType,
+            'panelDescription' => $_description,
+            'offerings'        => $_offeringsHtml,
+            'panelTitle'       => \Lang::get('dashboard.instance-' . $panelType . '-title'),
+            'panelType'        => $panelType,
+            'panelContext'     => $this->panelConfig($panelType, 'context'),
+            'headerIcon'       => $this->panelConfig($panelType, 'header-icon'),
+        ]));
 
         return $render ? $_view->render() : $_view;
     }
@@ -1165,8 +1145,9 @@ HTML;
                 $_suggested = array_get($_data, 'suggested');
 
                 $_helpBlock =
-                    (null !== ($_helpBlock = array_get($_data, 'help-block')))
-                        ? '<p class="help-block">' . $_helpBlock . '</p>' : null;
+                    (null !== ($_helpBlock = array_get($_data, 'help-block'))) ? '<p class="help-block">' .
+                        $_helpBlock .
+                        '</p>' : null;
 
                 if (!empty($_items)) {
                     $_options = null;
@@ -1199,13 +1180,12 @@ HTML;
                             '</option>';
                     }
 
-                    $_html .= view('layouts.partials.offerings',
-                        [
-                            'tag'         => $_tag,
-                            'displayName' => $_displayName,
-                            'options'     => $_options,
-                            'helpBlock'   => $_helpBlock,
-                        ])->render();
+                    $_html .= view('layouts.partials.offerings', [
+                        'tag'         => $_tag,
+                        'displayName' => $_displayName,
+                        'options'     => $_options,
+                        'helpBlock'   => $_helpBlock,
+                    ])->render();
                 }
             }
         }
@@ -1325,8 +1305,10 @@ HTML;
      */
     protected function buildInstanceUrl($instanceName)
     {
-        return config('dashboard.default-domain-protocol',
-            DashboardDefaults::DEFAULT_DOMAIN_PROTOCOL) . '://' . $instanceName . $this->getDefaultDomain();
+        return config('dashboard.default-domain-protocol', DashboardDefaults::DEFAULT_DOMAIN_PROTOCOL) .
+        '://' .
+        $instanceName .
+        $this->getDefaultDomain();
     }
 
     /**
@@ -1387,7 +1369,7 @@ HTML;
     {
         //  All out failure
         if (false === $result) {
-            $this->flashIf(false, 'Unable to reach console.');
+            Flasher::flashIf('Unable to reach console.', false);
 
             return ErrorPacket::create();
         }
@@ -1399,40 +1381,24 @@ HTML;
         //  An array?
         if (is_array($result)) {
             if (array_key_exists('error', $result)) {
-                $this->flashIf(false,
-                    data_get($result['error'], 'message', 'An error occurred during the request.'));
+                Flasher::flashIf(data_get($result['error'], 'message', 'An error occurred during the request.'), false);
 
                 return ErrorPacket::create($result['error'], data_get($result['error'], 'code'));
             }
 
             if (array_key_exists('response', $result)) {
                 if (false === data_get($result, 'success')) {
-                    $this->flashIf(false, 'The request failed to complete.');
+                    Flasher::flashIf('The request failed to complete.', false);
 
                     return ErrorPacket::create($result['response']);
                 }
 
-                $this->flashIf(true, 'Your request completed successfully.');
+                Flasher::flashIf('Your request completed successfully.');
 
                 return SuccessPacket::create($result['response']);
             }
         }
 
         return ErrorPacket::create($result, Response::HTTP_SERVICE_UNAVAILABLE, 'Invalid response from console.');
-    }
-
-    /**
-     * Flashes a message if the key is empty
-     *
-     * @param bool   $success
-     * @param string $message
-     */
-    protected function flashIf($success, $message)
-    {
-        $_key = 'dashboard-' . ($success ? 'success' : 'failure');
-
-        if (!\Session::has($_key)) {
-            \Session::flash($_key, $message);
-        }
     }
 }
