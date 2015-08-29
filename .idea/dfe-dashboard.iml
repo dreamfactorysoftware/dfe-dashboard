@@ -7,8 +7,11 @@
       <sourceFolder url="file://$MODULE_DIR$/app" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/app/original" />
       <excludeFolder url="file://$MODULE_DIR$/public/old" />
-      <excludeFolder url="file://$MODULE_DIR$/storage" />
       <excludeFolder url="file://$MODULE_DIR$/temp" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/console-tools.setdev-on" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/console-tools/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/console-tools/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/console-tools/vendor" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-common.setdev-on" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-common/.idea" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-common/vendor" />
@@ -37,10 +40,10 @@
     <orderEntry type="module-library">
       <library name="PHARS">
         <CLASSES>
-          <root url="phar://$MODULE_DIR$/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar" />
+          <root url="phar://$MODULE_DIR$/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
         </CLASSES>
         <SOURCES>
-          <root url="phar://$MODULE_DIR$/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar" />
+          <root url="phar://$MODULE_DIR$/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
         </SOURCES>
       </library>
     </orderEntry>

@@ -5,12 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('page-title', 'Welcome!') | {!! config('dfe.common.display-name') !!}</title>
-    @section('page-theme')
-        <link href="/static/bootswatch-3.3.5/flatly.min.css" rel="stylesheet">@show
+    @section('page-theme')<link href="/static/bootswatch-3.3.5/flatly.min.css" rel="stylesheet">@show
     <link href="/static/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Oswald|Montserrat' rel='stylesheet' type='text/css'>
     <link href="/css/style.css" rel="stylesheet">
     <link href="/css/partner.css" rel="stylesheet">
+    <script src="/static/jquery-2.1.4/jquery.min.js"></script>
     <!--[if lt IE 9]>
     <script src="//oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
     <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script><![endif]-->
@@ -77,7 +77,6 @@
 @show
 
 <script src="https://www.google.com/recaptcha/api.js?onload=_rcCallback&render=explicit" async defer></script>
-<script src="/static/jquery-2.1.4/jquery.min.js"></script>
 <script src="/static/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
 <script src="/js/app.jquery.js"></script>

@@ -332,7 +332,7 @@ table.dataTable thead th {
 }
 
 .panel-description {
-    height: 100px;
+    font-size: 17px;
 }
 
 .panel-toolbar .btn-xs, .panel-toolbar .btn-group-xs > .btn {
@@ -582,7 +582,7 @@ label[for="import-file"] {
 
 .either-or {
     display:     block;
-    font-size:   18pt;
+    font-size:   18px;
     font-weight: bold;
     padding:     0;
     text-align:  left;

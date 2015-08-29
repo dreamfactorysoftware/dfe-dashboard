@@ -33,5 +33,15 @@ return [
         ServerTypes::WEB => 'success',
         ServerTypes::APP => 'warning',
     ],
-
+    //******************************************************************************
+    //* General UI Alert Settings
+    //******************************************************************************
+    'alerts'                   => [
+        'success' => [
+            'context' => 'alert-success',
+        ],
+        'failure' => [
+            'context' => 'alert-danger',
+        ],
+    ],
 ];

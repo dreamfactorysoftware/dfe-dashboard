@@ -6,6 +6,7 @@
       <w>bascom</w>
       <w>bigue</w>
       <w>bootstrapper</w>
+      <w>describedby</w>
       <w>dismissable</w>
       <w>dspcontrol</w>
       <w>eventable</w>
@@ -19,6 +20,7 @@
       <w>optgroup</w>
       <w>parseable</w>
       <w>recents</w>
+      <w>reprovisioning</w>
       <w>reusables</w>
       <w>sitekey</w>
       <w>siteverify</w>

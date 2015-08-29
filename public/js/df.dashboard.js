@@ -156,7 +156,7 @@ var _makeRequest = function (id, action, href) {
 
     switch (action) {
         case 'launch':
-            window.open(href);
+            window.top.open(href, id);
             return;
         case 'destroy':
         case 'deprovision':

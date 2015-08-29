@@ -1,10 +1,10 @@
 <?php
 use Carbon\Carbon;
-use DreamFactory\Enterprise\Common\Utility\Yo;
+use DreamFactory\Library\Utility\Flasher;
 
-$_message = Yo::alert('dashboard');
+$_message = Flasher::getAlert();
 
-$_psa = Yo::psa(
+$_psa = Flasher::psa(
     'Alert',
     'Status updated as of ' . Carbon::now()->toFormattedDateString(),
     'alert-info alert-fixed',
@@ -18,7 +18,7 @@ $_psa = Yo::psa(
     {!! $_message !!}
     {!! $_psa !!}
 
-    @if($partnerContent)
+    @if(isset($partnerContent))
         <div class="row">
             <div class="col-sm-offset-2 col-sm-8 col-sm-offset-2 col-md-offset-2 col-md-8 col-md-offset-2">
                 {!! $partnerContent !!}
@@ -43,9 +43,9 @@ $_psa = Yo::psa(
 	<div class="row">
         <div class="col-sm-12 col-md-12">
             <div class="instance-panel-group">
-                @if ( is_string($instances) )
+                @if (is_string($instances))
                     {!! $instances !!}
-                @elseif( is_array($instances))
+                @elseif(is_array($instances))
                     @foreach( $instances as $_name => $_instance )
                         {!! $_instance->render() !!}
                     @endforeach
@@ -63,4 +63,3 @@ $_psa = Yo::psa(
 		<input type="hidden" name="_token" value="{{ csrf_token() }}">
 	</form>
 @endsection
-
