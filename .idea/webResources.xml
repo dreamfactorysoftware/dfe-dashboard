@@ -8,6 +8,7 @@
             <path value="file://$PROJECT_DIR$/public" />
             <path value="file://$PROJECT_DIR$/resources" />
             <path value="file://$PROJECT_DIR$/storage" />
+            <path value="file://$PROJECT_DIR$/database" />
           </resourceRoots>
         </entryData>
       </entry>

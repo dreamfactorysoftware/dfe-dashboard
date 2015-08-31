@@ -126,6 +126,7 @@ var _processAction = function ($element) {
     var _action = $element.data('instance-action');
 
     if ('create' == _action) {
+
         if (_validator && !_validator.valid()) {
             return;
         }
@@ -139,7 +140,7 @@ var _processAction = function ($element) {
         $element.addClass('disabled').prop('disabled', true);
     }
 
-    var _result = _makeRequest(_id, $element.data('instance-action'), $element.data('instance-href') || null);
+    var _result = _makeRequest(_id, _action, $element.data('instance-href') || null);
 
     $element.removeClass('disabled').prop('disabled', false);
 };
@@ -246,6 +247,11 @@ jQuery(function ($) {
     $('.panel-toolbar > button').on('click', function (e) {
         e.preventDefault();
         _processAction($(this));
+    });
+
+    //  Set the data-instance-id on btn-import-instance when an import is chosen
+    $('select#import-id').on('change', function (e) {
+        $('#btn-import-instance').data('instance-id', $(this).find(':selected').data('instance-id'));
     });
 
     window.setTimeout(_checkProgress, _dso.statusCheckFrequency);

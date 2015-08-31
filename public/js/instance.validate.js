@@ -13,33 +13,58 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var _validator;
+var _validator, _importValidator;
 
-jQuery(function($) {
-	var VALIDATION_RULES = {
-		ignoreTitle:    true,
-		submitHandler:  function(form) {
-			_processAction($(form).find('button[type="submit"]'));
-		},
-		errorClass:     'help-inline',
-		errorElement:   'span',
-		errorPlacement: function(error, element) {
-			error.appendTo($(element).closest('.form-group')).addClass('col-md-offset-2 col-md-10');
-		},
-		highlight:      function(element, errorClass) {
-			$(element).closest('.form-group').removeClass('has-success has-feedback').addClass('has-error has-feedback');
-		},
-		unhighlight:    function(element, errorClass) {
-			$(element).closest('.form-group').removeClass('has-error has-feedback').addClass('has-success has-feedback');
-		},
-		rules:          {
-			'instance-name': {
-				required:  true,
-				minlength: 3,
-				maxlength: 64
-			}
-		}
-	};
+jQuery(function ($) {
+    var VALIDATION_RULES = {
+        ignoreTitle:    true,
+        submitHandler:  function (form) {
+            _processAction($(form).find('button[type="submit"]'));
+        },
+        errorClass:     'help-inline',
+        errorElement:   'span',
+        errorPlacement: function (error, element) {
+            error.appendTo($(element).closest('.form-group')).addClass('col-md-offset-2 col-md-10');
+        },
+        highlight:      function (element, errorClass) {
+            $(element).closest('.form-group').removeClass('has-success has-feedback').addClass('has-error has-feedback');
+        },
+        unhighlight:    function (element, errorClass) {
+            $(element).closest('.form-group').removeClass('has-error has-feedback').addClass('has-success has-feedback');
+        },
+        rules:          {
+            'instance-name': {
+                required:  true,
+                minlength: 3,
+                maxlength: 64
+            }
+        }
+    };
 
-	_validator = $('#form-create').validate(VALIDATION_RULES);
+    _validator = $('#form-create').validate(VALIDATION_RULES);
+
+    var IMPORT_VALIDATION_RULES = {
+        ignoreTitle:    true,
+        submitHandler:  function (form) {
+            _processAction($(form).find('button[type="submit"]'));
+        },
+        errorClass:     'help-block',
+        errorElement:   'p',
+        errorPlacement: function (error, element) {
+            error.appendTo($(element).closest('.form-group')).addClass('col-md-offset-2 col-md-10');
+        },
+        highlight:      function (element, errorClass) {
+            $(element).closest('.form-group').removeClass('has-success has-feedback').addClass('has-error has-feedback');
+        },
+        unhighlight:    function (element, errorClass) {
+            $(element).closest('.form-group').removeClass('has-error has-feedback').addClass('has-success has-feedback');
+        },
+        rules:          {
+            'import-id': {
+                required:  true
+            }
+        }
+    };
+
+    _importValidator = $('#form-import').validate(IMPORT_VALIDATION_RULES);
 });

@@ -31,7 +31,7 @@ return [
     'instance-create-title'       => 'Crear un Nuevo Servidor',
     'instance-create-button-text' => 'Crear',
     'instance-create-help'        => <<<HTML
-<p class="help-inline" style="margin-top:2px; font-size: 13px; color:#888;">Nosotros le enviaremos un correo electrónico cuando su plataforma está lista.</p>
+<p class="help-block">Nosotros le enviaremos un correo electrónico cuando su plataforma está lista.</p>
 HTML
 
     ,
@@ -48,7 +48,7 @@ HTML
     'instance-default'            => null,
     'instance-import'             => <<<HTML
 <p>Por favor, elija una exportación de la lista de abajo. Alternativamente, puede subir su propio con su navegador haciendo clic en el botón <strong>Tu Propia Upload</strong>.</p>
-<p class="help-inline" style="margin-top:2px; font-size: 13px; color:#888;">Actualmente, sólo se admiten las exportaciones creadas por el Dashboard DreamFactory Enterprise.</p>
+<p class="help-block">Actualmente, sólo se admiten las exportaciones creadas por el Dashboard DreamFactory Enterprise.</p>
 HTML
 
     ,

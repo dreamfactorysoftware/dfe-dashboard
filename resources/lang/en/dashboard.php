@@ -30,7 +30,7 @@ return [
     'instance-create-heading'     => 'Create New',
     'instance-create-title'       => 'Create a New Instance',
     'instance-create-button-text' => 'Create',
-    'instance-create-help'        => '<p class="help-inline">Letters, numbers, and dashes are the only characters allowed.</p>',
+    'instance-create-help'        => '<p class="help-block">Letters, numbers, and dashes are the only characters allowed.</p>',
     'instance-create'             => '<p>Please choose a name for your new instance below. Once the creation process has completed, you will receive an email with access details.</p>',
     'instance-import-heading'     => 'Import Existing',
     'instance-import-title'       => 'Have an existing snapshot?',
@@ -44,7 +44,7 @@ return [
 HTML
 
     ,
-    'instance-import-help'        => '<p class="help-inline">Select an export to restore.</p>',
+    'instance-import-help'        => '<p class="help-block">Select an export to restore.</p>',
     //******************************************************************************
     //* Instance operational messages
     //******************************************************************************
