@@ -6,6 +6,7 @@ node_modules/
 /.env
 /.env.copy
 /.env.local
+.env.save
 /build
 /temp
 /composer.lock
