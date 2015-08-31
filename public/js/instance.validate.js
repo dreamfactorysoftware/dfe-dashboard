@@ -16,55 +16,44 @@
 var _validator, _importValidator;
 
 jQuery(function ($) {
-    var VALIDATION_RULES = {
-        ignoreTitle:    true,
-        submitHandler:  function (form) {
+    var VALIDATION_CONFIG = {
+        ignoreTitle: true,
+        submitHandler: function (form) {
             _processAction($(form).find('button[type="submit"]'));
         },
-        errorClass:     'help-inline',
-        errorElement:   'span',
+        errorClass: 'help-block',
+        errorElement: 'p',
         errorPlacement: function (error, element) {
             error.appendTo($(element).closest('.form-group')).addClass('col-md-offset-2 col-md-10');
         },
-        highlight:      function (element, errorClass) {
+        highlight: function (element, errorClass) {
             $(element).closest('.form-group').removeClass('has-success has-feedback').addClass('has-error has-feedback');
         },
-        unhighlight:    function (element, errorClass) {
+        unhighlight: function (element, errorClass) {
             $(element).closest('.form-group').removeClass('has-error has-feedback').addClass('has-success has-feedback');
-        },
-        rules:          {
+        }
+    };
+
+    var VALIDATION_RULES = {
+        rules: {
             'instance-name': {
-                required:  true,
+                required: true,
                 minlength: 3,
-                maxlength: 64
+                maxlength: 64,
+                alphanumeric: true
             }
         }
     };
 
-    _validator = $('#form-create').validate(VALIDATION_RULES);
+    _validator = $('#form-create').validate($.extend({}, VALIDATION_CONFIG, VALIDATION_RULES));
 
     var IMPORT_VALIDATION_RULES = {
-        ignoreTitle:    true,
-        submitHandler:  function (form) {
-            _processAction($(form).find('button[type="submit"]'));
-        },
-        errorClass:     'help-block',
-        errorElement:   'p',
-        errorPlacement: function (error, element) {
-            error.appendTo($(element).closest('.form-group')).addClass('col-md-offset-2 col-md-10');
-        },
-        highlight:      function (element, errorClass) {
-            $(element).closest('.form-group').removeClass('has-success has-feedback').addClass('has-error has-feedback');
-        },
-        unhighlight:    function (element, errorClass) {
-            $(element).closest('.form-group').removeClass('has-error has-feedback').addClass('has-success has-feedback');
-        },
-        rules:          {
+        rules: {
             'import-id': {
-                required:  true
+                required: true
             }
         }
     };
 
-    _importValidator = $('#form-import').validate(IMPORT_VALIDATION_RULES);
+    _importValidator = $('#form-import').validate($.extend({}, VALIDATION_CONFIG, IMPORT_VALIDATION_RULES));
 });

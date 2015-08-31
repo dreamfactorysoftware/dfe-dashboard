@@ -4,7 +4,19 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
     <title>@yield('page-title', 'Welcome!') | {!! config('dfe.common.display-name') !!}</title>
+    <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-touch-icon-120x120.png">
+    <link rel="icon" type="image/png" href="/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/img/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/img/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/img/manifest.json">
     @section('page-theme')<link href="/static/bootswatch-3.3.5/flatly.min.css" rel="stylesheet">@show
     <link href="/static/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Oswald|Montserrat' rel='stylesheet' type='text/css'>
@@ -24,7 +36,7 @@
         var _rcCallback = function () {
             var _gr = {
                 'sitekey': '{{ config('recaptcha.siteKey') }}',
-                'theme':   'light'
+                'theme': 'light'
             };
 
             $('.g-recaptcha').each(function () {
@@ -78,7 +90,8 @@
 
 <script src="https://www.google.com/recaptcha/api.js?onload=_rcCallback&render=explicit" async defer></script>
 <script src="/static/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/additional-methods.min.js"></script>
 <script src="/js/app.jquery.js"></script>
 <script src="/js/instance.validate.js"></script>
 <script src="/js/df.dashboard.js"></script>
