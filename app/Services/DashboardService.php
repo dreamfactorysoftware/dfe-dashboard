@@ -88,14 +88,16 @@ class DashboardService extends BaseService
     /**
      * @param \Illuminate\Http\Request $request
      * @param string|int               $id
+     * @param mixed|null               $extra
      *
      * @return bool|mixed|\stdClass|void
      */
-    public function handleRequest(Request $request, $id = null)
+    public function handleRequest(Request $request, $id = null, $extra = null)
     {
         $this->request = $request;
 
         $id = $id ?: $request->input('id');
+        $extra = $extra ?: $request->input('extra');
         $_command = $request->input('control');
 
         if ($request->isMethod(Request::METHOD_POST)) {
@@ -135,7 +137,7 @@ class DashboardService extends BaseService
 
                 case 'migrate':
                 case 'import':
-                    return $this->importInstance($id);
+                    return $this->importInstance($id, $extra);
 
                 case 'status':
                     return $this->instanceStatus($id);
@@ -339,34 +341,14 @@ class DashboardService extends BaseService
 
     /**
      * @param string $instanceId
+     * @param string $snapshotId
      *
      * @return bool|mixed|\stdClass
      */
-    public function importInstance($instanceId)
+    public function importInstance($instanceId, $snapshotId)
     {
-        $_snapshot = $this->request->input('dsp-snapshot-list');
-
-        if (empty($_snapshot)) {
-            Flasher::set('No snapshot selected to import.', false);
-
-            return false;
-        }
-
-        //	Strip off the name if there...
-        if (false !== strpos($_snapshot, '.')) {
-            $_parts = explode('.', $_snapshot);
-
-            if (2 != count($_parts) || false === strtotime($_parts[1])) {
-                Flasher::set('Invalid snapshot ID', false);
-
-                return false;
-            }
-
-            $_snapshot = $_parts[1];
-        }
-
         return $this->createResponseFromCallResult($this->callConsole('import',
-            ['instance-id' => $instanceId, 'snapshot' => $_snapshot]));
+            ['instance-id' => $instanceId, 'snapshot-id' => $snapshotId]));
     }
 
     /**

@@ -17,19 +17,19 @@ var _validator, _importValidator;
 
 jQuery(function ($) {
     var VALIDATION_CONFIG = {
-        ignoreTitle: true,
-        submitHandler: function (form) {
-            _processAction($(form).find('button[type="submit"]'));
+        submitHandler:  function (form) {
+            _processAction($(form).find('button[type="submit"]'), $(form));
         },
-        errorClass: 'help-block',
-        errorElement: 'p',
+        ignoreTitle:    true,
+        errorClass:     'help-block',
+        errorElement:   'p',
         errorPlacement: function (error, element) {
             error.appendTo($(element).closest('.form-group')).addClass('col-md-offset-2 col-md-10');
         },
-        highlight: function (element, errorClass) {
+        highlight:      function (element, errorClass) {
             $(element).closest('.form-group').removeClass('has-success has-feedback').addClass('has-error has-feedback');
         },
-        unhighlight: function (element, errorClass) {
+        unhighlight:    function (element, errorClass) {
             $(element).closest('.form-group').removeClass('has-error has-feedback').addClass('has-success has-feedback');
         }
     };
@@ -37,9 +37,9 @@ jQuery(function ($) {
     var VALIDATION_RULES = {
         rules: {
             'instance-name': {
-                required: true,
-                minlength: 3,
-                maxlength: 64,
+                required:     true,
+                minlength:    3,
+                maxlength:    64,
                 alphanumeric: true
             }
         }

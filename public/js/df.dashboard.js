@@ -118,15 +118,18 @@ var _checkProgress = function () {
 
 /**
  * Generates the necessary form data to push an action request to the console
- * @param {jQuery} $element
+ * @param {jQuery} [$element]
+ * @param {jQuery} [$form]
  * @private
  */
-var _processAction = function ($element) {
-    var _id = $element.data('instance-id');
+var _processAction = function ($element, $form) {
+    var _id = $element.data('instance-id'), _extra = $element.data('instance-href');
     var _action = $element.data('instance-action');
 
-    if ('create' == _action) {
-
+    if ('import' == _action) {
+        _id = $('input[name="instance-id"]', $form).val();
+        _extra = $('input[name="snapshot-id"]', $form).val();
+    } else if ('create' == _action) {
         if (_validator && !_validator.valid()) {
             return;
         }
@@ -140,7 +143,7 @@ var _processAction = function ($element) {
         $element.addClass('disabled').prop('disabled', true);
     }
 
-    var _result = _makeRequest(_id, _action, $element.data('instance-href') || null);
+    var _result = _makeRequest(_id, _action, _extra || null);
 
     $element.removeClass('disabled').prop('disabled', false);
 };
@@ -176,35 +179,15 @@ var _makeRequest = function (id, action, href) {
                 return;
             }
             break;
-        case 'provision':
-        case 'create':
-        case 'help':
-            break;
         case 'export':
             if (!confirm('Export instance "' + id + '"?')) {
                 return;
             }
             break;
+
         case 'import':
-            //				if ( !confirm('WARNING: Destructive Procedure. This may overwrite existing settings in this DSP.' + "\n\n" + 'Import to DSP "' + id + '"?') ) {
-            //					return;
-            //				}
-
-            $('input[name="id"]', _dso.controlForm).val(id);
-            $('input[name="control"]', _dso.controlForm).val('snapshots');
-            $('body').css('cursor', 'wait');
-
-            $.post('/control', _dso.controlForm.serialize(), function (data) {
-                $('body').css('cursor', 'pointer');
-                if (data) {
-                    $('#dsp-snapshot-list').html(data);
-                    $('form#_dsp-snapshot-control input[name="id"]').val(id);
-                    $('#dsp-import-snapshot').modal('show');
-                } else {
-                    alert('No snapshots available for this instance.');
-                }
-            }, 'html');
-            return;
+            //  Nothing...
+            break;
 
         default:
             alert('Invalid command "' + action + '"');
@@ -212,6 +195,7 @@ var _makeRequest = function (id, action, href) {
     }
 
     $('input[name="id"]', _dso.controlForm).val(id);
+    $('input[name="extra"]', _dso.controlForm).val(href);
     $('input[name="control"]', _dso.controlForm).val(action);
 
     return _dso.controlForm.submit();
@@ -244,14 +228,17 @@ jQuery(function ($) {
     });
 
     //	All toolbar button clicks go here...
-    $('.panel-toolbar > button').on('click', function (e) {
+    $('.panel-toolbar').on('click', 'button', function (e) {
         e.preventDefault();
         _processAction($(this));
     });
 
     //  Set the data-instance-id on btn-import-instance when an import is chosen
     $('select#import-id').on('change', function (e) {
-        $('#btn-import-instance').data('instance-id', $(this).find(':selected').data('instance-id'));
+        var $_form = $('#form-import'), $_selected = $(this).find(':selected');
+
+        $_form.find('input[name="instance-id"]').val($_selected.data('instance-id'));
+        $_form.find('input[name="snapshot-id"]').val($_selected.val());
     });
 
     window.setTimeout(_checkProgress, _dso.statusCheckFrequency);

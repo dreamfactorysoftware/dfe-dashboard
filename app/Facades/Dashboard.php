@@ -9,13 +9,13 @@ use Illuminate\View\View;
 /**
  * Dashboard
  *
- * @method static mixed handleRequest(Request $request, string $id = null);
- * @method static array|null|string userInstanceTable(array $data = null, bool $render = false)
- * @method static string renderInstance($view, array $data = [], string $panel = 'default')
- * @method static string|array renderInstances(array $instances = [], string $panel = 'default', $asArray = true)
- * @method static array buildInstancePanelData(mixed $instance, $data = [], string $panel = 'default', string $formId = null)
- * @method static mixed panelConfig(string $panel, string $key, mixed $default = null)
- * @method static View|string renderPanel(string $panel, array $data = [], boolean $render = true)
+ * @method static mixed handleRequest(Request $request, $id = null, $extra = null);
+ * @method static array|null|string userInstanceTable(array $data = null, $render = false)
+ * @method static string renderInstance($view, array $data = [], $panel = 'default')
+ * @method static string|array renderInstances(array $instances = [], $panel = 'default', $asArray = true)
+ * @method static array buildInstancePanelData($instance, $data = [], $panel = 'default', $formId = null)
+ * @method static mixed panelConfig($panel, $key, $default = null)
+ * @method static View|string renderPanel($panel, array $data = [], $render = true)
  * @method static array|\stdClass|\stdClass[] getProvisioners()
  * @method static int push(InstancePanel $panel)
  * @method static mixed|null|InstancePanel pop()

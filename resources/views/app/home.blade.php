@@ -59,7 +59,8 @@ $_psa = Flasher::psa(
 	<!--suppress HtmlUnknownTarget -->
     <form id="_dsp-control" method="POST" action="/control">
 		<input type="hidden" name="id" value="">
-		<input type="hidden" name="control" value="">
+        <input type="hidden" name="extra" value="">
+        <input type="hidden" name="control" value="">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}">
 	</form>
 @endsection

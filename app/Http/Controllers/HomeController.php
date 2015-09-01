@@ -99,16 +99,17 @@ class HomeController extends BaseController
     }
 
     /**
-     * @param Request $request
-     * @param string  $id
+     * @param Request    $request
+     * @param string     $id
+     * @param mixed|null $extra
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function control(Request $request, $id = null)
+    public function control(Request $request, $id = null, $extra = null)
     {
         $this->_validateCaptcha($request);
 
-        Dashboard::handleRequest($request, $id);
+        Dashboard::handleRequest($request, $id, $extra);
 
         return \Redirect::action('HomeController@index');
     }
