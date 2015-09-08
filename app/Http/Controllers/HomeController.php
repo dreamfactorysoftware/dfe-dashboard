@@ -129,6 +129,7 @@ class HomeController extends BaseController
         /** @type User $_user */
         $_user = \Auth::user();
 
+        /** @noinspection PhpUndefinedFieldInspection */
         $_coreData = [
             /** General */
             'panelContext'        => config('panels.default.context', DashboardDefaults::PANEL_CONTEXT),
@@ -141,13 +142,11 @@ class HomeController extends BaseController
                 Inflector::neutralize(str_replace(' ', '-', \Auth::user()->nickname_text)),
         ];
 
-        $_create = Dashboard::renderPanel('create',
-            array_merge($_coreData,
-                [
-                    'instanceName' => PanelTypes::CREATE,
-                    'panelType'    => PanelTypes::CREATE,
-                    'importables'  => $this->getUserImportables(),
-                ]));
+        $_create = Dashboard::renderPanel('create', array_merge($_coreData, [
+            'instanceName' => PanelTypes::CREATE,
+            'panelType'    => PanelTypes::CREATE,
+            'importables'  => $this->getUserImportables(),
+        ]));
 
         $_instances = Dashboard::userInstanceTable(null, true);
 
@@ -159,17 +158,15 @@ class HomeController extends BaseController
             $_partner = Partner::resolve($_partnerId);
         }
 
-        return view('app.home',
-            array_merge($_coreData,
-                [
-                    /** The instance create panel */
-                    'instanceCreator' => $_create,
-                    /** The instance list */
-                    'instances'       => $_instances,
-                    /** Partner junk */
-                    'partner'         => $_partner ?: null,
-                    'partnerContent'  => $_partner ? $_partner->getWebsiteContent() : null,
-                ]));
+        return view('app.home', array_merge($_coreData, [
+            /** The instance create panel */
+            'instanceCreator' => $_create,
+            /** The instance list */
+            'instances'       => $_instances,
+            /** Partner junk */
+            'partner'         => $_partner ?: null,
+            'partnerContent'  => $_partner ? $_partner->getWebsiteContent() : null,
+        ]));
     }
 
     /**
@@ -178,6 +175,7 @@ class HomeController extends BaseController
     protected function getUserImportables()
     {
         $_result = [];
+        /** @noinspection PhpUndefinedFieldInspection */
         $_rows = Snapshot::byUserId(\Auth::user()->id)->orderBy('create_date', 'desc')->get([
             'id',
             'instance_id',
@@ -218,10 +216,9 @@ class HomeController extends BaseController
     {
         //  If captcha is on, check it...
         if (config('dashboard.require-captcha') && $request->isMethod(Request::METHOD_POST)) {
-            $_validator = \Validator::make(\Input::all(),
-                [
-                    'g-recaptcha-response' => 'required|recaptcha',
-                ]);
+            $_validator = \Validator::make(\Input::all(), [
+                'g-recaptcha-response' => 'required|recaptcha',
+            ]);
 
             if (!$_validator->passes()) {
                 \Log::error('recaptcha failure: ' . print_r($_validator->errors()->all(), true));
@@ -350,6 +347,7 @@ class HomeController extends BaseController
         }
 
         //  Ok, now we have a user, we need to log his ass in...
+        /** @noinspection PhpParamsInspection */
         \Auth::login($_user);
 
         \Log::info('[auth.landing-page] auto-login user "' . $_email . '"');
