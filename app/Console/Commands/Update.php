@@ -62,6 +62,16 @@ class Update extends ConsoleCommand implements SelfHandling
             $this->shell('composer --quiet --no-interaction --no-ansi update');
         };
 
+        if (!$this->option('no-clear')) {
+            $this->info('Clearing caches...');
+            $this->shell('php artisan -q config:clear');
+            $this->shell('php artisan -q cache:clear');
+            $this->shell('php artisan -q route:clear');
+            $this->shell('php artisan -q clear-compiled');
+            $this->shell('php artisan -q optimize');
+            $this->shell('php artisan -q vendor:publish--tag =public --force');
+        }
+
         return 0;
     }
 
@@ -81,7 +91,21 @@ EOT
     /** @inheritdoc */
     protected function getOptions()
     {
-        return array_merge(parent::getOptions(), [['no-composer', null, InputOption::VALUE_NONE,]]);
+        return array_merge(parent::getOptions(),
+            [
+                [
+                    'no-composer',
+                    null,
+                    InputOption::VALUE_NONE,
+                    'If specified, a "composer update" will NOT be performed after an update.',
+                ],
+                [
+                    'no-clear',
+                    null,
+                    InputOption::VALUE_NONE,
+                    'If specified, the caches will not be cleared after an update.',
+                ],
+            ]);
     }
 
     /**
