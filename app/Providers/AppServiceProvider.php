@@ -8,20 +8,9 @@ class AppServiceProvider extends ServiceProvider
     //* Methods
     //******************************************************************************
 
-    /**
-     * Bootstrap any application services.
-     */
-    public function boot()
-    {
-    }
-
     /** @inheritdoc */
     public function register()
     {
-        $this->app->bind(
-            'Illuminate\Contracts\Auth\Registrar',
-            'DreamFactory\Enterprise\Dashboard\Services\Registrar'
-        );
+        $this->app->bind('Illuminate\Contracts\Auth\Registrar', 'DreamFactory\Enterprise\Dashboard\Services\Registrar');
     }
-
 }

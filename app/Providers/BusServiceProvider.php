@@ -14,23 +14,16 @@ class BusServiceProvider extends ServiceProvider
      *
      * @param  \Illuminate\Bus\Dispatcher $dispatcher
      */
-    public function boot( Dispatcher $dispatcher )
+    public function boot(Dispatcher $dispatcher)
     {
-        $dispatcher->mapUsing(
-            function ( $command )
-            {
-                return Dispatcher::simpleMapping(
-                    $command,
-                    'DreamFactory\Enterprise\Dashboard\Commands',
-                    'DreamFactory\Enterprise\Dashboard\Handlers\Commands'
-                );
-            }
-        );
+        $dispatcher->mapUsing(function ($command){
+            return Dispatcher::simpleMapping($command, 'DreamFactory\Enterprise\Dashboard\Commands',
+                'DreamFactory\Enterprise\Dashboard\Handlers\Commands');
+        });
     }
 
     /** @inheritdoc */
     public function register()
     {
     }
-
 }

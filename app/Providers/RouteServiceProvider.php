@@ -16,23 +16,11 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'DreamFactory\\Enterprise\\Dashboard\\Http\\Controllers';
+    protected $namespace = 'DreamFactory\Enterprise\Dashboard\Http\Controllers';
 
     //******************************************************************************
     //* Methods
     //******************************************************************************
-
-    /**
-     * Define your route model bindings, pattern filters, etc.
-     *
-     * @param  \Illuminate\Routing\Router $router
-     *
-     * @return void
-     */
-    public function boot( Router $router )
-    {
-        parent::boot( $router );
-    }
 
     /**
      * Define the routes for the application.
@@ -41,16 +29,12 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function map( Router $router )
+    public function map(Router $router)
     {
-        $router->group(
-            ['namespace' => $this->namespace],
-            function ( $router )
-            {
-                /** @noinspection PhpIncludeInspection */
-                require app_path( 'Http/routes.php' );
-            }
-        );
+        $router->group(['namespace' => $this->namespace], function ($router){
+            /** @noinspection PhpIncludeInspection */
+            require app_path('Http/routes.php');
+        });
     }
 
 }

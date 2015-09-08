@@ -18,22 +18,21 @@ class Verizon extends AlertPartner
         try {
             $user = app('auth')->user();
 
-            $data =
-                [
-                    'first_name'   => $user->first_name_text,
-                    'last_name'    => $user->last_name_text,
-                    'email'        => $user->email_addr_text,
-                    'company_name' => $user->company_name_text,
-                    'phone_number' => $user->phone_text,
-                    'date'         => date('Y-m-d'),
-                    'time'         => date('H:i:s')
-                ]; // Build up user data for posting to UTC
+            $data = [
+                'first_name'   => $user->first_name_text,
+                'last_name'    => $user->last_name_text,
+                'email'        => $user->email_addr_text,
+                'company_name' => $user->company_name_text,
+                'phone_number' => $user->phone_text,
+                'date'         => date('Y-m-d'),
+                'time'         => date('H:i:s')
+            ]; // Build up user data for posting to UTC
 
-            if (empty( $user->company_name_text ) === true) {
+            if (empty($user->company_name_text) === true) {
                 $data['company_name'] = 'DreamFactory Software';
             }
 
-            if (empty( $user->phone_text ) === true) {
+            if (empty($user->phone_text) === true) {
                 $data['phone_number'] = '';
             }
 
@@ -43,20 +42,12 @@ class Verizon extends AlertPartner
 
             $ch = curl_init($url);
             curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt(
-                $ch,
-                CURLOPT_HTTPHEADER,
-                array(
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                     'X-DreamFactory-Application-Name: DBAccess'
-                )
-            );
+                ));
             curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt(
-                $ch,
-                CURLOPT_USERPWD,
-                "dev.vz@utcassociates.com:Password2"
-            );
+            curl_setopt($ch, CURLOPT_USERPWD, "dev.vz@utcassociates.com:Password2");
 
             $result = curl_exec($ch);
             $response = json_decode($result);
@@ -66,13 +57,13 @@ class Verizon extends AlertPartner
 
             file_put_contents(storage_path() . "/logs/utc_post.log", $logMsg, FILE_APPEND);
 
-            if (null !== ( $_redirect = $this->get('redirect-uri') )) {
+            if (null !== ($_redirect = $this->get('redirect-uri'))) {
                 return \Redirect::to($_redirect);
             }
 
             \Log::debug('[partner.vz] no redirect for partner, going home.');
             \Redirect::to('/');
-        } catch ( Exception $e ) {
+        } catch (Exception $e) {
             \Log::error('[partner.vz] exception calling UTC during partner redirect: ' . $e->getMessage());
             \Redirect::to('/');
         }

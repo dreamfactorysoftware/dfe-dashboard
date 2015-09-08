@@ -5,16 +5,15 @@
 return [
     'vz' => [
         'name'          => 'Verizon',
-        'class'         => 'DreamFactory\\Enterprise\\Dashboard\\Partners\\Verizon',
+        'class'         => DreamFactory\Enterprise\Dashboard\Partners\Verizon::class,
         'referrers'     => ['verizon.com', 'hubspot.com', 'dreamfactory.com'],
         'commands'      => ['utc_post'],
         'description'   => 'Verizon Wireless',
         'alert-context' => 'alert-danger',
         'redirect-uri'  => 'https://my.cloud.verizon.com/registration/#/',
         'brand'         => [
-            'action'    => <<< HTML
-HTML
-            ,
+            'action' => <<< HTML
+HTML,
             'logo'      => '/vendor/dfe-partner/assets/img/logo-944x702.png',
             'icon'      => '/vendor/dfe-partner/assets/img/verizon_left.png',
             'copyright' => '&copy; ' . date('Y') . ' Verizon',
@@ -61,6 +60,7 @@ HTML
   </div>
 </div>
 HTML
+
             ,
         ],
     ],

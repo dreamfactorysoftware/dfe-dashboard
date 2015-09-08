@@ -1,4 +1,6 @@
 <?php
+use DreamFactory\Enterprise\Common\Enums\EnterpriseDefaults;
+
 return [
     //  Default connection
     'default'     => 'local',
@@ -7,26 +9,26 @@ return [
         //  Generalized local storage
         'local'            => [
             'driver' => 'local',
-            'path'   => env('DFE_HOSTED_BASE_PATH', '/data/storage'),
+            'path'   => env('DFE_HOSTED_BASE_PATH', EnterpriseDefaults::STORAGE_ROOT),
         ],
         //  cluster-east-2 hosted storage
         'cluster-east-2'   => [
             'driver' => 'local',
-            'path'   => env('DFE_HOSTED_BASE_PATH', '/data/storage'),
+            'path'   => env('DFE_HOSTED_BASE_PATH', EnterpriseDefaults::STORAGE_ROOT),
         ],
         //  mount-east-1 hosted storage
         'mount-east-1'     => [
             'driver' => 'local',
-            'path'   => env('DFE_HOSTED_BASE_PATH', '/data/storage'),
+            'path'   => env('DFE_HOSTED_BASE_PATH', EnterpriseDefaults::STORAGE_ROOT),
         ],
         //  dfe-mount-east-1 hosted storage
         'dfe-mount-east-1' => [
             'driver' => 'local',
-            'path'   => env('DFE_HOSTED_BASE_PATH', '/data/storage'),
+            'path'   => env('DFE_HOSTED_BASE_PATH', EnterpriseDefaults::STORAGE_ROOT),
         ],
         'mount-local-1'    => [
             'driver' => 'local',
-            'path'   => env('DFE_HOSTED_BASE_PATH', '/data/storage'),
+            'path'   => env('DFE_HOSTED_BASE_PATH', EnterpriseDefaults::STORAGE_ROOT),
         ],
 
     ],

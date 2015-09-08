@@ -10,16 +10,12 @@ use DreamFactory\Enterprise\Database\Models\Snapshot;
 \Route::post('status/{id}', ['uses' => 'HomeController@status']);
 \Route::post('control/{id?}', ['uses' => 'HomeController@control']);
 
-\Route::controllers(
-    [
-        'auth'     => 'Auth\AuthController',
-        'password' => 'Auth\PasswordController',
-    ]
-);
+\Route::controllers([
+    'auth'     => 'Auth\AuthController',
+    'password' => 'Auth\PasswordController',
+]);
 
 /** Snapshot download handler */
-\Route::get('/snapshot/{snapshotId}',
-    function ($snapshotId) {
-        return Snapshot::downloadFromHash($snapshotId);
-    }
-);
+\Route::get('/snapshot/{snapshotId}', function ($snapshotId){
+    return Snapshot::downloadFromHash($snapshotId);
+});

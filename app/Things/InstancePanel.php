@@ -18,13 +18,13 @@ class InstancePanel
      */
     protected $_id;
     /**
-     * @type array The data used to build the panel view
-     */
-    protected $_data = [];
-    /**
      * @type string The name of the blade to use for rendering the panel
      */
     protected $_blade = DashboardDefaults::SINGLE_INSTANCE_BLADE;
+    /**
+     * @type array The data used to build the panel view
+     */
+    protected $_data = [];
     /**
      * @type string
      */
@@ -46,8 +46,10 @@ class InstancePanel
         $this->_blade = $blade ?: config('panels.default.template', DashboardDefaults::SINGLE_INSTANCE_BLADE);
 
         $this->_defaultDomain =
-            '.' . trim(config('dashboard.default-dns-zone'),
-                '.') . '.' . trim(config('dashboard.default-dns-domain'), '.');
+            '.' .
+            trim(config('dashboard.default-dns-zone'), '.') .
+            '.' .
+            trim(config('dashboard.default-dns-domain'), '.');
     }
 
     /**
@@ -57,8 +59,7 @@ class InstancePanel
      */
     public function buildPanel($mergeData = [])
     {
-        return
-            \View::make($this->_blade, $this->_data, $mergeData);
+        return \View::make($this->_blade, $this->_data, $mergeData);
     }
 
     /**
@@ -79,22 +80,19 @@ class InstancePanel
      */
     protected function _prepareViewData($instance)
     {
-        return array_merge(
-            [
-                'panelContext'           => config('dashboard.panel-context', 'panel-info'),
-                'instanceName'           => $this->_id,
-                'defaultDomain'          => $this->_defaultDomain,
-                'headerIconSize'         => 'fa-1x',
-                'instanceDivId'          => $this->_htmlId('instance', $instance->instance_name_text),
-                'instanceStatusIconSize' => 'fa-3x',
-                'instanceUrl'            => config('dashboard.default-domain-protocol', 'https') .
-                    '://' .
-                    $instance->instance_name_text .
-                    $this->_defaultDomain,
-                'panelButtons'           => $this->_getPanelButtons($instance),
-            ],
-            $this->_getStatusData($instance)
-        );
+        return array_merge([
+            'panelContext'           => config('dashboard.panel-context', 'panel-info'),
+            'instanceName'           => $this->_id,
+            'defaultDomain'          => $this->_defaultDomain,
+            'headerIconSize'         => 'fa-1x',
+            'instanceDivId'          => $this->_htmlId('instance', $instance->instance_name_text),
+            'instanceStatusIconSize' => 'fa-3x',
+            'instanceUrl'            => config('dashboard.default-domain-protocol', 'https') .
+                '://' .
+                $instance->instance_name_text .
+                $this->_defaultDomain,
+            'panelButtons'           => $this->_getPanelButtons($instance),
+        ], $this->_getStatusData($instance));
     }
 
     /**

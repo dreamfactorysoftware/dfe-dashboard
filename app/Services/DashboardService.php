@@ -74,11 +74,10 @@ class DashboardService extends BaseService
         $this->requireCaptcha = config('dashboard.require-captcha', true);
         $this->panelsPerRow = config('panels.panels-per-row', DashboardDefaults::PANELS_PER_ROW);
 
-        $this->setDefaultDomain(implode('.',
-            [
-                trim(config('dashboard.default-dns-zone'), '. '),
-                trim(config('dashboard.default-dns-domain'), '. '),
-            ]));
+        $this->setDefaultDomain(implode('.', [
+            trim(config('dashboard.default-dns-zone'), '. '),
+            trim(config('dashboard.default-dns-domain'), '. '),
+        ]));
 
         $this->determineGridLayout();
 
@@ -102,7 +101,6 @@ class DashboardService extends BaseService
 
         if ($request->isMethod(Request::METHOD_POST)) {
             if (empty($id) || empty($_command)) {
-
                 $this->request = null;
 
                 return ErrorPacket::create(null, Response::HTTP_BAD_REQUEST);
@@ -194,8 +192,7 @@ class DashboardService extends BaseService
         if (false === ($_instanceName = Instance::isNameAvailable($instanceId)) || is_numeric($_instanceName[0])) {
             Flasher::setIf('The name of your instance cannot be "' .
                 $instanceId .
-                '".  It is either currently in-use, or otherwise invalid.',
-                false);
+                '".  It is either currently in-use, or otherwise invalid.', false);
 
             return ErrorPacket::create(null, Response::HTTP_BAD_REQUEST, 'Invalid instance name.');
         }
@@ -203,8 +200,7 @@ class DashboardService extends BaseService
         if (false === ($_clusterConfig = $this->getClusterConfig())) {
             Flasher::setIf('The DFE Console is not currently available. Please try your request later.', false);
 
-            return ErrorPacket::create(null,
-                Response::HTTP_INTERNAL_SERVER_ERROR,
+            return ErrorPacket::create(null, Response::HTTP_INTERNAL_SERVER_ERROR,
                 'Cluster server configuration error.');
         }
 
@@ -219,8 +215,7 @@ class DashboardService extends BaseService
             'owner-id'       => \Auth::id(),
             'owner-type'     => OwnerTypes::USER,
             'guest-location' => $_provisioner,
-        ],
-            $_clusterConfig);
+        ], $_clusterConfig);
 
         $_result = $this->callConsole('provision', $_payload);
 
@@ -307,8 +302,7 @@ class DashboardService extends BaseService
         $_result = $this->callConsole('exports', ['instance-id' => $instanceId]);
 
         if (!$_result || !is_object($_result) || !isset($_result->success)) {
-            Flasher::set(isset($_result, $_result->message) ? $_result->message : 'An unknown error occurred.',
-                false);
+            Flasher::set(isset($_result, $_result->message) ? $_result->message : 'An unknown error occurred.', false);
 
             return null;
         }
@@ -384,7 +378,7 @@ class DashboardService extends BaseService
         $_result = $this->getInstances();
 
         if (!is_object($_result) || !is_bool($_result->success)) {
-            \Log::error('Error pulling instance list: ' . print_r($_result, true));
+            $this->error('Error pulling instance list: ' . print_r($_result, true));
             Flasher::set('Error connecting to operations console.', false);
 
             return null;
@@ -435,21 +429,22 @@ class DashboardService extends BaseService
         $_name = is_object($instance) ? $instance->instance_name_text : 'NEW';
         $_id = is_object($instance) ? $instance->id : 0;
         $_overrides = $this->getPanelOverrides($panelType);
+        $_buttons = $this->getToolbarButtons($instance);
 
         return array_merge([
             //  Defaults
             'headerIcon'             => array_get($data, 'header-icon'),
             'headerIconSize'         => array_get($data, 'header-icon-size'),
-            'instanceLinks'          => [],//$this->_getInstanceLinks( $instance ),
-            'toolbarButtons'         => $this->getToolbarButtons($instance),
-            'panelButtons'           => $this->getToolbarButtons($instance),
+            'instanceLinks'          => [],
+            'toolbarButtons'         => $_buttons,
+            'panelButtons'           => $_buttons,
             'instanceDivId'          => $this->createDivId('instance', $_id, $_name),
             'instanceStatusIcon'     => $this->panelConfig($panelType, 'status-icon'),
             'instanceStatusIconSize' => $this->panelConfig($panelType, 'status-icon-size'),
             'instanceStatusContext'  => $this->panelConfig($panelType, 'status-icon-context'),
             'instanceUrl'            => $this->buildInstanceUrl($instance->instance_name_text),
         ], //  Instance status
-            $this->_getInstanceStatus($instance), //  Merge data
+            $this->getInstanceStatus($instance), //  Merge data
             $data, //  Overrides
             $_overrides, //  ENSURE!
             [
@@ -469,7 +464,7 @@ class DashboardService extends BaseService
      *
      * @return array
      */
-    protected function _getInstanceStatus($instance)
+    protected function getInstanceStatus($instance)
     {
         $_spinner = config('icons.spinner', DashboardDefaults::SPINNING_ICON);
 
@@ -754,7 +749,7 @@ HTML;
             false);
 
         if (is_string($_response)) {
-            \Log::error('Console API call received unexpected result: ' . $_response);
+            $this->error('Console API call received unexpected result: ' . $_response);
         }
 
         return false;
@@ -979,24 +974,19 @@ HTML;
             $_buttons = [
                 'launch' => $this->makeToolbarButton($_id, 'Launch', ['context' => 'btn-success', 'icon' => 'fa-play']),
                 'delete' => $this->makeToolbarButton($_id, 'Delete', ['context' => 'btn-danger', 'icon' => 'fa-times']),
-                'export' => $this->makeToolbarButton($_id,
-                    'Export',
+                'export' => $this->makeToolbarButton($_id, 'Export',
                     ['context' => 'btn-info', 'icon' => 'fa-cloud-download']),
             ];
         } else {
             //@todo make dynamic call to provisioner to find out supported operations
             $_buttons = [
-                'start'     => $this->makeToolbarButton($_id,
-                    'Start',
+                'start'     => $this->makeToolbarButton($_id, 'Start',
                     ['context' => 'btn-success', 'icon' => 'fa-play',]),
-                'stop'      => $this->makeToolbarButton($_id,
-                    'Stop',
+                'stop'      => $this->makeToolbarButton($_id, 'Stop',
                     ['context' => 'btn-warning', 'icon' => 'fa-stop',]),
-                'terminate' => $this->makeToolbarButton($_id,
-                    'Terminate',
+                'terminate' => $this->makeToolbarButton($_id, 'Terminate',
                     ['context' => 'btn-danger', 'icon' => 'fa-times',]),
-                'export'    => $this->makeToolbarButton($_id,
-                    'Export',
+                'export'    => $this->makeToolbarButton($_id, 'Export',
                     ['context' => 'btn-info', 'icon' => 'fa-cloud-download',]),
             ];
         }
@@ -1032,16 +1022,14 @@ HTML;
 
         $_action = str_replace(['_', ' '], '-', trim(strtolower($text)));
 
-        return array_merge($_template,
-            [
-                'id'   => 'instance-' . $_action . '-' . $id,
-                'text' => $text,
-                'data' => [
-                    'instance-id'     => $id,
-                    'instance-action' => $_action,
-                ],
+        return array_merge($_template, [
+            'id'   => 'instance-' . $_action . '-' . $id,
+            'text' => $text,
+            'data' => [
+                'instance-id'     => $id,
+                'instance-action' => $_action,
             ],
-            $options);
+        ], $options);
     }
 
     /**
@@ -1104,17 +1092,15 @@ HTML;
             $data['panelSize'] = array_get($data, 'panelSize', $this->columnClass);
         }
 
-        $_view = view($_blade,
-            array_merge($data,
-                [
-                    'formId'           => 'form-' . $panelType,
-                    'panelDescription' => $_description,
-                    'offerings'        => $_offeringsHtml,
-                    'panelTitle'       => \Lang::get('dashboard.instance-' . $panelType . '-title'),
-                    'panelType'        => $panelType,
-                    'panelContext'     => $this->panelConfig($panelType, 'context'),
-                    'headerIcon'       => $this->panelConfig($panelType, 'header-icon'),
-                ]));
+        $_view = view($_blade, array_merge($data, [
+            'formId'           => 'form-' . $panelType,
+            'panelDescription' => $_description,
+            'offerings'        => $_offeringsHtml,
+            'panelTitle'       => \Lang::get('dashboard.instance-' . $panelType . '-title'),
+            'panelType'        => $panelType,
+            'panelContext'     => $this->panelConfig($panelType, 'context'),
+            'headerIcon'       => $this->panelConfig($panelType, 'header-icon'),
+        ]));
 
         return $render ? $_view->render() : $_view;
     }
@@ -1175,13 +1161,12 @@ HTML;
                             '</option>';
                     }
 
-                    $_html .= view('layouts.partials.offerings',
-                        [
-                            'tag'         => $_tag,
-                            'displayName' => $_displayName,
-                            'options'     => $_options,
-                            'helpBlock'   => $_helpBlock,
-                        ])->render();
+                    $_html .= view('layouts.partials.offerings', [
+                        'tag'         => $_tag,
+                        'displayName' => $_displayName,
+                        'options'     => $_options,
+                        'helpBlock'   => $_helpBlock,
+                    ])->render();
                 }
             }
         }
@@ -1259,40 +1244,6 @@ HTML;
     }
 
     /**
-     * @param \DreamFactory\Enterprise\Dashboard\Things\InstancePanel $panel
-     *
-     * @return int
-     */
-    public function push(InstancePanel $panel)
-    {
-        return array_push($this->panels, $panel);
-    }
-
-    /**
-     * @return InstancePanel|null
-     */
-    public function pop()
-    {
-        return array_pop($this->panels);
-    }
-
-    /**
-     * @param array $mergeData
-     *
-     * @return null|string
-     */
-    public function renderStack($mergeData = [])
-    {
-        $_html = null;
-
-        foreach ($this->panels as $_panel) {
-            $_html .= $_panel->renderPanel($mergeData);
-        }
-
-        return $_html;
-    }
-
-    /**
      * Constructs and returns the fully qualified host name of an instance
      *
      * @param string $instanceName
@@ -1305,14 +1256,6 @@ HTML;
         '://' .
         $instanceName .
         $this->getDefaultDomain();
-    }
-
-    /**
-     * @return User
-     */
-    public function getUser()
-    {
-        return \Auth::user();
     }
 
     /**
@@ -1350,10 +1293,7 @@ HTML;
      */
     protected function getOpsClient()
     {
-        return $this->app[OpsClientServiceProvider::IOC_NAME]
-            ?: function (){
-                throw new \RuntimeException('DFE Console services are not available.');
-            };
+        return \App::make(OpsClientServiceProvider::IOC_NAME);
     }
 
     /**

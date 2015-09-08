@@ -12,7 +12,7 @@ class DashboardDefaults extends FactoryEnum
     /**
      * @type string
      */
-    const SIGNATURE_METHOD = 'sha256';
+    const SIGNATURE_METHOD = EnterpriseDefaults::SIGNATURE_METHOD;
     /**
      * @type string
      */

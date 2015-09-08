@@ -1,5 +1,4 @@
 <?php
-
 return [
     //  Default Queue Driver
     'default'     => env('QUEUE_DRIVER', 'sync'),

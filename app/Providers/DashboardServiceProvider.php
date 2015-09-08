@@ -24,11 +24,8 @@ class DashboardServiceProvider extends BaseServiceProvider
     public function register()
     {
         //  Register object into instance container
-        $this->singleton(
-            static::IOC_NAME,
-            function ($app) {
-                return new DashboardService($app);
-            }
-        );
+        $this->singleton(static::IOC_NAME, function ($app){
+            return new DashboardService($app);
+        });
     }
 }
