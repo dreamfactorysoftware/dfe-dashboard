@@ -1,0 +1,3 @@
+sessions/*
+!.gitignore
+views/*

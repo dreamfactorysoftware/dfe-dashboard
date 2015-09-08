@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: DreamFactory\Enterprise\Dashboard
+        psr4_prefix: DreamFactory\Enterprise\Dashboard
+        src_path: app

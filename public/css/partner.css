@@ -1,0 +1,64 @@
+.alert-partner {
+    background-color: #ecedee;
+    color:            #333333;
+    border-color:     #dcddde;
+    border-radius:    0 0 0 10px;
+}
+
+.partner-button {
+    border-radius: 0 0 0 10px;
+}
+
+.modal-content > button.close {
+    margin-right: 5px;
+    margin-top:   5px;
+}
+
+.vz-red {
+    background-color: #ef1d1d;
+    color:            #ef1d1d;
+}
+
+.partner-brand > h3 {
+    display:     inline-block;
+    margin-left: 14px;
+}
+
+.partner-copy {
+}
+
+.partner-copy h3 {
+    /*padding: 0;*/
+    /*margin:  35px 0 0;*/
+}
+
+.partner-action > .partner-button {
+    margin: 15% auto 0 auto;
+}
+
+.partner-action {
+    float:      right;
+    text-align: right;
+}
+
+.partner-row {
+}
+
+.partner-row form button {
+    margin-top: 30px;
+}
+
+.partner-row > .partner-brand {
+}
+
+.partner-row .partner-button .fa-fw {
+    text-align: right;
+}
+
+@media (max-width: 1000px) {
+    .partner-copy h3 {
+        /*padding: 0;*/
+        /*margin:  10px 0 0;*/
+    }
+}
+

@@ -1,0 +1,695 @@
+/*
+ * Base structure
+ */
+/* Move down content because we have a fixed navbar that is 40px tall */
+body {
+    padding-top:   40px;
+    /*font-family:   "Lato", "Open Sans", Arial, Helvetica, sans-serif;*/
+    /*background-color: #eeeeee;*/
+    min-width:     960px;
+    min-height:    100%;
+    height:        100%;
+    margin-bottom: 60px;
+}
+
+/*
+ * Global add-ons
+ */
+
+.sub-header {
+    padding-bottom: 10px;
+    border-bottom:  1px solid #eeeeee;
+}
+
+/*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+.navbar-fixed-top {
+    border: 0;
+}
+
+/** navbar min reduction **/
+.navbar {
+    margin-bottom: 0;
+    min-height:    40px;
+    height:        40px;
+}
+
+/*	navbar height to 40px */
+.navbar .navbar-brand {
+    height:      40px;
+    line-height: 20px;
+}
+
+.navbar-brand > img {
+    margin-top: -6px;
+}
+
+.navbar-toggle {
+    margin-top:    0;
+    margin-bottom: 0;
+    padding:       13px 0;
+}
+
+/** reduce padding to accommodate 40px bar **/
+.navbar-brand {
+    padding-top: 4px;
+}
+
+/** navbar menu items padding reduction **/
+.navbar .navbar-nav > li > a {
+    padding-top:    8px;
+    padding-bottom: 8px;
+}
+
+.nav.navbar-nav li a i.fa-fw {
+    margin-right: 4px;
+    text-align:   left;
+}
+
+/*
+ * Sidebar
+ */
+.sidebar {
+    /*display: none;*/
+    background-color: #f5f5f5;
+    padding:          20px;
+    overflow-x:       hidden;
+    overflow-y:       auto; /* Scrollable contents if viewport is shorter than content. */
+    border-right:     1px solid #eeeeee;
+}
+
+.tab-header {
+    font-weight:    bold;
+    font-size:      21px;
+    border-bottom:  1px solid #cccccc;
+    padding-bottom: 0;
+}
+
+/*
+ * Main content
+ */
+
+.main {
+    padding: 20px;
+}
+
+.main form.form-horizontal .form-group .form-actions {
+    margin-top: 25px;
+}
+
+body.body-404 .main {
+    padding: 0 20px 20px;
+}
+
+.main .page-header {
+    margin:         0;
+    text-shadow:    0 1px 1px #ffffff;
+    padding-bottom: 4px;
+    color:          #444444;
+}
+
+.hr {
+    height:              0;
+    clear:               both;
+    margin:              0 auto 15px;
+    padding:             0;
+    border:              1px solid #dddddd;
+    border-right-width:  0;
+    border-bottom-color: #ffffff;
+    border-left-width:   0;
+}
+
+/*
+ * Placeholder dashboard ideas
+ */
+.placeholders {
+    margin-bottom: 30px;
+    text-align:    center;
+}
+
+.placeholders h4 {
+    margin-bottom: 0;
+}
+
+.placeholder {
+    margin-bottom: 20px;
+}
+
+.placeholder img {
+    display:       inline-block;
+    border-radius: 50%;
+}
+
+/** avatar **/
+.avatar {
+    height:   32px;
+    width:    32px;
+    margin:   -5px 5px 0 -5px;
+    overflow: hidden;
+    display:  inline-block;
+}
+
+.avatar-image .gravatar-image {
+    margin-top:  -16px;
+    margin-left: -16px;
+}
+
+.avatar > img {
+    width:  48px;
+    height: 48px;
+}
+
+.user-info {
+    height:       40px;
+    line-height:  40px;
+    margin-right: 15px;
+}
+
+.user-info-name {
+    display:       block;
+    font-size:     12px;
+    /*color:         #AA8383;*/
+    margin-bottom: -4px;
+}
+
+.user-info-welcome {
+    font-weight: bold;
+    margin-top:  2px;
+}
+
+.dropdown-menu {
+    margin-right: 15px;
+}
+
+.dropdown-header {
+    font-size:   19px;
+    font-weight: bold;
+    color:       #888888;
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    text-shadow: 0 1px 1px #ffffff;
+}
+
+/** tabs **/
+.tab-content {
+    margin-top: 20px;
+}
+
+/** toolbar **/
+.page-header-toolbar button {
+    margin-top:    -10px;
+    margin-bottom: 0;
+    margin-left:   2px;
+}
+
+.btn-page-header {
+    margin-top:    -10px;
+    margin-bottom: 0;
+    padding-left:  10px;
+    padding-right: 10px;
+}
+
+/*------------------------------------------------------------------------------*/
+/* Loaders                                                                      */
+/*------------------------------------------------------------------------------*/
+
+.loading-content {
+    position:   absolute;
+    width:      100%;
+    left:       0;
+    background: #ebebeb;
+}
+
+.loading-image {
+    position: absolute;
+    top:      25px;
+    left:     15px;
+    color:    #ebebeb;
+}
+
+div.dataTables_filter input {
+    margin-left: 0;
+}
+
+div.dataTables_info {
+    font-size: 11px;
+}
+
+table.dataTable thead th {
+    font-size:   13px;
+    text-shadow: 0 1px 1px #ffffff;
+}
+
+.has-feedback .form-control {
+    padding-right: 0;
+}
+
+.pagination {
+    font-size: 11px;
+}
+
+.pagination > .active > a,
+.pagination > .active > a:focus,
+.pagination > .active > a:hover,
+.pagination > .active > span,
+.pagination > .active > span:focus,
+.pagination > .active > span:hover {
+    z-index:          2;
+    color:            #ffffff;
+    cursor:           default;
+    background-color: rgba(0, 149, 135, 0.8);
+    border-color:     rgba(0, 149, 135, 0.8);
+}
+
+.pagination > .disabled > a,
+.pagination > .disabled > a:focus,
+.pagination > .disabled > a:hover,
+.pagination > .disabled > span,
+.pagination > .disabled > span:focus,
+.pagination > .disabled > span:hover {
+    color: rgba(0, 0, 0, .30);
+}
+
+.alert-rounded {
+    border-radius: 2px;
+}
+
+.nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
+    background-color: rgba(0, 149, 135, 0.05);
+    box-shadow:       0 1px 4px rgba(0, 0, 0, .12), 0 1px 4px rgba(0, 0, 0, .12);
+    color:            #005547;
+}
+
+.page-content {
+    margin: 15px;
+    height: 100%;
+}
+
+#form-provision > .clearfix:first-of-type {
+    margin-top: 25px;
+}
+
+#form-import > .clearfix:first-of-type {
+    margin-top: -3px;
+}
+
+.footer {
+    position:         fixed;
+    bottom:           0;
+    width:            100%;
+    /* Set the fixed height of the footer here */
+    height:           60px;
+    background-color: #2c3e50;
+    color:            rgba(255, 255, 255, .75);
+}
+
+.footer > .container {
+    padding-right: 15px;
+    padding-left:  15px;
+}
+
+.footer ul, ol {
+    margin-bottom: 0;
+}
+
+.footer .social-links {
+    margin-top: 4px;
+}
+
+.footer > .container p {
+    margin-bottom: 0;
+}
+
+.dsp-box-heading {
+    margin-top:    0;
+    border-bottom: 1px solid #cccccc;
+}
+
+.dsp-links {
+    clear:    both;
+    overflow: hidden;
+}
+
+.panel-description {
+    font-size: 17px;
+}
+
+.panel-toolbar .btn-xs, .panel-toolbar .btn-group-xs > .btn {
+    font-size: 11px;
+}
+
+.panel-instance .panel-heading .panel-title .fa.fa-fw {
+    /*margin-right: 5px;*/
+    /*text-align: right;*/
+}
+
+.panel-heading-instance .panel-title {
+    position:    relative;
+    min-height:  18px;
+    line-height: 18px;
+    font-size:   17px;
+    float:       left;
+    display:     inline-block;
+}
+
+.panel-heading-instance .panel-title:hover {
+    text-decoration: underline;
+    cursor:          pointer;
+}
+
+.panel-heading-instance .panel-title:hover > span {
+    color:      rgba(252, 221, 134, 1);
+    transition: color 0.25s
+}
+
+.panel-heading-instance .panel-title:hover > span.text-faded {
+    color:      rgba(252, 221, 134, 0.8);
+    transition: color 0.25s;
+}
+
+.panel-heading-instance .panel-title .fa {
+    margin-right: 4px;
+}
+
+.dsp-help-button {
+    /*vertical-align: bottom;*/
+    /*margin-top:     4px;*/
+    /*font-size: 11px;*/
+}
+
+.dsp-links .dsp-controls .btn i.fa {
+    margin-right: 4px;
+}
+
+a[id^="dspcontrol___"]:first-child {
+    margin-left: 0;
+}
+
+a[id^="dspcontrol___"] {
+    /*font-size:    11px;*/
+}
+
+a[id^="dspcontrol___"]:last-child {
+    margin-right: 0;
+}
+
+.dsp-info .dsp-name .dsp-launch-link {
+    color:           #000000;
+    text-decoration: none;
+    margin:          0;
+    font-size:       17px;
+    font-weight:     400;
+    font-family:     "Montserrat", "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.dsp-info .dsp-name .dsp-launch-link:hover {
+    color: #005580;
+}
+
+.dsp-info .dsp-name small {
+    font-size:     13px;
+    display:       block;
+    margin-top:    -6px;
+    margin-bottom: 8px;
+}
+
+.panel {
+    overflow: hidden;
+    height:   100%;
+}
+
+.panel-body {
+    position:       relative;
+    padding-bottom: 10px;
+    overflow:       hidden;
+}
+
+.panel-instance .panel-body .dsp-info .dsp-name small a {
+    color:           #999999;
+    text-decoration: none;
+    font-family:     "Montserrat", "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.panel-instance .panel-body .dsp-info .dsp-name small a:hover {
+    text-decoration: underline;
+}
+
+.panel-instance .panel-body .dsp-name a, .key-name a {
+    text-decoration: none;
+}
+
+.dsp-stats {
+    /*margin:      0 0 10px 0;*/
+    min-height:  15px;
+    position:    relative;
+    color:       #7f7e7e;
+    font-family: "Montserrat", "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.instance-status-stats {
+    font-size:   11px;
+    font-weight: normal;
+    opacity:     0.8;
+}
+
+.panel-instance .panel-body .dsp-links {
+    /*width:         100%;*/
+    text-align:    right;
+    margin-bottom: 4px;
+}
+
+.panel-instance .panel-body .key-info .form-actions {
+    padding-left: 20px;
+}
+
+.panel-instance .panel-body .dsp-icon {
+    margin-right: 15px;
+}
+
+.panel-instance .panel-body .dsp-icon {
+    margin-right: 15px;
+}
+
+.panel-heading-instance .panel-title .text-muted {
+    color:       rgba(255, 255, 255, .70);
+    transition:  1s;
+    margin-left: -3px;
+    white-space: nowrap;
+}
+
+.text-muted.text-faded {
+    font-size: 11px;
+}
+
+.panel-title-status {
+    float:      right;
+    display:    inline-block;
+    margin-top: 0;
+}
+
+.panel-title-status.pull-right {
+    position: absolute;
+    top:      -1px;
+    right:    0;
+    opacity:  1;
+}
+
+.panel-title-status .fa.fa-fw {
+    color:   #ffffff;
+    opacity: .75;
+}
+
+#dsp_name-error {
+    display:    block;
+    position:   relative;
+    margin-top: 10px;
+    font-size:  larger;
+    color:      #e74c3c;
+}
+
+.dsp-name {
+    white-space: nowrap;
+}
+
+.btn2-group.row {
+    margin-left:  0;
+    margin-right: 0;
+}
+
+label[for="import-file-label"] {
+    font-size: 17px;
+}
+
+label[for="dsp_name"] {
+    padding-top: 11px;
+}
+
+#import-id {
+    font-size: 13px;
+}
+
+label[for="import-file"] {
+    /*padding: 10px;*/
+    margin-top: 5px;
+}
+
+.dsp-links > .btn {
+    margin-bottom: 0;
+}
+
+.header-status-icon {
+    text-align: right;
+}
+
+.panel-toolbar {
+    text-align: center;
+}
+
+.instance-status-name {
+    overflow: hidden;
+}
+
+.text-faded {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), transparent);
+}
+
+.g-recaptcha + .help-block {
+    margin-top: -10px;
+}
+
+#form-import > div.form-group:first-child {
+    margin-top: 74px
+}
+
+.instance-actions {
+    width:      100%;
+    text-align: center;
+}
+
+.pull-center {
+    text-align: center;
+}
+
+.no-instances {
+    padding:          10px;
+    border:           1px dotted #efefef;
+    background-color: rgba(255, 191, 115, .10);
+    width:            auto;
+    text-align:       center;
+    border-radius:    10px;
+}
+
+.either-or {
+    display:     block;
+    font-size:   18px;
+    font-weight: bold;
+    padding:     0;
+    text-align:  left;
+    margin:      -5px 0 15px;
+}
+
+/*------------------------------------------------------------------------------*/
+/* Media Queries                                                                */
+/*------------------------------------------------------------------------------*/
+
+@media (min-width: 768px) {
+    .main {
+        padding-right: 15px;
+        padding-left:  15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        padding: 0;
+    }
+
+    .navbar .navbar-brand {
+        height:      40px;
+        padding-top: 4px;
+    }
+
+    .panel-title {
+        font-size: 11px;
+    }
+
+    .dsp-info .dsp-name .dsp-launch-link {
+        font-size: 12px;
+    }
+
+    .dsp-icon.dsp-real i.fa-3x {
+        font-size: 1.5em;
+    }
+
+    .instance-panel-group > .panel-body {
+        padding: 5px;
+    }
+
+    .panel-instance .panel-body .dsp-icon, .panel-instance .panel-body .key-icon {
+        margin-right: 5px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .instance-panel-group > .panel-body {
+        padding: 5px 10px;
+    }
+
+    .panel-description {
+        font-size: 13px;
+    }
+
+    .phi-status > i.fa,
+    .phi-name > i.fa {
+        font-size: 11px;
+        opacity:   1;
+    }
+
+    .dsp-info .dsp-name .dsp-launch-link {
+        font-size: 12px;
+    }
+
+    .dsp-icon.dsp-real i.fa-3x {
+        font-size: 1.5em;
+    }
+
+    .dsp-stats, .instance-status-stats {
+        font-size: 11px;
+    }
+
+    .panel-instance .panel-body .dsp-icon, .panel-instance .panel-body .key-icon {
+        margin-right: 5px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .panel-title {
+        font-size: 14px;
+    }
+
+    .dsp-icon.dsp-real i.fa-3x {
+        font-size: 2em;
+    }
+
+    .panel-title-status.pull-right {
+        right: -10px;
+    }
+
+    .dsp-info .dsp-name .dsp-launch-link {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 1199px) {
+    .navbar .navbar-brand {
+        padding: 4px 15px 15px;
+        /* padding: 10px 15px; */
+    }
+}
+
+@media (max-width: 1299px) {
+    .hidden-toolbar-button {
+        display: none !important;
+    }
+}

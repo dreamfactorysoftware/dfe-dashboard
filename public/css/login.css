@@ -1,0 +1,100 @@
+body {
+	background-color: #353535; /*rgba(58, 44, 69, 1);*/
+	padding-top:      5%;
+	color:            rgba(255, 255, 255, .5);
+}
+
+.normal-text {
+	color: #ff9d1d;
+}
+
+#container-login form h4 {
+	font-size:  17px;
+	color:      #ff9d1d;
+	text-align: center;
+}
+
+#logo, #container-login {
+	margin-left:  auto;
+	margin-right: auto;
+	position:     relative;
+}
+
+#logo img {
+	margin:  0 auto;
+	display: block;
+	width:   250px;
+}
+
+#container-login {
+	overflow:   hidden !important;
+	text-align: left;
+	position:   relative;
+}
+
+#container-login form {
+	/*width:    100%;*/
+	/*background: #2E363F;*/
+	position: relative;
+	top:      0;
+	left:     0;
+}
+
+#container-login .form-actions {
+	border-top:  1px solid rgba(255, 255, 255, 0.1);
+	padding-top: 10px;
+}
+
+#container-login > form {
+	/*z-index: 200;*/
+	display: block;
+	margin:  15px auto;
+}
+
+#container-login #recover-form {
+	display:       none;
+	margin-bottom: 30px;
+}
+
+#container-login #recover-form .form-actions {
+	margin-top: 30px;
+}
+
+.container-logo {
+	/*width:          100%;*/
+	text-align:     center;
+	vertical-align: middle;
+	margin-bottom:  25px;
+	padding-bottom: 15px;
+	border-bottom:  1px solid rgba(189, 183, 107, 0.1);
+	/*font-family:    "Open Sans", "Droid Sans", Arial, sans-serif;*/
+}
+
+.container-logo img {
+	margin:         0 auto;
+	height:         256px;
+	display:        block;
+	padding-bottom: 10px;
+}
+
+.container-logo h3 small {
+	padding:    15px 0;
+	font-size:  21px;
+	color:      #96bd53;
+	margin-top: 15px;
+}
+
+.container-logo h3 small span {
+	font-size:  11px;
+	display:    block;
+	color:      #c97c19;
+	margin-top: 2px;
+}
+
+.checkbox label .check {
+	margin-right: 5px;
+}
+
+.help-inline {
+	color: #c96462;
+}

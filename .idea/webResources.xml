@@ -5,8 +5,15 @@
       <entry url="file://$PROJECT_DIR$">
         <entryData>
           <resourceRoots>
+<<<<<<< HEAD
             <path value="file://$PROJECT_DIR$/resources/views" />
             <path value="file://$PROJECT_DIR$/public" />
+=======
+            <path value="file://$PROJECT_DIR$/public" />
+            <path value="file://$PROJECT_DIR$/resources" />
+            <path value="file://$PROJECT_DIR$/storage" />
+            <path value="file://$PROJECT_DIR$/database" />
+>>>>>>> develop
           </resourceRoots>
         </entryData>
       </entry>
