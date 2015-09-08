@@ -126,21 +126,25 @@ var _processAction = function ($element, $form) {
     var _id = $element.data('instance-id'), _extra = $element.data('instance-href');
     var _action = $element.data('instance-action');
 
-    if ('import' == _action) {
-        _id = $('input[name="instance-id"]', $form).val();
-        _extra = $('input[name="snapshot-id"]', $form).val();
-    } else if ('create' == _action) {
-        if (_validator && !_validator.valid()) {
-            return;
-        }
+    switch (_action) {
+        case 'create':
+            if (_validator && !_validator.valid()) {
+                return;
+            }
 
-        _id = $('input#instance-name').val();
+            _id = $('input#instance-name').val();
 
-        if (!_id || !_id.length) {
-            alert('Invalid instance name.');
-        }
-    } else {
-        $element.addClass('disabled').prop('disabled', true);
+            if (!_id || !_id.length) {
+                alert('Invalid instance name.');
+            }
+            break;
+        case 'import':
+            _id = $('input[name="instance-id"]', $form).val();
+            _extra = $('input[name="snapshot-id"]', $form).val();
+            break;
+        default:
+            $element.addClass('disabled').prop('disabled', true);
+            break;
     }
 
     var _result = _makeRequest(_id, _action, _extra || null);
@@ -178,6 +182,10 @@ var _makeRequest = function (id, action, href) {
             if (!confirm('Stop instance "' + id + '"?')) {
                 return;
             }
+            break;
+        case 'provision':
+        case 'create':
+        case 'help':
             break;
         case 'export':
             if (!confirm('Export instance "' + id + '"?')) {
