@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< HEAD
-<project version="4" />
-=======
 <project version="4">
   <component name="PublishConfigData" serverName="dashboard.enterprise.dreamfactory.com">
     <serverData>
@@ -15,4 +12,3 @@
     </serverData>
   </component>
 </project>
->>>>>>> develop

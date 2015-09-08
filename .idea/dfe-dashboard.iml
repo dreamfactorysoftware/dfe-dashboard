@@ -6,20 +6,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/app" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/app/original" />
-<<<<<<< HEAD
-      <excludeFolder url="file://$MODULE_DIR$/public/old" />
-      <excludeFolder url="file://$MODULE_DIR$/storage" />
-      <excludeFolder url="file://$MODULE_DIR$/temp" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-common.setdev-on" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-common/.idea" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-common/vendor" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-ops-client.setdev-on" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-ops-client/.idea" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-ops-client/vendor" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/fabric-db.setdev-on" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/fabric-db/.idea" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/fabric-db/vendor" />
-=======
       <excludeFolder url="file://$MODULE_DIR$/bootstrap/cache" />
       <excludeFolder url="file://$MODULE_DIR$/public/old" />
       <excludeFolder url="file://$MODULE_DIR$/temp" />
@@ -48,7 +34,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/php-utils.setdev-on" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/php-utils/.idea" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/php-utils/vendor" />
->>>>>>> develop
       <excludeFolder url="file://$MODULE_DIR$/yii.config" />
     </content>
     <orderEntry type="inheritedJdk" />
@@ -56,20 +41,6 @@
     <orderEntry type="module-library">
       <library name="PHARS">
         <CLASSES>
-<<<<<<< HEAD
-          <root url="phar://$MODULE_DIR$/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar" />
-        </CLASSES>
-        <SOURCES>
-          <root url="phar://$MODULE_DIR$/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="library" name="jquery" level="application" />
-    <orderEntry type="library" name="jquery.validate" level="application" />
-    <orderEntry type="library" name="api" level="application" />
-  </component>
-</module>
-=======
           <root url="phar://$MODULE_DIR$/vendor/dreamfactory/console-tools/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar" />
           <root url="phar://$MODULE_DIR$/vendor/dreamfactory/console-tools/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar" />
           <root url="phar://$MODULE_DIR$/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
@@ -85,4 +56,3 @@
     <orderEntry type="library" name="additional-methods" level="application" />
   </component>
 </module>
->>>>>>> develop

@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-<<<<<<< HEAD
-  <component name="PhpProjectSharedConfiguration" php_language_level="5.6.0" />
-=======
->>>>>>> develop
   <component name="PhpStepFilterConfiguration">
     <option name="skippedFunctions">
       <list>
         <option value="config" />
-<<<<<<< HEAD
-=======
-        <option value="Illuminate\Container\Container-&gt;make" />
-        <option value="Composer\Autoload\ClassLoader-&gt;loadClass" />
->>>>>>> develop
       </list>
     </option>
   </component>

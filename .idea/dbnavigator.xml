@@ -35,8 +35,6 @@
   <component name="DBNavigator.Project.ObjectDependencyManager">
     <last-used-dependency-type value="INCOMING" />
   </component>
-<<<<<<< HEAD
-=======
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
     <filters />
@@ -44,7 +42,6 @@
   <component name="DBNavigator.Project.ScriptExecutionManager" clear-outputs="true">
     <recently-used-interfaces />
   </component>
->>>>>>> develop
   <component name="DBNavigator.Project.Settings">
     <connections />
     <browser-settings>
@@ -156,10 +153,7 @@
         <convert-empty-strings-to-null value="true" />
         <select-content-on-cell-edit value="true" />
         <large-value-preview-active value="true" />
-<<<<<<< HEAD
-=======
         <load-view-data-active value="false" />
->>>>>>> develop
       </general>
       <filters>
         <prompt-filter-dialog value="true" />
@@ -177,15 +171,8 @@
           <content-type name="PL/SQL" enabled="true" />
           <content-type name="JavaScript" enabled="true" />
           <content-type name="PHP" enabled="true" />
-<<<<<<< HEAD
-          <content-type name="JSP" enabled="true" />
-          <content-type name="JSPx" enabled="true" />
-          <content-type name="ASP" enabled="true" />
-          <content-type name="YAML" enabled="true" />
-=======
           <content-type name="YAML" enabled="true" />
           <content-type name="Bash" enabled="true" />
->>>>>>> develop
         </content-types>
       </qualified-text-editor>
       <record-navigation>
@@ -362,20 +349,6 @@
       <statement-execution>
         <fetch-block-size value="100" />
         <execution-timeout value="20" />
-<<<<<<< HEAD
-        <focus-result value="false" />
-      </statement-execution>
-      <statement-execution>
-        <execution-timeout value="20" />
-        <debug-execution-timeout value="600" />
-        <parameter-history-size value="10" />
-      </statement-execution>
-      <compiler>
-        <compile-type value="ASK" />
-        <compile-dependencies value="ASK" />
-        <always-show-controls value="false" />
-      </compiler>
-=======
         <debug-execution-timeout value="600" />
         <prompt-execution value="false" />
       </statement-execution>
@@ -388,7 +361,6 @@
         <debug-execution-timeout value="600" />
         <parameter-history-size value="10" />
       </method-execution>
->>>>>>> develop
     </execution-engine-settings>
     <operation-settings>
       <transactions>
@@ -407,8 +379,6 @@
         <kill-session value="ASK" />
         <reload-on-filter-change value="false" />
       </session-browser>
-<<<<<<< HEAD
-=======
       <compiler>
         <compile-type value="KEEP" />
         <compile-dependencies value="ASK" />
@@ -418,7 +388,6 @@
         <debugger-type value="JDBC" />
         <use-generic-runners value="true" />
       </debugger>
->>>>>>> develop
     </operation-settings>
     <ddl-file-settings>
       <extensions>
