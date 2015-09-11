@@ -3,9 +3,10 @@
   <component name="ComposerJsonPluginSettings">
     <unboundedVersionInspectionSettings>
       <excludedPackages>
-        <pattern pattern="dreamfactory/*" />
         <pattern pattern="league/*" />
+        <pattern pattern="dreamfactory/*" />
       </excludedPackages>
     </unboundedVersionInspectionSettings>
+    <customRepositories />
   </component>
 </project>
