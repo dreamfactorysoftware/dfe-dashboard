@@ -3,58 +3,54 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/app" isTestSource="false" />
-      <excludeFolder url="file://$MODULE_DIR$/app/original" />
       <excludeFolder url="file://$MODULE_DIR$/bootstrap/cache" />
       <excludeFolder url="file://$MODULE_DIR$/public/old" />
-      <excludeFolder url="file://$MODULE_DIR$/temp" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/console-tools.setdev-on" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/console-tools/.idea" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/console-tools/bin" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/console-tools/vendor" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-common.setdev-on" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-common/.idea" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-common/vendor" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-database.setdev-on" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-database/.idea" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-database/vendor" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-ops-client.setdev-on" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-ops-client/.idea" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-ops-client/vendor" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-partner.setdev-on" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-partner/.idea" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-partner/vendor" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-storage.setdev-on" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-storage/.idea" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/dfe-storage/vendor" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/fabric-db.setdev-on" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/fabric-db/.idea" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/fabric-db/vendor" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/php-utils.setdev-on" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/php-utils/.idea" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/dreamfactory/php-utils/vendor" />
-      <excludeFolder url="file://$MODULE_DIR$/yii.config" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
       <library name="PHARS">
         <CLASSES>
+          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/php-utils/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/dfe-database/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
           <root url="phar://$MODULE_DIR$/vendor/dreamfactory/console-tools/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
-          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/console-tools/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
-          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/console-tools/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/dfe-ops-client/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
           <root url="phar://$MODULE_DIR$/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/dfe-common/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/dfe-common/vendor/dreamfactory/dfe-database/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/console-tools/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/dfe-common/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/dfe-database/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/dfe-ops-client/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/php-utils/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/console-tools/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/console-tools/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/dfe-common/vendor/dreamfactory/dfe-database/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/console-tools/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
         </CLASSES>
         <SOURCES>
+          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/php-utils/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/dfe-database/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
           <root url="phar://$MODULE_DIR$/vendor/dreamfactory/console-tools/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
-          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/console-tools/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
-          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/console-tools/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/dfe-ops-client/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
           <root url="phar://$MODULE_DIR$/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/dfe-common/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/dfe-common/vendor/dreamfactory/dfe-database/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/console-tools/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/dfe-common/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/dfe-database/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/dfe-ops-client/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/php-utils/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/console-tools/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/console-tools/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/dfe-common/vendor/dreamfactory/dfe-database/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/dreamfactory/console-tools/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="library" name="additional-methods" level="application" />
     <orderEntry type="library" name="additional-methods" level="application" />
   </component>
 </module>
