@@ -14,7 +14,6 @@ use DreamFactory\Enterprise\Database\Enums\GuestLocations;
 use DreamFactory\Enterprise\Database\Enums\OwnerTypes;
 use DreamFactory\Enterprise\Database\Enums\ProvisionStates;
 use DreamFactory\Enterprise\Database\Models\Instance;
-use DreamFactory\Enterprise\Database\Models\User;
 use DreamFactory\Library\Utility\Flasher;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -1075,7 +1074,7 @@ HTML;
 
         if ($_dudes->success) {
             foreach ($_dudes->response as $_host) {
-                if ($_host->id == 'rave') {
+                if ('dreamfactory' == $_host->id) {
                     $_offeringsHtml = $this->buildOfferingsInput($_host);
                     break;
                 }
