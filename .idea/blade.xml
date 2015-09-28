@@ -19,11 +19,11 @@
       <data directive="@stop" />
       <data directive="@endsection" />
       <data directive="@endfor" />
-      <data directive="@endforelse" />
       <data directive="@overwrite" />
+      <data directive="@endforelse" />
       <data directive="@elseif" injection="true" prefix="&lt;?php elseif (" suffix="): ?&gt;" />
-      <data directive="@choice" injection="true" prefix="&lt;?php echo \Illuminate\Support\Facades\Lang::choice(" suffix="); ?&gt;" />
       <data directive="@parent" />
+      <data directive="@choice" injection="true" prefix="&lt;?php echo \Illuminate\Support\Facades\Lang::choice(" suffix="); ?&gt;" />
       <data directive="@show" />
       <data directive="@empty" />
       <data directive="@endunless" />
