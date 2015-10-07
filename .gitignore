@@ -1,11 +1,11 @@
 /vendor/
 /resources/views/vendor/
 /public/vendor/
-/.env
 /build
 /composer.lock
 /tests/storage/*
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/composerJson.xml
-
+/.env*
+!/.env-dist
