@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.1.19 (LTS) on 2015-10-05.
+ * Generated for Laravel 5.1.19 (LTS) on 2015-10-07.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -3715,7 +3715,7 @@ namespace {
         /**
          * Set the columns to be selected.
          *
-         * @param array $columns
+         * @param array|mixed $columns
          * @return $this 
          * @static 
          */
@@ -3750,7 +3750,7 @@ namespace {
         /**
          * Add a new select column to the query.
          *
-         * @param mixed $column
+         * @param array|mixed $column
          * @return $this 
          * @static 
          */
@@ -5483,7 +5483,7 @@ namespace {
         /**
          * Get all of the input except for a specified array of items.
          *
-         * @param array $keys
+         * @param array|mixed $keys
          * @return array 
          * @static 
          */
@@ -5600,7 +5600,7 @@ namespace {
         /**
          * Flash only some of the input to the session.
          *
-         * @param mixed  string
+         * @param array|mixed $keys
          * @return void 
          * @static 
          */
@@ -5611,7 +5611,7 @@ namespace {
         /**
          * Flash only some of the input to the session.
          *
-         * @param mixed  string
+         * @param array|mixed $keys
          * @return void 
          * @static 
          */
@@ -8235,7 +8235,7 @@ namespace {
         /**
          * Get all of the input except for a specified array of items.
          *
-         * @param array $keys
+         * @param array|mixed $keys
          * @return array 
          * @static 
          */
@@ -8352,7 +8352,7 @@ namespace {
         /**
          * Flash only some of the input to the session.
          *
-         * @param mixed  string
+         * @param array|mixed $keys
          * @return void 
          * @static 
          */
@@ -8363,7 +8363,7 @@ namespace {
         /**
          * Flash only some of the input to the session.
          *
-         * @param mixed  string
+         * @param array|mixed $keys
          * @return void 
          * @static 
          */
