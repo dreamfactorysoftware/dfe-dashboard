@@ -16,6 +16,14 @@ use DreamFactory\Enterprise\Database\Models\Snapshot;
 ]);
 
 /** Snapshot download handler */
-\Route::get('/snapshot/{snapshotId}', function ($snapshotId){
-    return Snapshot::downloadFromHash($snapshotId);
-});
+\Route::get('/snapshot/{snapshotId}',
+    function ($snapshotId){
+        return Snapshot::downloadFromHash($snapshotId);
+    });
+
+/** Login event listener */
+\Event::listen('auth.login',
+    function (){
+        \Auth::user()->update(['last_login_date' => date('c')]);
+    });
+
