@@ -24,6 +24,8 @@ use DreamFactory\Enterprise\Database\Models\Snapshot;
 /** Login event listener */
 \Event::listen('auth.login',
     function (){
-        \Auth::user()->update(['last_login_date' => date('c')]);
+        \Auth::user()->update(['last_login_date'    => date('c'),
+                               'last_login_ip_text' => \Request::server('REMOTE_ADDR'),
+        ]);
     });
 
