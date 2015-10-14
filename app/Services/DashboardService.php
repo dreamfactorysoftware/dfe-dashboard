@@ -1063,7 +1063,6 @@ HTML;
         }
 
         $_blade = $this->panelConfig($panelType, 'template', DashboardDefaults::SINGLE_INSTANCE_BLADE);
-
         $_offeringsHtml = null;
 
         $_dudes = $this->getProvisioners();
