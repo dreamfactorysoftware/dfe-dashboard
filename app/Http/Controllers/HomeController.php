@@ -142,11 +142,13 @@ class HomeController extends BaseController
                 Inflector::neutralize(str_replace(' ', '-', \Auth::user()->nickname_text)),
         ];
 
-        $_create = Dashboard::renderPanel('create', array_merge($_coreData, [
-            'instanceName' => PanelTypes::CREATE,
-            'panelType'    => PanelTypes::CREATE,
-            'importables'  => $this->getUserImportables(),
-        ]));
+        $_create = Dashboard::renderPanel('create',
+            array_merge($_coreData,
+                [
+                    'instanceName' => PanelTypes::CREATE,
+                    'panelType'    => PanelTypes::CREATE,
+                    'importables'  => $this->getUserImportables(),
+                ]));
 
         $_instances = Dashboard::userInstanceTable(null, true);
 
@@ -158,15 +160,17 @@ class HomeController extends BaseController
             $_partner = Partner::resolve($_partnerId);
         }
 
-        return view('app.home', array_merge($_coreData, [
-            /** The instance create panel */
-            'instanceCreator' => $_create,
-            /** The instance list */
-            'instances'       => $_instances,
-            /** Partner junk */
-            'partner'         => $_partner ?: null,
-            'partnerContent'  => $_partner ? $_partner->getWebsiteContent() : null,
-        ]));
+        return view('app.home',
+            array_merge($_coreData,
+                [
+                    /** The instance create panel */
+                    'instanceCreator' => $_create,
+                    /** The instance list */
+                    'instances'       => $_instances,
+                    /** Partner junk */
+                    'partner'         => $_partner ?: null,
+                    'partnerContent'  => $_partner ? $_partner->getWebsiteContent() : null,
+                ]));
     }
 
     /**
@@ -216,9 +220,10 @@ class HomeController extends BaseController
     {
         //  If captcha is on, check it...
         if (config('dashboard.require-captcha') && $request->isMethod(Request::METHOD_POST)) {
-            $_validator = \Validator::make(\Input::all(), [
-                'g-recaptcha-response' => 'required|recaptcha',
-            ]);
+            $_validator = \Validator::make(\Input::all(),
+                [
+                    'g-recaptcha-response' => 'required|recaptcha',
+                ]);
 
             if (!$_validator->passes()) {
                 \Log::error('recaptcha failure: ' . print_r($_validator->errors()->all(), true));
