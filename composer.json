@@ -98,6 +98,7 @@
       "php artisan config:clear",
       "php artisan route:clear",
       "php artisan optimize",
+      "php artisan ide-helper:generate",
       "php artisan vendor:publish --tag=public --force"
     ]
   },
