@@ -60,9 +60,9 @@
     "marwelln/recaptcha":                    "dev-master",
     "dreamfactory/php-utils":                "1.1.*",
     "dreamfactory/console-tools":            "dev-develop as dev-master",
-    "dreamfactory/dfe-audit":                "dev-develop as dev-master",
+    "dreamfactory/dfe-audit":                "1.0.*",
     "dreamfactory/dfe-common":               "dev-develop as dev-master",
-    "dreamfactory/dfe-database":             "dev-develop as dev-master",
+    "dreamfactory/dfe-database":             "1.0.*",
     "dreamfactory/dfe-ops-client":           "dev-develop as dev-master",
     "dreamfactory/dfe-partner":              "dev-develop as dev-master",
     "dreamfactory/dfe-storage":              "dev-develop as dev-master",
@@ -89,14 +89,16 @@
     "post-install-cmd": [
       "php artisan clear-compiled",
       "php artisan ide-helper:generate",
-      "php artisan vendor:publish",
-      "php artisan optimize"
+      "php artisan optimize",
+      "php artisan vendor:publish"
     ],
     "post-update-cmd":  [
       "php artisan clear-compiled",
-      "php artisan ide-helper:generate",
-      "php artisan vendor:publish --tag=public --force",
-      "php artisan optimize"
+      "php artisan cache:clear",
+      "php artisan config:clear",
+      "php artisan route:clear",
+      "php artisan optimize",
+      "php artisan vendor:publish --tag=public --force"
     ]
   },
   "config":            {
