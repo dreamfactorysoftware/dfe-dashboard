@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.1.20 (LTS) on 2015-10-19.
+ * Generated for Laravel 5.1.20 (LTS) on 2015-10-23.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -4447,7 +4447,7 @@ namespace {
         /**
          * Determine if any rows exist for the current query.
          *
-         * @return bool 
+         * @return bool|null 
          * @static 
          */
         public static function exists(){
@@ -5347,8 +5347,8 @@ namespace {
          * Get a segment from the URI (1 based index).
          *
          * @param int $index
-         * @param mixed $default
-         * @return string 
+         * @param string|null $default
+         * @return string|null 
          * @static 
          */
         public static function segment($index, $default = null){
@@ -5462,7 +5462,7 @@ namespace {
          * Retrieve an input item from the request.
          *
          * @param string $key
-         * @param mixed $default
+         * @param string|array|null $default
          * @return string|array 
          * @static 
          */
@@ -5496,7 +5496,7 @@ namespace {
          * Retrieve a query string item from the request.
          *
          * @param string $key
-         * @param mixed $default
+         * @param string|array|null $default
          * @return string|array 
          * @static 
          */
@@ -5519,7 +5519,7 @@ namespace {
          * Retrieve a cookie from the request.
          *
          * @param string $key
-         * @param mixed $default
+         * @param string|array|null $default
          * @return string|array 
          * @static 
          */
@@ -5532,7 +5532,7 @@ namespace {
          *
          * @param string $key
          * @param mixed $default
-         * @return \Symfony\Component\HttpFoundation\File\UploadedFile|array 
+         * @return \Symfony\Component\HttpFoundation\File\UploadedFile|array|null 
          * @static 
          */
         public static function file($key = null, $default = null){
@@ -5554,7 +5554,7 @@ namespace {
          * Retrieve a header from the request.
          *
          * @param string $key
-         * @param mixed $default
+         * @param string|array|null $default
          * @return string|array 
          * @static 
          */
@@ -5566,7 +5566,7 @@ namespace {
          * Retrieve a server variable from the request.
          *
          * @param string $key
-         * @param mixed $default
+         * @param string|array|null $default
          * @return string|array 
          * @static 
          */
@@ -5578,8 +5578,8 @@ namespace {
          * Retrieve an old input item.
          *
          * @param string $key
-         * @param mixed $default
-         * @return mixed 
+         * @param string|array|null $default
+         * @return string|array 
          * @static 
          */
         public static function old($key = null, $default = null){
@@ -5801,7 +5801,7 @@ namespace {
          * Get the route handling the request.
          *
          * @param string|null $param
-         * @return object|string 
+         * @return \Illuminate\Routing\Route|object|string 
          * @static 
          */
         public static function route($param = null){
@@ -7144,11 +7144,11 @@ namespace {
          *
          * @param string $name
          * @param string $level
-         * @return void 
+         * @return \Psr\Log\LoggerInterface 
          * @static 
          */
         public static function useSyslog($name = 'laravel', $level = 'debug'){
-            \Illuminate\Log\Writer::useSyslog($name, $level);
+            return \Illuminate\Log\Writer::useSyslog($name, $level);
         }
         
         /**
@@ -7266,11 +7266,11 @@ namespace {
          * @param string|array $view
          * @param array $data
          * @param \Closure|string $callback
-         * @return mixed 
+         * @return void 
          * @static 
          */
         public static function send($view, $data, $callback){
-            return \Illuminate\Mail\Mailer::send($view, $data, $callback);
+            \Illuminate\Mail\Mailer::send($view, $data, $callback);
         }
         
         /**
@@ -8099,8 +8099,8 @@ namespace {
          * Get a segment from the URI (1 based index).
          *
          * @param int $index
-         * @param mixed $default
-         * @return string 
+         * @param string|null $default
+         * @return string|null 
          * @static 
          */
         public static function segment($index, $default = null){
@@ -8214,7 +8214,7 @@ namespace {
          * Retrieve an input item from the request.
          *
          * @param string $key
-         * @param mixed $default
+         * @param string|array|null $default
          * @return string|array 
          * @static 
          */
@@ -8248,7 +8248,7 @@ namespace {
          * Retrieve a query string item from the request.
          *
          * @param string $key
-         * @param mixed $default
+         * @param string|array|null $default
          * @return string|array 
          * @static 
          */
@@ -8271,7 +8271,7 @@ namespace {
          * Retrieve a cookie from the request.
          *
          * @param string $key
-         * @param mixed $default
+         * @param string|array|null $default
          * @return string|array 
          * @static 
          */
@@ -8284,7 +8284,7 @@ namespace {
          *
          * @param string $key
          * @param mixed $default
-         * @return \Symfony\Component\HttpFoundation\File\UploadedFile|array 
+         * @return \Symfony\Component\HttpFoundation\File\UploadedFile|array|null 
          * @static 
          */
         public static function file($key = null, $default = null){
@@ -8306,7 +8306,7 @@ namespace {
          * Retrieve a header from the request.
          *
          * @param string $key
-         * @param mixed $default
+         * @param string|array|null $default
          * @return string|array 
          * @static 
          */
@@ -8318,7 +8318,7 @@ namespace {
          * Retrieve a server variable from the request.
          *
          * @param string $key
-         * @param mixed $default
+         * @param string|array|null $default
          * @return string|array 
          * @static 
          */
@@ -8330,8 +8330,8 @@ namespace {
          * Retrieve an old input item.
          *
          * @param string $key
-         * @param mixed $default
-         * @return mixed 
+         * @param string|array|null $default
+         * @return string|array 
          * @static 
          */
         public static function old($key = null, $default = null){
@@ -8553,7 +8553,7 @@ namespace {
          * Get the route handling the request.
          *
          * @param string|null $param
-         * @return object|string 
+         * @return \Illuminate\Routing\Route|object|string 
          * @static 
          */
         public static function route($param = null){
@@ -10789,7 +10789,7 @@ namespace {
          * Put a key / value pair or array of key / value pairs in the session.
          *
          * @param string|array $key
-         * @param mixed|null $value
+         * @param mixed $value
          * @return void 
          * @static 
          */
@@ -11312,7 +11312,7 @@ namespace {
         /**
          * Get the request instance.
          *
-         * @return \Symfony\Component\HttpFoundation\Request 
+         * @return \Illuminate\Http\Request 
          * @static 
          */
         public static function getRequest(){
