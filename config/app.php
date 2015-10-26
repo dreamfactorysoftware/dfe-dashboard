@@ -9,7 +9,7 @@ return [
     'locale'          => 'en',
     'fallback_locale' => 'en',
     'key'             => env('APP_KEY'),
-    'cipher'          => MCRYPT_RIJNDAEL_128,
+    'cipher'          => 'AES-256-CBC',
     'log'             => 'single',
     //******************************************************************************
     //* Autoloaded Providers
