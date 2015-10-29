@@ -66,10 +66,10 @@
     "dreamfactory/dfe-ops-client":           "dev-develop as dev-master",
     "dreamfactory/dfe-partner":              "dev-develop as dev-master",
     "dreamfactory/dfe-storage":              "dev-develop as dev-master",
+    "barryvdh/laravel-ide-helper":           "~2.0",
     "barryvdh/laravel-cors":                 "0.6.x"
   },
   "require-dev":       {
-    "barryvdh/laravel-ide-helper": "~2.0",
     "doctrine/dbal":               "~2.3",
     "phpspec/phpspec":             "~2.1",
     "phpunit/phpunit":             "~4.0",
