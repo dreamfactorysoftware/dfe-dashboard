@@ -61,19 +61,19 @@
     "dreamfactory/php-utils":                "1.1.*",
     "dreamfactory/console-tools":            "dev-develop as dev-master",
     "dreamfactory/dfe-audit":                "1.0.*",
-    "dreamfactory/dfe-common":               "dev-develop as dev-master",
+    "dreamfactory/dfe-common":               "1.0.*",
     "dreamfactory/dfe-database":             "1.0.*",
-    "dreamfactory/dfe-ops-client":           "dev-develop as dev-master",
-    "dreamfactory/dfe-partner":              "dev-develop as dev-master",
-    "dreamfactory/dfe-storage":              "dev-develop as dev-master",
+    "dreamfactory/dfe-ops-client":           "1.0.*",
+    "dreamfactory/dfe-partner":              "1.0.*",
+    "dreamfactory/dfe-storage":              "1.0.*",
     "barryvdh/laravel-ide-helper":           "~2.0",
     "barryvdh/laravel-cors":                 "0.6.x"
   },
   "require-dev":       {
-    "doctrine/dbal":               "~2.3",
-    "phpspec/phpspec":             "~2.1",
-    "phpunit/phpunit":             "~4.0",
-    "way/generators":              "~3.0"
+    "doctrine/dbal":   "~2.3",
+    "phpspec/phpspec": "~2.1",
+    "phpunit/phpunit": "~4.0",
+    "way/generators":  "~3.0"
   },
   "autoload":          {
     "psr-4": {
@@ -103,7 +103,7 @@
     ]
   },
   "config":            {
-    "preferred-install": "dist"
+    "preferred-install": "source"
   },
   "extra":             {
     "branch-alias": {
