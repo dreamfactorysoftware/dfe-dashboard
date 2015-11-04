@@ -63,13 +63,13 @@ class HomeController extends BaseController
      */
     public function download($snapshotId)
     {
-        try {
+        try{
             /** @type RouteHash $_hash */
             $_hash = RouteHash::with(['snapshot'])->byHash($snapshotId)->firstOrFail();
             /** @type Filesystem $_fs */
             $_fs = $_hash->snapshot->instance->getSnapshotMount();
             $_fs->readStream($_hash->actual_path_text);
-        } catch (\Exception $_ex) {
+        }catch (\Exception $_ex){
             abort(Response::HTTP_NOT_FOUND);
         }
     }
@@ -191,7 +191,7 @@ class HomeController extends BaseController
             foreach ($_rows as $_row) {
                 list($_date, $_instanceName) = explode('.', $_row->snapshot_id_text, 2);
 
-                try {
+                try{
                     //  Find instance, dead or alive!
                     $_instance = $this->_locateInstance($_instanceName);
 
@@ -202,7 +202,7 @@ class HomeController extends BaseController
                         'export-date'   => Carbon::create($_row->create_date)->toFormattedDateString(),
                         'instance-name' => $_instanceName,
                     ];
-                } catch (ModelNotFoundException $_ex) {
+                }catch (ModelNotFoundException $_ex){
                     //  ignored on purpose
                 }
             }
@@ -327,7 +327,7 @@ class HomeController extends BaseController
             }
 
             \Log::debug('[auth.landing-page] subGuid "' . $subGuid . '" attached with email "' . $_email . '"');
-        } else {
+        }else {
             //  Make sure it came from our domain...
             if (null === ($_referrer = \Request::server('HTTP_REFERER')) ||
                 false === stripos($_referrer, 'verizon.dreamfactory.com')
@@ -342,10 +342,10 @@ class HomeController extends BaseController
         }
 
         //  Lookup email address
-        try {
+        try{
             $_user = User::byEmail($_email)->firstOrFail();
             \Log::debug('[auth.landing-page] subGuid "' . $subGuid . '"/"' . $_email . '" user id#' . $_user->id);
-        } catch (ModelNotFoundException $_ex) {
+        }catch (ModelNotFoundException $_ex){
             \Log::debug('[auth.landing-page] subGuid "' . $subGuid . '"/"' . $_email . '" no related user.');
 
             return false;

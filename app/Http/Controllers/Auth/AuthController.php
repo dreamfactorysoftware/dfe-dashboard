@@ -5,6 +5,7 @@ use DreamFactory\Enterprise\Common\Http\Controllers\Auth\CommonAuthController;
 use DreamFactory\Enterprise\Database\Enums\OwnerTypes;
 use DreamFactory\Enterprise\Database\Models\AppKey;
 use DreamFactory\Enterprise\Database\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends CommonAuthController
@@ -41,7 +42,8 @@ class AuthController extends CommonAuthController
      */
     public function create(array $data)
     {
-        return \DB::transaction(function () use ($data){
+        /** @noinspection PhpUndefinedMethodInspection */
+        return DB::transaction(function () use ($data){
             /** @noinspection PhpUndefinedMethodInspection */
             $_user = User::create([
                 'first_name_text' => $data['first_name_text'],

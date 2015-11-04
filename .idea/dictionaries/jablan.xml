@@ -1,7 +1,9 @@
 <component name="ProjectDictionaryState">
   <dictionary name="jablan">
     <words>
+      <w>addr</w>
       <w>auth'd</w>
+      <w>autoloaded</w>
       <w>avenir</w>
       <w>bascom</w>
       <w>bigue</w>
@@ -10,6 +12,8 @@
       <w>dismissable</w>
       <w>dspcontrol</w>
       <w>eventable</w>
+      <w>flysystem</w>
+      <w>guid</w>
       <w>hapikey</w>
       <w>hubapi</w>
       <w>hubspot</w>
