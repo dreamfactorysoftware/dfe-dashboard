@@ -26,6 +26,8 @@ return [
         //******************************************************************************
         'display-name'      => 'DreamFactory Enterprise&trade; Dashboard',
         'display-version'   => 'v1.0-beta',
+        /* 256px X 256px to avoid pixelation */
+        'login-splash-image' => env('DFE_LOGIN_SPLASH_IMAGE', '/vendor/dfe-common/img/logo-dfe.png'),
         'display-copyright' => '© DreamFactory Software, Inc. 2012-' . date('Y') . '. All Rights Reserved.',
         /**
          * Theme selection -- a bootswatch theme name
