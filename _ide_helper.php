@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.1.23 (LTS) on 2015-11-06.
+ * Generated for Laravel 5.1.24 (LTS) on 2015-11-11.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -9831,6 +9831,7 @@ namespace {
          *
          * @param array $controllers
          * @return void 
+         * @deprecated since version 5.1.
          * @static 
          */
         public static function controllers($controllers){
@@ -9844,6 +9845,7 @@ namespace {
          * @param string $controller
          * @param array $names
          * @return void 
+         * @deprecated since version 5.1.
          * @static 
          */
         public static function controller($uri, $controller, $names = array()){

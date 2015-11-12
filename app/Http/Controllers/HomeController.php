@@ -63,13 +63,13 @@ class HomeController extends BaseController
      */
     public function download($snapshotId)
     {
-        try{
+        try {
             /** @type RouteHash $_hash */
             $_hash = RouteHash::with(['snapshot'])->byHash($snapshotId)->firstOrFail();
             /** @type Filesystem $_fs */
             $_fs = $_hash->snapshot->instance->getSnapshotMount();
             $_fs->readStream($_hash->actual_path_text);
-        }catch (\Exception $_ex){
+        } catch (\Exception $_ex) {
             abort(Response::HTTP_NOT_FOUND);
         }
     }
@@ -142,13 +142,17 @@ class HomeController extends BaseController
                 Inflector::neutralize(str_replace(' ', '-', \Auth::user()->nickname_text)),
         ];
 
-        $_create = Dashboard::renderPanel('create',
-            array_merge($_coreData,
+        $_create = Dashboard::renderPanel(
+            'create',
+            array_merge(
+                $_coreData,
                 [
                     'instanceName' => PanelTypes::CREATE,
                     'panelType'    => PanelTypes::CREATE,
                     'importables'  => $this->getUserImportables(),
-                ]));
+                ]
+            )
+        );
 
         $_instances = Dashboard::userInstanceTable(null, true);
 
@@ -160,8 +164,10 @@ class HomeController extends BaseController
             $_partner = Partner::resolve($_partnerId);
         }
 
-        return view('app.home',
-            array_merge($_coreData,
+        return view(
+            'app.home',
+            array_merge(
+                $_coreData,
                 [
                     /** The instance create panel */
                     'instanceCreator' => $_create,
@@ -170,7 +176,9 @@ class HomeController extends BaseController
                     /** Partner junk */
                     'partner'         => $_partner ?: null,
                     'partnerContent'  => $_partner ? $_partner->getWebsiteContent() : null,
-                ]));
+                ]
+            )
+        );
     }
 
     /**
@@ -180,29 +188,31 @@ class HomeController extends BaseController
     {
         $_result = [];
         /** @noinspection PhpUndefinedFieldInspection */
-        $_rows = Snapshot::byUserId(\Auth::user()->id)->orderBy('create_date', 'desc')->get([
-            'id',
-            'instance_id',
-            'snapshot_id_text',
-        ]);
+        $_rows = Snapshot::byUserId(\Auth::user()->id)->orderBy('create_date', 'desc')->get(
+            [
+                'id',
+                'instance_id',
+                'snapshot_id_text',
+            ]
+        );
 
         if (!empty($_rows)) {
             /** @var Snapshot[] $_rows */
             foreach ($_rows as $_row) {
                 list($_date, $_instanceName) = explode('.', $_row->snapshot_id_text, 2);
 
-                try{
+                try {
                     //  Find instance, dead or alive!
                     $_instance = $this->_locateInstance($_instanceName);
 
                     $_result[] = [
                         'id'            => $_row->id,
                         'name'          => $_row->snapshot_id_text,
-                        'instance-id'   => $_instance->instance_id_text,
+                        'instance-id'   => $_instance ? $_instance->instance_id_text : 'unknown',
                         'export-date'   => Carbon::create($_row->create_date)->toFormattedDateString(),
                         'instance-name' => $_instanceName,
                     ];
-                }catch (ModelNotFoundException $_ex){
+                } catch (ModelNotFoundException $_ex) {
                     //  ignored on purpose
                 }
             }
@@ -220,10 +230,7 @@ class HomeController extends BaseController
     {
         //  If captcha is on, check it...
         if (config('dashboard.require-captcha') && $request->isMethod(Request::METHOD_POST)) {
-            $_validator = \Validator::make(\Input::all(),
-                [
-                    'g-recaptcha-response' => 'required|recaptcha',
-                ]);
+            $_validator = \Validator::make(\Input::all(), ['g-recaptcha-response' => 'required|recaptcha',]);
 
             if (!$_validator->passes()) {
                 \Log::error('recaptcha failure: ' . print_r($_validator->errors()->all(), true));
@@ -327,7 +334,7 @@ class HomeController extends BaseController
             }
 
             \Log::debug('[auth.landing-page] subGuid "' . $subGuid . '" attached with email "' . $_email . '"');
-        }else {
+        } else {
             //  Make sure it came from our domain...
             if (null === ($_referrer = \Request::server('HTTP_REFERER')) ||
                 false === stripos($_referrer, 'verizon.dreamfactory.com')
@@ -342,10 +349,10 @@ class HomeController extends BaseController
         }
 
         //  Lookup email address
-        try{
+        try {
             $_user = User::byEmail($_email)->firstOrFail();
             \Log::debug('[auth.landing-page] subGuid "' . $subGuid . '"/"' . $_email . '" user id#' . $_user->id);
-        }catch (ModelNotFoundException $_ex){
+        } catch (ModelNotFoundException $_ex) {
             \Log::debug('[auth.landing-page] subGuid "' . $subGuid . '"/"' . $_email . '" no related user.');
 
             return false;
