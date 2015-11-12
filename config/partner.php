@@ -38,7 +38,7 @@ HTML,
 
         <p id="signup">When you click the 'Sign up now!' button you'll be redirected to the Verizon Cloud Registration page where you can purchase the cloud services for your new server.</p>
 
-        <p>After you purchase and create a server, you can install a new DreamFactory instance on the server using the appropriate Linux or Windows 
+        <p>After you purchase and create a server, you can install a new DreamFactory instance on the server using the appropriate Linux or Windows
         <a href="https://bitnami.com/stack/dreamfactory/installer" title="Bitnami DreamFactory Installer">Bitnami DreamFactory installer</a>.</p>
 
         <p>More information is available on the
@@ -61,6 +61,24 @@ HTML,
 </div>
 HTML
 
+            ,
+        ],
+    ],
+    'default' => [
+        'name'          => 'Default',
+        'class'         => 'DreamFactory\\Enterprise\\Dashboard\\Partners\\DefaultPartner',
+        'description'   => 'Default Partner Branding',
+        'alert-context' => 'alert-danger',
+        'redirect-uri'  => '',
+        'brand'         => [
+            'action'    => <<< HTML
+HTML
+            ,
+            'logo'      => env('DFE_PARTNER_LOGO',null),
+            'icon'      => env('DFE_PARTNER_ICON',null),
+            'copyright' => '&copy; ' . date('Y') . ' Verizon',
+            'copy'      => <<< HTML
+HTML
             ,
         ],
     ],
