@@ -16,12 +16,12 @@ class DefaultPartner extends AlertPartner
     {
         $_brand = $this->getPartnerBrand();
         $_context = $this->getPartnerDetail( 'alert-context' );
-        $_icon = $_brand->getLogo( true );
+        $_logo = $_brand->getLogo();
 
-        if (!is_null($_icon)) {
+        if (!is_null($_logo)) {
         $_html = '<div class="alert ' . $_context . ' alert-fixed partner-alert" role="alert" style="background-color: #FFFFFF; color: #333333; border-color: #FFFFFF">
     <div class="row partner-row">
-        <div style="padding-left: 0;"><img src="' . $_icon . '" class="partner-brand"></div>
+        <div style="padding-left: 0;"><img src="' . $_logo . '" class="partner-brand"></div>
     </div>
 </div>';
         } else {
