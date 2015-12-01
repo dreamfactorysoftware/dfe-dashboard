@@ -1,8 +1,0 @@
-log
-vendor
-.idea
-tests/config/keys.php
-tests/log
-tests/*.log
-build
-composer.lock
