@@ -92,7 +92,8 @@ class InstancePanel
                 $instance->instance_name_text .
                 $this->_defaultDomain,
             'panelButtons'           => $this->_getPanelButtons($instance),
-        ], $this->_getStatusData($instance));
+        ],
+            $this->_getStatusData($instance));
     }
 
     /**

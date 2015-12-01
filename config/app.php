@@ -9,7 +9,7 @@ return [
     'locale'          => 'en',
     'fallback_locale' => 'en',
     'key'             => env('APP_KEY'),
-    'cipher'          => MCRYPT_RIJNDAEL_128,
+    'cipher'          => 'AES-256-CBC',
     'log'             => 'single',
     //******************************************************************************
     //* Autoloaded Providers
@@ -47,7 +47,7 @@ return [
         DreamFactory\Enterprise\Dashboard\Providers\DashboardServiceProvider::class,
         /** DreamFactory Common Providers */
         DreamFactory\Enterprise\Common\Providers\LibraryAssetsProvider::class,
-        DreamFactory\Enterprise\Common\Providers\InstanceStorageServiceProvider::class,
+        DreamFactory\Enterprise\Storage\Providers\InstanceStorageServiceProvider::class,
         DreamFactory\Enterprise\Common\Providers\Auth\DashboardAuthProvider::class,
         /** DreamFactory Storage Provider */
         DreamFactory\Enterprise\Storage\Providers\MountServiceProvider::class,
@@ -98,7 +98,7 @@ return [
         'View'            => Illuminate\Support\Facades\View::class,
         /** DreamFactory aliases */
         'Dashboard'       => DreamFactory\Enterprise\Dashboard\Facades\Dashboard::class,
-        'InstanceStorage' => DreamFactory\Enterprise\Common\Facades\InstanceStorage::class,
+        'InstanceStorage' => DreamFactory\Enterprise\Storage\Facades\InstanceStorage::class,
         'Mounter'         => DreamFactory\Enterprise\Storage\Facades\Mounter::class,
         'Partner'         => DreamFactory\Enterprise\Partner\Facades\Partner::class,
         /** Third-party aliases */

@@ -13,7 +13,7 @@ class Handler extends ExceptionHandler
      * @var array list of the exception types that should not be reported.
      */
     protected $dontReport = [
-        'Symfony\Component\HttpKernel\Exception\HttpException'
+        'Symfony\Component\HttpKernel\Exception\HttpException',
     ];
 
     //******************************************************************************

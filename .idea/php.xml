@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="PhpProjectServersManager">
+    <servers>
+      <server host="dashboard.local" id="86045342-6e2f-4cbf-a4a9-30d8896c0fd7" name="dashboard.local" use_path_mappings="true">
+        <path_mappings>
+          <mapping local-root="$PROJECT_DIR$" remote-root="/opt/dreamfactory/dfe/dfe-dashboard" />
+          <mapping local-root="$PROJECT_DIR$/storage" remote-root="/opt/dreamfactory/dfe/dfe-dashboard/storage" />
+          <mapping local-root="$PROJECT_DIR$/vendor/dreamfactory/dfe-common" remote-root="/opt/dreamfactory/dfe/dfe-common" />
+          <mapping local-root="$PROJECT_DIR$/vendor/dreamfactory/dfe-database" remote-root="/opt/dreamfactory/dfe/dfe-database" />
+          <mapping local-root="$PROJECT_DIR$/vendor/dreamfactory/dfe-ops-client" remote-root="/opt/dreamfactory/dfe/dfe-ops-client" />
+          <mapping local-root="$PROJECT_DIR$/vendor/dreamfactory/dfe-storage" remote-root="/opt/dreamfactory/dfe/dfe-storage" />
+          <mapping local-root="$PROJECT_DIR$/vendor/dreamfactory/php-utils" remote-root="/opt/dreamfactory/lib/php-utils" />
+        </path_mappings>
+      </server>
+    </servers>
+  </component>
   <component name="PhpStepFilterConfiguration">
     <option name="skippedFunctions">
       <list>
