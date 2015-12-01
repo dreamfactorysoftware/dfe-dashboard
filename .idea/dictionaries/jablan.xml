@@ -6,6 +6,14 @@
       <w>autoloaded</w>
       <w>avenir</w>
       <w>bascom</w>
+<<<<<<< HEAD
+      <w>dspcontrol</w>
+      <w>marwelln</w>
+      <w>optgroup</w>
+      <w>parseable</w>
+      <w>sitekey</w>
+      <w>siteverify</w>
+=======
       <w>bigue</w>
       <w>bootstrapper</w>
       <w>describedby</w>
@@ -32,6 +40,7 @@
       <w>strapper</w>
       <w>unassigns</w>
       <w>unhighlight</w>
+>>>>>>> develop
     </words>
   </dictionary>
 </component>

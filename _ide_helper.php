@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.1.24 (LTS) on 2015-11-23.
+ * Generated for Laravel 5.1.25 (LTS) on 2015-12-01.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -6791,7 +6791,7 @@ namespace {
          * Determine if a translation exists for a given locale.
          *
          * @param string $key
-         * @param string $locale
+         * @param string|null $locale
          * @return bool 
          * @static 
          */
@@ -6803,7 +6803,7 @@ namespace {
          * Determine if a translation exists.
          *
          * @param string $key
-         * @param string $locale
+         * @param string|null $locale
          * @param bool $fallback
          * @return bool 
          * @static 
@@ -6817,7 +6817,7 @@ namespace {
          *
          * @param string $key
          * @param array $replace
-         * @param string $locale
+         * @param string|null $locale
          * @param bool $fallback
          * @return string 
          * @static 
@@ -11712,6 +11712,7 @@ namespace {
          *
          * @param bool $overwrite
          * @return string 
+         * @throws \InvalidArgumentException
          * @static 
          */
         public static function stopSection($overwrite = false){
@@ -11722,6 +11723,7 @@ namespace {
          * Stop injecting content into a section and append it.
          *
          * @return string 
+         * @throws \InvalidArgumentException
          * @static 
          */
         public static function appendSection(){
