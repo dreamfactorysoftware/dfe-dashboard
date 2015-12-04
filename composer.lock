@@ -606,12 +606,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/dfe-common.git",
-                "reference": "0688f35d95fde44333c8e8c5cce92ebe223da519"
+                "reference": "38fc7c61ba181378f5e250989946c73d4ec4115e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/0688f35d95fde44333c8e8c5cce92ebe223da519",
-                "reference": "0688f35d95fde44333c8e8c5cce92ebe223da519",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/38fc7c61ba181378f5e250989946c73d4ec4115e",
+                "reference": "38fc7c61ba181378f5e250989946c73d4ec4115e",
                 "shasum": ""
             },
             "require": {
@@ -669,7 +669,7 @@
                 "source": "https://github.com/dreamfactorysoftware/dfe-common/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/dfe-common/issues"
             },
-            "time": "2015-11-23 17:05:10"
+            "time": "2015-12-04 23:39:51"
         },
         {
             "name": "dreamfactory/dfe-database",
@@ -1421,12 +1421,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "dce531b679ac54b9b08539052e089cb6f78d7a7f"
+                "reference": "132febfd9e9cbb954b532c7b601fae45a7523765"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/dce531b679ac54b9b08539052e089cb6f78d7a7f",
-                "reference": "dce531b679ac54b9b08539052e089cb6f78d7a7f",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/132febfd9e9cbb954b532c7b601fae45a7523765",
+                "reference": "132febfd9e9cbb954b532c7b601fae45a7523765",
                 "shasum": ""
             },
             "require": {
@@ -1541,7 +1541,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2015-12-03 17:37:48"
+            "time": "2015-12-04 23:08:52"
         },
         {
             "name": "league/event",
@@ -4059,30 +4059,25 @@
         },
         {
             "name": "vlucas/phpdotenv",
-            "version": "dev-master",
+            "version": "1.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vlucas/phpdotenv.git",
-                "reference": "ae388efe53a2c352ddd270f4d316bad58952b8e3"
+                "reference": "0cac554ce06277e33ddf9f0b7ade4b8bbf2af3fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/ae388efe53a2c352ddd270f4d316bad58952b8e3",
-                "reference": "ae388efe53a2c352ddd270f4d316bad58952b8e3",
+                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/0cac554ce06277e33ddf9f0b7ade4b8bbf2af3fa",
+                "reference": "0cac554ce06277e33ddf9f0b7ade4b8bbf2af3fa",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.9"
+                "php": ">=5.3.2"
             },
             "require-dev": {
                 "phpunit/phpunit": "~4.0"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.1-dev"
-                }
-            },
             "autoload": {
                 "psr-0": {
                     "Dotenv": "src/"
@@ -4106,7 +4101,7 @@
                 "env",
                 "environment"
             ],
-            "time": "2015-02-19 20:37:05"
+            "time": "2015-05-30 15:59:26"
         },
         {
             "name": "wpb/string-blade-compiler",
