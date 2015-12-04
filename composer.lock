@@ -677,12 +677,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/dfe-database.git",
-                "reference": "336088cb4291ebcf7e88f0c5608aad30bd0d4110"
+                "reference": "a194026b51ba6b529872249647cd8e066f8660f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-database/zipball/336088cb4291ebcf7e88f0c5608aad30bd0d4110",
-                "reference": "336088cb4291ebcf7e88f0c5608aad30bd0d4110",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-database/zipball/a194026b51ba6b529872249647cd8e066f8660f2",
+                "reference": "a194026b51ba6b529872249647cd8e066f8660f2",
                 "shasum": ""
             },
             "require": {
@@ -726,7 +726,7 @@
                 "source": "https://github.com/dreamfactorysoftware/dfe-database/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/dfe-database/issues"
             },
-            "time": "2015-11-19 00:53:23"
+            "time": "2015-12-04 16:57:51"
         },
         {
             "name": "dreamfactory/dfe-ops-client",
@@ -1421,12 +1421,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "f3c88759b4687ccf061ff12ba69db3416dbd6951"
+                "reference": "dce531b679ac54b9b08539052e089cb6f78d7a7f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/f3c88759b4687ccf061ff12ba69db3416dbd6951",
-                "reference": "f3c88759b4687ccf061ff12ba69db3416dbd6951",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/dce531b679ac54b9b08539052e089cb6f78d7a7f",
+                "reference": "dce531b679ac54b9b08539052e089cb6f78d7a7f",
                 "shasum": ""
             },
             "require": {
@@ -1472,7 +1472,6 @@
                 "illuminate/events": "self.version",
                 "illuminate/exception": "self.version",
                 "illuminate/filesystem": "self.version",
-                "illuminate/foundation": "self.version",
                 "illuminate/hashing": "self.version",
                 "illuminate/http": "self.version",
                 "illuminate/log": "self.version",
@@ -1542,7 +1541,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2015-12-01 14:57:08"
+            "time": "2015-12-03 17:37:48"
         },
         {
             "name": "league/event",
@@ -2024,12 +2023,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "b2f26d30ee50ce46e172bc7e7cd45b90ef7c36b8"
+                "reference": "c542e5d86a9775abd1021618eb2430278bfc1e01"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/b2f26d30ee50ce46e172bc7e7cd45b90ef7c36b8",
-                "reference": "b2f26d30ee50ce46e172bc7e7cd45b90ef7c36b8",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/c542e5d86a9775abd1021618eb2430278bfc1e01",
+                "reference": "c542e5d86a9775abd1021618eb2430278bfc1e01",
                 "shasum": ""
             },
             "require": {
@@ -2067,7 +2066,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2015-11-21 21:30:40"
+            "time": "2015-12-04 15:28:43"
         },
         {
             "name": "paragonie/random_compat",
@@ -2434,12 +2433,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ruflin/Elastica.git",
-                "reference": "7a3ee01afc369abd7184c2e495c3533f7132abe4"
+                "reference": "57b9da5bcc08d73a97920b32b1995f8f3af7413a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ruflin/Elastica/zipball/7a3ee01afc369abd7184c2e495c3533f7132abe4",
-                "reference": "7a3ee01afc369abd7184c2e495c3533f7132abe4",
+                "url": "https://api.github.com/repos/ruflin/Elastica/zipball/57b9da5bcc08d73a97920b32b1995f8f3af7413a",
+                "reference": "57b9da5bcc08d73a97920b32b1995f8f3af7413a",
                 "shasum": ""
             },
             "require": {
@@ -2481,7 +2480,7 @@
                 "client",
                 "search"
             ],
-            "time": "2015-11-26 22:22:18"
+            "time": "2015-12-02 16:34:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -4005,12 +4004,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "72bcb27411780eaee9469729aace73c0d46fb2b8"
+                "reference": "b1eb6b876ee562dcdc6cca7912f3722c72470e1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/72bcb27411780eaee9469729aace73c0d46fb2b8",
-                "reference": "72bcb27411780eaee9469729aace73c0d46fb2b8",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/b1eb6b876ee562dcdc6cca7912f3722c72470e1a",
+                "reference": "b1eb6b876ee562dcdc6cca7912f3722c72470e1a",
                 "shasum": ""
             },
             "require": {
@@ -4056,7 +4055,7 @@
                 "debug",
                 "dump"
             ],
-            "time": "2015-11-18 13:41:01"
+            "time": "2015-12-03 10:46:32"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -4158,12 +4157,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/cache.git",
-                "reference": "f69c21c5cea834def1664a73a1b7cd5fcdfbd23e"
+                "reference": "da201c5a23b9c19e275d27937f8db221dc608bf1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/f69c21c5cea834def1664a73a1b7cd5fcdfbd23e",
-                "reference": "f69c21c5cea834def1664a73a1b7cd5fcdfbd23e",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/da201c5a23b9c19e275d27937f8db221dc608bf1",
+                "reference": "da201c5a23b9c19e275d27937f8db221dc608bf1",
                 "shasum": ""
             },
             "require": {
@@ -4220,7 +4219,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2015-11-02 18:32:40"
+            "time": "2015-12-03 10:46:43"
         },
         {
             "name": "doctrine/collections",
@@ -4294,12 +4293,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/common.git",
-                "reference": "79fdef35a79a3694e5ae552575d23fd7dc8482c2"
+                "reference": "6065c0756da7dc286b8221107ade4c70298b1eba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/common/zipball/79fdef35a79a3694e5ae552575d23fd7dc8482c2",
-                "reference": "79fdef35a79a3694e5ae552575d23fd7dc8482c2",
+                "url": "https://api.github.com/repos/doctrine/common/zipball/6065c0756da7dc286b8221107ade4c70298b1eba",
+                "reference": "6065c0756da7dc286b8221107ade4c70298b1eba",
                 "shasum": ""
             },
             "require": {
@@ -4308,15 +4307,15 @@
                 "doctrine/collections": "1.*",
                 "doctrine/inflector": "1.*",
                 "doctrine/lexer": "1.*",
-                "php": ">=5.3.2"
+                "php": "~5.5|~7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.7"
+                "phpunit/phpunit": "~4.8|~5.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6.x-dev"
+                    "dev-master": "2.7.x-dev"
                 }
             },
             "autoload": {
@@ -4359,7 +4358,7 @@
                 "persistence",
                 "spl"
             ],
-            "time": "2015-10-30 18:43:38"
+            "time": "2015-12-04 13:08:02"
         },
         {
             "name": "doctrine/dbal",
@@ -5148,12 +5147,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/environment.git",
-                "reference": "6324c907ce7a52478eeeaede764f48733ef5ae44"
+                "reference": "6e7133793a8e5a5714a551a8324337374be209df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/6324c907ce7a52478eeeaede764f48733ef5ae44",
-                "reference": "6324c907ce7a52478eeeaede764f48733ef5ae44",
+                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/6e7133793a8e5a5714a551a8324337374be209df",
+                "reference": "6e7133793a8e5a5714a551a8324337374be209df",
                 "shasum": ""
             },
             "require": {
@@ -5190,7 +5189,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2015-08-03 06:14:51"
+            "time": "2015-12-02 08:37:27"
         },
         {
             "name": "sebastian/exporter",
