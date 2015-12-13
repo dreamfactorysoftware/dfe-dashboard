@@ -9,13 +9,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/"><img src="/img/logo-navbar-194x42.png" alt=""></a>
+                <a class="navbar-brand" href="/"><img src="{{config('dfe.common.navbar-image')}}"></a>
             </div>
 
             <div class="collapse navbar-collapse navbar-right" id="navbar-dashboard">
                 <ul class="nav navbar-nav">
-                    <li><a href="http://www.dreamfactory.com/resources/" alt="Logout"><i class="fa fa-fw fa-book"></i>Resources</a></li>
-                    <li><a href="/auth/logout" alt="Logout"><i class="fa fa-fw fa-sign-out"></i>Logout</a></li>
+                    <li><a href="http://www.dreamfactory.com/resources/"><i class="fa fa-fw fa-book"></i>Resources</a></li>
+                    <li><a href="/auth/logout"><i class="fa fa-fw fa-sign-out"></i>Logout</a></li>
                 </ul>
             </div>
         </div>
