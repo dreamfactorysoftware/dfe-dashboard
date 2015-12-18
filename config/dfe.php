@@ -21,20 +21,25 @@ return [
     //* Common across all DFE apps
     //******************************************************************************
     'common'           => [
-        //******************************************************************************
-        //* Global Options
-        //******************************************************************************
-        'display-name'      => 'DreamFactory Enterprise&trade; Dashboard',
-        'display-version'   => 'v1.0.1',
-        /* 256px X 256px to avoid pixelation */
-        'login-splash-image' => env('DFE_LOGIN_SPLASH_IMAGE', '/vendor/dfe-common/img/logo-dfe.png'),
-        'display-copyright' => '© DreamFactory Software, Inc. 2012-' . date('Y') . '. All Rights Reserved.',
+        'display-name'       => 'DreamFactory Enterprise&trade; Dashboard',
+        'display-version'    => env('DFE_VERSION'),
+        'display-copyright'  => '© DreamFactory Software, Inc. 2012-' . date('Y') . '. All Rights Reserved.',
         /**
          * Theme selection -- a bootswatch theme name
          * Included are cerulean, darkly, flatly, paper, and superhero.
          * You may also install other compatible themes and use them as well.
          */
-        'themes'            => ['auth' => 'darkly', 'page' => 'yeti'],
+        'themes'             => ['auth' => 'darkly', 'page' => 'yeti'],
+        /**
+         * Auth pages 256x256px image
+         * Shown on auth pages
+         */
+        'login-splash-image' => env('DFE_LOGIN_SPLASH_IMAGE', '/vendor/dfe-common/img/logo-dfe.png'),
+        /**
+         * NavBar 194x42px image
+         * Shown on top of inner pages.
+         */
+        'navbar-image'       => env('DFE_NAVBAR_IMAGE', '/img/logo-navbar-194x42.png'),
     ],
     'security'         => [
         /** This key needs to match the key configured in the console */

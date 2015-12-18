@@ -17,7 +17,8 @@
     <link rel="icon" type="image/png" href="/img/favicon-96x96.png" sizes="96x96">
     <link rel="icon" type="image/png" href="/img/favicon-16x16.png" sizes="16x16">
     <link rel="manifest" href="/img/manifest.json">
-    @section('page-theme')<link href="/static/bootswatch-3.3.5/flatly.min.css" rel="stylesheet">@show
+    @section('page-theme')
+        <link href="/static/bootswatch-3.3.5/flatly.min.css" rel="stylesheet">@show
     <link href="/static/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Oswald|Montserrat' rel='stylesheet' type='text/css'>
     <link href="/css/style.css" rel="stylesheet">
@@ -36,7 +37,7 @@
         var _rcCallback = function () {
             var _gr = {
                 'sitekey': '{{ config('recaptcha.siteKey') }}',
-                'theme': 'light'
+                'theme':   'light'
             };
 
             $('.g-recaptcha').each(function () {
