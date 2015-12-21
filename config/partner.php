@@ -15,8 +15,8 @@ return [
             'action'    => <<< HTML
 HTML
             ,
-            'logo'      => '/vendor/dfe-partner/assets/img/logo-944x702.png',
-            'icon'      => '/vendor/dfe-partner/assets/img/verizon_left.png',
+            'logo'      => '/img/partners/docomo-256x256.png',
+            'icon'      => '/img/partners/docomo-256x100.png',
             'copyright' => '&copy; ' . date('Y') . ' Verizon',
             'copy'      => <<< HTML
 <div class="row partner-row">
