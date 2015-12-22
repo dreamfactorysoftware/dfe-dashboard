@@ -9,11 +9,12 @@ return [
         'referrers'     => ['docomo.com', 'hubspot.com', 'dreamfactory.com'],
         'commands'      => [],
         'description'   => 'Docomo',
-        'alert-context' => 'alert-partner',
+        'alert-context' => 'alert-partner well',
         'redirect-uri'  => null,
         'brand'         => [
             'action'    => <<< HTML
 HTML
+
             ,
             'logo'      => '/img/partners/docomo-256x256.png',
             'icon'      => '/img/partners/docomo-256x100.png',
@@ -27,6 +28,7 @@ HTML
     </div>
 </div>
 HTML
+
             ,
         ],
     ],
@@ -39,12 +41,14 @@ HTML
         'brand'         => [
             'action'    => <<< HTML
 HTML
+
             ,
             'logo'      => env('DFE_PARTNER_LOGO', null),
             'icon'      => env('DFE_PARTNER_ICON', null),
             'copyright' => '&copy; ' . date('Y') . ' Verizon',
             'copy'      => <<< HTML
 HTML
+
             ,
         ],
     ],

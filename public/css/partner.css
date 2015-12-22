@@ -1,45 +1,47 @@
 .alert-partner {
-	background-color: #ecedee;
-	color:            #333333;
-	border-color:     #dcddde;
-	border-radius:    4px;
+    background-color: #ecedee;
+    color:            #333333;
+    border-color:     #dcddde;
 }
 
 .partner-button {
 }
 
 .modal-content > button.close {
-	margin-right: 5px;
-	margin-top:   5px;
+    margin-right: 5px;
+    margin-top:   5px;
 }
 
 .vz-red {
-	background-color: #ef1d1d;
-	color:            #ef1d1d;
+    background-color: #ef1d1d;
+    color:            #ef1d1d;
 }
 
 .partner-brand > h3 {
-	display:     inline-block;
-	margin-left: 14px;
+    display:     inline-block;
+    margin-left: 14px;
 }
 
 .partner-copy {
 }
 
 .partner-copy h3 {
-	margin-left: 32px;
-	text-align:  left;
-	font-size:   20pt;
-	font-family: "Lato", "Open Sans", sans-serif;
+    margin-left:   32px;
+    margin-right:  32px;
+    padding-left:  32px;
+    padding-right: 32px;
+    text-align:    left;
+    font-size:     20pt;
+    font-family:   "Lato", "Open Sans", sans-serif;
 }
 
 .partner-action > .partner-button {
-	margin: 15% auto 0 auto;
+    margin: 15% auto 0 auto;
 }
 
 .partner-action {
-	float:      right;
-	text-align: right;
+    float:      right;
+    text-align: right;
 }
 
 .partner-row {
@@ -49,34 +51,34 @@
  * Learn More button
  */
 .btn-learn-more {
-	color:            #ffffff;
-	background-color: #d9534f;
-	border-color:     #d43f3a;
-	vertical-align:   middle;
-	float:            right;
-	margin-top:       6%;
-	margin-right:     15px;
+    color:            #ffffff;
+    background-color: #d9534f;
+    border-color:     #d43f3a;
+    vertical-align:   middle;
+    float:            right;
+    margin-top:       6%;
+    margin-right:     15px;
 }
 
 .btn-learn-more:focus,
 .btn-learn-more.focus {
-	color:            #ffffff;
-	background-color: #c9302c;
-	border-color:     #761c19;
+    color:            #ffffff;
+    background-color: #c9302c;
+    border-color:     #761c19;
 }
 
 .btn-learn-more:hover {
-	color:            #ffffff;
-	background-color: #c9302c;
-	border-color:     #ac2925;
+    color:            #ffffff;
+    background-color: #c9302c;
+    border-color:     #ac2925;
 }
 
 .btn-learn-more:active,
 .btn-learn-more.active,
 .open > .dropdown-toggle.btn-learn-more {
-	color:            #ffffff;
-	background-color: #c9302c;
-	border-color:     #ac2925;
+    color:            #ffffff;
+    background-color: #c9302c;
+    border-color:     #ac2925;
 }
 
 .btn-learn-more:active:hover,
@@ -88,15 +90,15 @@
 .btn-learn-more:active.focus,
 .btn-learn-more.active.focus,
 .open > .dropdown-toggle.btn-learn-more.focus {
-	color:            #ffffff;
-	background-color: #ac2925;
-	border-color:     #761c19;
+    color:            #ffffff;
+    background-color: #ac2925;
+    border-color:     #761c19;
 }
 
 .btn-learn-more:active,
 .btn-learn-more.active,
 .open > .dropdown-toggle.btn-learn-more {
-	background-image: none;
+    background-image: none;
 }
 
 .btn-learn-more.disabled,
@@ -117,30 +119,29 @@ fieldset[disabled] .btn-learn-more:active,
 .btn-learn-more.disabled.active,
 .btn-learn-more[disabled].active,
 fieldset[disabled] .btn-learn-more.active {
-	background-color: #d9534f;
-	border-color:     #d43f3a;
+    background-color: #d9534f;
+    border-color:     #d43f3a;
 }
 
 .btn-learn-more .badge {
-	color:            #d9534f;
-	background-color: #ffffff;
+    color:            #d9534f;
+    background-color: #ffffff;
 }
 
 .partner-row form button {
-	margin-top: 30px;
+    margin-top: 30px;
 }
 
 .partner-row > .partner-brand {
 }
 
 .partner-row .partner-button .fa-fw {
-	text-align: right;
+    text-align: right;
 }
 
-@media (max-width: 1000px) {
-	.partner-copy h3 {
-		/*padding: 0;*/
-		/*margin:  10px 0 0;*/
-	}
+@media (max-width: 1164px) {
+    .partner-copy h3 {
+        margin-top: 10px;
+    }
 }
 
