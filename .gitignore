@@ -1,4 +1,5 @@
 /app/Partners/Verizon.php
+/app/Partners/Docomo.php
 resources/views/vendor/
 public/vendor/
 /build
@@ -7,11 +8,7 @@ public/vendor/
 vendor/
 node_modules/
 .env
-.idea/*.iml
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/composerJson.xml
-/build
-/tests/storage/
-bootstrap/cache/*
+.env.work
+.idea/
+/bootstrap/cache/*
 

@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.1.27 (LTS) on 2015-12-17.
+ * Generated for Laravel 5.1.27 (LTS) on 2015-12-21.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -4871,7 +4871,7 @@ namespace {
     class File extends \Illuminate\Support\Facades\File{
         
         /**
-         * Determine if a file exists.
+         * Determine if a file or directory exists.
          *
          * @param string $path
          * @return bool 

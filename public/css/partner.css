@@ -2,11 +2,9 @@
     background-color: #ecedee;
     color:            #333333;
     border-color:     #dcddde;
-    border-radius:    0 0 0 10px;
 }
 
 .partner-button {
-    border-radius: 0 0 0 10px;
 }
 
 .modal-content > button.close {
@@ -28,8 +26,13 @@
 }
 
 .partner-copy h3 {
-    /*padding: 0;*/
-    /*margin:  35px 0 0;*/
+    margin-left:   32px;
+    margin-right:  32px;
+    padding-left:  32px;
+    padding-right: 32px;
+    text-align:    left;
+    font-size:     20pt;
+    font-family:   "Lato", "Open Sans", sans-serif;
 }
 
 .partner-action > .partner-button {
@@ -44,6 +47,87 @@
 .partner-row {
 }
 
+/**
+ * Learn More button
+ */
+.btn-learn-more {
+    color:            #ffffff;
+    background-color: #d9534f;
+    border-color:     #d43f3a;
+    vertical-align:   middle;
+    float:            right;
+    margin-top:       6%;
+    margin-right:     15px;
+}
+
+.btn-learn-more:focus,
+.btn-learn-more.focus {
+    color:            #ffffff;
+    background-color: #c9302c;
+    border-color:     #761c19;
+}
+
+.btn-learn-more:hover {
+    color:            #ffffff;
+    background-color: #c9302c;
+    border-color:     #ac2925;
+}
+
+.btn-learn-more:active,
+.btn-learn-more.active,
+.open > .dropdown-toggle.btn-learn-more {
+    color:            #ffffff;
+    background-color: #c9302c;
+    border-color:     #ac2925;
+}
+
+.btn-learn-more:active:hover,
+.btn-learn-more.active:hover,
+.open > .dropdown-toggle.btn-learn-more:hover,
+.btn-learn-more:active:focus,
+.btn-learn-more.active:focus,
+.open > .dropdown-toggle.btn-learn-more:focus,
+.btn-learn-more:active.focus,
+.btn-learn-more.active.focus,
+.open > .dropdown-toggle.btn-learn-more.focus {
+    color:            #ffffff;
+    background-color: #ac2925;
+    border-color:     #761c19;
+}
+
+.btn-learn-more:active,
+.btn-learn-more.active,
+.open > .dropdown-toggle.btn-learn-more {
+    background-image: none;
+}
+
+.btn-learn-more.disabled,
+.btn-learn-more[disabled],
+fieldset[disabled] .btn-learn-more,
+.btn-learn-more.disabled:hover,
+.btn-learn-more[disabled]:hover,
+fieldset[disabled] .btn-learn-more:hover,
+.btn-learn-more.disabled:focus,
+.btn-learn-more[disabled]:focus,
+fieldset[disabled] .btn-learn-more:focus,
+.btn-learn-more.disabled.focus,
+.btn-learn-more[disabled].focus,
+fieldset[disabled] .btn-learn-more.focus,
+.btn-learn-more.disabled:active,
+.btn-learn-more[disabled]:active,
+fieldset[disabled] .btn-learn-more:active,
+.btn-learn-more.disabled.active,
+.btn-learn-more[disabled].active,
+fieldset[disabled] .btn-learn-more.active {
+    background-color: #d9534f;
+    border-color:     #d43f3a;
+}
+
+.btn-learn-more .badge {
+    color:            #d9534f;
+    background-color: #ffffff;
+}
+
 .partner-row form button {
     margin-top: 30px;
 }
@@ -55,10 +139,9 @@
     text-align: right;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1164px) {
     .partner-copy h3 {
-        /*padding: 0;*/
-        /*margin:  10px 0 0;*/
+        margin-top: 10px;
     }
 }
 
