@@ -15,7 +15,18 @@
             <div class="collapse navbar-collapse navbar-right" id="navbar-dashboard">
                 <ul class="nav navbar-nav">
                     <li><a href="http://www.dreamfactory.com/resources/"><i class="fa fa-fw fa-book"></i>Resources</a></li>
-                    <li><a href="/auth/logout"><i class="fa fa-fw fa-sign-out"></i>Logout</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <i class="fa fa-fw fa-user"></i>
+                            <span>{{ \Auth::user()->nickname_text }}</span>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="/auth/logout"><i class="fa fa-fw fa-sign-out"></i>Logout</a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
