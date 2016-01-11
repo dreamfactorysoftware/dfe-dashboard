@@ -10,7 +10,6 @@
             <div class="col-md-8">
                 <div class="input-group">
                     <input type="text"
-                           minlength="3"
                            maxlength="64"
                            required
                            name="instance-name"
@@ -24,8 +23,7 @@
             <div class="col-md-2">
                 <button id="btn-create-instance" type="submit" class="btn btn-primary btn-success btn-md"
                         data-instance-action="create">
-                    <i class="fa fa-fw {{ config('icons.create') }}"
-                       style="margin-right: 8px;"></i><span>{{ \Lang::get('dashboard.instance-create-button-text') }}</span>
+                    <i class="fa fa-fw {{ config('icons.create') }} fa-move-right"></i><span>{{ \Lang::get('dashboard.instance-create-button-text') }}</span>
                 </button>
             </div>
         </div>
@@ -64,8 +62,7 @@
                 <div class="col-md-2">
                     <button id="btn-import-instance" type="submit" class="btn btn-primary btn-success btn-md"
                             data-instance-action="import">
-                        <i class="fa fa-fw {{ config('icons.import') }}"
-                           style="margin-right: 8px;"></i><span>{{ \Lang::get('dashboard.instance-import-button-text') }}</span>
+                        <i class="fa fa-fw {{ config('icons.import') }} fa-move-right"></i><span>{{ \Lang::get('dashboard.instance-import-button-text') }}</span>
                     </button>
                 </div>
             </div>
@@ -76,6 +73,8 @@
                    value="{{ \DreamFactory\Enterprise\Database\Enums\GuestLocations::DFE_CLUSTER }}">
         </form>
     @endif
-    
+
+    @if(config('dfe.)
+
     <input type="hidden" name="control" value="create">
 @overwrite

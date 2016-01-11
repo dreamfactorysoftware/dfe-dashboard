@@ -31,10 +31,11 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map(Router $router)
     {
-        $router->group(['namespace' => $this->namespace], function ($router){
-            /** @noinspection PhpIncludeInspection */
-            require app_path('Http/routes.php');
-        });
+        $router->group(['namespace' => $this->namespace],
+            function($router) {
+                /** @noinspection PhpIncludeInspection */
+                require app_path('Http/routes.php');
+            });
     }
 
 }

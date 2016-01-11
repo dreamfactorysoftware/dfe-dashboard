@@ -29,7 +29,7 @@ return [
          * Included are cerulean, darkly, flatly, paper, and superhero.
          * You may also install other compatible themes and use them as well.
          */
-        'themes'             => ['auth' => 'darkly', 'page' => 'yeti'],
+        'themes'             => ['auth' => config('DFE_AUTH_THEME', 'darkly'), 'page' => config('DFE_PAGE_THEME', 'yeti')],
         /**
          * Auth pages 256x256px image
          * Shown on auth pages
@@ -45,10 +45,12 @@ return [
         /** This key needs to match the key configured in the console */
         'console-api-key'           => env('DFE_CONSOLE_API_KEY'),
         /** This is the full url to the DFE Console API endpoint */
-        'console-api-url'           => env('DFE_CONSOLE_API_URL', 'http://localhost/api/v1/ops/'),
+        'console-api-url'           => env('DFE_CONSOLE_API_URL', config('DFE_DEFAULT_DOMAIN_PROTOCOL', 'https') . '://localhost/api/v1/ops/'),
         /** These keys are assigned during system installation */
         'console-api-client-id'     => env('DFE_CONSOLE_API_CLIENT_ID'),
         'console-api-client-secret' => env('DFE_CONSOLE_API_CLIENT_SECRET'),
         'guzzle-config'             => [],
+        /** If true, users are allowed to upload their own exports for importing */
+        'allow-import-uploads'      => env('DFE_ALLOW_IMPORT_UPLOADS', false),
     ],
 ];

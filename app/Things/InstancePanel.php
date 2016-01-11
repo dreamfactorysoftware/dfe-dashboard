@@ -45,11 +45,7 @@ class InstancePanel
         $this->_data = $data ?: [];
         $this->_blade = $blade ?: config('panels.default.template', DashboardDefaults::SINGLE_INSTANCE_BLADE);
 
-        $this->_defaultDomain =
-            '.' .
-            trim(config('dashboard.default-dns-zone'), '.') .
-            '.' .
-            trim(config('dashboard.default-dns-domain'), '.');
+        $this->_defaultDomain = '.' . trim(config('dashboard.default-dns-zone'), '.') . '.' . trim(config('dashboard.default-dns-domain'), '.');
     }
 
     /**
@@ -78,7 +74,7 @@ class InstancePanel
      *
      * @return array
      */
-    protected function _prepareViewData($instance)
+    protected function prepareViewData($instance)
     {
         return array_merge([
             'panelContext'           => config('dashboard.panel-context', 'panel-info'),
@@ -87,13 +83,10 @@ class InstancePanel
             'headerIconSize'         => 'fa-1x',
             'instanceDivId'          => $this->_htmlId('instance', $instance->instance_name_text),
             'instanceStatusIconSize' => 'fa-3x',
-            'instanceUrl'            => config('dashboard.default-domain-protocol', 'https') .
-                '://' .
-                $instance->instance_name_text .
-                $this->_defaultDomain,
-            'panelButtons'           => $this->_getPanelButtons($instance),
+            'instanceUrl'            => config('dashboard.default-domain-protocol', 'https') . '://' . $instance->instance_name_text . $this->_defaultDomain,
+            'panelButtons'           => $this->getPanelButtons(),
         ],
-            $this->_getStatusData($instance));
+            $this->getStatusData($instance));
     }
 
     /**
@@ -115,7 +108,7 @@ class InstancePanel
      *
      * @return array
      */
-    protected function _getStatusData($instance)
+    protected function getStatusData($instance)
     {
         $_spinner = config('icons.spinner', DashboardDefaults::SPINNING_ICON);
 
@@ -174,11 +167,9 @@ class InstancePanel
     }
 
     /**
-     * @param \stdClass|Instance $instance
-     *
      * @return array
      */
-    protected function _getPanelButtons($instance)
+    protected function getPanelButtons()
     {
         $_buttons = [
             'launch' => [

@@ -73,11 +73,7 @@ class DashboardService extends BaseService
         $this->requireCaptcha = config('dashboard.require-captcha', true);
         $this->panelsPerRow = config('panels.panels-per-row', DashboardDefaults::PANELS_PER_ROW);
 
-        $this->setDefaultDomain(implode('.', [
-            trim(config('dashboard.default-dns-zone'), '. '),
-            trim(config('dashboard.default-dns-domain'), '. '),
-        ]));
-
+        $this->setDefaultDomain(implode('.', [trim(config('dashboard.default-dns-zone'), '. '), trim(config('dashboard.default-dns-domain'), '. '),]));
         $this->determineGridLayout();
 
         Flasher::setPrefix('dashboard');
@@ -189,9 +185,8 @@ class DashboardService extends BaseService
 
         //	Check the name here for quicker UI response...
         if (false === ($_instanceName = Instance::isNameAvailable($instanceId)) || is_numeric($_instanceName[0])) {
-            Flasher::setIf('The name of your instance cannot be "' .
-                $instanceId .
-                '".  It is either currently in-use, or otherwise invalid.', false);
+            Flasher::setIf('The name of your instance cannot be "' . $instanceId . '".  It is either currently in-use, or otherwise invalid.',
+                false);
 
             return ErrorPacket::create(null, Response::HTTP_BAD_REQUEST, 'Invalid instance name.');
         }
@@ -199,7 +194,8 @@ class DashboardService extends BaseService
         if (false === ($_clusterConfig = $this->getClusterConfig())) {
             Flasher::setIf('The DFE Console is not currently available. Please try your request later.', false);
 
-            return ErrorPacket::create(null, Response::HTTP_INTERNAL_SERVER_ERROR,
+            return ErrorPacket::create(null,
+                Response::HTTP_INTERNAL_SERVER_ERROR,
                 'Cluster server configuration error.');
         }
 
@@ -214,7 +210,8 @@ class DashboardService extends BaseService
             'owner-id'       => \Auth::id(),
             'owner-type'     => OwnerTypes::USER,
             'guest-location' => $_provisioner,
-        ], $_clusterConfig);
+        ],
+            $_clusterConfig);
 
         $_result = $this->callConsole('provision', $_payload);
 
@@ -692,8 +689,7 @@ HTML;
             case ProvisionStates::CREATED:
             case ProvisionStates::PROVISIONING:
                 $_statusIcon = $_icon = $_spinner;
-                $_message =
-                    'Your instance is being created, with lots of love! You will receive an email when it is ready.';
+                $_message = 'Your instance is being created, with lots of love! You will receive an email when it is ready.';
                 break;
 
             case ProvisionStates::DEPROVISIONING:
@@ -704,8 +700,7 @@ HTML;
             case ProvisionStates::CREATION_ERROR:
             case ProvisionStates::PROVISIONING_ERROR:
             case ProvisionStates::DEPROVISIONING_ERROR:
-                $_message =
-                    'There was an error completing your request. Our engineers have been notified. Maybe go take a stroll?';
+                $_message = 'There was an error completing your request. Our engineers have been notified. Maybe go take a stroll?';
                 $_statusIcon = $_icon = config('icons.dead');
                 break;
 
@@ -973,19 +968,24 @@ HTML;
             $_buttons = [
                 'launch' => $this->makeToolbarButton($_id, 'Launch', ['context' => 'btn-success', 'icon' => 'fa-play']),
                 'delete' => $this->makeToolbarButton($_id, 'Delete', ['context' => 'btn-danger', 'icon' => 'fa-times']),
-                'export' => $this->makeToolbarButton($_id, 'Export',
+                'export' => $this->makeToolbarButton($_id,
+                    'Export',
                     ['context' => 'btn-info', 'icon' => 'fa-cloud-download']),
             ];
         } else {
             //@todo make dynamic call to provisioner to find out supported operations
             $_buttons = [
-                'start'     => $this->makeToolbarButton($_id, 'Start',
+                'start'     => $this->makeToolbarButton($_id,
+                    'Start',
                     ['context' => 'btn-success', 'icon' => 'fa-play',]),
-                'stop'      => $this->makeToolbarButton($_id, 'Stop',
+                'stop'      => $this->makeToolbarButton($_id,
+                    'Stop',
                     ['context' => 'btn-warning', 'icon' => 'fa-stop',]),
-                'terminate' => $this->makeToolbarButton($_id, 'Terminate',
+                'terminate' => $this->makeToolbarButton($_id,
+                    'Terminate',
                     ['context' => 'btn-danger', 'icon' => 'fa-times',]),
-                'export'    => $this->makeToolbarButton($_id, 'Export',
+                'export'    => $this->makeToolbarButton($_id,
+                    'Export',
                     ['context' => 'btn-info', 'icon' => 'fa-cloud-download',]),
             ];
         }
@@ -1021,14 +1021,16 @@ HTML;
 
         $_action = str_replace(['_', ' '], '-', trim(strtolower($text)));
 
-        return array_merge($_template, [
-            'id'   => 'instance-' . $_action . '-' . $id,
-            'text' => $text,
-            'data' => [
-                'instance-id'     => $id,
-                'instance-action' => $_action,
+        return array_merge($_template,
+            [
+                'id'   => 'instance-' . $_action . '-' . $id,
+                'text' => $text,
+                'data' => [
+                    'instance-id'     => $id,
+                    'instance-action' => $_action,
+                ],
             ],
-        ], $options);
+            $options);
     }
 
     /**
@@ -1091,15 +1093,17 @@ HTML;
             $data['panelSize'] = array_get($data, 'panelSize', $this->columnClass);
         }
 
-        $_view = view($_blade, array_merge($data, [
-            'formId'           => 'form-' . $panelType,
-            'panelDescription' => $_description,
-            'offerings'        => $_offeringsHtml,
-            'panelTitle'       => \Lang::get('dashboard.instance-' . $panelType . '-title'),
-            'panelType'        => $panelType,
-            'panelContext'     => $this->panelConfig($panelType, 'context'),
-            'headerIcon'       => $this->panelConfig($panelType, 'header-icon'),
-        ]));
+        $_view = view($_blade,
+            array_merge($data,
+                [
+                    'formId'           => 'form-' . $panelType,
+                    'panelDescription' => $_description,
+                    'offerings'        => $_offeringsHtml,
+                    'panelTitle'       => \Lang::get('dashboard.instance-' . $panelType . '-title'),
+                    'panelType'        => $panelType,
+                    'panelContext'     => $this->panelConfig($panelType, 'context'),
+                    'headerIcon'       => $this->panelConfig($panelType, 'header-icon'),
+                ]));
 
         return $render ? $_view->render() : $_view;
     }
@@ -1124,10 +1128,7 @@ HTML;
                 $_items = array_get($_data, 'items', []);
                 $_suggested = array_get($_data, 'suggested');
 
-                $_helpBlock =
-                    (null !== ($_helpBlock = array_get($_data, 'help-block'))) ? '<p class="help-block">' .
-                        $_helpBlock .
-                        '</p>' : null;
+                $_helpBlock = (null !== ($_helpBlock = array_get($_data, 'help-block'))) ? '<p class="help-block">' . $_helpBlock . '</p>' : null;
 
                 if (!empty($_items)) {
                     $_options = null;
@@ -1149,23 +1150,16 @@ HTML;
                         }
 
                         $_suggested == $_name && $_selected = ' selected ';
-                        $_options .= '<option value="' .
-                            $_name .
-                            '" ' .
-                            $_attributes .
-                            ' ' .
-                            $_selected .
-                            '>' .
-                            $_description .
-                            '</option>';
+                        $_options .= '<option value="' . $_name . '" ' . $_attributes . ' ' . $_selected . '>' . $_description . '</option>';
                     }
 
-                    $_html .= view('layouts.partials.offerings', [
-                        'tag'         => $_tag,
-                        'displayName' => $_displayName,
-                        'options'     => $_options,
-                        'helpBlock'   => $_helpBlock,
-                    ])->render();
+                    $_html .= view('layouts.partials.offerings',
+                        [
+                            'tag'         => $_tag,
+                            'displayName' => $_displayName,
+                            'options'     => $_options,
+                            'helpBlock'   => $_helpBlock,
+                        ])->render();
                 }
             }
         }
@@ -1251,10 +1245,7 @@ HTML;
      */
     protected function buildInstanceUrl($instanceName)
     {
-        return config('dashboard.default-domain-protocol', DashboardDefaults::DEFAULT_DOMAIN_PROTOCOL) .
-        '://' .
-        $instanceName .
-        $this->getDefaultDomain();
+        return config('dashboard.default-domain-protocol', DashboardDefaults::DEFAULT_DOMAIN_PROTOCOL) . '://' . $instanceName . $this->getDefaultDomain();
     }
 
     /**

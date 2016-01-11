@@ -1,0 +1,3 @@
+*.php
+!DefaultPartner.php
+!.gitignore
