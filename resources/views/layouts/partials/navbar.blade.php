@@ -18,7 +18,7 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             <i class="fa fa-fw fa-user"></i>
-                            <span>{{ \Auth::user()->nickname_text }}</span>
+                            <span>{{ \Auth::user()->nickname_text ?: \Auth::user()->first_name_text }}</span>
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
