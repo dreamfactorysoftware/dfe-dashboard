@@ -126,6 +126,10 @@ class HomeController extends BaseController
         $_message = isset($messages) ? $messages : null;
         $_defaultDomain = '.' . trim(config('dashboard.default-domain'), '. ');
 
+        if (\Input::hasFile('upload-file')) {
+            Flasher::set('File uploaded successfully. It will appear in your list of exports shortly.');
+        }
+
         /** @type User $_user */
         $_user = \Auth::user();
 

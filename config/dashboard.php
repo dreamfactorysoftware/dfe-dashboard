@@ -12,6 +12,8 @@ return [
     'view-path'                => base_path() . '/resources/views',
     /** If true, recaptcha is required on new hosted instances */
     'require-captcha'          => env('DFE_REQUIRE_RECAPTCHA_FOR_LAUNCH', false),
+    /** If true, users are allowed to upload their own exports for importing. Defaults to "false" */
+    'allow-import-uploads'     => env('DFE_ALLOW_IMPORT_UPLOADS', false),
     //  Instance defaults
     'default-dns-zone'         => env('DFE_DEFAULT_DNS_ZONE', 'enterprise'),
     'default-dns-domain'       => env('DFE_DEFAULT_DNS_DOMAIN', 'dreamfactory.com'),

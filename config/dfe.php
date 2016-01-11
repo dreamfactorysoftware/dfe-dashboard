@@ -50,7 +50,5 @@ return [
         'console-api-client-id'     => env('DFE_CONSOLE_API_CLIENT_ID'),
         'console-api-client-secret' => env('DFE_CONSOLE_API_CLIENT_SECRET'),
         'guzzle-config'             => [],
-        /** If true, users are allowed to upload their own exports for importing */
-        'allow-import-uploads'      => env('DFE_ALLOW_IMPORT_UPLOADS', false),
     ],
 ];

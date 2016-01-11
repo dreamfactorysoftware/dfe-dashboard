@@ -25,7 +25,9 @@ return [
     'instance-name-label'         => 'New Instance Name',
     'instance-or-label'           => 'or',
     'instance-import-label'       => 'Restore Instance',
-    'instance-import-button-text' => 'Import',
+    'instance-import-button-text' => 'Restore',
+    'instance-upload-label'       => 'Upload Import',
+    'instance-upload-button-text' => 'Upload',
     'instance-proof-text'         => 'I am not a robot.',
     'instance-create-heading'     => 'Create New',
     'instance-create-title'       => 'Create a New Instance',
@@ -34,6 +36,8 @@ return [
     'instance-create'             => '<p>Please choose a name for your new instance below. Once the creation process has completed, you will receive an email with access details.</p>',
     'instance-import-heading'     => 'Import Existing',
     'instance-import-title'       => 'Have an existing snapshot?',
+    'instance-upload-heading'     => 'Upload Your Own',
+    'instance-upload-title'       => 'Have an export from another system?',
     //******************************************************************************
     //* Instance panel bodies
     //******************************************************************************
@@ -42,9 +46,9 @@ return [
 <p>Please choose a snapshot to import from the drop-down below. You will receive an email once the process completes.</p>
 <p class="help-block" style="margin-top:2px; font-size: 13px; color:#888;">Currently, only exports created by this dashboard are supported.</p>
 HTML
-
     ,
     'instance-import-help'        => '<p class="help-block">Select an export to restore.</p>',
+    'instance-upload-help'        => '<p class="help-block">Select an existing export file (*.tar.gz) to upload from your system and click the <strong>Upload</strong> button.</p>',
     //******************************************************************************
     //* Instance operational messages
     //******************************************************************************

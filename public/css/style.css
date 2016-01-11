@@ -21,6 +21,13 @@ body {
     border-bottom:  1px solid #eeeeee;
 }
 
+.dropdown-menu > li > a > span {
+    font-weight: normal;
+    font-size:   11px;
+    text-align:  right;
+    margin-left: 100px;
+}
+
 /*
  * Top navigation
  * Hide default border to remove 1px line.
@@ -526,7 +533,7 @@ label[for="dsp_name"] {
 }
 
 #import-id {
-    font-size: 13px;
+    /*font-size: 13px;*/
 }
 
 label[for="import-file"] {
