@@ -41,10 +41,11 @@ class Authenticate
     public function handle($request, Closure $next)
     {
         if ($this->auth->guest()) {
-            return $request->ajax() ? response('Unauthorized.', 401) : redirect()->guest('auth/login');
+            return $request->ajax()
+                ? response()->json('Unauthorized.', 401)
+                : \Redirect::guest('auth/login')->with('Your session has expired or is otherwise not valid.', 'Invalid Session');
         }
 
         return $next($request);
     }
-
 }

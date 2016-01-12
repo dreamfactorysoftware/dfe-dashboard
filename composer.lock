@@ -606,12 +606,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/dfe-common.git",
-                "reference": "2c44225de2ee6a0bc35d7148fe9b31565c7e6c6d"
+                "reference": "4109ff49240b9d691c8457516d83250a14d44514"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/2c44225de2ee6a0bc35d7148fe9b31565c7e6c6d",
-                "reference": "2c44225de2ee6a0bc35d7148fe9b31565c7e6c6d",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/4109ff49240b9d691c8457516d83250a14d44514",
+                "reference": "4109ff49240b9d691c8457516d83250a14d44514",
                 "shasum": ""
             },
             "require": {
@@ -669,7 +669,7 @@
                 "source": "https://github.com/dreamfactorysoftware/dfe-common/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/dfe-common/issues"
             },
-            "time": "2016-01-11 04:31:06"
+            "time": "2016-01-11 19:29:57"
         },
         {
             "name": "dreamfactory/dfe-database",
