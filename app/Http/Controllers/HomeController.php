@@ -57,6 +57,24 @@ class HomeController extends BaseController
     }
 
     /**
+     * Handle an uploaded import
+     */
+    public function upload()
+    {
+        if (!\Input::file('upload-file')) {
+            \Log::error('Error in upload file');
+            Flasher::set('There was a problem with your request.', false);
+        } else {
+            \Log::error('File uploaded');
+            Flasher::set('File uploaded successfully. It will appear in your list of exports shortly.');
+
+            Dashboard::importInstance('import1', \Input::file('upload-file')->getRealPath(), true);
+        }
+
+        return $this->index(app('request'));
+    }
+
+    /**
      * Request a download of a snapshot by id/hash
      *
      * @param string $snapshotId The snapshot-id
@@ -126,10 +144,6 @@ class HomeController extends BaseController
         $_message = isset($messages) ? $messages : null;
         $_defaultDomain = '.' . trim(config('dashboard.default-domain'), '. ');
 
-        if (\Input::hasFile('upload-file')) {
-            Flasher::set('File uploaded successfully. It will appear in your list of exports shortly.');
-        }
-
         /** @type User $_user */
         $_user = \Auth::user();
 
@@ -146,17 +160,13 @@ class HomeController extends BaseController
                 Inflector::neutralize(str_replace(' ', '-', \Auth::user()->nickname_text)),
         ];
 
-        $_create = Dashboard::renderPanel(
-            'create',
-            array_merge(
-                $_coreData,
+        $_create = Dashboard::renderPanel('create',
+            array_merge($_coreData,
                 [
                     'instanceName' => PanelTypes::CREATE,
                     'panelType'    => PanelTypes::CREATE,
                     'importables'  => $this->getUserImportables(),
-                ]
-            )
-        );
+                ]));
 
         $_instances = Dashboard::userInstanceTable(null, true);
 
@@ -168,10 +178,8 @@ class HomeController extends BaseController
             $_partner = Partner::resolve($_partnerId);
         }
 
-        return view(
-            'app.home',
-            array_merge(
-                $_coreData,
+        return view('app.home',
+            array_merge($_coreData,
                 [
                     /** The instance create panel */
                     'instanceCreator' => $_create,
@@ -180,9 +188,7 @@ class HomeController extends BaseController
                     /** Partner junk */
                     'partner'         => $_partner ?: null,
                     'partnerContent'  => $_partner ? $_partner->getWebsiteContent() : null,
-                ]
-            )
-        );
+                ]));
     }
 
     /**
@@ -192,13 +198,11 @@ class HomeController extends BaseController
     {
         $_result = [];
         /** @noinspection PhpUndefinedFieldInspection */
-        $_rows = Snapshot::byUserId(\Auth::user()->id)->orderBy('create_date', 'desc')->get(
-            [
-                'id',
-                'instance_id',
-                'snapshot_id_text',
-            ]
-        );
+        $_rows = Snapshot::byUserId(\Auth::user()->id)->orderBy('create_date', 'desc')->get([
+            'id',
+            'instance_id',
+            'snapshot_id_text',
+        ]);
 
         if (!empty($_rows)) {
             /** @var Snapshot[] $_rows */
@@ -276,10 +280,7 @@ class HomeController extends BaseController
     protected function locateContactBySubmissionGuid($subGuid, $partnerEmail)
     {
         if ('false' !== $subGuid && empty($partnerEmail)) {
-            $_url =
-                'https://api.hubapi.com/contacts/v1/lists/recently_updated/contacts/recent/?hapikey=' .
-                config('marketing.hubspot.api-key') .
-                '&count=50';
+            $_url = 'https://api.hubapi.com/contacts/v1/lists/recently_updated/contacts/recent/?hapikey=' . config('marketing.hubspot.api-key') . '&count=50';
 
             if (false === ($_response = Curl::get($_url))) {
                 \Log::debug('[auth.landing-page] recent contact pull failed.');
@@ -287,11 +288,7 @@ class HomeController extends BaseController
                 return false;
             }
 
-            if (empty($_response) ||
-                !($_response instanceof \stdClass) ||
-                !isset($_response->contacts) ||
-                empty($_response->contacts)
-            ) {
+            if (empty($_response) || !($_response instanceof \stdClass) || !isset($_response->contacts) || empty($_response->contacts)) {
                 //  Methinks thine guid is bogus
                 \Log::debug('[auth.landing-page] recent contacts empty or invalid.');
                 \Log::debug('[auth.landing-page] * response: ' . print_r($_response, true));
@@ -314,10 +311,7 @@ class HomeController extends BaseController
                                 foreach ($_contact->{'identity-profiles'} as $_profile) {
                                     if (isset($_profile->identities)) {
                                         foreach ($_profile->identities as $_identity) {
-                                            if (isset($_identity->type) &&
-                                                'EMAIL' == $_identity->type &&
-                                                isset($_identity->value)
-                                            ) {
+                                            if (isset($_identity->type) && 'EMAIL' == $_identity->type && isset($_identity->value)) {
                                                 $_email = $_identity->value;
                                                 break 4;
                                             }
@@ -340,9 +334,7 @@ class HomeController extends BaseController
             \Log::debug('[auth.landing-page] subGuid "' . $subGuid . '" attached with email "' . $_email . '"');
         } else {
             //  Make sure it came from our domain...
-            if (null === ($_referrer = \Request::server('HTTP_REFERER')) ||
-                false === stripos($_referrer, 'verizon.dreamfactory.com')
-            ) {
+            if (null === ($_referrer = \Request::server('HTTP_REFERER')) || false === stripos($_referrer, 'verizon.dreamfactory.com')) {
                 \Log::debug('[auth.landing-page] bad referrer "' . $_referrer . '" in auto-login request.');
 
                 return false;

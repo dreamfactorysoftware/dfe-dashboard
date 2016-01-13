@@ -332,13 +332,21 @@ class DashboardService extends BaseService
     /**
      * @param string $instanceId
      * @param string $snapshotId
+     * @param bool   $file True if $snapshotId is a file path
      *
      * @return bool|mixed|\stdClass
      */
-    public function importInstance($instanceId, $snapshotId)
+    public function importInstance($instanceId, $snapshotId, $file = false)
     {
-        return $this->createResponseFromCallResult($this->callConsole('import',
-            ['instance-id' => $instanceId, 'snapshot-id' => $snapshotId]));
+        $_payload = ['instance-id' => $instanceId,];
+
+        if ($file) {
+            $_payload['snapshot'] = $file;
+        } else {
+            $_payload['snapshot-id'] = $snapshotId;
+        }
+
+        return $this->createResponseFromCallResult($this->callConsole('import', $_payload));
     }
 
     /**

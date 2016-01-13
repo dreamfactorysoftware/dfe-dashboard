@@ -69,8 +69,7 @@
                         <option data-instance-id="" value="">Select an export...</option>
                         @foreach( $importables as $importable )
                             <option data-instance-id="{{ $importable['instance-id'] }}" value="{{ $importable['name'] }}">
-                                <strong>{{ $importable['instance-name']}}</strong>&nbsp;
-                                <small>{{ $importable['export-date'] }}</small>
+                                {{ $importable['instance-name']}}&nbsp;({{ $importable['export-date'] }})
                             </option>
                         @endforeach
                     </select>
@@ -92,7 +91,7 @@
     @endif
 
     @if(config('dashboard.allow-import-uploads'))
-        <form id="form-upload" class="form-horizontal" method="POST">
+        <form id="form-upload" class="form-horizontal" method="POST" action="/upload">
             <div class="row">
                 <div class="col-md-offset-2 col-md-1"><h3 class="either-or">Or</h3></div>
             </div>
@@ -103,11 +102,11 @@
                        style="padding-top:0; vertical-align:middle;">{{ \Lang::get('dashboard.instance-upload-label') }}</label>
 
                 <div class="col-md-8">
-                    <input type="file" class="form-control" name="upload-file" id="upload-file" accept="application/gz">
+                    <input type="file" class="form-control" name="upload-file" id="upload-file" accept="application/gz,application/zip">
                     {!! \Lang::get('dashboard.instance-upload-help') !!}
                 </div>
                 <div class="col-md-2">
-                    <button id="btn-upload-instance" type="submit" class="btn btn-primary btn-success btn-md">
+                    <button id="btn-upload-instance" type="submit" class="btn btn-primary btn-success btn-md" data-instance-action="upload">
                         <i class="fa fa-fw {{ config('icons.upload') }} fa-move-right"></i><span>{{ \Lang::get('dashboard.instance-upload-button-text') }}</span>
                     </button>
                 </div>
