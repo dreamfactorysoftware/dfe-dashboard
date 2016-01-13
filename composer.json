@@ -67,7 +67,8 @@
     "dreamfactory/dfe-partner":              "1.0.*",
     "dreamfactory/dfe-storage":              "1.0.*",
     "barryvdh/laravel-ide-helper":           "~2.0",
-    "barryvdh/laravel-cors":                 "0.6.x"
+    "barryvdh/laravel-cors":                 "0.6.x",
+    "dflydev/apache-mime-types": "^1.0"
   },
   "require-dev":       {
     "doctrine/dbal":   "~2.3",

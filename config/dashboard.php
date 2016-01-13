@@ -35,6 +35,7 @@ return [
         ServerTypes::WEB => 'success',
         ServerTypes::APP => 'warning',
     ],
+    'upload-store'             => 'uploads',
     //******************************************************************************
     //* General UI Alert Settings
     //******************************************************************************

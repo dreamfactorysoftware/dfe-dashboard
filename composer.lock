@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4225c980728010703c9d89d01ae67ca5",
-    "content-hash": "5fd7d4608fb59da37dd99f5b733cd5a4",
+    "hash": "b6633f3d0c170a78311af282416bf833",
+    "content-hash": "5e484d953c630ddf0584c47f6e93d123",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -271,6 +271,61 @@
                 "utils"
             ],
             "time": "2015-07-23 00:54:12"
+        },
+        {
+            "name": "dflydev/apache-mime-types",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dflydev/dflydev-apache-mime-types.git",
+                "reference": "381da0f5a4d0313ec7cedcf84e5ab60dcf58ac5c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dflydev/dflydev-apache-mime-types/zipball/381da0f5a4d0313ec7cedcf84e5ab60dcf58ac5c",
+                "reference": "381da0f5a4d0313ec7cedcf84e5ab60dcf58ac5c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "twig/twig": "1.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Dflydev\\ApacheMimeTypes": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dragonfly Development Inc.",
+                    "email": "info@dflydev.com",
+                    "homepage": "http://dflydev.com"
+                },
+                {
+                    "name": "Beau Simensen",
+                    "email": "beau@dflydev.com",
+                    "homepage": "http://beausimensen.com"
+                }
+            ],
+            "description": "Apache MIME Types",
+            "keywords": [
+                "apache",
+                "mime",
+                "mimetypes"
+            ],
+            "time": "2014-02-21 21:07:58"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
