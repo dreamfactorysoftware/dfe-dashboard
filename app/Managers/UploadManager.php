@@ -69,17 +69,19 @@ class UploadManager extends BaseManager
             $files[] = $this->fileDetails($path);
         }
 
-        return compact(
-            'folder',
+        return compact('folder',
             'folderName',
             'breadcrumbs',
             'subfolders',
-            'files'
-        );
+            'files');
     }
 
     /**
      * Sanitize the folder name
+     *
+     * @param string $folder
+     *
+     * @return string
      */
     protected function cleanFolder($folder)
     {
@@ -88,6 +90,10 @@ class UploadManager extends BaseManager
 
     /**
      * Return breadcrumbs to current folder
+     *
+     * @param string $folder
+     *
+     * @return array
      */
     protected function breadcrumbs($folder)
     {
@@ -110,6 +116,10 @@ class UploadManager extends BaseManager
 
     /**
      * Return an array of file details for a file
+     *
+     * @param string $path
+     *
+     * @return array
      */
     protected function fileDetails($path)
     {
@@ -127,27 +137,34 @@ class UploadManager extends BaseManager
 
     /**
      * Return the full web path to a file
+     *
+     * @param string $path
+     *
+     * @return string
      */
     public function fileWebpath($path)
     {
-        $path = rtrim(config('blog.uploads.webpath'), '/') . '/' .
-            ltrim($path, '/');
-
-        return url($path);
+        return url(rtrim(config('dashboard.upload-path'), '/') . '/' . ltrim($path, '/'));
     }
 
     /**
      * Return the mime type
+     *
+     * @param string $path
+     *
+     * @return null|string
      */
     public function fileMimeType($path)
     {
-        return $this->mimeDetect->findType(
-            pathinfo($path, PATHINFO_EXTENSION)
-        );
+        return $this->mimeDetect->findType(pathinfo($path, PATHINFO_EXTENSION));
     }
 
     /**
      * Return the file size
+     *
+     * @param string $path
+     *
+     * @return int
      */
     public function fileSize($path)
     {
@@ -156,11 +173,13 @@ class UploadManager extends BaseManager
 
     /**
      * Return the last modified time
+     *
+     * @param string $path
+     *
+     * @return static
      */
     public function fileModified($path)
     {
-        return Carbon::createFromTimestamp(
-            $this->disk->lastModified($path)
-        );
+        return Carbon::createFromTimestamp($this->disk->lastModified($path));
     }
 }
