@@ -6,12 +6,16 @@ return [
     'cloud'   => 's3',
     //  Filesystem Disks
     'disks'   => [
-        'local'  => [
+        'local'   => [
             'driver' => 'local',
-            'root'   => storage_path() . '/app',
+            'root'   => storage_path('app'),
+        ],
+        'uploads' => [
+            'driver' => 'local',
+            'root'   => storage_path('uploads'),
         ],
         //  hosted storage
-        'hosted' => [
+        'hosted'  => [
             'driver' => 'local',
             'root'   => '/data/storage',
         ],

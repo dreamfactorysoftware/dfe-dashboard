@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0fcadbeefe520e8d05948638456c7c6c",
+    "hash": "4225c980728010703c9d89d01ae67ca5",
     "content-hash": "5fd7d4608fb59da37dd99f5b733cd5a4",
     "packages": [
         {
@@ -606,12 +606,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/dfe-common.git",
-                "reference": "4109ff49240b9d691c8457516d83250a14d44514"
+                "reference": "030e159c450379b3df02564dc370e11335ffe266"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/4109ff49240b9d691c8457516d83250a14d44514",
-                "reference": "4109ff49240b9d691c8457516d83250a14d44514",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/030e159c450379b3df02564dc370e11335ffe266",
+                "reference": "030e159c450379b3df02564dc370e11335ffe266",
                 "shasum": ""
             },
             "require": {
@@ -669,7 +669,7 @@
                 "source": "https://github.com/dreamfactorysoftware/dfe-common/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/dfe-common/issues"
             },
-            "time": "2016-01-11 19:29:57"
+            "time": "2016-01-13 17:40:55"
         },
         {
             "name": "dreamfactory/dfe-database",
@@ -5401,12 +5401,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "9db3e5a309bd5f3dfd974f5b42d820904352c4d8"
+                "reference": "82287b794641153ae1837b9288c3ae90cecdf5c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/9db3e5a309bd5f3dfd974f5b42d820904352c4d8",
-                "reference": "9db3e5a309bd5f3dfd974f5b42d820904352c4d8",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/82287b794641153ae1837b9288c3ae90cecdf5c4",
+                "reference": "82287b794641153ae1837b9288c3ae90cecdf5c4",
                 "shasum": ""
             },
             "require": {
@@ -5442,7 +5442,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-01-06 10:01:46"
+            "time": "2016-01-13 16:23:43"
         },
         {
             "name": "way/generators",

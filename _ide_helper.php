@@ -10646,11 +10646,12 @@ namespace {
          *
          * @param string $instanceId
          * @param string $snapshotId
+         * @param bool $file True if $snapshotId is a file path
          * @return bool|mixed|\stdClass 
          * @static 
          */
-        public static function importInstance($instanceId, $snapshotId){
-            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::importInstance($instanceId, $snapshotId);
+        public static function importInstance($instanceId, $snapshotId, $file = false){
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::importInstance($instanceId, $snapshotId, $file);
         }
         
         /**
