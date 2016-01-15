@@ -23,6 +23,7 @@ return [
     //* Instance panel text
     //******************************************************************************
     'instance-name-label'         => 'New Instance Name',
+    'instance-id-label'           => 'Imported Instance Name',
     'instance-or-label'           => 'or',
     'instance-import-label'       => 'Restore Instance',
     'instance-import-button-text' => 'Restore',
@@ -46,9 +47,10 @@ return [
 <p>Please choose a snapshot to import from the drop-down below. You will receive an email once the process completes.</p>
 <p class="help-block" style="margin-top:2px; font-size: 13px; color:#888;">Currently, only exports created by this dashboard are supported.</p>
 HTML
+
     ,
     'instance-import-help'        => '<p class="help-block">Select an export to restore.</p>',
-    'instance-upload-help'        => '<p class="help-block">Select an existing export file (*.tar.gz) to upload from your system and click the <strong>Upload</strong> button.</p>',
+    'instance-upload-help'        => '<p class="help-block">Select an existing export file (*.zip or *.tar.gz) to upload from your system and click the <strong>Upload</strong> button.</p>',
     //******************************************************************************
     //* Instance operational messages
     //******************************************************************************

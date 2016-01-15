@@ -62,16 +62,15 @@ class HomeController extends BaseController
     public function upload()
     {
         if (!\Input::file('upload-file')) {
-            \Log::error('Error in upload file');
-            Flasher::set('There was a problem with your request.', false);
-        } else {
-            \Log::error('File uploaded');
-            Flasher::set('File uploaded successfully. It will appear in your list of exports shortly.');
+            \Log::error('Import file upload failure.');
 
-            Dashboard::importInstance('import1', \Input::file('upload-file')->getRealPath(), true);
+            return \Redirect::to('/')->with('failure', 'There was a problem with your request.');
         }
 
-        return $this->index(app('request'));
+        \Log::info('Import file uploaded: ' . \Input::file('upload-file'));
+        Dashboard::importInstance(\Input::get('instance-id'), \Input::file('upload-file')->getRealPath(), true);
+
+        return \Redirect::to('/');
     }
 
     /**
