@@ -17,6 +17,7 @@ use DreamFactory\Enterprise\Database\Models\Instance;
 use DreamFactory\Library\Utility\Flasher;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class DashboardService extends BaseService
@@ -207,7 +208,7 @@ class DashboardService extends BaseService
             'disk-size'      => $this->request->input('disk-size'),
             'vendor-id'      => $this->request->input('vendor-id'),
             'vendor-secret'  => $this->request->input('vendor-secret'),
-            'owner-id'       => \Auth::id(),
+            'owner-id'       => Auth::id(),
             'owner-type'     => OwnerTypes::USER,
             'guest-location' => $_provisioner,
         ],
@@ -331,20 +332,14 @@ class DashboardService extends BaseService
 
     /**
      * @param string $instanceId
-     * @param string $snapshotId
-     * @param bool   $file True if $snapshotId is a file path
+     * @param string $snapshot
+     * @param bool   $indirect
      *
      * @return bool|mixed|\stdClass
      */
-    public function importInstance($instanceId, $snapshotId, $file = false)
+    public function importInstance($instanceId, $snapshot, $indirect = false)
     {
-        $_payload = ['instance-id' => $instanceId,];
-
-        if ($file) {
-            $_payload['snapshot'] = $file;
-        } else {
-            $_payload['snapshot-id'] = $snapshotId;
-        }
+        $_payload = ['instance-id' => $instanceId, 'snapshot' => $snapshot, '--indirect' => $indirect, 'owner-id' => Auth::user()->id];
 
         return $this->createResponseFromCallResult($this->callConsole('import', $_payload));
     }

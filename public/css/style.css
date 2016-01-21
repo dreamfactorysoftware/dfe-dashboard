@@ -566,7 +566,7 @@ label[for="import-file"] {
 }
 
 #form-import > div.form-group:first-child {
-    margin-top: 74px
+    /*margin-top: 74px*/
 }
 
 .instance-actions {

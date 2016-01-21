@@ -67,8 +67,11 @@ class HomeController extends BaseController
             return \Redirect::to('/')->with('failure', 'There was a problem with your request.');
         }
 
-        \Log::info('Import file uploaded: ' . \Input::file('upload-file'));
-        Dashboard::importInstance(\Input::get('instance-id'), \Input::file('upload-file')->getRealPath(), true);
+        $_payload = \Input::all();
+
+        \Log::info('Import file uploaded: ' . \Input::file('upload-file'), $_payload);
+
+        Dashboard::importInstance(array_get($_payload, 'instance-id'), \Input::file('upload-file')->getRealPath(), true);
 
         return \Redirect::to('/');
     }

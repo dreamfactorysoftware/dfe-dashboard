@@ -18,6 +18,6 @@ use DreamFactory\Enterprise\Database\Models\Snapshot;
 
 /** Snapshot download handler */
 \Route::get('/snapshot/{snapshotId}',
-    function ($snapshotId) {
+    function($snapshotId) {
         return Snapshot::downloadFromHash($snapshotId);
     });

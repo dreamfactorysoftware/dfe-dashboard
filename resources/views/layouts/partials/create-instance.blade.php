@@ -2,7 +2,7 @@
 @extends('layouts.partials.single-instance')
 
 @section('panel-body')
-    <ul class="nav nav-tabs" role="tablist">
+    <ul class="nav nav-tabs" role="tablist" id="instance-create-tabs">
         <li role="presentation" class="active"><a href="#new-instance" aria-controls="new-instance" role="tab" data-toggle="tab">New Instance</a></li>
         @if( !empty( $importables ) )
             <li role="presentation"><a href="#import-instance" aria-controls="import-instance" role="tab" data-toggle="tab">Restore from Export</a></li>
@@ -16,22 +16,22 @@
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="new-instance">
             {{--@if( isset($panelDescription) && !empty($panelDescription) )--}}
-                {{--<div class="panel-description">{!! $panelDescription !!}</div>--}}
-                {{--<hr class="hr" />--}}
+            {{--<div class="panel-description">{!! $panelDescription !!}</div>--}}
+            {{--<hr class="hr" />--}}
             {{--@endif--}}
 
             <form id="form-create" class="form-horizontal" method="POST">
                 <div class="form-group">
-                    <label for="instance-name"
-                           class="col-md-2 control-label">{{ \Lang::get('dashboard.instance-name-label') }}</label>
+                    <label for="instance-id"
+                           class="col-md-2 control-label">{{ \Lang::get('dashboard.instance-id-label') }}</label>
 
                     <div class="col-md-8">
                         <div class="input-group">
                             <input type="text"
                                    maxlength="64"
                                    required
-                                   name="instance-name"
-                                   id="instance-name"
+                                   name="instance-id"
+                                   id="instance-id"
                                    class="form-control"
                                    placeholder="{{ $defaultInstanceName }}">
                             <span class="input-group-addon">{{ $defaultDomain }}</span>
@@ -61,24 +61,6 @@
                         <label for="import-id" class="col-md-2 control-label">{{ \Lang::get('dashboard.instance-import-label') }}</label>
 
                         <div class="col-md-8">
-                            {{--<div class="dropdown">--}}
-                            {{--<button class="btn btn-default dropdown-toggle"--}}
-                            {{--type="button"--}}
-                            {{--id="import-id-dropdown"--}}
-                            {{--data-toggle="dropdown"--}}
-                            {{--aria-haspopup="true"--}}
-                            {{--aria-expanded="true">Select an export to restore...<span style="text-align: right;" class="caret"></span>--}}
-                            {{--</button>--}}
-                            {{--<ul class="dropdown-menu" aria-labelledby="import-id-dropdown">--}}
-                            {{--@foreach( $importables as $importable )--}}
-                            {{--<li><a href="#" data-instance-id="{{ $importable['instance-id'] }}" data-value="{{ $importable['name'] }}">--}}
-                            {{--<strong>{{ $importable['instance-name']}}</strong>--}}
-                            {{--<span><small>{{ $importable['export-date'] }}</small></span>--}}
-                            {{--</a></li>--}}
-                            {{--@endforeach--}}
-                            {{--</ul>--}}
-                            {{--</div>--}}
-
                             <select name="import-id"
                                     id="import-id"
                                     class="form-control">
@@ -108,7 +90,7 @@
         @endif
 
         @if(config('dashboard.allow-import-uploads'))
-            <div role="tabpanel" class="tab-pane " id="upload-instance">
+            <div role="tabpanel" class="tab-pane" id="upload-instance">
                 <form id="form-upload" class="form-horizontal" method="POST" action="/upload" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="instance-id"
@@ -143,8 +125,6 @@
                             </button>
                         </div>
                     </div>
-                    <input type="hidden" name="instance-id" value="">
-                    <input type="hidden" name="snapshot-id" value="">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="_provisioner" value="{{ \DreamFactory\Enterprise\Database\Enums\GuestLocations::DFE_CLUSTER }}">
                 </form>
