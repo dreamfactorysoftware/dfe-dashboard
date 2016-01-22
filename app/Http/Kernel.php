@@ -1,8 +1,8 @@
 <?php namespace DreamFactory\Enterprise\Dashboard\Http;
 
-use DreamFactory\Enterprise\Dashboard\Http\Middleware\Authenticate;
-use DreamFactory\Enterprise\Dashboard\Http\Middleware\RedirectIfAuthenticated;
-use DreamFactory\Enterprise\Dashboard\Http\Middleware\VerifyCsrfToken;
+use DreamFactory\Enterprise\Common\Http\Middleware\Authenticate;
+use DreamFactory\Enterprise\Common\Http\Middleware\RedirectIfAuthenticated;
+use DreamFactory\Enterprise\Common\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;

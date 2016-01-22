@@ -56,4 +56,8 @@ HTML
     //******************************************************************************
     'export-success'              => 'Your export is queued and you will receive an email with instructions for access.',
     'export-failure'              => 'Your export request failed. Please try again later.',
+    //******************************************************************************
+    //* Others
+    //******************************************************************************
+    'session-expired'             => 'Your session has expired or is otherwise not valid.',
 ];
