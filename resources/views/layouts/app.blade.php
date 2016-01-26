@@ -53,6 +53,8 @@
             };
         </script>
     @endif
+
+    {{ config('dfe.common.custom-css-file') }}
 </head>
 <body class="@yield('body-class')">
 

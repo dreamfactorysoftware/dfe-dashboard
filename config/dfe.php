@@ -1,4 +1,4 @@
- <?php
+<?php
 //******************************************************************************
 //* DFE General Settings
 //******************************************************************************
@@ -40,6 +40,8 @@ return [
          * Shown on top of inner pages.
          */
         'navbar-image'       => env('DFE_NAVBAR_IMAGE', '/img/logo-navbar-194x42.png'),
+        /** Custom css to load */
+        'custom-css-file'    => env('DFE_CUSTOM_CSS_FILE'),
     ],
     'security'         => [
         /** This key needs to match the key configured in the console */
