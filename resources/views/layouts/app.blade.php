@@ -1,4 +1,9 @@
-<!DOCTYPE html>
+<?php
+//  Convert custom CSS file to a <link> tag
+if (null !== ($_customCssFile = config('dfe.common.custom-css-file'))) {
+    $_customCssFile = '<link href="' . $_customCssFile . '" rel="stylesheet">';
+}
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -54,7 +59,7 @@
         </script>
     @endif
 
-    {{ config('dfe.common.custom-css-file') }}
+    {!! $_customCssFile !!}
 </head>
 <body class="@yield('body-class')">
 
