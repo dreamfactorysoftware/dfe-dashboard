@@ -5,12 +5,14 @@ return [
     //******************************************************************************
     'debug'           => env('APP_DEBUG'),
     'url'             => env('APP_URL'),
-    'timezone'        => 'America/New_York',
-    'locale'          => 'en',
-    'fallback_locale' => 'en',
+    'timezone'        => env('TIME_ZONE', 'America/New_York'),
+    'locale'          => env('LOCALE', 'en'),
+    'fallback_locale' => env('FALLBACK_LOCALE', 'en'),
     'key'             => env('APP_KEY'),
-    'cipher'          => 'AES-256-CBC',
+    'cipher'          => env('APP_CIPHER', 'AES-256-CBC'),
     'log'             => 'single',
+    /** Set at runtime */
+    'version'         => null,
     //******************************************************************************
     //* Autoloaded Providers
     //******************************************************************************

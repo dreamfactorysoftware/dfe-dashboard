@@ -57,4 +57,8 @@ HTML
     //******************************************************************************
     'export-success'              => 'Su exportación se pone en cola. Usted recibirá un correo electrónico cuando se ha completado.',
     'export-failure'              => 'Su solicitud de exportación fracasó. Por favor, inténtelo de nuevo más tarde.',
+    //******************************************************************************
+    //* Others
+    //******************************************************************************
+    'session-expired'             => 'Su sesión ha caducado o no es de otra manera válida.',
 ];

@@ -20,6 +20,7 @@ use Illuminate\View\View;
  * @method static int push(InstancePanel $panel)
  * @method static mixed|null|InstancePanel pop()
  * @method static string renderStack(array $mergeData = [])
+ * @method static bool|mixed|\stdClass importInstance($instanceId, $snapshotId, $file = false)
  */
 class Dashboard extends Facade
 {

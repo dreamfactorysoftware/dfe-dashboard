@@ -33,11 +33,6 @@
                     @if(!isset($noForm))
                         <form id="{{ $formId }}" class="form-horizontal" method="POST">@endif
 
-                            @if( isset($panelDescription) && !empty($panelDescription) )
-                                <div class="panel-description">{!! $panelDescription !!}</div>
-                                <hr class="hr"/>
-                            @endif
-
                             @section('panel-body')
                                 @if( isset($panelBody) )
                                     {!! $panelBody !!}

@@ -1,24 +1,19 @@
 <?php namespace DreamFactory\Enterprise\Dashboard\Http;
 
-use DreamFactory\Enterprise\Dashboard\Http\Middleware\Authenticate;
-use DreamFactory\Enterprise\Dashboard\Http\Middleware\RedirectIfAuthenticated;
-use DreamFactory\Enterprise\Dashboard\Http\Middleware\VerifyCsrfToken;
+use DreamFactory\Enterprise\Common\Http\Middleware\Authenticate;
+use DreamFactory\Enterprise\Common\Http\Middleware\RedirectIfAuthenticated;
+use DreamFactory\Enterprise\Common\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class Kernel extends HttpKernel
 {
-    //******************************************************************************
-    //* Traits
-    //******************************************************************************
-
-    //use CommonLogging;
-
     //******************************************************************************
     //* Members
     //******************************************************************************
@@ -38,4 +33,26 @@ class Kernel extends HttpKernel
         'auth.basic' => AuthenticateWithBasicAuth::class,
         'guest'      => RedirectIfAuthenticated::class,
     ];
+
+    //******************************************************************************
+    //* Methods
+    //******************************************************************************
+
+    /** @inheritdoc */
+    public function bootstrap()
+    {
+        parent::bootstrap();
+
+        //  Make the version info extra cool
+        if (null === ($_version = Cache::get('dfe.cool-app-version'))) {
+            $_version = config('dfe.common.display-version') . '-' . `git rev-parse --verify HEAD`;
+            logger('app version realized ' . $_version);
+            Cache::put('dfe.cool-app-version', $_version, 15);
+        }
+
+        config(['dfe.common.display-version' => $_version, 'app.version' => $_version,]);
+        putenv('APP_VERSION=' . $_version);
+        $_ENV['APP_VERSION'] = $_version;
+    }
+
 }

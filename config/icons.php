@@ -3,7 +3,8 @@
 //* Dashboard UI Icon Settings
 //******************************************************************************
 return [
-    'import'      => 'fa-cloud-upload',
+    'import'      => 'fa-undo',
+    'upload'      => 'fa-cloud-upload',
     'export'      => 'fa-cloud-download',
     'spinner'     => 'fa fa-spinner fa-spin text-info',
     'up'          => 'fa-thumbs-o-up',

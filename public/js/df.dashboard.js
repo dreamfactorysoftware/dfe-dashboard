@@ -132,7 +132,7 @@ var _processAction = function ($element, $form) {
                 return;
             }
 
-            _id = $('input#instance-name').val();
+            _id = $('input#instance-id').val();
 
             if (!_id || !_id.length) {
                 alert('Invalid instance name.');
