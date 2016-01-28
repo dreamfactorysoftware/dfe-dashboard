@@ -25,7 +25,7 @@ if (null !== ($_customCssFile = config('dfe.common.custom-css-file'))) {
     @section('page-theme')
         <link href="/static/bootswatch-3.3.6/flatly.min.css" rel="stylesheet">@show
     <link href="/static/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Oswald|Montserrat' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Oswald|Montserrat' rel='stylesheet' type='text/css'>
     <link href="/css/style.css" rel="stylesheet">
     <link href="/css/partner.css" rel="stylesheet">
     <script src="/static/jquery-2.1.4/jquery.min.js"></script>
@@ -41,13 +41,13 @@ if (null !== ($_customCssFile = config('dfe.common.custom-css-file'))) {
 
     @if(!empty($_recaptchaSiteKey=config('recaptcha.siteKey')))
         <script type="text/javascript">
-            var _rcCallback = function () {
+            var _rcCallback = function() {
                 var _gr = {
                     'sitekey': '{{ $_recaptchaSiteKey }}',
                     'theme':   'light'
                 };
 
-                $('.g-recaptcha').each(function () {
+                $('.g-recaptcha').each(function() {
                     var _id = $(this).attr('id');
 
                     if (_id) {
@@ -99,7 +99,7 @@ if (null !== ($_customCssFile = config('dfe.common.custom-css-file'))) {
 @section('before-body-scripts')
 @show
 
-<script src="https://www.google.com/recaptcha/api.js?onload=_rcCallback&render=explicit" async defer></script>
+<script src="//www.google.com/recaptcha/api.js?onload=_rcCallback&render=explicit" async defer></script>
 <script src="/static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
 <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
 <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/additional-methods.min.js"></script>

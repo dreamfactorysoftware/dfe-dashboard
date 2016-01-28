@@ -125,7 +125,7 @@ var _checkProgress = function() {
  */
 var _processAction = function($element, $form) {
     //  Skip this for uploads...
-    if ('form-upload' == $form.attr('id')) {
+    if ($form && 'form-upload' == $form.attr('id')) {
         return $form.submit();
     }
 
