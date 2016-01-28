@@ -90,6 +90,7 @@
         @endif
 
         @if(config('dashboard.allow-import-uploads'))
+
             <div role="tabpanel" class="tab-pane" id="upload-instance">
                 <form id="form-upload" class="form-horizontal" method="POST" action="/upload" enctype="multipart/form-data">
                     <div class="form-group">
