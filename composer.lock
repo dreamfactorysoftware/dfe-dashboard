@@ -105,12 +105,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-ide-helper.git",
-                "reference": "aa8f772a46c35ecdcb7119f38772ac2ec952a941"
+                "reference": "4b8ba85b346fc9962521661aa639911535b2bb3f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/aa8f772a46c35ecdcb7119f38772ac2ec952a941",
-                "reference": "aa8f772a46c35ecdcb7119f38772ac2ec952a941",
+                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/4b8ba85b346fc9962521661aa639911535b2bb3f",
+                "reference": "4b8ba85b346fc9962521661aa639911535b2bb3f",
                 "shasum": ""
             },
             "require": {
@@ -160,7 +160,7 @@
                 "phpstorm",
                 "sublime"
             ],
-            "time": "2016-01-22 13:33:15"
+            "time": "2016-01-28 08:19:58"
         },
         {
             "name": "classpreloader/classpreloader",
@@ -1780,12 +1780,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem-sftp.git",
-                "reference": "c32e064127625054e1356bd154d9c8a284fce8f3"
+                "reference": "e54bedd5561de9857abb591eb6ef89be380f8df3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem-sftp/zipball/c32e064127625054e1356bd154d9c8a284fce8f3",
-                "reference": "c32e064127625054e1356bd154d9c8a284fce8f3",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-sftp/zipball/e54bedd5561de9857abb591eb6ef89be380f8df3",
+                "reference": "e54bedd5561de9857abb591eb6ef89be380f8df3",
                 "shasum": ""
             },
             "require": {
@@ -1819,7 +1819,7 @@
                 }
             ],
             "description": "Flysystem adapter for SFTP",
-            "time": "2015-12-08 14:46:21"
+            "time": "2016-01-28 07:52:44"
         },
         {
             "name": "league/flysystem-ziparchive",
@@ -2078,12 +2078,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "94f10d3c505cf1631c551824218da96a39af9592"
+                "reference": "e05ef2374367ae8d96101cd6f353b2f0362ad80f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/94f10d3c505cf1631c551824218da96a39af9592",
-                "reference": "94f10d3c505cf1631c551824218da96a39af9592",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/e05ef2374367ae8d96101cd6f353b2f0362ad80f",
+                "reference": "e05ef2374367ae8d96101cd6f353b2f0362ad80f",
                 "shasum": ""
             },
             "require": {
@@ -2121,7 +2121,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2016-01-15 21:05:36"
+            "time": "2016-01-28 16:03:02"
         },
         {
             "name": "paragonie/random_compat",
@@ -5424,12 +5424,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/recursion-context.git",
-                "reference": "913401df809e99e4f47b27cdd781f4a258d58791"
+                "reference": "7ff5b1b3dcc55b8ab8ae61ef99d4730940856ee7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/recursion-context/zipball/913401df809e99e4f47b27cdd781f4a258d58791",
-                "reference": "913401df809e99e4f47b27cdd781f4a258d58791",
+                "url": "https://api.github.com/repos/sebastianbergmann/recursion-context/zipball/7ff5b1b3dcc55b8ab8ae61ef99d4730940856ee7",
+                "reference": "7ff5b1b3dcc55b8ab8ae61ef99d4730940856ee7",
                 "shasum": ""
             },
             "require": {
@@ -5469,7 +5469,7 @@
             ],
             "description": "Provides functionality to recursively process PHP variables",
             "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
-            "time": "2015-11-11 19:50:13"
+            "time": "2016-01-28 05:39:29"
         },
         {
             "name": "sebastian/version",
