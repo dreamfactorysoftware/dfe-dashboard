@@ -1,1 +1,1 @@
-## DreamFactory Enterprise&trade; Dashboard v1.0.4
+## DreamFactory Enterprise&trade; Dashboard v1.0.5

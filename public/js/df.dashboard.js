@@ -21,7 +21,7 @@ var _checking = false;
  * @param [show]
  * @private
  */
-var _closeAlert = function (selector, delay, show) {
+var _closeAlert = function(selector, delay, show) {
     var $_alert = jQuery(selector).not('.alert-fixed').alert();
 
     if ($_alert.length) {
@@ -30,7 +30,7 @@ var _closeAlert = function (selector, delay, show) {
         }
 
         if (!$_alert.hasClass('alert-fixed')) {
-            window.setTimeout(function () {
+            window.setTimeout(function() {
                 $_alert.alert('close')
             }, delay);
         }
@@ -41,10 +41,10 @@ var _closeAlert = function (selector, delay, show) {
  *
  * @private
  */
-var _checkProgress = function () {
-    (function ($) {
+var _checkProgress = function() {
+    (function($) {
 
-        $(".instance-heading-status .fa-spinner").each(function (index, item) {
+        $(".instance-heading-status .fa-spinner").each(function(index, item) {
             var $_form = $("form#_dsp-control");
             var _div = $(this).closest('a[data-toggle="collapse"]').attr('href');
 
@@ -56,10 +56,10 @@ var _checkProgress = function () {
                     $('input[name="id"]', $_form).val(id);
                     $('input[name="control"]', $_form).val('status');
 
-                    $.post('/status/' + id, $_form.serialize(), function (data) {
+                    $.post('/status/' + id, $_form.serialize(), function(data) {
                             var $_inner = $("div#" + _id + ".panel-collapse .panel-body");
 
-                            $(item).fadeOut('slow', function () {
+                            $(item).fadeOut('slow', function() {
                                 $(item).fadeIn('fast');
                             });
 
@@ -70,7 +70,8 @@ var _checkProgress = function () {
                                     $(item).removeClass('fa-spinner fa-spin').addClass(data.icons[1]);
                                     $(".dsp-icon i", $_inner).removeClass('fa-spinner fa-spin').addClass(data.icons[1]);
                                     $(item).closest('.panel-instance').fadeOut();
-                                } catch (e) {
+                                }
+                                catch (e) {
                                     //	Ignore
                                 }
 
@@ -122,7 +123,12 @@ var _checkProgress = function () {
  * @param {jQuery} [$form]
  * @private
  */
-var _processAction = function ($element, $form) {
+var _processAction = function($element, $form) {
+    //  Skip this for uploads...
+    if ($form && 'form-upload' == $form.attr('id')) {
+        return $form.submit();
+    }
+
     var _id = $element.data('instance-id'), _extra = $element.data('instance-href');
     var _action = $element.data('instance-action');
 
@@ -160,7 +166,7 @@ var _processAction = function ($element, $form) {
  * @returns {*}
  * @private
  */
-var _makeRequest = function (id, action, href) {
+var _makeRequest = function(id, action, href) {
 
     switch (action) {
         case 'launch':
@@ -212,7 +218,7 @@ var _makeRequest = function (id, action, href) {
 /**
  * DR
  */
-jQuery(function ($) {
+jQuery(function($) {
     //	Reusables...
     var $_toolbars = $('div[id^="instance-toolbar-"]');
 
@@ -222,27 +228,27 @@ jQuery(function ($) {
     }
 
     //	Open/close toolbar
-    $_toolbars.on('show.bs.collapse', function () {
+    $_toolbars.on('show.bs.collapse', function() {
         var $_icon = $(this).prev('.instance-actions').find('.fa-angle-down');
         $_icon.removeClass('fa-angle-down').addClass('fa-angle-up');
-    }).on('hide.bs.collapse', function () {
+    }).on('hide.bs.collapse', function() {
         var $_icon = $(this).prev('.instance-actions').find('.fa-angle-up');
         $_icon.removeClass('fa-angle-up').addClass('fa-angle-down');
     });
 
     //	No clicks allowed on disabled stuff
-    $('body').on('click', '.disabled', function (e) {
+    $('body').on('click', '.disabled', function(e) {
         e.preventDefault();
     });
 
     //	All toolbar button clicks go here...
-    $('.panel-toolbar').on('click', 'button', function (e) {
+    $('.panel-toolbar').on('click', 'button', function(e) {
         e.preventDefault();
         _processAction($(this));
     });
 
     //  Set the data-instance-id on btn-import-instance when an import is chosen
-    $('select#import-id').on('change', function (e) {
+    $('select#import-id').on('change', function(e) {
         var $_form = $('#form-import'), $_selected = $(this).find(':selected');
 
         $_form.find('input[name="instance-id"]').val($_selected.data('instance-id'));

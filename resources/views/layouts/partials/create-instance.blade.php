@@ -23,7 +23,7 @@
             <form id="form-create" class="form-horizontal" method="POST">
                 <div class="form-group">
                     <label for="instance-id"
-                           class="col-md-2 control-label">{{ \Lang::get('dashboard.instance-id-label') }}</label>
+                           class="col-md-2 control-label">{{ \Lang::get('dashboard.instance-name-label') }}</label>
 
                     <div class="col-md-8">
                         <div class="input-group">
@@ -90,6 +90,7 @@
         @endif
 
         @if(config('dashboard.allow-import-uploads'))
+
             <div role="tabpanel" class="tab-pane" id="upload-instance">
                 <form id="form-upload" class="form-horizontal" method="POST" action="/upload" enctype="multipart/form-data">
                     <div class="form-group">
