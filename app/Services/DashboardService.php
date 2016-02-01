@@ -284,7 +284,7 @@ class DashboardService extends BaseService
         $_success = (!isset($_response['success']) || true === $_response['success']);
         $_which = $_success ? 'success' : 'failure';
 
-        Flasher::set(\Lang::get('dashboard.export-' . $_which), $_success);
+        Flasher::set(\Lang::get('common.export-' . $_which), $_success);
 
         return $_response;
     }
@@ -471,31 +471,31 @@ class DashboardService extends BaseService
             case ProvisionStates::CREATED:
                 $_icon = $_spinner;
                 $_context = 'text-success';
-                $_text = \Lang::get('dashboard.status-started');
+                $_text = \Lang::get('common.status-started');
                 break;
 
             case ProvisionStates::PROVISIONING:
                 $_icon = $_spinner;
                 $_context = 'text-info';
-                $_text = \Lang::get('dashboard.status-started');
+                $_text = \Lang::get('common.status-started');
                 break;
 
             case ProvisionStates::PROVISIONED:
                 $_icon = config('icons.up');
                 $_context = 'text-success';
-                $_text = \Lang::get('dashboard.status-up');
+                $_text = \Lang::get('common.status-up');
                 break;
 
             case ProvisionStates::DEPROVISIONING:
                 $_icon = $_spinner;
                 $_context = 'text-info';
-                $_text = \Lang::get('dashboard.status-stopping');
+                $_text = \Lang::get('common.status-stopping');
                 break;
 
             case ProvisionStates::DEPROVISIONED:
                 $_icon = config('icons.terminating');
                 $_context = 'text-warning';
-                $_text = \Lang::get('dashboard.status-terminating');
+                $_text = \Lang::get('common.status-terminating');
                 break;
 
             case ProvisionStates::PROVISIONING_ERROR:
@@ -503,13 +503,13 @@ class DashboardService extends BaseService
             case ProvisionStates::CREATION_ERROR:
                 $_icon = config('icons.dead');
                 $_context = 'text-danger';
-                $_text = \Lang::get('dashboard.status-dead');
+                $_text = \Lang::get('common.status-dead');
                 break;
 
             default:
                 $_icon = config('icons.unknown');
                 $_context = 'text-warning';
-                $_text = \Lang::get('dashboard.status-dead');
+                $_text = \Lang::get('common.status-dead');
                 break;
         }
 
@@ -924,33 +924,33 @@ HTML;
             case ProvisionStates::PROVISIONING_ERROR:
             case ProvisionStates::DEPROVISIONING_ERROR:
                 $_icon = config('icons.dead');
-                $_message = \Lang::get('dashboard.status-error');
+                $_message = \Lang::get('common.status-error');
                 break;
 
             case ProvisionStates::CREATED:
             case ProvisionStates::PROVISIONING:
                 $_icon = $_spinner;
-                $_message = \Lang::get('dashboard.status-starting');
+                $_message = \Lang::get('common.status-starting');
                 break;
 
             case ProvisionStates::DEPROVISIONING:
                 $_icon = $_spinner;
-                $_message = \Lang::get('dashboard.status-stopping');
+                $_message = \Lang::get('common.status-stopping');
                 break;
 
             case ProvisionStates::PROVISIONED:
                 $_icon = config('icons.up');
-                $_message = \Lang::get('dashboard.status-up');
+                $_message = \Lang::get('common.status-up');
                 break;
 
             case ProvisionStates::DEPROVISIONED:
                 $_icon = config('icons.dead');;
-                $_message = \Lang::get('dashboard.status-dead');
+                $_message = \Lang::get('common.status-dead');
                 break;
 
             default:
                 $_icon = $_spinner;
-                $_message = \Lang::get('dashboard.status-other');
+                $_message = \Lang::get('common.status-other');
                 break;
         }
 
@@ -1102,7 +1102,7 @@ HTML;
                     'formId'           => 'form-' . $panelType,
                     'panelDescription' => $_description,
                     'offerings'        => $_offeringsHtml,
-                    'panelTitle'       => \Lang::get('dashboard.instance-' . $panelType . '-title'),
+                    'panelTitle'       => \Lang::get('common.instance-' . $panelType . '-title'),
                     'panelType'        => $panelType,
                     'panelContext'     => $this->panelConfig($panelType, 'context'),
                     'headerIcon'       => $this->panelConfig($panelType, 'header-icon'),
