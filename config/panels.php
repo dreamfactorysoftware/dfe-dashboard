@@ -16,7 +16,7 @@ return [
         'header-icon'      => 'fa-asterisk',
         'header-icon-size' => 'fa-1x',
         'body-icon'        => false,
-        'description'      => 'dashboard.instance-create',
+        'description'      => 'common.instance-create',
         'form-id'          => 'form-create',
     ],
     /** This is the create via import panel **/
@@ -26,7 +26,7 @@ return [
         'header-icon'      => 'fa-cloud-upload',
         'header-icon-size' => 'fa-1x',
         'body-icon'        => false,
-        'description'      => 'dashboard.instance-import',
+        'description'      => 'common.instance-import',
         'form-id'          => 'form-import',
     ],
     /** This is the default panel for an existing instance **/
@@ -41,7 +41,7 @@ return [
         'help-icon'               => 'fa-question',
         'help-url'                => 'http://www.dreamfactory.com/resources/',
         'help-text'               => null,
-        'description'             => 'dashboard.instance-default',
+        'description'             => 'common.instance-default',
         'form-id'                 => 'form-default',
     ],
 ];

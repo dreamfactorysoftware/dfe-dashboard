@@ -1477,12 +1477,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "0ef0eb0304f86f3d29266a6fea1b5bfee30f83b1"
+                "reference": "0169509935281ade3015d1b184a54707b391a9ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/0ef0eb0304f86f3d29266a6fea1b5bfee30f83b1",
-                "reference": "0ef0eb0304f86f3d29266a6fea1b5bfee30f83b1",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/0169509935281ade3015d1b184a54707b391a9ef",
+                "reference": "0169509935281ade3015d1b184a54707b391a9ef",
                 "shasum": ""
             },
             "require": {
@@ -1597,7 +1597,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2016-02-01 17:38:10"
+            "time": "2016-02-01 19:05:51"
         },
         {
             "name": "league/event",
@@ -3199,12 +3199,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/framework-bundle.git",
-                "reference": "0f7b9e1f956a13f46ab9c670f271f932bf7466d4"
+                "reference": "bf36e67d9ffd6dcb826072dfff153f2a4df673fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/framework-bundle/zipball/0f7b9e1f956a13f46ab9c670f271f932bf7466d4",
-                "reference": "0f7b9e1f956a13f46ab9c670f271f932bf7466d4",
+                "url": "https://api.github.com/repos/symfony/framework-bundle/zipball/bf36e67d9ffd6dcb826072dfff153f2a4df673fc",
+                "reference": "bf36e67d9ffd6dcb826072dfff153f2a4df673fc",
                 "shasum": ""
             },
             "require": {
@@ -3278,7 +3278,7 @@
             ],
             "description": "Symfony FrameworkBundle",
             "homepage": "https://symfony.com",
-            "time": "2016-01-31 21:09:31"
+            "time": "2016-02-01 19:38:55"
         },
         {
             "name": "symfony/http-foundation",
@@ -4054,12 +4054,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "dd940c8cee336befb5aa27f01b8642da554493fb"
+                "reference": "4c61cf815af17eee4cebf0e4c66f56a2f704cfd8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/dd940c8cee336befb5aa27f01b8642da554493fb",
-                "reference": "dd940c8cee336befb5aa27f01b8642da554493fb",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/4c61cf815af17eee4cebf0e4c66f56a2f704cfd8",
+                "reference": "4c61cf815af17eee4cebf0e4c66f56a2f704cfd8",
                 "shasum": ""
             },
             "require": {
@@ -4109,7 +4109,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2016-01-31 07:57:13"
+            "time": "2016-02-01 20:45:15"
         },
         {
             "name": "symfony/var-dumper",
