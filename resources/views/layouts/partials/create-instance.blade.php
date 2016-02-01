@@ -23,7 +23,7 @@
             <form id="form-create" class="form-horizontal" method="POST">
                 <div class="form-group">
                     <label for="instance-id"
-                           class="col-md-2 control-label">{{ \Lang::get('dashboard.instance-name-label') }}</label>
+                           class="col-md-2 control-label">{{ \Lang::get('common.instance-name-label') }}</label>
 
                     <div class="col-md-8">
                         <div class="input-group">
@@ -36,12 +36,12 @@
                                    placeholder="{{ $defaultInstanceName }}">
                             <span class="input-group-addon">{{ $defaultDomain }}</span>
                         </div>
-                        {!! \Lang::get('dashboard.instance-create-help') !!}
+                        {!! \Lang::get('common.instance-create-help') !!}
                     </div>
                     <div class="col-md-2">
                         <button id="btn-create-instance" type="submit" class="btn btn-primary btn-success btn-md"
                                 data-instance-action="create">
-                            <i class="fa fa-fw {{ config('icons.create') }} fa-move-right"></i><span>{{ \Lang::get('dashboard.instance-create-button-text') }}</span>
+                            <i class="fa fa-fw {{ config('icons.create') }} fa-move-right"></i><span>{{ \Lang::get('common.instance-create-button-text') }}</span>
                         </button>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
             <div role="tabpanel" class="tab-pane " id="import-instance">
                 <form id="form-import" class="form-horizontal" method="POST">
                     <div class="form-group">
-                        <label for="import-id" class="col-md-2 control-label">{{ \Lang::get('dashboard.instance-import-label') }}</label>
+                        <label for="import-id" class="col-md-2 control-label">{{ \Lang::get('common.instance-import-label') }}</label>
 
                         <div class="col-md-8">
                             <select name="import-id"
@@ -71,12 +71,12 @@
                                     </option>
                                 @endforeach
                             </select>
-                            {!! \Lang::get('dashboard.instance-import-help') !!}
+                            {!! \Lang::get('common.instance-import-help') !!}
                         </div>
                         <div class="col-md-2">
                             <button id="btn-import-instance" type="submit" class="btn btn-primary btn-success btn-md"
                                     data-instance-action="import">
-                                <i class="fa fa-fw {{ config('icons.import') }} fa-move-right"></i><span>{{ \Lang::get('dashboard.instance-import-button-text') }}</span>
+                                <i class="fa fa-fw {{ config('icons.import') }} fa-move-right"></i><span>{{ \Lang::get('common.instance-import-button-text') }}</span>
                             </button>
                         </div>
                     </div>
@@ -95,7 +95,7 @@
                 <form id="form-upload" class="form-horizontal" method="POST" action="/upload" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="instance-id"
-                               class="col-md-2 control-label">{{ \Lang::get('dashboard.instance-id-label') }}</label>
+                               class="col-md-2 control-label">{{ \Lang::get('common.instance-id-label') }}</label>
 
                         <div class="col-md-8">
                             <div class="input-group">
@@ -108,21 +108,21 @@
                                        placeholder="{{ $defaultInstanceName }}">
                                 <span class="input-group-addon">{{ $defaultDomain }}</span>
                             </div>
-                            {!! \Lang::get('dashboard.instance-create-help') !!}
+                            {!! \Lang::get('common.instance-create-help') !!}
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="upload-file"
                                class="col-md-2 control-label"
-                               style="padding-top:0; vertical-align:middle;">{{ \Lang::get('dashboard.instance-upload-label') }}</label>
+                               style="padding-top:0; vertical-align:middle;">{{ \Lang::get('common.instance-upload-label') }}</label>
 
                         <div class="col-md-8">
                             <input type="file" class="form-control" name="upload-file" id="upload-file" accept="application/gz,application/zip">
-                            {!! \Lang::get('dashboard.instance-upload-help') !!}
+                            {!! \Lang::get('common.instance-upload-help') !!}
                         </div>
                         <div class="col-md-2">
                             <button id="btn-upload-instance" type="submit" class="btn btn-primary btn-success btn-md" data-instance-action="upload">
-                                <i class="fa fa-fw {{ config('icons.upload') }} fa-move-right"></i><span>{{ \Lang::get('dashboard.instance-upload-button-text') }}</span>
+                                <i class="fa fa-fw {{ config('icons.upload') }} fa-move-right"></i><span>{{ \Lang::get('common.instance-upload-button-text') }}</span>
                             </button>
                         </div>
                     </div>

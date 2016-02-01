@@ -50,7 +50,7 @@
                                                  class="g-recaptcha"
                                                  data-sitekey="{{ config('recaptcha.siteKey') }}"></div>
                                             <p class="help-block"
-                                               style="margin-top:2px;font-size: 13px;color:#888;">{!! \Lang::get('dashboard.instance-proof-text') !!}</p>
+                                               style="margin-top:2px;font-size: 13px;color:#888;">{!! \Lang::get('common.instance-proof-text') !!}</p>
                                         </div>
                                     </div>
                                 @endif

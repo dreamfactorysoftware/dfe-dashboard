@@ -116,31 +116,31 @@ class InstancePanel
             case ProvisionStates::CREATED:
                 $_icon = $_spinner;
                 $_context = 'btn-success';
-                $_text = \Lang::get('dashboard.status-started');
+                $_text = \Lang::get('common.status-started');
                 break;
 
             case ProvisionStates::PROVISIONING:
                 $_icon = $_spinner;
                 $_context = 'btn-info';
-                $_text = \Lang::get('dashboard.status-started');
+                $_text = \Lang::get('common.status-started');
                 break;
 
             case ProvisionStates::PROVISIONED:
                 $_icon = config('icons.up');
                 $_context = 'btn-success';
-                $_text = \Lang::get('dashboard.status-up');
+                $_text = \Lang::get('common.status-up');
                 break;
 
             case ProvisionStates::DEPROVISIONING:
                 $_icon = $_spinner;
                 $_context = 'btn-info';
-                $_text = \Lang::get('dashboard.status-stopping');
+                $_text = \Lang::get('common.status-stopping');
                 break;
 
             case ProvisionStates::DEPROVISIONED:
                 $_icon = config('icons.instance-terminating');
                 $_context = 'btn-warning';
-                $_text = \Lang::get('dashboard.status-terminating');
+                $_text = \Lang::get('common.status-terminating');
                 break;
 
             case ProvisionStates::PROVISIONING_ERROR:
@@ -148,13 +148,13 @@ class InstancePanel
             case ProvisionStates::CREATION_ERROR:
                 $_icon = config('icons.instance-dead');
                 $_context = 'btn-danger';
-                $_text = \Lang::get('dashboard.status-dead');
+                $_text = \Lang::get('common.status-dead');
                 break;
 
             default:
                 $_icon = config('icons.instance-unknown');
                 $_context = 'btn-warning';
-                $_text = \Lang::get('dashboard.status-dead');
+                $_text = \Lang::get('common.status-dead');
                 break;
         }
 
