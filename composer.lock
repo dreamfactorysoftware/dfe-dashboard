@@ -661,12 +661,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/dfe-common.git",
-                "reference": "7388aea4c62f736d059790e93ea972262b6964f9"
+                "reference": "f3aa080731328a1076e312a28de2e11b50b8bdbd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/7388aea4c62f736d059790e93ea972262b6964f9",
-                "reference": "7388aea4c62f736d059790e93ea972262b6964f9",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/f3aa080731328a1076e312a28de2e11b50b8bdbd",
+                "reference": "f3aa080731328a1076e312a28de2e11b50b8bdbd",
                 "shasum": ""
             },
             "require": {
@@ -724,7 +724,7 @@
                 "source": "https://github.com/dreamfactorysoftware/dfe-common/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/dfe-common/issues"
             },
-            "time": "2016-01-26 17:16:55"
+            "time": "2016-02-01 18:16:40"
         },
         {
             "name": "dreamfactory/dfe-database",
@@ -1477,12 +1477,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "ccea4a0a351b4e09888f677c563dbb72937d3885"
+                "reference": "0ef0eb0304f86f3d29266a6fea1b5bfee30f83b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/ccea4a0a351b4e09888f677c563dbb72937d3885",
-                "reference": "ccea4a0a351b4e09888f677c563dbb72937d3885",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/0ef0eb0304f86f3d29266a6fea1b5bfee30f83b1",
+                "reference": "0ef0eb0304f86f3d29266a6fea1b5bfee30f83b1",
                 "shasum": ""
             },
             "require": {
@@ -1597,7 +1597,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2016-01-29 23:34:08"
+            "time": "2016-02-01 17:38:10"
         },
         {
             "name": "league/event",
