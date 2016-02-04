@@ -732,12 +732,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/dfe-database.git",
-                "reference": "542db550f91c0b690154c965e952c9b73cac1a12"
+                "reference": "866d94055a82d423d72d4f4a0fee577259aa05da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-database/zipball/542db550f91c0b690154c965e952c9b73cac1a12",
-                "reference": "542db550f91c0b690154c965e952c9b73cac1a12",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-database/zipball/866d94055a82d423d72d4f4a0fee577259aa05da",
+                "reference": "866d94055a82d423d72d4f4a0fee577259aa05da",
                 "shasum": ""
             },
             "require": {
@@ -781,7 +781,7 @@
                 "source": "https://github.com/dreamfactorysoftware/dfe-database/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/dfe-database/issues"
             },
-            "time": "2016-02-04 00:10:11"
+            "time": "2016-02-04 18:53:26"
         },
         {
             "name": "dreamfactory/dfe-ops-client",
@@ -2652,20 +2652,23 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/class-loader.git",
-                "reference": "696bc208eaa7292d246475af22f458f545d8eafc"
+                "reference": "dd93569b7689d32ce35e12cea6fd397554a0003c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/class-loader/zipball/696bc208eaa7292d246475af22f458f545d8eafc",
-                "reference": "696bc208eaa7292d246475af22f458f545d8eafc",
+                "url": "https://api.github.com/repos/symfony/class-loader/zipball/dd93569b7689d32ce35e12cea6fd397554a0003c",
+                "reference": "dd93569b7689d32ce35e12cea6fd397554a0003c",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5.9",
-                "symfony/polyfill-apcu": "~1.0,>=1.0.2"
+                "php": ">=5.5.9"
             },
             "require-dev": {
-                "symfony/finder": "~2.8|~3.0"
+                "symfony/finder": "~2.8|~3.0",
+                "symfony/polyfill-apcu": "~1.1"
+            },
+            "suggest": {
+                "symfony/polyfill-apcu": "For using ApcClassLoader on HHVM"
             },
             "type": "library",
             "extra": {
@@ -2697,7 +2700,7 @@
             ],
             "description": "Symfony ClassLoader Component",
             "homepage": "https://symfony.com",
-            "time": "2016-01-20 12:19:44"
+            "time": "2016-02-04 12:57:09"
         },
         {
             "name": "symfony/config",
@@ -2705,12 +2708,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
-                "reference": "fc19da5120822a9f9cdda46c7f764d7241b2cd49"
+                "reference": "f4d8e2236db888c708d934975070ff6f0a332a24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/fc19da5120822a9f9cdda46c7f764d7241b2cd49",
-                "reference": "fc19da5120822a9f9cdda46c7f764d7241b2cd49",
+                "url": "https://api.github.com/repos/symfony/config/zipball/f4d8e2236db888c708d934975070ff6f0a332a24",
+                "reference": "f4d8e2236db888c708d934975070ff6f0a332a24",
                 "shasum": ""
             },
             "require": {
@@ -2747,7 +2750,7 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
-            "time": "2016-01-21 09:24:53"
+            "time": "2016-02-04 14:44:13"
         },
         {
             "name": "symfony/console",
@@ -2924,12 +2927,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dependency-injection.git",
-                "reference": "e9f375e67fca754086e765e386c10dc9b3eec8e6"
+                "reference": "478a98846ef14fac480f40f8ca4e58e99c8045bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/e9f375e67fca754086e765e386c10dc9b3eec8e6",
-                "reference": "e9f375e67fca754086e765e386c10dc9b3eec8e6",
+                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/478a98846ef14fac480f40f8ca4e58e99c8045bf",
+                "reference": "478a98846ef14fac480f40f8ca4e58e99c8045bf",
                 "shasum": ""
             },
             "require": {
@@ -2978,7 +2981,7 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "https://symfony.com",
-            "time": "2016-02-02 09:49:18"
+            "time": "2016-02-04 13:53:00"
         },
         {
             "name": "symfony/dom-crawler",
@@ -3199,12 +3202,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/framework-bundle.git",
-                "reference": "bf36e67d9ffd6dcb826072dfff153f2a4df673fc"
+                "reference": "2dce15edd5daf0e8c4d027d1df711ac457dd3c59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/framework-bundle/zipball/bf36e67d9ffd6dcb826072dfff153f2a4df673fc",
-                "reference": "bf36e67d9ffd6dcb826072dfff153f2a4df673fc",
+                "url": "https://api.github.com/repos/symfony/framework-bundle/zipball/2dce15edd5daf0e8c4d027d1df711ac457dd3c59",
+                "reference": "2dce15edd5daf0e8c4d027d1df711ac457dd3c59",
                 "shasum": ""
             },
             "require": {
@@ -3278,7 +3281,7 @@
             ],
             "description": "Symfony FrameworkBundle",
             "homepage": "https://symfony.com",
-            "time": "2016-02-01 19:38:55"
+            "time": "2016-02-04 12:09:54"
         },
         {
             "name": "symfony/http-foundation",
@@ -3416,62 +3419,6 @@
             "description": "Symfony HttpKernel Component",
             "homepage": "https://symfony.com",
             "time": "2016-01-27 05:09:39"
-        },
-        {
-            "name": "symfony/polyfill-apcu",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-apcu.git",
-                "reference": "d1911e6caeb4b6a4c8e2d5c46b978a66b3745e4c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-apcu/zipball/d1911e6caeb4b6a4c8e2d5c46b978a66b3745e4c",
-                "reference": "d1911e6caeb4b6a4c8e2d5c46b978a66b3745e4c",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.1-dev"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "bootstrap.php"
-                ],
-                "classmap": [
-                    "Resources/stubs"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony polyfill backporting apcu_* functions to lower PHP versions",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "apcu",
-                "compatibility",
-                "polyfill",
-                "portable",
-                "shim"
-            ],
-            "time": "2016-01-20 09:13:37"
         },
         {
             "name": "symfony/polyfill-php55",
@@ -3751,12 +3698,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/routing.git",
-                "reference": "c22d67a7bdcce81ebfd631f234efeb13771f28bb"
+                "reference": "c63128f6dd5095351a87cd7c8801963001e22aff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/routing/zipball/c22d67a7bdcce81ebfd631f234efeb13771f28bb",
-                "reference": "c22d67a7bdcce81ebfd631f234efeb13771f28bb",
+                "url": "https://api.github.com/repos/symfony/routing/zipball/c63128f6dd5095351a87cd7c8801963001e22aff",
+                "reference": "c63128f6dd5095351a87cd7c8801963001e22aff",
                 "shasum": ""
             },
             "require": {
@@ -3778,6 +3725,7 @@
                 "doctrine/annotations": "For using the annotation loader",
                 "symfony/config": "For using the all-in-one router or any loader",
                 "symfony/expression-language": "For using expression matching",
+                "symfony/http-foundation": "For using a Symfony Request object",
                 "symfony/yaml": "For using the YAML loader"
             },
             "type": "library",
@@ -3816,7 +3764,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2016-01-27 05:09:39"
+            "time": "2016-02-04 13:52:46"
         },
         {
             "name": "symfony/security-core",
@@ -5507,17 +5455,73 @@
             "time": "2015-06-21 13:59:46"
         },
         {
+            "name": "symfony/polyfill-apcu",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-apcu.git",
+                "reference": "d1911e6caeb4b6a4c8e2d5c46b978a66b3745e4c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-apcu/zipball/d1911e6caeb4b6a4c8e2d5c46b978a66b3745e4c",
+                "reference": "d1911e6caeb4b6a4c8e2d5c46b978a66b3745e4c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ],
+                "classmap": [
+                    "Resources/stubs"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill backporting apcu_* functions to lower PHP versions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "apcu",
+                "compatibility",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "time": "2016-01-20 09:13:37"
+        },
+        {
             "name": "symfony/yaml",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "25d01edb35f3d5902f612eff297385e9b4d9a8b4"
+                "reference": "ef9ec82292e23c098636cbe6ca652fd4c3db9ea8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/25d01edb35f3d5902f612eff297385e9b4d9a8b4",
-                "reference": "25d01edb35f3d5902f612eff297385e9b4d9a8b4",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/ef9ec82292e23c098636cbe6ca652fd4c3db9ea8",
+                "reference": "ef9ec82292e23c098636cbe6ca652fd4c3db9ea8",
                 "shasum": ""
             },
             "require": {
@@ -5553,7 +5557,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-01-22 06:37:40"
+            "time": "2016-02-04 12:57:09"
         },
         {
             "name": "way/generators",

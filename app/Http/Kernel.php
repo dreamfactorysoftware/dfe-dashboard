@@ -45,9 +45,9 @@ class Kernel extends HttpKernel
 
         //  Make the version info extra cool
         if (null === ($_version = Cache::get('dfe.cool-app-version'))) {
-            $_version = config('dfe.common.display-version') . '-' . `git rev-parse --verify HEAD`;
+            $_version = config('dfe.common.display-version') . '-' . substr(`git rev-parse --verify HEAD`, 0, 8);
             logger('app version realized ' . $_version);
-            Cache::put('dfe.cool-app-version', $_version, 15);
+            \Cache::put('dfe.cool-app-version', $_version, 15);
         }
 
         config(['dfe.common.display-version' => $_version, 'app.version' => $_version,]);
