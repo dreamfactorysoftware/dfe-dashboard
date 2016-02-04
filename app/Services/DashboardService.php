@@ -442,10 +442,14 @@ class DashboardService extends BaseService
             'instanceStatusIconSize' => $this->panelConfig($panelType, 'status-icon-size'),
             'instanceStatusContext'  => $this->panelConfig($panelType, 'status-icon-context'),
             'instanceUrl'            => $this->buildInstanceUrl($instance->instance_name_text),
-        ], //  Instance status
-            $this->getInstanceStatus($instance), //  Merge data
-            $data, //  Overrides
-            $_overrides, //  ENSURE!
+        ],
+            //  Instance status
+            $this->getInstanceStatus($instance),
+            //  Merge data
+            $data,
+            //  Overrides
+            $_overrides,
+            //  ENSURE!
             [
                 'captchaId'     => 'dfe-rc-' . $_name,
                 'formId'        => $formId,
@@ -455,6 +459,8 @@ class DashboardService extends BaseService
                 'panelType'     => $panelType,
                 'collapse'      => false,
                 'instanceName'  => $_name,
+                'autoExpand'    => config('auto-expand-instance-panels', true) ? 'true' : 'false',
+                'showHeading'   => PanelTypes::CREATE == $panelType ? config('dashboard.show-panel-heading', false) : true,
             ]);
     }
 
@@ -1106,6 +1112,8 @@ HTML;
                     'panelType'        => $panelType,
                     'panelContext'     => $this->panelConfig($panelType, 'context'),
                     'headerIcon'       => $this->panelConfig($panelType, 'header-icon'),
+                    'autoExpand'       => config('dashboard.auto-expand-instance-panels', true) ? 'true' : 'false',
+                    'showHeading'      => PanelTypes::CREATE == $panelType ? config('dashboard.show-panel-heading', false) : true,
                 ]));
 
         return $render ? $_view->render() : $_view;

@@ -1,29 +1,31 @@
 <div class="{{ $panelSize or null }}">
     <div class="panel {{ $panelContext }} panel-instance">
 
-        <div class="panel-heading" role="tab">
-            <h4 class="panel-title" data-instance-name="{{ $instanceName or 'NEW' }}">
-                @if(isset($collapse))
-                    <a data-toggle="collapse" data-parent="#panel-accordion"
-                       href="#{{ 'panel-body-' . $instanceName }}">
-                        @endif
-                        @if ( isset($headerIcon) )
-                            <i class="fa fa-fw {{ $headerIcon }}"></i>
-                        @endif
-                        @if ( isset($panelTitle) )
-                            {{ $panelTitle }}
-                        @else
-                            {{ "Set \$panelTitle to change" }}
-                        @endif
-                        @if ( isset($headerStatusIcon) )
-                            <span class="pull-right"><i
+        @if($showHeading)
+            <div class="panel-heading" role="tab">
+                <h4 class="panel-title" data-instance-name="{{ $instanceName or 'NEW' }}">
+                    @if(isset($collapse))
+                        <a data-toggle="collapse" data-parent="#panel-accordion"
+                           href="#{{ 'panel-body-' . $instanceName }}">
+                            @endif
+                            @if ( isset($headerIcon) )
+                                <i class="fa fa-fw {{ $headerIcon }}"></i>
+                            @endif
+                            @if ( isset($panelTitle) )
+                                {{ $panelTitle }}
+                            @else
+                                {{ "Set \$panelTitle to change" }}
+                            @endif
+                            @if ( isset($headerStatusIcon) )
+                                <span class="pull-right"><i
                                         class="fa fa-fw {{ $headerStatusIcon }} {{ $headerStatusIconSize or 'fa-1x' }} header-status-icon"></i></span>
-                        @endif
-                        @if(isset($collapse))
-                    </a>
-                @endif
-            </h4>
-        </div>
+                            @endif
+                            @if(isset($collapse))
+                        </a>
+                    @endif
+                </h4>
+            </div>
+        @endif
 
         @if(isset($collapse))
             <div id="{{ 'panel-body-' . $instanceName }}" class="panel-collapse collapse in" role="tabpanel">
@@ -61,14 +63,14 @@
                                     <div class="instance-actions"
                                          data-toggle="collapse"
                                          data-target="#instance-toolbar-{{ $instanceName }}"
-                                         aria-expanded="false"
+                                         aria-expanded="{{ $autoExpand }}"
                                          aria-controls="instance-toolbar-{{ $instanceName }}"><i
-                                                class="fa fa-fw fa-angle-down"></i>
+                                            class="fa fa-fw fa-angle-down"></i>
                                     </div>
 
-                                    <div id="instance-toolbar-{{ $instanceName }}" class="panel-toolbar collapse"
+                                    <div id="instance-toolbar-{{ $instanceName }}" class="panel-toolbar collapse {{ 'true' == $autoExpand ? 'in' : '' }}"
                                          role="toolbar">
-                                        <hr class="hr" style="margin-bottom: 5px;"/>
+                                        <hr class="hr" style="margin-bottom: 5px;" />
                                         @foreach( $toolbarButtons as $_button )
                                             <button id="{{ $_button['id'] }}"
                                                     type="{{ $_button['type'] }}"
@@ -80,9 +82,10 @@
                                                     data-instance-href="{{ $instanceUrl }}"
                                                     data-toggle="tooltip" data-placement="bottom"
                                                     title="{{ $_button['hint'] or $_button['text'] }}"
-                                                    class="btn {{ $_button['size'] or 'btn-xs' }} {{ $_button['context'] or 'btn-default' }}">{!! $_button['icon'] !!}
+                                                    class="btn {{ $_button['size'] or 'btn-xs' }} {{ $_button['context'] or 'btn-default' }}">{!!
+                                                $_button['icon'] !!}
                                                 <span
-                                                        class="hidden-xs hidden-sm hidden-md hidden-toolbar-button">{{ $_button['text'] }}</span>
+                                                    class="hidden-xs hidden-sm hidden-md hidden-toolbar-button">{{ $_button['text'] }}</span>
                                             </button>
                                         @endforeach
                                     </div>
