@@ -704,3 +704,8 @@ label[for="import-file"] {
         display: none !important;
     }
 }
+
+.create-instance .panel-success.panel-instance {
+    padding: 8px;
+    border-color: #dddddd;
+}
