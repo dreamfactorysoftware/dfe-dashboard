@@ -77,7 +77,7 @@ class DashboardService extends BaseService
         $this->setDefaultDomain(implode('.', [trim(config('dashboard.default-dns-zone'), '. '), trim(config('dashboard.default-dns-domain'), '. '),]));
         $this->determineGridLayout();
 
-        Flasher::setPrefix('dashboard');
+        Flasher::setPrefix('common');
     }
 
     /**
