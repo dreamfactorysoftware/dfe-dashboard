@@ -21,7 +21,7 @@ return [
     'default-domain-protocol'     => env('DFE_DEFAULT_DOMAIN_PROTOCOL', 'https'),
     //  UI defaults
     'panel-context'               => 'panel-info',
-    'create-panel-context'        => 'panel-success',
+    'create-panel-context'        => 'panel-warning',
     'import-panel-context'        => 'panel-warning',
     'help-button-url'             => env('DFE_HELP_BUTTON_URL', 'https://www.dreamfactory.com/'),
     /** If true, uses below settings to override console default guest placements */
@@ -39,7 +39,7 @@ return [
     /** If true, instance panels will be open by default */
     'auto-expand-instance-panels' => true,
     /** If true, the "Create New Instance" heading is shown */
-    'show-panel-heading'          => false,
+    'show-panel-heading'          => true,
     //******************************************************************************
     //* General UI Alert Settings
     //******************************************************************************

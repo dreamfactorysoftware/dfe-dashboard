@@ -5,10 +5,10 @@ use DreamFactory\Library\Utility\Flasher;
 $_message = Flasher::getAlert();
 
 $_psa = Flasher::psa('Alert',
-        'Status updated as of ' . Carbon::now()->toFormattedDateString(),
-        'alert-info alert-fixed',
-        'dashboard-alert',
-        true);
+    'Status updated as of ' . Carbon::now()->toFormattedDateString(),
+    'alert-info alert-fixed',
+    'dashboard-alert',
+    true);
 ?>
 @extends('layouts.app')
 
@@ -19,7 +19,6 @@ $_psa = Flasher::psa('Alert',
     @if(isset($partnerContent))
         <div class="row">
             <div class="col-sm-12 col-md-12">
-                {{--<div class="col-sm-offset-1 col-sm-10 col-sm-offset-1 col-md-offset-1 col-md-10 col-md-offset-1">--}}
                 {!! $partnerContent !!}
             </div>
         </div>
@@ -27,7 +26,6 @@ $_psa = Flasher::psa('Alert',
 
     <div class="row">
         <div class="col-sm-12 col-md-12">
-            {{--<div class="col-sm-offset-1 col-sm-10 col-sm-offset-1 col-md-offset-1 col-md-10 col-md-offset-1">--}}
             <div class="create-instance">
                 {!! $instanceCreator !!}
             </div>

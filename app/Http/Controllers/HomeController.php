@@ -168,6 +168,7 @@ class HomeController extends BaseController
                     'instanceName' => PanelTypes::CREATE,
                     'panelType'    => PanelTypes::CREATE,
                     'importables'  => $this->getUserImportables(),
+                    'panelContext' => config('panels.create.context', $_coreData['panelContext']),
                 ]));
 
         $_instances = Dashboard::userInstanceTable(null, true);

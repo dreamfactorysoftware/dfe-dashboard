@@ -705,7 +705,12 @@ label[for="import-file"] {
     }
 }
 
-.create-instance .panel-success.panel-instance {
-    padding: 8px;
-    border-color: #dddddd;
+.panel-heading > h4 > a {
+    text-decoration: none;
+    cursor:          pointer;
+}
+
+div.panel-heading > h4 > a {
+    text-decoration: none;
+    cursor:          pointer;
 }
