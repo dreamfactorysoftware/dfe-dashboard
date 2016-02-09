@@ -54,6 +54,8 @@ class HomeController extends BaseController
 
             $this->autoLoginRegistrant($_subGuid, $request->input('pem'));
         }
+
+        \View::share('themes', config('dashboard.theme-cache', []));
     }
 
     /**

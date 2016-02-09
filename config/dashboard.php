@@ -41,6 +41,18 @@ return [
     /** If true, the "Create New Instance" heading is shown */
     'show-panel-heading'          => true,
     //******************************************************************************
+    //* Personalization
+    //******************************************************************************
+    /** Allow users to change theme */
+    'allow-personalization'       => false,
+    /** The locations where themes are stored */
+    'theme-locations'             => [
+        '/static/bootswatch-3.3.6',
+        '/vendor/dfe-common/static/bootswatch-3.3.6',
+    ],
+    /** Always available themes */
+    'default-themes'              => ['darkly', 'flatly', 'yeti',],
+    //******************************************************************************
     //* General UI Alert Settings
     //******************************************************************************
     'alerts'                      => [

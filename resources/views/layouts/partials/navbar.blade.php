@@ -22,9 +22,14 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li>
-                                <a href="/auth/logout"><i class="fa fa-fw fa-sign-out"></i>Logout</a>
-                            </li>
+                            @if(config('dashboard.allow-personalization',false))
+                                <li class="dropdown-header">Dashboard Theme</li>
+                                @foreach($themes as $_theme)
+                                    <li><a href="#" name="select-theme-{{$_theme}}">{{$_theme}}</a></li>
+                                @endforeach
+                                <li class="divider" role="separator"></li>
+                            @endif
+                            <li><a href="/auth/logout"><i class="fa fa-fw fa-sign-out"></i>Logout</a></li>
                         </ul>
                     </li>
                 </ul>
