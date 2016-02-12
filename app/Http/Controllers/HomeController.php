@@ -207,6 +207,7 @@ class HomeController extends BaseController
             'id',
             'instance_id',
             'snapshot_id_text',
+            'create_date',
         ]);
 
         if (!empty($_rows)) {
@@ -222,7 +223,7 @@ class HomeController extends BaseController
                         'id'            => $_row->id,
                         'name'          => $_row->snapshot_id_text,
                         'instance-id'   => $_instance ? $_instance->instance_id_text : 'unknown',
-                        'export-date'   => Carbon::create($_row->create_date)->toFormattedDateString(),
+                        'export-date'   => Carbon::createFromFormat('Y-m-d H:i:s', $_row->create_date)->format('M j, Y g:i A'),
                         'instance-name' => $_instanceName,
                     ];
                 } catch (ModelNotFoundException $_ex) {
