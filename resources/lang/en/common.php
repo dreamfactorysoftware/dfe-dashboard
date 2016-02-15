@@ -31,7 +31,7 @@ return [
     'instance-upload-button-text' => 'Upload',
     'instance-proof-text'         => 'I am not a robot.',
     'instance-create-heading'     => 'Create New',
-    'instance-create-title'       => '<h4>Welcome to your DreamFactory Dashboard!</h4><p>Use the Dashboard to create and manage all of your DreamFactory instances in one place.</p>',
+    'instance-create-title'       => '<h4>Welcome to your DreamFactory Dashboard!</h4><Hp>Use the Dashboard to create and manage all of your DreamFactory instances in one place.</h4>',
     'instance-create-button-text' => 'Create',
     'instance-create-help'        => '<p class="help-block">Instance names may contain only letters, numbers, and underscores.</p>',
     'instance-create'             => '<p>Please choose a name for your new instance below. Once the creation process has completed, you will receive an email with access details.</p>',
