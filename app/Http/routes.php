@@ -10,6 +10,7 @@ use DreamFactory\Enterprise\Database\Models\Snapshot;
 \Route::post('status/{id}', ['uses' => 'HomeController@status']);
 \Route::post('control/{id?}', ['uses' => 'HomeController@control']);
 \Route::post('upload', ['uses' => 'HomeController@upload']);
+\Route::controller('blueprint', 'BlueprintController');
 
 \Route::controllers([
     'auth'     => 'Auth\AuthController',
