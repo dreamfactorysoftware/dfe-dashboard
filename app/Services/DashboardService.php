@@ -428,7 +428,7 @@ class DashboardService extends BaseService
 
         $_name = is_object($instance) ? $instance->instance_name_text : 'NEW';
         $_id = is_object($instance) ? $instance->id : 0;
-        $_overrides = $this->getPanelOverrides($panelType);
+        $_overrides = $this->getPanelOverrides($panelType); 
         $_buttons = UX::makeInstanceToolbarButtons($instance->instance_id_text);
 
         return array_merge([
