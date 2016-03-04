@@ -5,6 +5,7 @@ use DreamFactory\Enterprise\Common\Packets\ErrorPacket;
 use DreamFactory\Enterprise\Common\Packets\SuccessPacket;
 use DreamFactory\Enterprise\Common\Services\BaseService;
 use DreamFactory\Enterprise\Common\Traits\EntityLookup;
+use DreamFactory\Enterprise\Common\Utility\UX;
 use DreamFactory\Enterprise\Console\Ops\Providers\OpsClientServiceProvider;
 use DreamFactory\Enterprise\Console\Ops\Services\OpsClientService;
 use DreamFactory\Enterprise\Dashboard\Enums\DashboardDefaults;
@@ -428,7 +429,7 @@ class DashboardService extends BaseService
         $_name = is_object($instance) ? $instance->instance_name_text : 'NEW';
         $_id = is_object($instance) ? $instance->id : 0;
         $_overrides = $this->getPanelOverrides($panelType);
-        $_buttons = $this->getToolbarButtons($instance);
+        $_buttons = UX::makeInstanceToolbarButtons($instance->instance_id_text);
 
         return array_merge([
             //  Defaults
@@ -961,85 +962,6 @@ HTML;
         }
 
         return ['icon' => $_icon, 'message' => $_message];
-    }
-
-    /**
-     * @param \stdClass|Instance $instance
-     *
-     * @return array
-     * @todo generate buttons based on provisioner features rather than statically
-     */
-    protected function getToolbarButtons($instance)
-    {
-        $_id = $instance->instance_id_text;
-
-        if (GuestLocations::DFE_CLUSTER == $instance->guest_location_nbr) {
-            $_buttons = [
-                'launch' => $this->makeToolbarButton($_id, 'Launch', ['context' => 'btn-success', 'icon' => 'fa-play']),
-                'delete' => $this->makeToolbarButton($_id, 'Delete', ['context' => 'btn-danger', 'icon' => 'fa-times']),
-                'export' => $this->makeToolbarButton($_id,
-                    'Export',
-                    ['context' => 'btn-info', 'icon' => 'fa-cloud-download']),
-            ];
-        } else {
-            //@todo make dynamic call to provisioner to find out supported operations
-            $_buttons = [
-                'start'     => $this->makeToolbarButton($_id,
-                    'Start',
-                    ['context' => 'btn-success', 'icon' => 'fa-play',]),
-                'stop'      => $this->makeToolbarButton($_id,
-                    'Stop',
-                    ['context' => 'btn-warning', 'icon' => 'fa-stop',]),
-                'terminate' => $this->makeToolbarButton($_id,
-                    'Terminate',
-                    ['context' => 'btn-danger', 'icon' => 'fa-times',]),
-                'export'    => $this->makeToolbarButton($_id,
-                    'Export',
-                    ['context' => 'btn-info', 'icon' => 'fa-cloud-download',]),
-            ];
-        }
-
-        return $_buttons;
-    }
-
-    /**
-     * @param string|int $id
-     * @param string     $text
-     * @param array      $options
-     *
-     * @return array
-     */
-    protected function makeToolbarButton($id, $text, array $options = [])
-    {
-        static $_template = [
-            'type'    => 'button',
-            'size'    => 'btn-xs',
-            'context' => 'btn-info',
-            'icon'    => '',
-            'hint'    => '',
-            'data'    => [],
-        ];
-
-        if (isset($options['icon'])) {
-            $options['icon'] = '<i class="fa fa-fw ' . $options['icon'] . ' instance-toolbar-button"></i>';
-        }
-
-        if (!isset($options['hint'])) {
-            $options['hint'] = $text . ' instance';
-        }
-
-        $_action = str_replace(['_', ' '], '-', trim(strtolower($text)));
-
-        return array_merge($_template,
-            [
-                'id'   => 'instance-' . $_action . '-' . $id,
-                'text' => $text,
-                'data' => [
-                    'instance-id'     => $id,
-                    'instance-action' => $_action,
-                ],
-            ],
-            $options);
     }
 
     /**
