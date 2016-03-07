@@ -21,7 +21,6 @@
     "support":           {
         "email": "support@dreamfactory.com"
     },
-    "minimum-stability": "dev",
     "repositories":      [
         {
             "type": "vcs",
@@ -48,33 +47,34 @@
             "url":  "https://github.com/dreamfactorysoftware/dfe-audit.git"
         }
     ],
+    "prefer-stable":     false,
+    "minimum-stability": "dev",
     "require":           {
-        "laravel/framework":                     "5.1.*",
-        "predis/predis":                         "~1.1",
-        "graham-campbell/flysystem":             "~3.0",
-        "league/flysystem-sftp":                 "~1.0",
+        "laravel/framework":                     "5.2.*",
+        "dreamfactory/console-tools":            "dev-develop as dev-master",
+        "dreamfactory/dfe-common":               "dev-feature/l52-upgrade as dev-master",
+        "dreamfactory/dfe-database":             "dev-feature/l52-upgrade as dev-master",
+        "dreamfactory/dfe-ops-client":           "dev-feature/guzzle6-upgrade as dev-master",
+        "dreamfactory/dfe-storage":              "dev-feature/l52-upgrade as dev-master",
+        "dreamfactory/dfe-audit":                "1.0.*",
+        "dreamfactory/dfe-partner":              "1.0.*",
+        "dreamfactory/php-utils":                "~1.1",
+        "graham-campbell/github":                "^4.0",
+        "graham-campbell/flysystem":             "^3.0",
         "league/flysystem-ziparchive":           "~1.0",
         "league/flysystem-eventable-filesystem": "~1.0",
+        "barryvdh/laravel-ide-helper":           "~2.1",
         "wpb/string-blade-compiler":             "2.*@dev",
-        "guzzlehttp/guzzle":                     "~4.0",
-        "marwelln/recaptcha":                    "*",
-        "dreamfactory/php-utils":                "1.1.*",
-        "dreamfactory/console-tools":            "dev-develop as dev-master",
-        "dreamfactory/dfe-audit":                "1.0.*",
-        "dreamfactory/dfe-common":               "1.0.*",
-        "dreamfactory/dfe-database":             "1.0.*",
-        "dreamfactory/dfe-ops-client":           "1.0.*",
-        "dreamfactory/dfe-partner":              "1.0.*",
-        "dreamfactory/dfe-storage":              "1.0.*",
-        "barryvdh/laravel-ide-helper":           "~2.0",
-        "barryvdh/laravel-cors":                 "0.6.x",
-        "dflydev/apache-mime-types":             "^1.0"
+        "guzzlehttp/guzzle":                     "~6.0",
+        "marwelln/recaptcha":                    "*"
     },
     "require-dev":       {
-        "doctrine/dbal":   "~2.3",
-        "phpspec/phpspec": "~2.1",
-        "phpunit/phpunit": "~4.0",
-        "way/generators":  "~3.0"
+        "symfony/dom-crawler":  "~3.0",
+        "symfony/css-selector": "~3.0",
+        "doctrine/dbal":        "~2.3",
+        "phpspec/phpspec":      "~2.1",
+        "phpunit/phpunit":      "~4.0",
+        "way/generators":       "~3.0"
     },
     "autoload":          {
         "classmap": [

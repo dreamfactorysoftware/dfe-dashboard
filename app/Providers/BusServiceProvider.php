@@ -17,7 +17,7 @@ class BusServiceProvider extends ServiceProvider
     public function boot(Dispatcher $dispatcher)
     {
         $dispatcher->mapUsing(function($command) {
-            return Dispatcher::simpleMapping($command,
+            return \Illuminate\Events\Dispatcher::simpleMapping($command,
                 'DreamFactory\Enterprise\Dashboard\Commands',
                 'DreamFactory\Enterprise\Dashboard\Handlers\Commands');
         });
