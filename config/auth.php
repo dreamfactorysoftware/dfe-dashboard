@@ -27,8 +27,6 @@ return [
     'providers'         => [
         'users' => [
             'driver' => 'dashboard',
-            'model'  => DreamFactory\Enterprise\Database\Models\User::class,
-            'table'  => 'user_t',
         ],
     ],
     /** Password Resets */

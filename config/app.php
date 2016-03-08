@@ -19,7 +19,6 @@ return [
     //******************************************************************************
     'providers'       => [
         /** Laravel Framework Service Providers... */
-        Illuminate\Foundation\Providers\ArtisanServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Cache\CacheServiceProvider::class,
         Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
@@ -41,8 +40,8 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         /** Application Service Providers... */
         DreamFactory\Enterprise\Dashboard\Providers\AppServiceProvider::class,
-//        DreamFactory\Enterprise\Dashboard\Providers\BusServiceProvider::class,
-//        DreamFactory\Enterprise\Dashboard\Providers\ConfigServiceProvider::class,
+        //        DreamFactory\Enterprise\Dashboard\Providers\BusServiceProvider::class,
+        //        DreamFactory\Enterprise\Dashboard\Providers\ConfigServiceProvider::class,
         DreamFactory\Enterprise\Dashboard\Providers\EventServiceProvider::class,
         DreamFactory\Enterprise\Dashboard\Providers\RouteServiceProvider::class,
         DreamFactory\Enterprise\Dashboard\Providers\DashboardServiceProvider::class,

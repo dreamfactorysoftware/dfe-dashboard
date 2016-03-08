@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "27444c7f2a842fbe6234ceaf34b4d5d3",
-    "content-hash": "c243e7cdaf9db351092951b12e58f2ca",
+    "hash": "7f2ad1b1ad26178e63c8d40ace9a7811",
+    "content-hash": "972773fe08c2aef5532c2067b702879b",
     "packages": [
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -472,20 +472,20 @@
         },
         {
             "name": "dreamfactory/dfe-audit",
-            "version": "dev-develop",
+            "version": "dev-feature/l52-upgrade",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/dfe-audit.git",
-                "reference": "7d19e5b7a5e2c74c9111bafb21eb2fe30411fc8a"
+                "reference": "48e27f834158a8ca16acb34b791ccb2b99963494"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-audit/zipball/7d19e5b7a5e2c74c9111bafb21eb2fe30411fc8a",
-                "reference": "7d19e5b7a5e2c74c9111bafb21eb2fe30411fc8a",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-audit/zipball/48e27f834158a8ca16acb34b791ccb2b99963494",
+                "reference": "48e27f834158a8ca16acb34b791ccb2b99963494",
                 "shasum": ""
             },
             "require-dev": {
-                "laravel/framework": "5.1.*",
+                "laravel/framework": "5.1.*|5.2.*",
                 "phpunit/phpunit": "@stable"
             },
             "type": "library",
@@ -517,37 +517,33 @@
                 "utility"
             ],
             "support": {
-                "source": "https://github.com/dreamfactorysoftware/dfe-audit/tree/develop",
+                "source": "https://github.com/dreamfactorysoftware/dfe-audit/tree/feature/l52-upgrade",
                 "issues": "https://github.com/dreamfactorysoftware/dfe-audit/issues"
             },
-            "time": "2015-10-19 18:48:24"
+            "time": "2016-03-07 23:50:40"
         },
         {
             "name": "dreamfactory/dfe-common",
-            "version": "dev-develop",
+            "version": "dev-feature/l52-upgrade",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/dfe-common.git",
-                "reference": "3a054fa15eeb474c24af3d6c1d2ac44f32c74516"
+                "reference": "dfc673d7aa1233451825380cad613ef6f41ad8ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/3a054fa15eeb474c24af3d6c1d2ac44f32c74516",
-                "reference": "3a054fa15eeb474c24af3d6c1d2ac44f32c74516",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/dfc673d7aa1233451825380cad613ef6f41ad8ff",
+                "reference": "dfc673d7aa1233451825380cad613ef6f41ad8ff",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/dfe-database": "1.0.*",
                 "dreamfactory/php-utils": "1.1.*",
-                "league/flysystem-sftp": "*",
-                "league/flysystem-ziparchive": "*",
+                "league/flysystem-ziparchive": "~1.0",
                 "ruflin/elastica": "*",
                 "wpb/string-blade-compiler": "2.*@dev"
             },
             "require-dev": {
-                "barryvdh/laravel-ide-helper": "~2.0",
-                "doctrine/dbal": "~2.3",
-                "laravel/framework": "5.1.*",
+                "laravel/framework": "5.2.*",
                 "phpspec/phpspec": "~2.1",
                 "phpunit/phpunit": "~4.0",
                 "way/generators": "~3.0"
@@ -578,7 +574,7 @@
                     "email": "jerryablan@dreamfactory.com"
                 }
             ],
-            "description": "DreamFactory Enterprise(tm) Common Components",
+            "description": "DreamFactory(tm) Enterprise Common Component Package",
             "homepage": "https://www.dreamfactory.com/",
             "keywords": [
                 "common",
@@ -588,31 +584,31 @@
                 "utility"
             ],
             "support": {
-                "source": "https://github.com/dreamfactorysoftware/dfe-common/tree/develop",
+                "source": "https://github.com/dreamfactorysoftware/dfe-common/tree/feature/l52-upgrade",
                 "issues": "https://github.com/dreamfactorysoftware/dfe-common/issues"
             },
-            "time": "2016-03-04 18:37:30"
+            "time": "2016-03-08 18:05:14"
         },
         {
             "name": "dreamfactory/dfe-database",
-            "version": "dev-develop",
+            "version": "dev-feature/l52-upgrade",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/dfe-database.git",
-                "reference": "b339744870459c111a1ce717a18ff97c26452003"
+                "reference": "b7aa8c6f175d8425ae54f318c6a0b3ecc8ca319b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-database/zipball/b339744870459c111a1ce717a18ff97c26452003",
-                "reference": "b339744870459c111a1ce717a18ff97c26452003",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-database/zipball/b7aa8c6f175d8425ae54f318c6a0b3ecc8ca319b",
+                "reference": "b7aa8c6f175d8425ae54f318c6a0b3ecc8ca319b",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/dfe-common": "1.0.*",
-                "dreamfactory/dfe-storage": "1.0.*"
+                "dreamfactory/dfe-common": "dev-feature/l52-upgrade"
             },
             "require-dev": {
-                "laravel/framework": "5.1.*",
+                "dreamfactory/dfe-storage": "dev-feature/l52-upgrade",
+                "laravel/framework": "5.2.*",
                 "phpunit/phpunit": "@stable"
             },
             "type": "library",
@@ -635,7 +631,7 @@
                     "email": "jerryablan@dreamfactory.com"
                 }
             ],
-            "description": "DreamFactory Enterprise(tm) Database Library",
+            "description": "DreamFactory(tm) Enterprise Database Components Package",
             "homepage": "https://www.dreamfactory.com/",
             "keywords": [
                 "database",
@@ -645,32 +641,32 @@
                 "utility"
             ],
             "support": {
-                "source": "https://github.com/dreamfactorysoftware/dfe-database/tree/develop",
+                "source": "https://github.com/dreamfactorysoftware/dfe-database/tree/feature/l52-upgrade",
                 "issues": "https://github.com/dreamfactorysoftware/dfe-database/issues"
             },
-            "time": "2016-03-03 16:34:26"
+            "time": "2016-03-08 18:18:02"
         },
         {
             "name": "dreamfactory/dfe-ops-client",
-            "version": "dev-feature/guzzle6-upgrade",
+            "version": "dev-feature/l52-upgrade",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/dfe-ops-client.git",
-                "reference": "6fdccaed5da94f2894622c79bde157b224f771ea"
+                "reference": "358c1540384eb9dfce0f7ab8ad9c95a1609e00a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-ops-client/zipball/6fdccaed5da94f2894622c79bde157b224f771ea",
-                "reference": "6fdccaed5da94f2894622c79bde157b224f771ea",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-ops-client/zipball/358c1540384eb9dfce0f7ab8ad9c95a1609e00a6",
+                "reference": "358c1540384eb9dfce0f7ab8ad9c95a1609e00a6",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/dfe-common": "1.0.*",
-                "dreamfactory/dfe-database": "1.0.*",
-                "guzzlehttp/guzzle": "~6.0"
+                "dreamfactory/dfe-common": "dev-feature/l52-upgrade as dev-master",
+                "dreamfactory/dfe-database": "dev-feature/l52-upgrade as dev-master",
+                "guzzlehttp/guzzle": "~4.0"
             },
             "require-dev": {
-                "laravel/framework": "5.1.*",
+                "laravel/framework": "5.2.*",
                 "phpspec/phpspec": "~2.1",
                 "phpunit/phpunit": "@stable"
             },
@@ -694,7 +690,7 @@
                     "email": "jerryablan@dreamfactory.com"
                 }
             ],
-            "description": "DreamFactory Enterprise(tm) Console API Service Library",
+            "description": "DreamFactory(tm) Enterprise Console API Package",
             "homepage": "https://www.dreamfactory.com/",
             "keywords": [
                 "common",
@@ -705,33 +701,32 @@
                 "utility"
             ],
             "support": {
-                "source": "https://github.com/dreamfactorysoftware/dfe-ops-client/tree/feature/guzzle6-upgrade",
+                "source": "https://github.com/dreamfactorysoftware/dfe-ops-client/tree/feature/l52-upgrade",
                 "issues": "https://github.com/dreamfactorysoftware/dfe-ops-client/issues"
             },
-            "time": "2016-03-07 00:22:57"
+            "time": "2016-03-08 17:23:45"
         },
         {
             "name": "dreamfactory/dfe-partner",
-            "version": "dev-develop",
+            "version": "dev-feature/l52-upgrade",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/dfe-partner.git",
-                "reference": "729b962c5680eb76314173be942e5bf8f0d5ea84"
+                "reference": "65e72cd5c228c5bb653e99d9bd98c04c19a05758"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-partner/zipball/729b962c5680eb76314173be942e5bf8f0d5ea84",
-                "reference": "729b962c5680eb76314173be942e5bf8f0d5ea84",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-partner/zipball/65e72cd5c228c5bb653e99d9bd98c04c19a05758",
+                "reference": "65e72cd5c228c5bb653e99d9bd98c04c19a05758",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/dfe-common": "1.0.*",
-                "dreamfactory/dfe-database": "1.0.*"
+                "dreamfactory/dfe-common": "dev-feature/l52-upgrade as master"
             },
             "require-dev": {
-                "graham-campbell/flysystem": "~2.1",
-                "laravel/laravel": "5.1.*",
-                "league/flysystem-sftp": "~1.0",
+                "dreamfactory/dfe-database": "dev-feature/l52-upgrade as master",
+                "graham-campbell/flysystem": "^3.0",
+                "laravel/framework": "5.2.*",
                 "league/flysystem-ziparchive": "~1.0",
                 "phpunit/phpunit": "@stable"
             },
@@ -755,7 +750,7 @@
                     "email": "jerryablan@dreamfactory.com"
                 }
             ],
-            "description": "DreamFactory Enterprise(tm) Partner Services Library",
+            "description": "DreamFactory(tm) Enterprise Partner Services Package",
             "homepage": "https://www.dreamfactory.com/",
             "keywords": [
                 "dfe",
@@ -765,35 +760,34 @@
                 "utility"
             ],
             "support": {
-                "source": "https://github.com/dreamfactorysoftware/dfe-partner/tree/develop",
+                "source": "https://github.com/dreamfactorysoftware/dfe-partner/tree/feature/l52-upgrade",
                 "issues": "https://github.com/dreamfactorysoftware/dfe-partner/issues"
             },
-            "time": "2015-10-31 01:14:43"
+            "time": "2016-03-07 23:38:56"
         },
         {
             "name": "dreamfactory/dfe-storage",
-            "version": "dev-develop",
+            "version": "dev-feature/l52-upgrade",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/dfe-storage.git",
-                "reference": "8536fba2c77bbaecbb4ba63d5ebbd53ba07e9fd6"
+                "reference": "7100deb9d02130579cea7421a65d3e8226fd66b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-storage/zipball/8536fba2c77bbaecbb4ba63d5ebbd53ba07e9fd6",
-                "reference": "8536fba2c77bbaecbb4ba63d5ebbd53ba07e9fd6",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-storage/zipball/7100deb9d02130579cea7421a65d3e8226fd66b3",
+                "reference": "7100deb9d02130579cea7421a65d3e8226fd66b3",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/dfe-common": "1.0.*",
-                "dreamfactory/dfe-database": "1.0.*"
+                "dreamfactory/dfe-common": "dev-feature/l52-upgrade as master",
+                "graham-campbell/flysystem": "^3.0",
+                "league/flysystem-ziparchive": "~1.0"
             },
             "require-dev": {
-                "graham-campbell/flysystem": "~2.1",
-                "laravel/laravel": "5.1.*",
-                "league/flysystem-sftp": "~1.0",
-                "league/flysystem-ziparchive": "~1.0",
-                "phpunit/phpunit": "@stable"
+                "dreamfactory/dfe-database": "dev-feature/l52-upgrade as master",
+                "laravel/framework": "5.2.*",
+                "phpunit/phpunit": "~4.0"
             },
             "type": "library",
             "extra": {
@@ -815,7 +809,7 @@
                     "email": "jerryablan@dreamfactory.com"
                 }
             ],
-            "description": "DreamFactory Enterprise(tm) Storage Library",
+            "description": "DreamFactory(tm) Enterprise Storage Components Package",
             "homepage": "https://www.dreamfactory.com/",
             "keywords": [
                 "dfe",
@@ -825,10 +819,10 @@
                 "utility"
             ],
             "support": {
-                "source": "https://github.com/dreamfactorysoftware/dfe-storage/tree/develop",
+                "source": "https://github.com/dreamfactorysoftware/dfe-storage/tree/feature/l52-upgrade",
                 "issues": "https://github.com/dreamfactorysoftware/dfe-storage/issues"
             },
-            "time": "2016-02-19 01:48:29"
+            "time": "2016-03-07 22:48:12"
         },
         {
             "name": "dreamfactory/php-utils",
@@ -1190,41 +1184,44 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "dev-master",
+            "version": "4.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "30f8346719d2ba1da9b2799f60b3dea360d908f4"
+                "reference": "66fd916e9f9130bc22c51450476823391cb2f67c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/30f8346719d2ba1da9b2799f60b3dea360d908f4",
-                "reference": "30f8346719d2ba1da9b2799f60b3dea360d908f4",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/66fd916e9f9130bc22c51450476823391cb2f67c",
+                "reference": "66fd916e9f9130bc22c51450476823391cb2f67c",
                 "shasum": ""
             },
             "require": {
-                "guzzlehttp/promises": "~1.0",
-                "guzzlehttp/psr7": "~1.1",
-                "php": ">=5.5.0"
+                "ext-json": "*",
+                "guzzlehttp/streams": "~2.1",
+                "php": ">=5.4.0"
             },
             "require-dev": {
                 "ext-curl": "*",
                 "phpunit/phpunit": "~4.0",
                 "psr/log": "~1.0"
             },
+            "suggest": {
+                "ext-curl": "Guzzle will use specific adapters if cURL is present"
+            },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "6.2-dev"
+                    "dev-master": "4.2-dev"
                 }
             },
             "autoload": {
-                "files": [
-                    "src/functions_include.php"
-                ],
                 "psr-4": {
                     "GuzzleHttp\\": "src/"
-                }
+                },
+                "files": [
+                    "src/functions.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1237,7 +1234,7 @@
                     "homepage": "https://github.com/mtdowling"
                 }
             ],
-            "description": "Guzzle is a PHP HTTP client library",
+            "description": "Guzzle is a PHP HTTP client library and framework for building RESTful web service clients",
             "homepage": "http://guzzlephp.org/",
             "keywords": [
                 "client",
@@ -1248,24 +1245,24 @@
                 "rest",
                 "web service"
             ],
-            "time": "2016-03-05 02:10:00"
+            "time": "2014-10-05 19:29:14"
         },
         {
-            "name": "guzzlehttp/promises",
-            "version": "dev-master",
+            "name": "guzzlehttp/streams",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/guzzle/promises.git",
-                "reference": "976e0f50981f845dcee1c25bfcac2304a7bb5583"
+                "url": "https://github.com/guzzle/streams.git",
+                "reference": "f91b721d73f0e561410903b3b3c90a5d0e40b534"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/976e0f50981f845dcee1c25bfcac2304a7bb5583",
-                "reference": "976e0f50981f845dcee1c25bfcac2304a7bb5583",
+                "url": "https://api.github.com/repos/guzzle/streams/zipball/f91b721d73f0e561410903b3b3c90a5d0e40b534",
+                "reference": "f91b721d73f0e561410903b3b3c90a5d0e40b534",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5.0"
+                "php": ">=5.4.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "~4.0"
@@ -1273,15 +1270,15 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "2.0-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "GuzzleHttp\\Promise\\": "src/"
+                    "GuzzleHttp\\Stream\\": "src/"
                 },
                 "files": [
-                    "src/functions_include.php"
+                    "src/functions.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1295,69 +1292,13 @@
                     "homepage": "https://github.com/mtdowling"
                 }
             ],
-            "description": "Guzzle promises library",
+            "description": "Provides a simple abstraction over streams of data (Guzzle 4+)",
+            "homepage": "http://guzzlephp.org/",
             "keywords": [
-                "promise"
+                "Guzzle",
+                "stream"
             ],
-            "time": "2016-02-26 22:29:15"
-        },
-        {
-            "name": "guzzlehttp/psr7",
-            "version": "1.2.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/guzzle/psr7.git",
-                "reference": "2e89629ff057ebb49492ba08e6995d3a6a80021b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/2e89629ff057ebb49492ba08e6995d3a6a80021b",
-                "reference": "2e89629ff057ebb49492ba08e6995d3a6a80021b",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0",
-                "psr/http-message": "~1.0"
-            },
-            "provide": {
-                "psr/http-message-implementation": "1.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "GuzzleHttp\\Psr7\\": "src/"
-                },
-                "files": [
-                    "src/functions_include.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michael Dowling",
-                    "email": "mtdowling@gmail.com",
-                    "homepage": "https://github.com/mtdowling"
-                }
-            ],
-            "description": "PSR-7 message implementation",
-            "keywords": [
-                "http",
-                "message",
-                "stream",
-                "uri"
-            ],
-            "time": "2016-02-18 21:54:00"
+            "time": "2014-08-17 21:15:53"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -1745,12 +1686,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "8333ebc5e76c334ee0e202f2f91e1948e566a655"
+                "reference": "b334d6c5f95364948e06d2f620ab93d084074c6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/8333ebc5e76c334ee0e202f2f91e1948e566a655",
-                "reference": "8333ebc5e76c334ee0e202f2f91e1948e566a655",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/b334d6c5f95364948e06d2f620ab93d084074c6e",
+                "reference": "b334d6c5f95364948e06d2f620ab93d084074c6e",
                 "shasum": ""
             },
             "require": {
@@ -1820,7 +1761,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2016-02-21 11:35:18"
+            "time": "2016-03-07 21:01:43"
         },
         {
             "name": "league/flysystem-eventable-filesystem",
@@ -1868,53 +1809,6 @@
             ],
             "description": "Many filesystems, one API.",
             "time": "2015-01-21 22:20:01"
-        },
-        {
-            "name": "league/flysystem-sftp",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/thephpleague/flysystem-sftp.git",
-                "reference": "d20a70c3528f0919d397d6dab16dfa19ee4f7641"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem-sftp/zipball/d20a70c3528f0919d397d6dab16dfa19ee4f7641",
-                "reference": "d20a70c3528f0919d397d6dab16dfa19ee4f7641",
-                "shasum": ""
-            },
-            "require": {
-                "league/flysystem": "~1.0",
-                "php": ">=5.4.0",
-                "phpseclib/phpseclib": "~2.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "0.9.*",
-                "phpunit/phpunit": "~4.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "League\\Flysystem\\Sftp\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Frank de Jonge",
-                    "email": "info@frenky.net"
-                }
-            ],
-            "description": "Flysystem adapter for SFTP",
-            "time": "2016-02-19 15:56:00"
         },
         {
             "name": "league/flysystem-ziparchive",
@@ -2314,199 +2208,6 @@
                 }
             ],
             "time": "2015-02-03 12:10:50"
-        },
-        {
-            "name": "phpseclib/phpseclib",
-            "version": "2.0.x-dev",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "e666562569a2127f47c50b9bb77b6301e90187ff"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/e666562569a2127f47c50b9bb77b6301e90187ff",
-                "reference": "e666562569a2127f47c50b9bb77b6301e90187ff",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "phing/phing": "~2.7",
-                "phpunit/phpunit": "~4.0",
-                "sami/sami": "~2.0",
-                "squizlabs/php_codesniffer": "~2.0"
-            },
-            "suggest": {
-                "ext-gmp": "Install the GMP (GNU Multiple Precision) extension in order to speed up arbitrary precision integer arithmetic operations.",
-                "ext-libsodium": "SSH2/SFTP can make use of some algorithms provided by the libsodium-php extension.",
-                "ext-mcrypt": "Install the Mcrypt extension in order to speed up a few other cryptographic operations.",
-                "ext-openssl": "Install the OpenSSL extension in order to speed up a wide variety of cryptographic operations."
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "phpseclib\\": "phpseclib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jim Wigginton",
-                    "email": "terrafrost@php.net",
-                    "role": "Lead Developer"
-                },
-                {
-                    "name": "Patrick Monnerat",
-                    "email": "pm@datasphere.ch",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Andreas Fischer",
-                    "email": "bantu@phpbb.com",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Hans-Jürgen Petrich",
-                    "email": "petrich@tronic-media.com",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Graham Campbell",
-                    "email": "graham@alt-three.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "PHP Secure Communications Library - Pure-PHP implementations of RSA, AES, SSH2, SFTP, X.509 etc.",
-            "homepage": "http://phpseclib.sourceforge.net",
-            "keywords": [
-                "BigInteger",
-                "aes",
-                "asn.1",
-                "asn1",
-                "blowfish",
-                "crypto",
-                "cryptography",
-                "encryption",
-                "rsa",
-                "security",
-                "sftp",
-                "signature",
-                "signing",
-                "ssh",
-                "twofish",
-                "x.509",
-                "x509"
-            ],
-            "time": "2016-03-02 16:13:15"
-        },
-        {
-            "name": "predis/predis",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/nrk/predis.git",
-                "reference": "6bc1a38123f61efde92d8b4a73adabf168e09442"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/nrk/predis/zipball/6bc1a38123f61efde92d8b4a73adabf168e09442",
-                "reference": "6bc1a38123f61efde92d8b4a73adabf168e09442",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.9"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.0"
-            },
-            "suggest": {
-                "ext-curl": "Allows access to Webdis when paired with phpiredis",
-                "ext-phpiredis": "Allows faster serialization and deserialization of the Redis protocol"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Predis\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Daniele Alessandri",
-                    "email": "suppakilla@gmail.com",
-                    "homepage": "http://clorophilla.net"
-                }
-            ],
-            "description": "Flexible and feature-complete PHP client library for Redis",
-            "homepage": "http://github.com/nrk/predis",
-            "keywords": [
-                "nosql",
-                "predis",
-                "redis"
-            ],
-            "time": "2015-07-30 18:51:15"
-        },
-        {
-            "name": "psr/http-message",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/http-message.git",
-                "reference": "85d63699f0dbedb190bbd4b0d2b9dc707ea4c298"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/http-message/zipball/85d63699f0dbedb190bbd4b0d2b9dc707ea4c298",
-                "reference": "85d63699f0dbedb190bbd4b0d2b9dc707ea4c298",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Psr\\Http\\Message\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP-FIG",
-                    "homepage": "http://www.php-fig.org/"
-                }
-            ],
-            "description": "Common interface for HTTP messages",
-            "keywords": [
-                "http",
-                "http-message",
-                "psr",
-                "psr-7",
-                "request",
-                "response"
-            ],
-            "time": "2015-05-04 20:22:00"
         },
         {
             "name": "psr/log",
@@ -5653,22 +5354,50 @@
         {
             "alias": "dev-master",
             "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
+            "version": "dev-feature/l52-upgrade",
             "package": "dreamfactory/dfe-common"
         },
         {
             "alias": "dev-master",
             "alias_normalized": "9999999-dev",
-            "version": "dev-feature/guzzle6-upgrade",
+            "version": "dev-feature/l52-upgrade",
+            "package": "dreamfactory/dfe-database"
+        },
+        {
+            "alias": "dev-master",
+            "alias_normalized": "9999999-dev",
+            "version": "dev-feature/l52-upgrade",
             "package": "dreamfactory/dfe-ops-client"
+        },
+        {
+            "alias": "dev-master",
+            "alias_normalized": "9999999-dev",
+            "version": "dev-feature/l52-upgrade",
+            "package": "dreamfactory/dfe-storage"
+        },
+        {
+            "alias": "dev-master",
+            "alias_normalized": "9999999-dev",
+            "version": "dev-feature/l52-upgrade",
+            "package": "dreamfactory/dfe-audit"
+        },
+        {
+            "alias": "dev-master",
+            "alias_normalized": "9999999-dev",
+            "version": "dev-feature/l52-upgrade",
+            "package": "dreamfactory/dfe-partner"
         }
     ],
     "minimum-stability": "dev",
     "stability-flags": {
-        "wpb/string-blade-compiler": 20,
         "dreamfactory/console-tools": 20,
         "dreamfactory/dfe-common": 20,
-        "dreamfactory/dfe-ops-client": 20
+        "dreamfactory/dfe-database": 20,
+        "dreamfactory/dfe-ops-client": 20,
+        "dreamfactory/dfe-storage": 20,
+        "dreamfactory/dfe-audit": 20,
+        "dreamfactory/dfe-partner": 20,
+        "wpb/string-blade-compiler": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

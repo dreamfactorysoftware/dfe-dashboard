@@ -54,10 +54,10 @@
         "dreamfactory/console-tools":            "dev-develop as dev-master",
         "dreamfactory/dfe-common":               "dev-feature/l52-upgrade as dev-master",
         "dreamfactory/dfe-database":             "dev-feature/l52-upgrade as dev-master",
-        "dreamfactory/dfe-ops-client":           "dev-feature/guzzle6-upgrade as dev-master",
+        "dreamfactory/dfe-ops-client":           "dev-feature/l52-upgrade as dev-master",
         "dreamfactory/dfe-storage":              "dev-feature/l52-upgrade as dev-master",
-        "dreamfactory/dfe-audit":                "1.0.*",
-        "dreamfactory/dfe-partner":              "1.0.*",
+        "dreamfactory/dfe-audit":                "dev-feature/l52-upgrade as dev-master",
+        "dreamfactory/dfe-partner":              "dev-feature/l52-upgrade as dev-master",
         "dreamfactory/php-utils":                "~1.1",
         "graham-campbell/github":                "^4.0",
         "graham-campbell/flysystem":             "^3.0",
@@ -65,7 +65,7 @@
         "league/flysystem-eventable-filesystem": "~1.0",
         "barryvdh/laravel-ide-helper":           "~2.1",
         "wpb/string-blade-compiler":             "2.*@dev",
-        "guzzlehttp/guzzle":                     "~6.0",
+        "guzzlehttp/guzzle":                     "~4.0",
         "marwelln/recaptcha":                    "*"
     },
     "require-dev":       {
