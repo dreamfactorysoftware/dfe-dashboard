@@ -20,6 +20,8 @@ return [
     'providers'       => [
         /** Laravel Framework Service Providers... */
         Illuminate\Auth\AuthServiceProvider::class,
+        Illuminate\Broadcasting\BroadcastServiceProvider::class,
+        Illuminate\Bus\BusServiceProvider::class,
         Illuminate\Cache\CacheServiceProvider::class,
         Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
         Illuminate\Cookie\CookieServiceProvider::class,
@@ -38,10 +40,9 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+
         /** Application Service Providers... */
         DreamFactory\Enterprise\Dashboard\Providers\AppServiceProvider::class,
-        //        DreamFactory\Enterprise\Dashboard\Providers\BusServiceProvider::class,
-        //        DreamFactory\Enterprise\Dashboard\Providers\ConfigServiceProvider::class,
         DreamFactory\Enterprise\Dashboard\Providers\EventServiceProvider::class,
         DreamFactory\Enterprise\Dashboard\Providers\RouteServiceProvider::class,
         DreamFactory\Enterprise\Dashboard\Providers\DashboardServiceProvider::class,

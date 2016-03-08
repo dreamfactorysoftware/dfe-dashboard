@@ -51,6 +51,7 @@
     "minimum-stability": "dev",
     "require":           {
         "laravel/framework":                     "5.2.*",
+        "laravelcollective/bus":                 "5.2.*",
         "dreamfactory/console-tools":            "dev-develop as dev-master",
         "dreamfactory/dfe-common":               "dev-feature/l52-upgrade as dev-master",
         "dreamfactory/dfe-database":             "dev-feature/l52-upgrade as dev-master",

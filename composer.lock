@@ -421,12 +421,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/console-tools.git",
-                "reference": "db66deea885c2290bc0520fd8ea2a467143892bc"
+                "reference": "eec475ebe39c8a3e33450b47dcf79df1e1e840f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/console-tools/zipball/db66deea885c2290bc0520fd8ea2a467143892bc",
-                "reference": "db66deea885c2290bc0520fd8ea2a467143892bc",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/console-tools/zipball/eec475ebe39c8a3e33450b47dcf79df1e1e840f7",
+                "reference": "eec475ebe39c8a3e33450b47dcf79df1e1e840f7",
                 "shasum": ""
             },
             "require": {
@@ -468,7 +468,7 @@
                 "dreamfactory",
                 "utility"
             ],
-            "time": "2016-03-07 00:50:43"
+            "time": "2016-03-08 18:21:18"
         },
         {
             "name": "dreamfactory/dfe-audit",
@@ -528,12 +528,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/dfe-common.git",
-                "reference": "dfc673d7aa1233451825380cad613ef6f41ad8ff"
+                "reference": "8fcb62b506d4821b7a1708d0231031f0d607ff32"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/dfc673d7aa1233451825380cad613ef6f41ad8ff",
-                "reference": "dfc673d7aa1233451825380cad613ef6f41ad8ff",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/8fcb62b506d4821b7a1708d0231031f0d607ff32",
+                "reference": "8fcb62b506d4821b7a1708d0231031f0d607ff32",
                 "shasum": ""
             },
             "require": {
@@ -587,7 +587,7 @@
                 "source": "https://github.com/dreamfactorysoftware/dfe-common/tree/feature/l52-upgrade",
                 "issues": "https://github.com/dreamfactorysoftware/dfe-common/issues"
             },
-            "time": "2016-03-08 18:05:14"
+            "time": "2016-03-08 20:12:30"
         },
         {
             "name": "dreamfactory/dfe-database",

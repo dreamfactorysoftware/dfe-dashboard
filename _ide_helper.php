@@ -1811,6 +1811,56 @@ namespace {
     }
 
 
+    class Bus extends \Illuminate\Support\Facades\Bus{
+        
+        /**
+         * Dispatch a command to its appropriate handler.
+         *
+         * @param mixed $command
+         * @return mixed 
+         * @static 
+         */
+        public static function dispatch($command){
+            return \Illuminate\Bus\Dispatcher::dispatch($command);
+        }
+        
+        /**
+         * Dispatch a command to its appropriate handler in the current process.
+         *
+         * @param mixed $command
+         * @return mixed 
+         * @static 
+         */
+        public static function dispatchNow($command){
+            return \Illuminate\Bus\Dispatcher::dispatchNow($command);
+        }
+        
+        /**
+         * Dispatch a command to its appropriate handler behind a queue.
+         *
+         * @param mixed $command
+         * @return mixed 
+         * @throws \RuntimeException
+         * @static 
+         */
+        public static function dispatchToQueue($command){
+            return \Illuminate\Bus\Dispatcher::dispatchToQueue($command);
+        }
+        
+        /**
+         * Set the pipes through which commands should be piped before dispatching.
+         *
+         * @param array $pipes
+         * @return $this 
+         * @static 
+         */
+        public static function pipeThrough($pipes){
+            return \Illuminate\Bus\Dispatcher::pipeThrough($pipes);
+        }
+        
+    }
+
+
     class Cache extends \Illuminate\Support\Facades\Cache{
         
         /**
