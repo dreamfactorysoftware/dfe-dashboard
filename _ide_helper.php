@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.1.29 (LTS) on 2016-02-04.
+ * Generated for Laravel 5.2.22 on 2016-03-08.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -492,7 +492,7 @@ namespace {
         }
         
         /**
-         * Get the path to the cached services.json file.
+         * Get the path to the cached services.php file.
          *
          * @return string 
          * @static 
@@ -783,20 +783,6 @@ namespace {
         public static function share($closure){
             //Method inherited from \Illuminate\Container\Container            
             return \Illuminate\Foundation\Application::share($closure);
-        }
-        
-        /**
-         * Bind a shared Closure into the container.
-         *
-         * @param string $abstract
-         * @param \Closure $closure
-         * @return void 
-         * @deprecated since version 5.1. Use singleton instead.
-         * @static 
-         */
-        public static function bindShared($abstract, $closure){
-            //Method inherited from \Illuminate\Container\Container            
-            \Illuminate\Foundation\Application::bindShared($abstract, $closure);
         }
         
         /**
@@ -1172,23 +1158,38 @@ namespace {
     class Auth extends \Illuminate\Support\Facades\Auth{
         
         /**
-         * Create an instance of the database driver.
+         * Attempt to get the guard from the local cache.
          *
-         * @return \Illuminate\Auth\Guard 
+         * @param string $name
+         * @return \Illuminate\Contracts\Auth\Guard|\Illuminate\Contracts\Auth\StatefulGuard 
          * @static 
          */
-        public static function createDatabaseDriver(){
-            return \Illuminate\Auth\AuthManager::createDatabaseDriver();
+        public static function guard($name = null){
+            return \Illuminate\Auth\AuthManager::guard($name);
         }
         
         /**
-         * Create an instance of the Eloquent driver.
+         * Create a session based authentication guard.
          *
-         * @return \Illuminate\Auth\Guard 
+         * @param string $name
+         * @param array $config
+         * @return \Illuminate\Auth\SessionGuard 
          * @static 
          */
-        public static function createEloquentDriver(){
-            return \Illuminate\Auth\AuthManager::createEloquentDriver();
+        public static function createSessionDriver($name, $config){
+            return \Illuminate\Auth\AuthManager::createSessionDriver($name, $config);
+        }
+        
+        /**
+         * Create a token based authentication guard.
+         *
+         * @param string $name
+         * @param array $config
+         * @return \Illuminate\Auth\TokenGuard 
+         * @static 
+         */
+        public static function createTokenDriver($name, $config){
+            return \Illuminate\Auth\AuthManager::createTokenDriver($name, $config);
         }
         
         /**
@@ -1199,6 +1200,17 @@ namespace {
          */
         public static function getDefaultDriver(){
             return \Illuminate\Auth\AuthManager::getDefaultDriver();
+        }
+        
+        /**
+         * Set the default guard driver the factory should serve.
+         *
+         * @param string $name
+         * @return void 
+         * @static 
+         */
+        public static function shouldUse($name){
+            \Illuminate\Auth\AuthManager::shouldUse($name);
         }
         
         /**
@@ -1213,15 +1225,36 @@ namespace {
         }
         
         /**
-         * Get a driver instance.
+         * Register a new callback based request guard.
          *
          * @param string $driver
-         * @return mixed 
+         * @param callable $callback
+         * @return $this 
          * @static 
          */
-        public static function driver($driver = null){
-            //Method inherited from \Illuminate\Support\Manager            
-            return \Illuminate\Auth\AuthManager::driver($driver);
+        public static function viaRequest($driver, $callback){
+            return \Illuminate\Auth\AuthManager::viaRequest($driver, $callback);
+        }
+        
+        /**
+         * Get the user resolver callback.
+         *
+         * @return \Closure 
+         * @static 
+         */
+        public static function userResolver(){
+            return \Illuminate\Auth\AuthManager::userResolver();
+        }
+        
+        /**
+         * Set the callback to be used to resolve users.
+         *
+         * @param \Closure $userResolver
+         * @return $this 
+         * @static 
+         */
+        public static function resolveUsersUsing($userResolver){
+            return \Illuminate\Auth\AuthManager::resolveUsersUsing($userResolver);
         }
         
         /**
@@ -1233,49 +1266,41 @@ namespace {
          * @static 
          */
         public static function extend($driver, $callback){
-            //Method inherited from \Illuminate\Support\Manager            
             return \Illuminate\Auth\AuthManager::extend($driver, $callback);
         }
         
         /**
-         * Get all of the created "drivers".
+         * Register a custom provider creator Closure.
          *
-         * @return array 
+         * @param string $name
+         * @param \Closure $callback
+         * @return $this 
          * @static 
          */
-        public static function getDrivers(){
-            //Method inherited from \Illuminate\Support\Manager            
-            return \Illuminate\Auth\AuthManager::getDrivers();
+        public static function provider($name, $callback){
+            return \Illuminate\Auth\AuthManager::provider($name, $callback);
         }
         
         /**
-         * Determine if the current user is authenticated.
+         * Create the user provider implementation for the driver.
          *
-         * @return bool 
+         * @param string $provider
+         * @return \Illuminate\Contracts\Auth\UserProvider 
+         * @throws \InvalidArgumentException
          * @static 
          */
-        public static function check(){
-            return \Illuminate\Auth\Guard::check();
-        }
-        
-        /**
-         * Determine if the current user is a guest.
-         *
-         * @return bool 
-         * @static 
-         */
-        public static function guest(){
-            return \Illuminate\Auth\Guard::guest();
+        public static function createUserProvider($provider){
+            return \Illuminate\Auth\AuthManager::createUserProvider($provider);
         }
         
         /**
          * Get the currently authenticated user.
          *
-         * @return \DreamFactory\Enterprise\Database\Models\User|null 
+         * @return \App\User|null 
          * @static 
          */
         public static function user(){
-            return \Illuminate\Auth\Guard::user();
+            return \Illuminate\Auth\SessionGuard::user();
         }
         
         /**
@@ -1285,7 +1310,7 @@ namespace {
          * @static 
          */
         public static function id(){
-            return \Illuminate\Auth\Guard::id();
+            return \Illuminate\Auth\SessionGuard::id();
         }
         
         /**
@@ -1296,7 +1321,7 @@ namespace {
          * @static 
          */
         public static function once($credentials = array()){
-            return \Illuminate\Auth\Guard::once($credentials);
+            return \Illuminate\Auth\SessionGuard::once($credentials);
         }
         
         /**
@@ -1307,29 +1332,31 @@ namespace {
          * @static 
          */
         public static function validate($credentials = array()){
-            return \Illuminate\Auth\Guard::validate($credentials);
+            return \Illuminate\Auth\SessionGuard::validate($credentials);
         }
         
         /**
          * Attempt to authenticate using HTTP Basic Auth.
          *
          * @param string $field
+         * @param array $extraConditions
          * @return \Symfony\Component\HttpFoundation\Response|null 
          * @static 
          */
-        public static function basic($field = 'email'){
-            return \Illuminate\Auth\Guard::basic($field);
+        public static function basic($field = 'email', $extraConditions = array()){
+            return \Illuminate\Auth\SessionGuard::basic($field, $extraConditions);
         }
         
         /**
          * Perform a stateless HTTP Basic login attempt.
          *
          * @param string $field
+         * @param array $extraConditions
          * @return \Symfony\Component\HttpFoundation\Response|null 
          * @static 
          */
-        public static function onceBasic($field = 'email'){
-            return \Illuminate\Auth\Guard::onceBasic($field);
+        public static function onceBasic($field = 'email', $extraConditions = array()){
+            return \Illuminate\Auth\SessionGuard::onceBasic($field, $extraConditions);
         }
         
         /**
@@ -1342,7 +1369,7 @@ namespace {
          * @static 
          */
         public static function attempt($credentials = array(), $remember = false, $login = true){
-            return \Illuminate\Auth\Guard::attempt($credentials, $remember, $login);
+            return \Illuminate\Auth\SessionGuard::attempt($credentials, $remember, $login);
         }
         
         /**
@@ -1353,7 +1380,7 @@ namespace {
          * @static 
          */
         public static function attempting($callback){
-            \Illuminate\Auth\Guard::attempting($callback);
+            \Illuminate\Auth\SessionGuard::attempting($callback);
         }
         
         /**
@@ -1365,7 +1392,7 @@ namespace {
          * @static 
          */
         public static function login($user, $remember = false){
-            \Illuminate\Auth\Guard::login($user, $remember);
+            \Illuminate\Auth\SessionGuard::login($user, $remember);
         }
         
         /**
@@ -1373,11 +1400,11 @@ namespace {
          *
          * @param mixed $id
          * @param bool $remember
-         * @return \DreamFactory\Enterprise\Database\Models\User 
+         * @return \App\User 
          * @static 
          */
         public static function loginUsingId($id, $remember = false){
-            return \Illuminate\Auth\Guard::loginUsingId($id, $remember);
+            return \Illuminate\Auth\SessionGuard::loginUsingId($id, $remember);
         }
         
         /**
@@ -1388,7 +1415,7 @@ namespace {
          * @static 
          */
         public static function onceUsingId($id){
-            return \Illuminate\Auth\Guard::onceUsingId($id);
+            return \Illuminate\Auth\SessionGuard::onceUsingId($id);
         }
         
         /**
@@ -1398,7 +1425,7 @@ namespace {
          * @static 
          */
         public static function logout(){
-            \Illuminate\Auth\Guard::logout();
+            \Illuminate\Auth\SessionGuard::logout();
         }
         
         /**
@@ -1409,7 +1436,7 @@ namespace {
          * @static 
          */
         public static function getCookieJar(){
-            return \Illuminate\Auth\Guard::getCookieJar();
+            return \Illuminate\Auth\SessionGuard::getCookieJar();
         }
         
         /**
@@ -1420,7 +1447,7 @@ namespace {
          * @static 
          */
         public static function setCookieJar($cookie){
-            \Illuminate\Auth\Guard::setCookieJar($cookie);
+            \Illuminate\Auth\SessionGuard::setCookieJar($cookie);
         }
         
         /**
@@ -1430,7 +1457,7 @@ namespace {
          * @static 
          */
         public static function getDispatcher(){
-            return \Illuminate\Auth\Guard::getDispatcher();
+            return \Illuminate\Auth\SessionGuard::getDispatcher();
         }
         
         /**
@@ -1441,7 +1468,7 @@ namespace {
          * @static 
          */
         public static function setDispatcher($events){
-            \Illuminate\Auth\Guard::setDispatcher($events);
+            \Illuminate\Auth\SessionGuard::setDispatcher($events);
         }
         
         /**
@@ -1451,7 +1478,7 @@ namespace {
          * @static 
          */
         public static function getSession(){
-            return \Illuminate\Auth\Guard::getSession();
+            return \Illuminate\Auth\SessionGuard::getSession();
         }
         
         /**
@@ -1461,7 +1488,7 @@ namespace {
          * @static 
          */
         public static function getProvider(){
-            return \Illuminate\Auth\Guard::getProvider();
+            return \Illuminate\Auth\SessionGuard::getProvider();
         }
         
         /**
@@ -1472,17 +1499,17 @@ namespace {
          * @static 
          */
         public static function setProvider($provider){
-            \Illuminate\Auth\Guard::setProvider($provider);
+            \Illuminate\Auth\SessionGuard::setProvider($provider);
         }
         
         /**
          * Return the currently cached user.
          *
-         * @return \DreamFactory\Enterprise\Database\Models\User|null 
+         * @return \App\User|null 
          * @static 
          */
         public static function getUser(){
-            return \Illuminate\Auth\Guard::getUser();
+            return \Illuminate\Auth\SessionGuard::getUser();
         }
         
         /**
@@ -1493,7 +1520,7 @@ namespace {
          * @static 
          */
         public static function setUser($user){
-            \Illuminate\Auth\Guard::setUser($user);
+            \Illuminate\Auth\SessionGuard::setUser($user);
         }
         
         /**
@@ -1503,7 +1530,7 @@ namespace {
          * @static 
          */
         public static function getRequest(){
-            return \Illuminate\Auth\Guard::getRequest();
+            return \Illuminate\Auth\SessionGuard::getRequest();
         }
         
         /**
@@ -1514,17 +1541,17 @@ namespace {
          * @static 
          */
         public static function setRequest($request){
-            return \Illuminate\Auth\Guard::setRequest($request);
+            return \Illuminate\Auth\SessionGuard::setRequest($request);
         }
         
         /**
          * Get the last user we attempted to authenticate.
          *
-         * @return \DreamFactory\Enterprise\Database\Models\User 
+         * @return \App\User 
          * @static 
          */
         public static function getLastAttempted(){
-            return \Illuminate\Auth\Guard::getLastAttempted();
+            return \Illuminate\Auth\SessionGuard::getLastAttempted();
         }
         
         /**
@@ -1534,7 +1561,7 @@ namespace {
          * @static 
          */
         public static function getName(){
-            return \Illuminate\Auth\Guard::getName();
+            return \Illuminate\Auth\SessionGuard::getName();
         }
         
         /**
@@ -1544,7 +1571,7 @@ namespace {
          * @static 
          */
         public static function getRecallerName(){
-            return \Illuminate\Auth\Guard::getRecallerName();
+            return \Illuminate\Auth\SessionGuard::getRecallerName();
         }
         
         /**
@@ -1554,7 +1581,27 @@ namespace {
          * @static 
          */
         public static function viaRemember(){
-            return \Illuminate\Auth\Guard::viaRemember();
+            return \Illuminate\Auth\SessionGuard::viaRemember();
+        }
+        
+        /**
+         * Determine if the current user is authenticated.
+         *
+         * @return bool 
+         * @static 
+         */
+        public static function check(){
+            return \Illuminate\Auth\SessionGuard::check();
+        }
+        
+        /**
+         * Determine if the current user is a guest.
+         *
+         * @return bool 
+         * @static 
+         */
+        public static function guest(){
+            return \Illuminate\Auth\SessionGuard::guest();
         }
         
     }
@@ -1767,52 +1814,25 @@ namespace {
     class Bus extends \Illuminate\Support\Facades\Bus{
         
         /**
-         * Marshal a command and dispatch it to its appropriate handler.
-         *
-         * @param mixed $command
-         * @param array $array
-         * @return mixed 
-         * @static 
-         */
-        public static function dispatchFromArray($command, $array){
-            return \Illuminate\Bus\Dispatcher::dispatchFromArray($command, $array);
-        }
-        
-        /**
-         * Marshal a command and dispatch it to its appropriate handler.
-         *
-         * @param mixed $command
-         * @param \ArrayAccess $source
-         * @param array $extras
-         * @return mixed 
-         * @static 
-         */
-        public static function dispatchFrom($command, $source, $extras = array()){
-            return \Illuminate\Bus\Dispatcher::dispatchFrom($command, $source, $extras);
-        }
-        
-        /**
          * Dispatch a command to its appropriate handler.
          *
          * @param mixed $command
-         * @param \Closure|null $afterResolving
          * @return mixed 
          * @static 
          */
-        public static function dispatch($command, $afterResolving = null){
-            return \Illuminate\Bus\Dispatcher::dispatch($command, $afterResolving);
+        public static function dispatch($command){
+            return \Illuminate\Bus\Dispatcher::dispatch($command);
         }
         
         /**
          * Dispatch a command to its appropriate handler in the current process.
          *
          * @param mixed $command
-         * @param \Closure|null $afterResolving
          * @return mixed 
          * @static 
          */
-        public static function dispatchNow($command, $afterResolving = null){
-            return \Illuminate\Bus\Dispatcher::dispatchNow($command, $afterResolving);
+        public static function dispatchNow($command){
+            return \Illuminate\Bus\Dispatcher::dispatchNow($command);
         }
         
         /**
@@ -1825,74 +1845,6 @@ namespace {
          */
         public static function dispatchToQueue($command){
             return \Illuminate\Bus\Dispatcher::dispatchToQueue($command);
-        }
-        
-        /**
-         * Get the handler instance for the given command.
-         *
-         * @param mixed $command
-         * @return mixed 
-         * @static 
-         */
-        public static function resolveHandler($command){
-            return \Illuminate\Bus\Dispatcher::resolveHandler($command);
-        }
-        
-        /**
-         * Get the handler class for the given command.
-         *
-         * @param mixed $command
-         * @return string 
-         * @static 
-         */
-        public static function getHandlerClass($command){
-            return \Illuminate\Bus\Dispatcher::getHandlerClass($command);
-        }
-        
-        /**
-         * Get the handler method for the given command.
-         *
-         * @param mixed $command
-         * @return string 
-         * @static 
-         */
-        public static function getHandlerMethod($command){
-            return \Illuminate\Bus\Dispatcher::getHandlerMethod($command);
-        }
-        
-        /**
-         * Register command-to-handler mappings.
-         *
-         * @param array $commands
-         * @return void 
-         * @static 
-         */
-        public static function maps($commands){
-            \Illuminate\Bus\Dispatcher::maps($commands);
-        }
-        
-        /**
-         * Register a fallback mapper callback.
-         *
-         * @param \Closure $mapper
-         * @return void 
-         * @static 
-         */
-        public static function mapUsing($mapper){
-            \Illuminate\Bus\Dispatcher::mapUsing($mapper);
-        }
-        
-        /**
-         * Map the command to a handler within a given root namespace.
-         *
-         * @param mixed $command
-         * @param string $commandNamespace
-         * @param string $handlerNamespace
-         * @return string 
-         * @static 
-         */
-        public static function simpleMapping($command, $commandNamespace, $handlerNamespace){
-            return \Illuminate\Bus\Dispatcher::simpleMapping($command, $commandNamespace, $handlerNamespace);
         }
         
         /**
@@ -2012,6 +1964,19 @@ namespace {
         }
         
         /**
+         * Retrieve multiple items from the cache by key.
+         * 
+         * Items not found in the cache will have a null value.
+         *
+         * @param array $keys
+         * @return array 
+         * @static 
+         */
+        public static function many($keys){
+            return \Illuminate\Cache\Repository::many($keys);
+        }
+        
+        /**
          * Retrieve an item from the cache and delete it.
          *
          * @param string $key
@@ -2032,8 +1997,20 @@ namespace {
          * @return void 
          * @static 
          */
-        public static function put($key, $value, $minutes){
+        public static function put($key, $value, $minutes = null){
             \Illuminate\Cache\Repository::put($key, $value, $minutes);
+        }
+        
+        /**
+         * Store multiple items in the cache for a given number of minutes.
+         *
+         * @param array $values
+         * @param int $minutes
+         * @return void 
+         * @static 
+         */
+        public static function putMany($values, $minutes){
+            \Illuminate\Cache\Repository::putMany($values, $minutes);
         }
         
         /**
@@ -2107,18 +2084,6 @@ namespace {
          */
         public static function forget($key){
             return \Illuminate\Cache\Repository::forget($key);
-        }
-        
-        /**
-         * Begin executing a new tags operation if the store supports it.
-         *
-         * @param string $name
-         * @return \Illuminate\Cache\TaggedCache 
-         * @deprecated since version 5.1. Use tags instead.
-         * @static 
-         */
-        public static function section($name){
-            return \Illuminate\Cache\Repository::section($name);
         }
         
         /**
@@ -2659,6 +2624,26 @@ namespace {
         }
         
         /**
+         * Get all of the support drivers.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function supportedDrivers(){
+            return \Illuminate\Database\DatabaseManager::supportedDrivers();
+        }
+        
+        /**
+         * Get all of the drivers that are actually available.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function availableDrivers(){
+            return \Illuminate\Database\DatabaseManager::availableDrivers();
+        }
+        
+        /**
          * Register an extension connection resolver.
          *
          * @param string $name
@@ -2892,7 +2877,7 @@ namespace {
          *
          * @param \Closure $callback
          * @return mixed 
-         * @throws \Throwable
+         * @throws \Exception|\Throwable
          * @static 
          */
         public static function transaction($callback){
@@ -3055,6 +3040,7 @@ namespace {
          *
          * @param \PDO|null $pdo
          * @return $this 
+         * @throws \RuntimeException
          * @static 
          */
         public static function setPdo($pdo){
@@ -3235,15 +3221,39 @@ namespace {
         }
         
         /**
-         * Set the default fetch mode for the connection.
+         * Get the fetch argument to be applied when selecting.
+         *
+         * @return mixed 
+         * @static 
+         */
+        public static function getFetchArgument(){
+            //Method inherited from \Illuminate\Database\Connection            
+            return \Illuminate\Database\MySqlConnection::getFetchArgument();
+        }
+        
+        /**
+         * Get custom constructor arguments for the PDO::FETCH_CLASS fetch mode.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function getFetchConstructorArgument(){
+            //Method inherited from \Illuminate\Database\Connection            
+            return \Illuminate\Database\MySqlConnection::getFetchConstructorArgument();
+        }
+        
+        /**
+         * Set the default fetch mode for the connection, and optional arguments for the given fetch mode.
          *
          * @param int $fetchMode
+         * @param mixed $fetchArgument
+         * @param array $fetchConstructorArgument
          * @return int 
          * @static 
          */
-        public static function setFetchMode($fetchMode){
+        public static function setFetchMode($fetchMode, $fetchArgument = null, $fetchConstructorArgument = array()){
             //Method inherited from \Illuminate\Database\Connection            
-            return \Illuminate\Database\MySqlConnection::setFetchMode($fetchMode);
+            return \Illuminate\Database\MySqlConnection::setFetchMode($fetchMode, $fetchArgument, $fetchConstructorArgument);
         }
         
         /**
@@ -3365,6 +3375,40 @@ namespace {
     class Eloquent extends \Illuminate\Database\Eloquent\Model{
         
         /**
+         * Register a new global scope.
+         *
+         * @param string $identifier
+         * @param \Illuminate\Database\Eloquent\Scope|\Closure $scope
+         * @return $this 
+         * @static 
+         */
+        public static function withGlobalScope($identifier, $scope){
+            return \Illuminate\Database\Eloquent\Builder::withGlobalScope($identifier, $scope);
+        }
+        
+        /**
+         * Remove a registered global scope.
+         *
+         * @param \Illuminate\Database\Eloquent\Scope|string $scope
+         * @return $this 
+         * @static 
+         */
+        public static function withoutGlobalScope($scope){
+            return \Illuminate\Database\Eloquent\Builder::withoutGlobalScope($scope);
+        }
+        
+        /**
+         * Remove all or passed registered global scopes.
+         *
+         * @param array|null $scopes
+         * @return $this 
+         * @static 
+         */
+        public static function withoutGlobalScopes($scopes = null){
+            return \Illuminate\Database\Eloquent\Builder::withoutGlobalScopes($scopes);
+        }
+        
+        /**
          * Find a model by its primary key.
          *
          * @param mixed $id
@@ -3399,6 +3443,52 @@ namespace {
          */
         public static function findOrFail($id, $columns = array()){
             return \Illuminate\Database\Eloquent\Builder::findOrFail($id, $columns);
+        }
+        
+        /**
+         * Find a model by its primary key or return fresh model instance.
+         *
+         * @param mixed $id
+         * @param array $columns
+         * @return \Illuminate\Database\Eloquent\Model 
+         * @static 
+         */
+        public static function findOrNew($id, $columns = array()){
+            return \Illuminate\Database\Eloquent\Builder::findOrNew($id, $columns);
+        }
+        
+        /**
+         * Get the first record matching the attributes or instantiate it.
+         *
+         * @param array $attributes
+         * @return \Illuminate\Database\Eloquent\Model 
+         * @static 
+         */
+        public static function firstOrNew($attributes){
+            return \Illuminate\Database\Eloquent\Builder::firstOrNew($attributes);
+        }
+        
+        /**
+         * Get the first record matching the attributes or create it.
+         *
+         * @param array $attributes
+         * @return \Illuminate\Database\Eloquent\Model 
+         * @static 
+         */
+        public static function firstOrCreate($attributes){
+            return \Illuminate\Database\Eloquent\Builder::firstOrCreate($attributes);
+        }
+        
+        /**
+         * Create or update a record matching the attributes, and fill it with values.
+         *
+         * @param array $attributes
+         * @param array $values
+         * @return \Illuminate\Database\Eloquent\Model 
+         * @static 
+         */
+        public static function updateOrCreate($attributes, $values = array()){
+            return \Illuminate\Database\Eloquent\Builder::updateOrCreate($attributes, $values);
         }
         
         /**
@@ -3447,20 +3537,6 @@ namespace {
         }
         
         /**
-         * Get a single column's value from the first result of a query.
-         * 
-         * This is an alias for the "value" method.
-         *
-         * @param string $column
-         * @return mixed 
-         * @deprecated since version 5.1.
-         * @static 
-         */
-        public static function pluck($column){
-            return \Illuminate\Database\Eloquent\Builder::pluck($column);
-        }
-        
-        /**
          * Chunk the results of the query.
          *
          * @param int $count
@@ -3473,11 +3549,36 @@ namespace {
         }
         
         /**
+         * Execute a callback over each item while chunking.
+         *
+         * @param callable $callback
+         * @param int $count
+         * @return bool 
+         * @static 
+         */
+        public static function each($callback, $count = 1000){
+            return \Illuminate\Database\Eloquent\Builder::each($callback, $count);
+        }
+        
+        /**
          * Get an array with the values of a given column.
          *
          * @param string $column
          * @param string|null $key
          * @return \Illuminate\Support\Collection 
+         * @static 
+         */
+        public static function pluck($column, $key = null){
+            return \Illuminate\Database\Eloquent\Builder::pluck($column, $key);
+        }
+        
+        /**
+         * Alias for the "pluck" method.
+         *
+         * @param string $column
+         * @param string $key
+         * @return \Illuminate\Support\Collection 
+         * @deprecated since version 5.2. Use the "pluck" method directly.
          * @static 
          */
         public static function lists($column, $key = null){
@@ -3573,7 +3674,7 @@ namespace {
         }
         
         /**
-         * Add a relationship count condition to the query.
+         * Add a relationship count / exists condition to the query.
          *
          * @param string $relation
          * @param string $operator
@@ -3588,7 +3689,7 @@ namespace {
         }
         
         /**
-         * Add a relationship count condition to the query.
+         * Add a relationship count / exists condition to the query.
          *
          * @param string $relation
          * @param string $boolean
@@ -3601,7 +3702,7 @@ namespace {
         }
         
         /**
-         * Add a relationship count condition to the query with where clauses.
+         * Add a relationship count / exists condition to the query with where clauses.
          *
          * @param string $relation
          * @param \Closure $callback
@@ -3615,7 +3716,7 @@ namespace {
         }
         
         /**
-         * Add a relationship count condition to the query with where clauses.
+         * Add a relationship count / exists condition to the query with where clauses.
          *
          * @param string $relation
          * @param \Closure|null $callback
@@ -3627,7 +3728,7 @@ namespace {
         }
         
         /**
-         * Add a relationship count condition to the query with an "or".
+         * Add a relationship count / exists condition to the query with an "or".
          *
          * @param string $relation
          * @param string $operator
@@ -3640,7 +3741,7 @@ namespace {
         }
         
         /**
-         * Add a relationship count condition to the query with where clauses and an "or".
+         * Add a relationship count / exists condition to the query with where clauses and an "or".
          *
          * @param string $relation
          * @param \Closure $callback
@@ -3654,6 +3755,16 @@ namespace {
         }
         
         /**
+         * Apply the scopes to the Eloquent builder instance and return it.
+         *
+         * @return \Illuminate\Database\Eloquent\Builder|static 
+         * @static 
+         */
+        public static function applyScopes(){
+            return \Illuminate\Database\Eloquent\Builder::applyScopes();
+        }
+        
+        /**
          * Get the underlying query builder instance.
          *
          * @return \Illuminate\Database\Query\Builder|static 
@@ -3661,6 +3772,16 @@ namespace {
          */
         public static function getQuery(){
             return \Illuminate\Database\Eloquent\Builder::getQuery();
+        }
+        
+        /**
+         * Get a base query builder instance.
+         *
+         * @return \Illuminate\Database\Query\Builder 
+         * @static 
+         */
+        public static function toBase(){
+            return \Illuminate\Database\Eloquent\Builder::toBase();
         }
         
         /**
@@ -3768,6 +3889,7 @@ namespace {
          * @param \Closure|\Illuminate\Database\Query\Builder|string $query
          * @param string $as
          * @return \Illuminate\Database\Query\Builder|static 
+         * @throws \InvalidArgumentException
          * @static 
          */
         public static function selectSub($query, $as){
@@ -3982,6 +4104,16 @@ namespace {
         }
         
         /**
+         * Create a new query instance for nested where condition.
+         *
+         * @return \Illuminate\Database\Query\Builder 
+         * @static 
+         */
+        public static function forNestedWhere(){
+            return \Illuminate\Database\Query\Builder::forNestedWhere();
+        }
+        
+        /**
          * Add another query builder as a nested where to the query builder.
          *
          * @param \Illuminate\Database\Query\Builder|static $query
@@ -4039,6 +4171,19 @@ namespace {
          */
         public static function orWhereNotExists($callback){
             return \Illuminate\Database\Query\Builder::orWhereNotExists($callback);
+        }
+        
+        /**
+         * Add an exists clause to the query.
+         *
+         * @param \Illuminate\Database\Query\Builder $query
+         * @param string $boolean
+         * @param bool $not
+         * @return $this 
+         * @static 
+         */
+        public static function addWhereExistsQuery($query, $boolean = 'and', $not = false){
+            return \Illuminate\Database\Query\Builder::addWhereExistsQuery($query, $boolean, $not);
         }
         
         /**
@@ -4151,6 +4296,19 @@ namespace {
          */
         public static function whereDate($column, $operator, $value, $boolean = 'and'){
             return \Illuminate\Database\Query\Builder::whereDate($column, $operator, $value, $boolean);
+        }
+        
+        /**
+         * Add an "or where date" statement to the query.
+         *
+         * @param string $column
+         * @param string $operator
+         * @param int $value
+         * @return \Illuminate\Database\Query\Builder|static 
+         * @static 
+         */
+        public static function orWhereDate($column, $operator, $value){
+            return \Illuminate\Database\Query\Builder::orWhereDate($column, $operator, $value);
         }
         
         /**
@@ -4434,18 +4592,6 @@ namespace {
          */
         public static function toSql(){
             return \Illuminate\Database\Query\Builder::toSql();
-        }
-        
-        /**
-         * Execute the query as a fresh "select" statement.
-         *
-         * @param array $columns
-         * @return array|static[] 
-         * @deprecated since version 5.1. Use get instead.
-         * @static 
-         */
-        public static function getFresh($columns = array()){
-            return \Illuminate\Database\Query\Builder::getFresh($columns);
         }
         
         /**
@@ -5234,6 +5380,152 @@ namespace {
     }
 
 
+    class Gate extends \Illuminate\Support\Facades\Gate{
+        
+        /**
+         * Determine if a given ability has been defined.
+         *
+         * @param string $ability
+         * @return bool 
+         * @static 
+         */
+        public static function has($ability){
+            return \Illuminate\Auth\Access\Gate::has($ability);
+        }
+        
+        /**
+         * Define a new ability.
+         *
+         * @param string $ability
+         * @param callable|string $callback
+         * @return $this 
+         * @throws \InvalidArgumentException
+         * @static 
+         */
+        public static function define($ability, $callback){
+            return \Illuminate\Auth\Access\Gate::define($ability, $callback);
+        }
+        
+        /**
+         * Define a policy class for a given class type.
+         *
+         * @param string $class
+         * @param string $policy
+         * @return $this 
+         * @static 
+         */
+        public static function policy($class, $policy){
+            return \Illuminate\Auth\Access\Gate::policy($class, $policy);
+        }
+        
+        /**
+         * Register a callback to run before all Gate checks.
+         *
+         * @param callable $callback
+         * @return $this 
+         * @static 
+         */
+        public static function before($callback){
+            return \Illuminate\Auth\Access\Gate::before($callback);
+        }
+        
+        /**
+         * Register a callback to run after all Gate checks.
+         *
+         * @param callable $callback
+         * @return $this 
+         * @static 
+         */
+        public static function after($callback){
+            return \Illuminate\Auth\Access\Gate::after($callback);
+        }
+        
+        /**
+         * Determine if the given ability should be granted for the current user.
+         *
+         * @param string $ability
+         * @param array|mixed $arguments
+         * @return bool 
+         * @static 
+         */
+        public static function allows($ability, $arguments = array()){
+            return \Illuminate\Auth\Access\Gate::allows($ability, $arguments);
+        }
+        
+        /**
+         * Determine if the given ability should be denied for the current user.
+         *
+         * @param string $ability
+         * @param array|mixed $arguments
+         * @return bool 
+         * @static 
+         */
+        public static function denies($ability, $arguments = array()){
+            return \Illuminate\Auth\Access\Gate::denies($ability, $arguments);
+        }
+        
+        /**
+         * Determine if the given ability should be granted for the current user.
+         *
+         * @param string $ability
+         * @param array|mixed $arguments
+         * @return bool 
+         * @static 
+         */
+        public static function check($ability, $arguments = array()){
+            return \Illuminate\Auth\Access\Gate::check($ability, $arguments);
+        }
+        
+        /**
+         * Determine if the given ability should be granted for the current user.
+         *
+         * @param string $ability
+         * @param array|mixed $arguments
+         * @return \Illuminate\Auth\Access\Response 
+         * @throws \Illuminate\Auth\Access\AuthorizationException
+         * @static 
+         */
+        public static function authorize($ability, $arguments = array()){
+            return \Illuminate\Auth\Access\Gate::authorize($ability, $arguments);
+        }
+        
+        /**
+         * Get a policy instance for a given class.
+         *
+         * @param object|string $class
+         * @return mixed 
+         * @throws \InvalidArgumentException
+         * @static 
+         */
+        public static function getPolicyFor($class){
+            return \Illuminate\Auth\Access\Gate::getPolicyFor($class);
+        }
+        
+        /**
+         * Build a policy class instance of the given type.
+         *
+         * @param object|string $class
+         * @return mixed 
+         * @static 
+         */
+        public static function resolvePolicy($class){
+            return \Illuminate\Auth\Access\Gate::resolvePolicy($class);
+        }
+        
+        /**
+         * Get a guard instance for the given user.
+         *
+         * @param \Illuminate\Contracts\Auth\Authenticatable|mixed $user
+         * @return static 
+         * @static 
+         */
+        public static function forUser($user){
+            return \Illuminate\Auth\Access\Gate::forUser($user);
+        }
+        
+    }
+
+
     class Hash extends \Illuminate\Support\Facades\Hash{
         
         /**
@@ -5351,6 +5643,17 @@ namespace {
         }
         
         /**
+         * Get the full URL for the request with the added query string parameters.
+         *
+         * @param array $query
+         * @return string 
+         * @static 
+         */
+        public static function fullUrlWithQuery($query){
+            return \Illuminate\Http\Request::fullUrlWithQuery($query);
+        }
+        
+        /**
          * Get the current path info for the request.
          *
          * @return string 
@@ -5401,6 +5704,17 @@ namespace {
          */
         public static function is(){
             return \Illuminate\Http\Request::is();
+        }
+        
+        /**
+         * Determine if the current request URL and query string matches a pattern.
+         *
+         * @param mixed  string
+         * @return bool 
+         * @static 
+         */
+        public static function fullUrlIs(){
+            return \Illuminate\Http\Request::fullUrlIs();
         }
         
         /**
@@ -5500,7 +5814,7 @@ namespace {
         /**
          * Get a subset of the items from the input data.
          *
-         * @param array $keys
+         * @param array|mixed $keys
          * @return array 
          * @static 
          */
@@ -5552,6 +5866,16 @@ namespace {
          */
         public static function cookie($key = null, $default = null){
             return \Illuminate\Http\Request::cookie($key, $default);
+        }
+        
+        /**
+         * Get an array of all of the files on the request.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function allFiles(){
+            return \Illuminate\Http\Request::allFiles();
         }
         
         /**
@@ -5777,6 +6101,16 @@ namespace {
         }
         
         /**
+         * Get the bearer token from the request headers.
+         *
+         * @return string|null 
+         * @static 
+         */
+        public static function bearerToken(){
+            return \Illuminate\Http\Request::bearerToken();
+        }
+        
+        /**
          * Create an Illuminate request from a Symfony instance.
          *
          * @param \Symfony\Component\HttpFoundation\Request $request
@@ -5817,11 +6151,12 @@ namespace {
         /**
          * Get the user making the request.
          *
+         * @param string|null $guard
          * @return mixed 
          * @static 
          */
-        public static function user(){
-            return \Illuminate\Http\Request::user();
+        public static function user($guard = null){
+            return \Illuminate\Http\Request::user($guard);
         }
         
         /**
@@ -5833,6 +6168,17 @@ namespace {
          */
         public static function route($param = null){
             return \Illuminate\Http\Request::route($param);
+        }
+        
+        /**
+         * Get a unique fingerprint for the request / route / IP address.
+         *
+         * @return string 
+         * @throws \RuntimeException
+         * @static 
+         */
+        public static function fingerprint(){
+            return \Illuminate\Http\Request::fingerprint();
         }
         
         /**
@@ -5875,6 +6221,16 @@ namespace {
          */
         public static function setRouteResolver($callback){
             return \Illuminate\Http\Request::setRouteResolver($callback);
+        }
+        
+        /**
+         * Get all of the input and files for the request.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function toArray(){
+            return \Illuminate\Http\Request::toArray();
         }
         
         /**
@@ -6129,29 +6485,22 @@ namespace {
         }
         
         /**
-         * Gets a "parameter" value.
+         * Gets a "parameter" value from any bag.
          * 
-         * This method is mainly useful for libraries that want to provide some flexibility.
+         * This method is mainly useful for libraries that want to provide some flexibility. If you don't need the
+         * flexibility in controllers, it is better to explicitly get request parameters from the appropriate
+         * public property instead (attributes, query, request).
          * 
-         * Order of precedence: GET, PATH, POST
-         * 
-         * Avoid using this method in controllers:
-         * 
-         *  * slow
-         *  * prefer to get from a "named" source
-         * 
-         * It is better to explicitly get request parameters from the appropriate
-         * public property instead (query, attributes, request).
+         * Order of precedence: PATH (routing placeholders or custom attributes), GET, BODY
          *
          * @param string $key the key
          * @param mixed $default the default value
-         * @param bool $deep is parameter deep in multidimensional array
          * @return mixed 
          * @static 
          */
-        public static function get($key, $default = null, $deep = false){
+        public static function get($key, $default = null){
             //Method inherited from \Symfony\Component\HttpFoundation\Request            
-            return \Illuminate\Http\Request::get($key, $default, $deep);
+            return \Illuminate\Http\Request::get($key, $default);
         }
         
         /**
@@ -6804,6 +7153,29 @@ namespace {
             return \Illuminate\Http\Request::isXmlHttpRequest();
         }
         
+        /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param callable $macro
+         * @return void 
+         * @static 
+         */
+        public static function macro($name, $macro){
+            \Illuminate\Http\Request::macro($name, $macro);
+        }
+        
+        /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */
+        public static function hasMacro($name){
+            return \Illuminate\Http\Request::hasMacro($name);
+        }
+        
     }
 
 
@@ -6846,7 +7218,7 @@ namespace {
          * @param array $replace
          * @param string|null $locale
          * @param bool $fallback
-         * @return string 
+         * @return string|array|null 
          * @static 
          */
         public static function get($key, $replace = array(), $locale = null, $fallback = true){
@@ -6857,7 +7229,7 @@ namespace {
          * Get a translation according to an integer value.
          *
          * @param string $key
-         * @param int $number
+         * @param int|array|\Countable $number
          * @param array $replace
          * @param string $locale
          * @return string 
@@ -6874,7 +7246,7 @@ namespace {
          * @param array $parameters
          * @param string $domain
          * @param string $locale
-         * @return string 
+         * @return string|array|null 
          * @static 
          */
         public static function trans($id, $parameters = array(), $domain = 'messages', $locale = null){
@@ -6885,7 +7257,7 @@ namespace {
          * Get a translation according to an integer value.
          *
          * @param string $id
-         * @param int $number
+         * @param int|array|\Countable $number
          * @param array $parameters
          * @param string $domain
          * @param string $locale
@@ -7281,11 +7653,11 @@ namespace {
          *
          * @param string $text
          * @param mixed $callback
-         * @return int 
+         * @return void 
          * @static 
          */
         public static function raw($text, $callback){
-            return \Illuminate\Mail\Mailer::raw($text, $callback);
+            \Illuminate\Mail\Mailer::raw($text, $callback);
         }
         
         /**
@@ -7294,11 +7666,11 @@ namespace {
          * @param string $view
          * @param array $data
          * @param mixed $callback
-         * @return int 
+         * @return void 
          * @static 
          */
         public static function plain($view, $data, $callback){
-            return \Illuminate\Mail\Mailer::plain($view, $data, $callback);
+            \Illuminate\Mail\Mailer::plain($view, $data, $callback);
         }
         
         /**
@@ -7401,27 +7773,6 @@ namespace {
         }
         
         /**
-         * Tell the mailer to not really send messages.
-         *
-         * @param bool $value
-         * @return void 
-         * @static 
-         */
-        public static function pretend($value = true){
-            \Illuminate\Mail\Mailer::pretend($value);
-        }
-        
-        /**
-         * Check if the mailer is pretending to send messages.
-         *
-         * @return bool 
-         * @static 
-         */
-        public static function isPretending(){
-            return \Illuminate\Mail\Mailer::isPretending();
-        }
-        
-        /**
          * Get the view factory instance.
          *
          * @return \Illuminate\Contracts\View\Factory 
@@ -7463,17 +7814,6 @@ namespace {
         }
         
         /**
-         * Set the log writer instance.
-         *
-         * @param \Psr\Log\LoggerInterface $logger
-         * @return $this 
-         * @static 
-         */
-        public static function setLogger($logger){
-            return \Illuminate\Mail\Mailer::setLogger($logger);
-        }
-        
-        /**
          * Set the queue manager instance.
          *
          * @param \Illuminate\Contracts\Queue\Queue $queue
@@ -7501,80 +7841,52 @@ namespace {
     class Password extends \Illuminate\Support\Facades\Password{
         
         /**
-         * Send a password reset link to a user.
+         * Attempt to get the broker from the local cache.
          *
-         * @param array $credentials
-         * @param \Closure|null $callback
+         * @param string $name
+         * @return \Illuminate\Contracts\Auth\PasswordBroker 
+         * @static 
+         */
+        public static function broker($name = null){
+            return \Illuminate\Auth\Passwords\PasswordBrokerManager::broker($name);
+        }
+        
+        /**
+         * Get the default password broker name.
+         *
          * @return string 
          * @static 
          */
-        public static function sendResetLink($credentials, $callback = null){
-            return \Illuminate\Auth\Passwords\PasswordBroker::sendResetLink($credentials, $callback);
+        public static function getDefaultDriver(){
+            return \Illuminate\Auth\Passwords\PasswordBrokerManager::getDefaultDriver();
         }
         
         /**
-         * Send the password reset link via e-mail.
+         * Set the default password broker name.
          *
-         * @param \Illuminate\Contracts\Auth\CanResetPassword $user
-         * @param string $token
-         * @param \Closure|null $callback
-         * @return int 
-         * @static 
-         */
-        public static function emailResetLink($user, $token, $callback = null){
-            return \Illuminate\Auth\Passwords\PasswordBroker::emailResetLink($user, $token, $callback);
-        }
-        
-        /**
-         * Reset the password for the given token.
-         *
-         * @param array $credentials
-         * @param \Closure $callback
-         * @return mixed 
-         * @static 
-         */
-        public static function reset($credentials, $callback){
-            return \Illuminate\Auth\Passwords\PasswordBroker::reset($credentials, $callback);
-        }
-        
-        /**
-         * Set a custom password validator.
-         *
-         * @param \Closure $callback
+         * @param string $name
          * @return void 
          * @static 
          */
-        public static function validator($callback){
-            \Illuminate\Auth\Passwords\PasswordBroker::validator($callback);
-        }
-        
-        /**
-         * Determine if the passwords match for the request.
-         *
-         * @param array $credentials
-         * @return bool 
-         * @static 
-         */
-        public static function validateNewPassword($credentials){
-            return \Illuminate\Auth\Passwords\PasswordBroker::validateNewPassword($credentials);
-        }
-        
-        /**
-         * Get the user for the given credentials.
-         *
-         * @param array $credentials
-         * @return \Illuminate\Contracts\Auth\CanResetPassword 
-         * @throws \UnexpectedValueException
-         * @static 
-         */
-        public static function getUser($credentials){
-            return \Illuminate\Auth\Passwords\PasswordBroker::getUser($credentials);
+        public static function setDefaultDriver($name){
+            \Illuminate\Auth\Passwords\PasswordBrokerManager::setDefaultDriver($name);
         }
         
     }
 
 
     class Queue extends \Illuminate\Support\Facades\Queue{
+        
+        /**
+         * Register an event listener for the before job event.
+         *
+         * @param mixed $callback
+         * @return void 
+         * @static 
+         */
+        public static function before($callback){
+            \Illuminate\Queue\QueueManager::before($callback);
+        }
         
         /**
          * Register an event listener for the after job event.
@@ -7715,7 +8027,7 @@ namespace {
          * @param mixed $data
          * @param string $queue
          * @return mixed 
-         * @throws \Throwable
+         * @throws \Exception|\Throwable
          * @static 
          */
         public static function push($job, $data = '', $queue = null){
@@ -7787,18 +8099,6 @@ namespace {
         public static function laterOn($queue, $delay, $job, $data = ''){
             //Method inherited from \Illuminate\Queue\Queue            
             return \Illuminate\Queue\SyncQueue::laterOn($queue, $delay, $job, $data);
-        }
-        
-        /**
-         * Marshal a push queue request and fire the job.
-         *
-         * @throws \RuntimeException
-         * @deprecated since version 5.1.
-         * @static 
-         */
-        public static function marshal(){
-            //Method inherited from \Illuminate\Queue\Queue            
-            return \Illuminate\Queue\SyncQueue::marshal();
         }
         
         /**
@@ -7999,61 +8299,6 @@ namespace {
     }
 
 
-    class Redis extends \Illuminate\Support\Facades\Redis{
-        
-        /**
-         * Get a specific Redis connection instance.
-         *
-         * @param string $name
-         * @return \Predis\ClientInterface|null 
-         * @static 
-         */
-        public static function connection($name = 'default'){
-            return \Illuminate\Redis\Database::connection($name);
-        }
-        
-        /**
-         * Run a command against the Redis database.
-         *
-         * @param string $method
-         * @param array $parameters
-         * @return mixed 
-         * @static 
-         */
-        public static function command($method, $parameters = array()){
-            return \Illuminate\Redis\Database::command($method, $parameters);
-        }
-        
-        /**
-         * Subscribe to a set of given channels for messages.
-         *
-         * @param array|string $channels
-         * @param \Closure $callback
-         * @param string $connection
-         * @param string $method
-         * @return void 
-         * @static 
-         */
-        public static function subscribe($channels, $callback, $connection = null, $method = 'subscribe'){
-            \Illuminate\Redis\Database::subscribe($channels, $callback, $connection, $method);
-        }
-        
-        /**
-         * Subscribe to a set of given channels with wildcards.
-         *
-         * @param array|string $channels
-         * @param \Closure $callback
-         * @param string $connection
-         * @return void 
-         * @static 
-         */
-        public static function psubscribe($channels, $callback, $connection = null){
-            \Illuminate\Redis\Database::psubscribe($channels, $callback, $connection);
-        }
-        
-    }
-
-
     class Request extends \Illuminate\Support\Facades\Request{
         
         /**
@@ -8117,6 +8362,17 @@ namespace {
         }
         
         /**
+         * Get the full URL for the request with the added query string parameters.
+         *
+         * @param array $query
+         * @return string 
+         * @static 
+         */
+        public static function fullUrlWithQuery($query){
+            return \Illuminate\Http\Request::fullUrlWithQuery($query);
+        }
+        
+        /**
          * Get the current path info for the request.
          *
          * @return string 
@@ -8167,6 +8423,17 @@ namespace {
          */
         public static function is(){
             return \Illuminate\Http\Request::is();
+        }
+        
+        /**
+         * Determine if the current request URL and query string matches a pattern.
+         *
+         * @param mixed  string
+         * @return bool 
+         * @static 
+         */
+        public static function fullUrlIs(){
+            return \Illuminate\Http\Request::fullUrlIs();
         }
         
         /**
@@ -8266,7 +8533,7 @@ namespace {
         /**
          * Get a subset of the items from the input data.
          *
-         * @param array $keys
+         * @param array|mixed $keys
          * @return array 
          * @static 
          */
@@ -8318,6 +8585,16 @@ namespace {
          */
         public static function cookie($key = null, $default = null){
             return \Illuminate\Http\Request::cookie($key, $default);
+        }
+        
+        /**
+         * Get an array of all of the files on the request.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function allFiles(){
+            return \Illuminate\Http\Request::allFiles();
         }
         
         /**
@@ -8543,6 +8820,16 @@ namespace {
         }
         
         /**
+         * Get the bearer token from the request headers.
+         *
+         * @return string|null 
+         * @static 
+         */
+        public static function bearerToken(){
+            return \Illuminate\Http\Request::bearerToken();
+        }
+        
+        /**
          * Create an Illuminate request from a Symfony instance.
          *
          * @param \Symfony\Component\HttpFoundation\Request $request
@@ -8583,11 +8870,12 @@ namespace {
         /**
          * Get the user making the request.
          *
+         * @param string|null $guard
          * @return mixed 
          * @static 
          */
-        public static function user(){
-            return \Illuminate\Http\Request::user();
+        public static function user($guard = null){
+            return \Illuminate\Http\Request::user($guard);
         }
         
         /**
@@ -8599,6 +8887,17 @@ namespace {
          */
         public static function route($param = null){
             return \Illuminate\Http\Request::route($param);
+        }
+        
+        /**
+         * Get a unique fingerprint for the request / route / IP address.
+         *
+         * @return string 
+         * @throws \RuntimeException
+         * @static 
+         */
+        public static function fingerprint(){
+            return \Illuminate\Http\Request::fingerprint();
         }
         
         /**
@@ -8641,6 +8940,16 @@ namespace {
          */
         public static function setRouteResolver($callback){
             return \Illuminate\Http\Request::setRouteResolver($callback);
+        }
+        
+        /**
+         * Get all of the input and files for the request.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function toArray(){
+            return \Illuminate\Http\Request::toArray();
         }
         
         /**
@@ -8895,29 +9204,22 @@ namespace {
         }
         
         /**
-         * Gets a "parameter" value.
+         * Gets a "parameter" value from any bag.
          * 
-         * This method is mainly useful for libraries that want to provide some flexibility.
+         * This method is mainly useful for libraries that want to provide some flexibility. If you don't need the
+         * flexibility in controllers, it is better to explicitly get request parameters from the appropriate
+         * public property instead (attributes, query, request).
          * 
-         * Order of precedence: GET, PATH, POST
-         * 
-         * Avoid using this method in controllers:
-         * 
-         *  * slow
-         *  * prefer to get from a "named" source
-         * 
-         * It is better to explicitly get request parameters from the appropriate
-         * public property instead (query, attributes, request).
+         * Order of precedence: PATH (routing placeholders or custom attributes), GET, BODY
          *
          * @param string $key the key
          * @param mixed $default the default value
-         * @param bool $deep is parameter deep in multidimensional array
          * @return mixed 
          * @static 
          */
-        public static function get($key, $default = null, $deep = false){
+        public static function get($key, $default = null){
             //Method inherited from \Symfony\Component\HttpFoundation\Request            
-            return \Illuminate\Http\Request::get($key, $default, $deep);
+            return \Illuminate\Http\Request::get($key, $default);
         }
         
         /**
@@ -9570,6 +9872,29 @@ namespace {
             return \Illuminate\Http\Request::isXmlHttpRequest();
         }
         
+        /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param callable $macro
+         * @return void 
+         * @static 
+         */
+        public static function macro($name, $macro){
+            \Illuminate\Http\Request::macro($name, $macro);
+        }
+        
+        /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */
+        public static function hasMacro($name){
+            return \Illuminate\Http\Request::hasMacro($name);
+        }
+        
     }
 
 
@@ -9656,6 +9981,18 @@ namespace {
          */
         public static function download($file, $name = null, $headers = array(), $disposition = 'attachment'){
             return \Illuminate\Routing\ResponseFactory::download($file, $name, $headers, $disposition);
+        }
+        
+        /**
+         * Return the raw contents of a binary file.
+         *
+         * @param \SplFileInfo|string $file
+         * @param array $headers
+         * @return \Symfony\Component\HttpFoundation\BinaryFileResponse 
+         * @static 
+         */
+        public static function file($file, $headers = array()){
+            return \Illuminate\Routing\ResponseFactory::file($file, $headers);
         }
         
         /**
@@ -9760,11 +10097,11 @@ namespace {
          * Register a new GET route with the router.
          *
          * @param string $uri
-         * @param \Closure|array|string $action
+         * @param \Closure|array|string|null $action
          * @return \Illuminate\Routing\Route 
          * @static 
          */
-        public static function get($uri, $action){
+        public static function get($uri, $action = null){
             return \Illuminate\Routing\Router::get($uri, $action);
         }
         
@@ -9772,11 +10109,11 @@ namespace {
          * Register a new POST route with the router.
          *
          * @param string $uri
-         * @param \Closure|array|string $action
+         * @param \Closure|array|string|null $action
          * @return \Illuminate\Routing\Route 
          * @static 
          */
-        public static function post($uri, $action){
+        public static function post($uri, $action = null){
             return \Illuminate\Routing\Router::post($uri, $action);
         }
         
@@ -9784,11 +10121,11 @@ namespace {
          * Register a new PUT route with the router.
          *
          * @param string $uri
-         * @param \Closure|array|string $action
+         * @param \Closure|array|string|null $action
          * @return \Illuminate\Routing\Route 
          * @static 
          */
-        public static function put($uri, $action){
+        public static function put($uri, $action = null){
             return \Illuminate\Routing\Router::put($uri, $action);
         }
         
@@ -9796,11 +10133,11 @@ namespace {
          * Register a new PATCH route with the router.
          *
          * @param string $uri
-         * @param \Closure|array|string $action
+         * @param \Closure|array|string|null $action
          * @return \Illuminate\Routing\Route 
          * @static 
          */
-        public static function patch($uri, $action){
+        public static function patch($uri, $action = null){
             return \Illuminate\Routing\Router::patch($uri, $action);
         }
         
@@ -9808,11 +10145,11 @@ namespace {
          * Register a new DELETE route with the router.
          *
          * @param string $uri
-         * @param \Closure|array|string $action
+         * @param \Closure|array|string|null $action
          * @return \Illuminate\Routing\Route 
          * @static 
          */
-        public static function delete($uri, $action){
+        public static function delete($uri, $action = null){
             return \Illuminate\Routing\Router::delete($uri, $action);
         }
         
@@ -9820,11 +10157,11 @@ namespace {
          * Register a new OPTIONS route with the router.
          *
          * @param string $uri
-         * @param \Closure|array|string $action
+         * @param \Closure|array|string|null $action
          * @return \Illuminate\Routing\Route 
          * @static 
          */
-        public static function options($uri, $action){
+        public static function options($uri, $action = null){
             return \Illuminate\Routing\Router::options($uri, $action);
         }
         
@@ -9832,11 +10169,11 @@ namespace {
          * Register a new route responding to all verbs.
          *
          * @param string $uri
-         * @param \Closure|array|string $action
+         * @param \Closure|array|string|null $action
          * @return \Illuminate\Routing\Route 
          * @static 
          */
-        public static function any($uri, $action){
+        public static function any($uri, $action = null){
             return \Illuminate\Routing\Router::any($uri, $action);
         }
         
@@ -9845,11 +10182,11 @@ namespace {
          *
          * @param array|string $methods
          * @param string $uri
-         * @param \Closure|array|string $action
+         * @param \Closure|array|string|null $action
          * @return \Illuminate\Routing\Route 
          * @static 
          */
-        public static function match($methods, $uri, $action){
+        public static function match($methods, $uri, $action = null){
             return \Illuminate\Routing\Router::match($methods, $uri, $action);
         }
         
@@ -9858,6 +10195,7 @@ namespace {
          *
          * @param array $controllers
          * @return void 
+         * @deprecated since version 5.2.
          * @static 
          */
         public static function controllers($controllers){
@@ -9871,10 +10209,32 @@ namespace {
          * @param string $controller
          * @param array $names
          * @return void 
+         * @deprecated since version 5.2.
          * @static 
          */
         public static function controller($uri, $controller, $names = array()){
             \Illuminate\Routing\Router::controller($uri, $controller, $names);
+        }
+        
+        /**
+         * Set the unmapped global resource parameters to singular.
+         *
+         * @return void 
+         * @static 
+         */
+        public static function singularResourceParameters(){
+            \Illuminate\Routing\Router::singularResourceParameters();
+        }
+        
+        /**
+         * Set the global resource parameter mapping.
+         *
+         * @param array $parameters
+         * @return void 
+         * @static 
+         */
+        public static function resourceParameters($parameters = array()){
+            \Illuminate\Routing\Router::resourceParameters($parameters);
         }
         
         /**
@@ -9899,6 +10259,16 @@ namespace {
          */
         public static function resource($name, $controller, $options = array()){
             \Illuminate\Routing\Router::resource($name, $controller, $options);
+        }
+        
+        /**
+         * Register the typical authentication routes for an application.
+         *
+         * @return void 
+         * @static 
+         */
+        public static function auth(){
+            \Illuminate\Routing\Router::auth();
         }
         
         /**
@@ -9980,10 +10350,10 @@ namespace {
         }
         
         /**
-         * Resolve the middleware name to a class name preserving passed parameters.
+         * Resolve the middleware name to a class name(s) preserving passed parameters.
          *
          * @param string $name
-         * @return string 
+         * @return string|array 
          * @static 
          */
         public static function resolveMiddlewareClassName($name){
@@ -9999,30 +10369,6 @@ namespace {
          */
         public static function matched($callback){
             \Illuminate\Routing\Router::matched($callback);
-        }
-        
-        /**
-         * Register a new "before" filter with the router.
-         *
-         * @param string|callable $callback
-         * @return void 
-         * @deprecated since version 5.1.
-         * @static 
-         */
-        public static function before($callback){
-            \Illuminate\Routing\Router::before($callback);
-        }
-        
-        /**
-         * Register a new "after" filter with the router.
-         *
-         * @param string|callable $callback
-         * @return void 
-         * @deprecated since version 5.1.
-         * @static 
-         */
-        public static function after($callback){
-            \Illuminate\Routing\Router::after($callback);
         }
         
         /**
@@ -10048,44 +10394,43 @@ namespace {
         }
         
         /**
-         * Register a new filter with the router.
+         * Register a group of middleware.
          *
          * @param string $name
-         * @param string|callable $callback
-         * @return void 
-         * @deprecated since version 5.1.
+         * @param array $middleware
+         * @return $this 
          * @static 
          */
-        public static function filter($name, $callback){
-            \Illuminate\Routing\Router::filter($name, $callback);
+        public static function middlewareGroup($name, $middleware){
+            return \Illuminate\Routing\Router::middlewareGroup($name, $middleware);
         }
         
         /**
-         * Register a pattern-based filter with the router.
+         * Add a middleware to the beginning of a middleware group.
+         * 
+         * If the middleware is already in the group, it will not be added again.
          *
-         * @param string $pattern
-         * @param string $name
-         * @param array|null $methods
-         * @return void 
-         * @deprecated since version 5.1.
+         * @param string $group
+         * @param string $middleware
+         * @return $this 
          * @static 
          */
-        public static function when($pattern, $name, $methods = null){
-            \Illuminate\Routing\Router::when($pattern, $name, $methods);
+        public static function prependMiddlewareToGroup($group, $middleware){
+            return \Illuminate\Routing\Router::prependMiddlewareToGroup($group, $middleware);
         }
         
         /**
-         * Register a regular expression based filter with the router.
+         * Add a middleware to the end of a middleware group.
+         * 
+         * If the middleware is already in the group, it will not be added again.
          *
-         * @param string $pattern
-         * @param string $name
-         * @param array|null $methods
-         * @return void 
-         * @deprecated since version 5.1.
+         * @param string $group
+         * @param string $middleware
+         * @return $this 
          * @static 
          */
-        public static function whenRegex($pattern, $name, $methods = null){
-            \Illuminate\Routing\Router::whenRegex($pattern, $name, $methods);
+        public static function pushMiddlewareToGroup($group, $middleware){
+            return \Illuminate\Routing\Router::pushMiddlewareToGroup($group, $middleware);
         }
         
         /**
@@ -10146,60 +10491,6 @@ namespace {
          */
         public static function patterns($patterns){
             \Illuminate\Routing\Router::patterns($patterns);
-        }
-        
-        /**
-         * Call the given route's before filters.
-         *
-         * @param \Illuminate\Routing\Route $route
-         * @param \Illuminate\Http\Request $request
-         * @return mixed 
-         * @static 
-         */
-        public static function callRouteBefore($route, $request){
-            return \Illuminate\Routing\Router::callRouteBefore($route, $request);
-        }
-        
-        /**
-         * Find the patterned filters matching a request.
-         *
-         * @param \Illuminate\Http\Request $request
-         * @return array 
-         * @deprecated since version 5.1.
-         * @static 
-         */
-        public static function findPatternFilters($request){
-            return \Illuminate\Routing\Router::findPatternFilters($request);
-        }
-        
-        /**
-         * Call the given route's after filters.
-         *
-         * @param \Illuminate\Routing\Route $route
-         * @param \Illuminate\Http\Request $request
-         * @param \Illuminate\Http\Response $response
-         * @return mixed 
-         * @deprecated since version 5.1.
-         * @static 
-         */
-        public static function callRouteAfter($route, $request, $response){
-            return \Illuminate\Routing\Router::callRouteAfter($route, $request, $response);
-        }
-        
-        /**
-         * Call the given route filter.
-         *
-         * @param string $filter
-         * @param array $parameters
-         * @param \Illuminate\Routing\Route $route
-         * @param \Illuminate\Http\Request $request
-         * @param \Illuminate\Http\Response|null $response
-         * @return mixed 
-         * @deprecated since version 5.1.
-         * @static 
-         */
-        public static function callRouteFilter($filter, $parameters, $route, $request, $response = null){
-            return \Illuminate\Routing\Router::callRouteFilter($filter, $parameters, $route, $request, $response);
         }
         
         /**
@@ -10456,6 +10747,19 @@ namespace {
         public static function hasColumns($table, $columns){
             //Method inherited from \Illuminate\Database\Schema\Builder            
             return \Illuminate\Database\Schema\MySqlBuilder::hasColumns($table, $columns);
+        }
+        
+        /**
+         * Get the data type for the given column name.
+         *
+         * @param string $table
+         * @param string $column
+         * @return string 
+         * @static 
+         */
+        public static function getColumnType($table, $column){
+            //Method inherited from \Illuminate\Database\Schema\Builder            
+            return \Illuminate\Database\Schema\MySqlBuilder::getColumnType($table, $column);
         }
         
         /**
@@ -11141,6 +11445,16 @@ namespace {
         }
         
         /**
+         * Get a default cloud filesystem instance.
+         *
+         * @return \Illuminate\Contracts\Filesystem\Filesystem 
+         * @static 
+         */
+        public static function cloud(){
+            return \Illuminate\Filesystem\FilesystemManager::cloud();
+        }
+        
+        /**
          * Create an instance of the local driver.
          *
          * @param array $config
@@ -11192,6 +11506,16 @@ namespace {
          */
         public static function getDefaultDriver(){
             return \Illuminate\Filesystem\FilesystemManager::getDefaultDriver();
+        }
+        
+        /**
+         * Get the default cloud driver name.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getDefaultCloudDriver(){
+            return \Illuminate\Filesystem\FilesystemManager::getDefaultCloudDriver();
         }
         
         /**

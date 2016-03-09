@@ -1,10 +1,9 @@
 <?php namespace DreamFactory\Enterprise\Dashboard\Console\Commands;
 
 use DreamFactory\Enterprise\Common\Commands\ConsoleCommand;
-use Illuminate\Contracts\Bus\SelfHandling;
 use Symfony\Component\Console\Input\InputOption;
 
-class Update extends ConsoleCommand implements SelfHandling
+class Update extends ConsoleCommand
 {
     //******************************************************************************
     //* Members
@@ -20,9 +19,9 @@ class Update extends ConsoleCommand implements SelfHandling
     //******************************************************************************
 
     /** @inheritdoc */
-    public function fire()
+    public function handle()
     {
-        parent::fire();
+        parent::handle();
 
         if (empty($_git = $this->shell('which git'))) {
             $this->error('"git" does not appear to be installed on this system. It is required for this command');
@@ -91,7 +90,8 @@ EOT
     /** @inheritdoc */
     protected function getOptions()
     {
-        return array_merge(parent::getOptions(), [
+        return array_merge(parent::getOptions(),
+            [
                 [
                     'no-composer',
                     null,

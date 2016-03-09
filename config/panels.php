@@ -11,9 +11,9 @@ return [
     'toolbar-size'      => 'btn-group-xs',
     /** This is the create from scratch panel **/
     'create'            => [
-        'context'          => 'panel-success',
+        'context'          => 'panel-warning',
         'template'         => DashboardDefaults::CREATE_INSTANCE_BLADE,
-        'header-icon'      => 'fa-asterisk',
+        'header-icon'      => null,
         'header-icon-size' => 'fa-1x',
         'body-icon'        => false,
         'description'      => 'common.instance-create',

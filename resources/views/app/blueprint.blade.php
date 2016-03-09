@@ -26,30 +26,7 @@ $_psa = Flasher::psa('Alert',
 
     <div class="row">
         <div class="col-sm-12 col-md-12">
-            <div class="create-instance">
-                {!! $instanceCreator !!}
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-12 col-md-12">
-            <hr class="hr" />
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-12 col-md-12">
-            <div class="instance-panel-group">
-                @if (is_string($instances))
-                    {!! $instances !!}
-                @elseif(is_array($instances))
-                    @foreach( $instances as $_name => $_instance )
-                        {!! $_instance->render() !!}
-                    @endforeach
-                @else
-                    <h3 class="no-instances">You have no instances</h3>
-                @endif
+            <div class="create-instance-blueprint">
             </div>
         </div>
     </div>
