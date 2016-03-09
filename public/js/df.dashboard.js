@@ -1,4 +1,12 @@
 /**
+ * Our global options
+ */
+var _options = {
+    alertHideDelay:      10000,
+    notifyDiv:           'div#request-message',
+    ajaxMessageFadeTime: 6000
+};
+/**
  * Global settings
  * @type {{}}
  * @private
@@ -20,7 +28,7 @@ var _checking = false;
  * @param [show]
  * @private
  */
-var _closeAlert = function(selector, delay, show) {
+var _closeAlert = function (selector, delay, show) {
     var $_alert = jQuery(selector).not('.alert-fixed').alert();
 
     if ($_alert.length) {
@@ -30,7 +38,7 @@ var _closeAlert = function(selector, delay, show) {
 
         if (!$_alert.hasClass('alert-fixed')) {
             window.setTimeout(
-                function() {
+                function () {
                     $_alert.alert('close')
                 }, delay
             );
@@ -41,10 +49,10 @@ var _closeAlert = function(selector, delay, show) {
  *
  * @private
  */
-var _checkProgress = function() {
-    (function($) {
+var _checkProgress = function () {
+    (function ($) {
         $(".instance-heading-status .fa-spinner").each(
-            function(index, item) {
+            function (index, item) {
                 var $_form = $("form#_dsp-control");
                 var _div = $(this).closest('a[data-toggle="collapse"]').attr('href');
 
@@ -58,12 +66,12 @@ var _checkProgress = function() {
 
                         $.post(
                             '/status/' + id, $_form.serialize(),
-                            function(data) {
+                            function (data) {
                                 var $_inner = $("div#" + _id + ".panel-collapse .panel-body");
 
                                 $(item).fadeOut(
                                     'slow',
-                                    function() {
+                                    function () {
                                         $(item).fadeIn('fast');
                                     }
                                 );
@@ -121,7 +129,7 @@ var _checkProgress = function() {
  * @param {jQuery} [$form]
  * @private
  */
-var _processAction = function($element, $form) {
+var _processAction = function ($element, $form) {
     //  Skip this for uploads...
     if ($form && 'form-upload' == $form.attr('id')) {
         return $form.submit();
@@ -164,7 +172,7 @@ var _processAction = function($element, $form) {
  * @returns {*}
  * @private
  */
-var _makeRequest = function(id, action, href) {
+var _makeRequest = function (id, action, href) {
 
     switch (action) {
         case 'launch':
@@ -217,7 +225,7 @@ var _makeRequest = function(id, action, href) {
  * DR
  */
 jQuery(
-    function($) {
+    function ($) {
         //	Reusables...
         var $_toolbars = $('div[id^="instance-toolbar-"]');
 
@@ -229,12 +237,12 @@ jQuery(
         //	Open/close toolbar
         $_toolbars.on(
             'show.bs.collapse',
-            function() {
+            function () {
                 var $_icon = $(this).prev('.instance-actions').find('.fa-angle-down');
                 $_icon.removeClass('fa-angle-down').addClass('fa-angle-up');
             }
         ).on(
-            'hide.bs.collapse', function() {
+            'hide.bs.collapse', function () {
                 var $_icon = $(this).prev('.instance-actions').find('.fa-angle-up');
                 $_icon.removeClass('fa-angle-up').addClass('fa-angle-down');
             }
@@ -243,14 +251,14 @@ jQuery(
         //	No clicks allowed on disabled stuff
         $('body').on(
             'click', '.disabled',
-            function(e) {
+            function (e) {
                 e.preventDefault();
             }
         );
 
         //	All toolbar button clicks go here...
         $('.panel-toolbar').on(
-            'click', 'button', function(e) {
+            'click', 'button', function (e) {
                 e.preventDefault();
                 _processAction($(this));
             }
@@ -258,7 +266,7 @@ jQuery(
 
         //  Set the data-instance-id on btn-import-instance when an import is chosen
         $('select#import-id').on(
-            'change', function(e) {
+            'change', function (e) {
                 var $_form = $('#form-import'), $_selected = $(this).find(':selected');
 
                 $_form.find('input[name="instance-id"]').val($_selected.data('instance-id'));
@@ -266,7 +274,13 @@ jQuery(
             }
         );
 
-        window.setTimeout(_checkProgress, _dso.statusCheckFrequency);
-        _closeAlert('.alert-dismissable', _dso.alertHideTimeout);
+        //  Nice cursor on logo
+        $('.navbar-brand').css({cursor: 'default'});
+
+        /** Clear any alerts after configured time */
+        if (_options.alertHideDelay) {
+            window.setTimeout(_checkProgress, _dso.statusCheckFrequency);
+            _closeAlert('.alert-dismissable', _dso.alertHideTimeout);
+        }
     }
 );

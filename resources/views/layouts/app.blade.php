@@ -103,7 +103,6 @@ if (null !== ($_customCssFile = config('dfe.common.custom-css-file'))) {
 <script src="/static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
 <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
 <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/additional-methods.min.js"></script>
-<script src="/js/app.jquery.js"></script>
 <script src="/js/instance.validate.js"></script>
 <script src="/js/df.dashboard.js"></script>
 
