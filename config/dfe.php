@@ -21,7 +21,7 @@ return [
     //* Common across all DFE apps
     //******************************************************************************
     'common'           => [
-        'display-name'       => 'DreamFactory Enterprise&trade; Dashboard',
+        'display-name'       => 'DreamFactory™ Enterprise Dashboard',
         'display-version'    => env('DFE_VERSION', '1.0.11'),
         'display-copyright'  => '© DreamFactory Software, Inc. 2012-' . date('Y') . '. All Rights Reserved.',
         /**
