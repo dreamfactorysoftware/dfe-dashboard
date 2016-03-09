@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.2.22 on 2016-03-08.
+ * Generated for Laravel 5.2.22 on 2016-03-09.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -1814,37 +1814,132 @@ namespace {
     class Bus extends \Illuminate\Support\Facades\Bus{
         
         /**
-         * Dispatch a command to its appropriate handler.
+         * Marshal a command and dispatch it to its appropriate handler.
          *
          * @param mixed $command
+         * @param array $array
          * @return mixed 
          * @static 
          */
-        public static function dispatch($command){
-            return \Illuminate\Bus\Dispatcher::dispatch($command);
+        public static function dispatchFromArray($command, $array){
+            return \Collective\Bus\Dispatcher::dispatchFromArray($command, $array);
+        }
+        
+        /**
+         * Marshal a command and dispatch it to its appropriate handler.
+         *
+         * @param mixed $command
+         * @param \ArrayAccess $source
+         * @param array $extras
+         * @return mixed 
+         * @static 
+         */
+        public static function dispatchFrom($command, $source, $extras = array()){
+            return \Collective\Bus\Dispatcher::dispatchFrom($command, $source, $extras);
+        }
+        
+        /**
+         * Dispatch a command to its appropriate handler.
+         *
+         * @param mixed $command
+         * @param \Closure|null $afterResolving
+         * @return mixed 
+         * @static 
+         */
+        public static function dispatch($command, $afterResolving = null){
+            return \Collective\Bus\Dispatcher::dispatch($command, $afterResolving);
         }
         
         /**
          * Dispatch a command to its appropriate handler in the current process.
          *
          * @param mixed $command
+         * @param \Closure|null $afterResolving
          * @return mixed 
          * @static 
          */
-        public static function dispatchNow($command){
-            return \Illuminate\Bus\Dispatcher::dispatchNow($command);
+        public static function dispatchNow($command, $afterResolving = null){
+            return \Collective\Bus\Dispatcher::dispatchNow($command, $afterResolving);
         }
         
         /**
          * Dispatch a command to its appropriate handler behind a queue.
          *
          * @param mixed $command
-         * @return mixed 
          * @throws \RuntimeException
+         * @return mixed 
          * @static 
          */
         public static function dispatchToQueue($command){
-            return \Illuminate\Bus\Dispatcher::dispatchToQueue($command);
+            return \Collective\Bus\Dispatcher::dispatchToQueue($command);
+        }
+        
+        /**
+         * Get the handler instance for the given command.
+         *
+         * @param mixed $command
+         * @return mixed 
+         * @static 
+         */
+        public static function resolveHandler($command){
+            return \Collective\Bus\Dispatcher::resolveHandler($command);
+        }
+        
+        /**
+         * Get the handler class for the given command.
+         *
+         * @param mixed $command
+         * @return string 
+         * @static 
+         */
+        public static function getHandlerClass($command){
+            return \Collective\Bus\Dispatcher::getHandlerClass($command);
+        }
+        
+        /**
+         * Get the handler method for the given command.
+         *
+         * @param mixed $command
+         * @return string 
+         * @static 
+         */
+        public static function getHandlerMethod($command){
+            return \Collective\Bus\Dispatcher::getHandlerMethod($command);
+        }
+        
+        /**
+         * Register command-to-handler mappings.
+         *
+         * @param array $commands
+         * @return void 
+         * @static 
+         */
+        public static function maps($commands){
+            \Collective\Bus\Dispatcher::maps($commands);
+        }
+        
+        /**
+         * Register a fallback mapper callback.
+         *
+         * @param \Closure $mapper
+         * @return void 
+         * @static 
+         */
+        public static function mapUsing($mapper){
+            \Collective\Bus\Dispatcher::mapUsing($mapper);
+        }
+        
+        /**
+         * Map the command to a handler within a given root namespace.
+         *
+         * @param mixed $command
+         * @param string $commandNamespace
+         * @param string $handlerNamespace
+         * @return string 
+         * @static 
+         */
+        public static function simpleMapping($command, $commandNamespace, $handlerNamespace){
+            return \Collective\Bus\Dispatcher::simpleMapping($command, $commandNamespace, $handlerNamespace);
         }
         
         /**
@@ -1855,7 +1950,7 @@ namespace {
          * @static 
          */
         public static function pipeThrough($pipes){
-            return \Illuminate\Bus\Dispatcher::pipeThrough($pipes);
+            return \Collective\Bus\Dispatcher::pipeThrough($pipes);
         }
         
     }

@@ -1,4 +1,12 @@
 /**
+ * Our global options
+ */
+var _options = {
+    alertHideDelay:      10000,
+    notifyDiv:           'div#request-message',
+    ajaxMessageFadeTime: 6000
+};
+/**
  * Global settings
  * @type {{}}
  * @private
@@ -21,12 +29,10 @@ var _checking = false;
  * @private
  */
 var _closeAlert = function(selector, delay, show) {
-    var $_alert = jQuery(selector).not('.alert-fixed').alert();
+    var $_alert = $(selector).not('.alert-fixed');
 
     if ($_alert.length) {
-        if (show) {
-            jQuery(selector).removeClass('hide').show();
-        }
+        show && $(selector).removeClass('hide').show();
 
         if (!$_alert.hasClass('alert-fixed')) {
             window.setTimeout(
@@ -37,84 +43,6 @@ var _closeAlert = function(selector, delay, show) {
         }
     }
 };
-/**
- *
- * @private
- */
-var _checkProgress = function() {
-    (function($) {
-        $(".instance-heading-status .fa-spinner").each(
-            function(index, item) {
-                var $_form = $("form#_dsp-control");
-                var _div = $(this).closest('a[data-toggle="collapse"]').attr('href');
-
-                if (_div && _div.length) {
-                    var _id = $(_div).attr('id');
-                    var _parts = _id.split('___');
-
-                    if (3 == _parts.length) {
-                        $('input[name="id"]', $_form).val(id);
-                        $('input[name="control"]', $_form).val('status');
-
-                        $.post(
-                            '/status/' + id, $_form.serialize(),
-                            function(data) {
-                                var $_inner = $("div#" + _id + ".panel-collapse .panel-body");
-
-                                $(item).fadeOut(
-                                    'slow',
-                                    function() {
-                                        $(item).fadeIn('fast');
-                                    }
-                                );
-
-                                if (data && ( 404 == data.code || 1 == data.deleted )) {
-                                    //	Delete one...
-                                    try {
-                                        // _flasher($(item).closest('.accordion-group').find('.instance-heading'), true);
-                                        $(item).removeClass('fa-spinner fa-spin').addClass(data.icons[1]);
-                                        $(".dsp-icon i", $_inner).removeClass('fa-spinner fa-spin').addClass(data.icons[1]);
-                                        $(item).closest('.panel-instance').fadeOut();
-                                    }
-                                    catch (e) {
-                                        //	Ignored
-                                    }
-
-                                    _closeAlert('#alert-status-change', _dso.alertHideTimeout, true);
-                                } else {
-                                    if (data.instanceState) {
-                                        //	Replace message...
-                                        data.icons[2] && $("div.dsp-info div.dsp-stats", $_inner).html(data.icons[2]);
-                                        data.link && $("div.dsp-info div.dsp-name", $_inner).html(data.link);
-                                        data.buttons && $("div.dsp-info div.dsp-links .dsp-controls", $_inner).html(data.buttons);
-
-                                        if ('fa-spinner fa-spin' != data.icons[1]) {
-                                            //_flasher($(item).closest('.accordion-group').find('.instance-heading'));
-                                            $(item).removeClass('fa-spinner fa-spin').addClass(data.icons[1]);
-                                            $(".dsp-icon i", $_inner).removeClass('fa-spinner fa-spin').addClass(data.icons[1]);
-
-                                            _closeAlert('#alert-status-change', _dso.alertHideTimeout, true);
-                                        }
-                                    }
-                                }
-                            }
-                            , 'json'
-                        );
-                    }
-                }
-            }
-        );
-
-        _checking = false;
-    })(jQuery);
-
-    //	Re-up if there are more...
-    if (!_checking && jQuery(".instance-heading-status .fa-spinner").length) {
-        _checking = true;
-        window.setTimeout(_checkProgress, _dso.statusCheckFrequency);
-    }
-};
-
 /**
  * Generates the necessary form data to push an action request to the console
  * @param {jQuery} [$element]
@@ -266,7 +194,10 @@ jQuery(
             }
         );
 
-        window.setTimeout(_checkProgress, _dso.statusCheckFrequency);
+        //  Nice cursor on logo
+        $('.navbar-brand').css({cursor: 'default'});
+
+        /** Clear any alerts after configured time */
         _closeAlert('.alert-dismissable', _dso.alertHideTimeout);
     }
 );
