@@ -13,6 +13,10 @@ class Handler extends ExceptionHandler
      * @var array list of the exception types that should not be reported.
      */
     protected $dontReport = [
+//        AuthorizationException::class,
+//        HttpException::class,
+//        ModelNotFoundException::class,
+//        ValidationException::class,
         'Symfony\Component\HttpKernel\Exception\HttpException',
     ];
 

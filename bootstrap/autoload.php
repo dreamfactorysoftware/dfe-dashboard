@@ -13,14 +13,15 @@ if (!function_exists('__dfe_autoload')) {
      */
     function __dfe_autoload()
     {
-        //  Register The Composer Auto Loader
-        $_basePath = dirname(__DIR__);
-        require $_basePath . '/vendor/autoload.php';
+        $_vendorPath = __DIR__ . '/../vendor';
 
-        //  Laravel 5.1
-        if (file_exists(__DIR__ . '/cache/compiled.php')) {
+        //  Register The Composer Auto Loader
+        require $_vendorPath . '/autoload.php';
+
+        //  Laravel 5.1+
+        if (file_exists($_vendorPath . '/compiled.php')) {
             /** @noinspection PhpIncludeInspection */
-            require __DIR__ . '/cache/compiled.php';
+            require $_vendorPath . '/compiled.php';
         }
 
         return true;

@@ -77,7 +77,9 @@
                                                 data-{{ $_dataKey }}="{{ $_dataItem }}"
                                                 @endforeach
                                                 @endif
+                                                data-instance-id="{{ $instanceName }}"
                                                 data-instance-href="{{ $instanceUrl }}"
+                                                data-instance-action="{{ $_button['action'] }}"
                                                 data-toggle="tooltip" data-placement="bottom"
                                                 title="{{ $_button['hint'] or $_button['text'] }}"
                                                 class="btn {{ $_button['size'] or 'btn-xs' }} {{ $_button['context'] or 'btn-default' }}">{!!
