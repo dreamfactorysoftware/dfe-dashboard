@@ -525,16 +525,16 @@
         },
         {
             "name": "dreamfactory/dfe-common",
-            "version": "1.0.15",
+            "version": "1.0.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/dfe-common.git",
-                "reference": "fa65f543959e72ff27824897cdd64129a5408828"
+                "reference": "aca62d181bc62bdfceee125dc14a9aa1b96ed100"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/fa65f543959e72ff27824897cdd64129a5408828",
-                "reference": "fa65f543959e72ff27824897cdd64129a5408828",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/aca62d181bc62bdfceee125dc14a9aa1b96ed100",
+                "reference": "aca62d181bc62bdfceee125dc14a9aa1b96ed100",
                 "shasum": ""
             },
             "require": {
@@ -585,10 +585,10 @@
                 "utility"
             ],
             "support": {
-                "source": "https://github.com/dreamfactorysoftware/dfe-common/tree/1.0.15",
+                "source": "https://github.com/dreamfactorysoftware/dfe-common/tree/1.0.16",
                 "issues": "https://github.com/dreamfactorysoftware/dfe-common/issues"
             },
-            "time": "2016-03-08 22:48:15"
+            "time": "2016-03-09 20:25:03"
         },
         {
             "name": "dreamfactory/dfe-database",
@@ -3201,7 +3201,7 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.1.0",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
@@ -3260,7 +3260,7 @@
         },
         {
             "name": "symfony/polyfill-php56",
-            "version": "v1.1.0",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php56.git",
@@ -3316,16 +3316,16 @@
         },
         {
             "name": "symfony/polyfill-php70",
-            "version": "v1.1.0",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php70.git",
-                "reference": "8428ceddbbaf102f2906769a8ef2438220c5cb95"
+                "reference": "386c1be9cad3ab531425211919e78c37971be4ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php70/zipball/8428ceddbbaf102f2906769a8ef2438220c5cb95",
-                "reference": "8428ceddbbaf102f2906769a8ef2438220c5cb95",
+                "url": "https://api.github.com/repos/symfony/polyfill-php70/zipball/386c1be9cad3ab531425211919e78c37971be4ce",
+                "reference": "386c1be9cad3ab531425211919e78c37971be4ce",
                 "shasum": ""
             },
             "require": {
@@ -3371,11 +3371,11 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-01-25 08:44:42"
+            "time": "2016-01-28 22:42:02"
         },
         {
             "name": "symfony/polyfill-util",
-            "version": "v1.1.0",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-util.git",
