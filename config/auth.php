@@ -6,7 +6,7 @@
 return [
     /** General */
     //  If true, users may self-register. Otherwise, admins must create users */
-    'open-registration' => config('DFE_OPEN_REGISTRATION', true),
+    'open-registration' => env('DFE_OPEN_REGISTRATION', true),
     /** Defaults */
     'defaults'          => [
         'guard'     => 'web',
