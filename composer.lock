@@ -592,16 +592,16 @@
         },
         {
             "name": "dreamfactory/dfe-database",
-            "version": "1.0.21",
+            "version": "1.0.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/dfe-database.git",
-                "reference": "7b507cbeb7a236083497691ae7871995bb576841"
+                "reference": "0fd25fe328693b95bf0d40fc26b62c6b7091d307"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-database/zipball/7b507cbeb7a236083497691ae7871995bb576841",
-                "reference": "7b507cbeb7a236083497691ae7871995bb576841",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-database/zipball/0fd25fe328693b95bf0d40fc26b62c6b7091d307",
+                "reference": "0fd25fe328693b95bf0d40fc26b62c6b7091d307",
                 "shasum": ""
             },
             "require": {
@@ -642,10 +642,10 @@
                 "utility"
             ],
             "support": {
-                "source": "https://github.com/dreamfactorysoftware/dfe-database/tree/1.0.21",
+                "source": "https://github.com/dreamfactorysoftware/dfe-database/tree/1.0.22",
                 "issues": "https://github.com/dreamfactorysoftware/dfe-database/issues"
             },
-            "time": "2016-03-08 22:59:58"
+            "time": "2016-03-09 01:39:32"
         },
         {
             "name": "dreamfactory/dfe-ops-client",
