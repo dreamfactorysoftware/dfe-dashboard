@@ -47,7 +47,7 @@
             "url":  "https://github.com/dreamfactorysoftware/dfe-audit.git"
         }
     ],
-    "prefer-stable":     true,
+    "prefer-stable":     false,
     "minimum-stability": "dev",
     "require":           {
         "laravel/framework":                     "5.2.*",
