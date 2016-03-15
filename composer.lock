@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cdd12fd66ce5070f5155dc6f38e11d61",
-    "content-hash": "a1d2abfb89865752b84282c3efd2b0e2",
+    "hash": "919f118d478a8e4f3dcc1f49f38f5cb9",
+    "content-hash": "7df94d0bb6e1fdcee9177d157cd38c45",
     "packages": [
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -528,12 +528,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/dfe-common.git",
-                "reference": "676f6ce420c4cb747de4f0edf0a7c120e8aa5d46"
+                "reference": "5e572f12d58f9cc3786fa077cb17cdf1cbd16ffe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/676f6ce420c4cb747de4f0edf0a7c120e8aa5d46",
-                "reference": "676f6ce420c4cb747de4f0edf0a7c120e8aa5d46",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dfe-common/zipball/5e572f12d58f9cc3786fa077cb17cdf1cbd16ffe",
+                "reference": "5e572f12d58f9cc3786fa077cb17cdf1cbd16ffe",
                 "shasum": ""
             },
             "require": {
@@ -587,7 +587,7 @@
                 "source": "https://github.com/dreamfactorysoftware/dfe-common/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/dfe-common/issues"
             },
-            "time": "2016-03-09 20:51:32"
+            "time": "2016-03-15 22:02:29"
         },
         {
             "name": "dreamfactory/dfe-database",
