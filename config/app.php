@@ -4,6 +4,7 @@ return [
     //* Application Settings
     //******************************************************************************
     'debug'           => env('APP_DEBUG'),
+    'env'             => env('APP_ENV', 'production'),
     'url'             => env('APP_URL'),
     'timezone'        => env('TIME_ZONE', 'America/New_York'),
     'locale'          => env('LOCALE', 'en'),
@@ -11,7 +12,6 @@ return [
     'key'             => env('APP_KEY'),
     'cipher'          => env('APP_CIPHER', 'AES-256-CBC'),
     'log'             => 'single',
-    'env'             => env('APP_ENV', 'production'),
     /** Set at runtime */
     'version'         => null,
     //******************************************************************************
