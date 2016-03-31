@@ -714,3 +714,11 @@ div.panel-heading > h4 > a {
     text-decoration: none;
     cursor:          pointer;
 }
+
+#form-import .form-group:first-child {
+    margin-bottom: 5px;
+}
+
+#form-import hr {
+    margin:  0 auto 10px;
+}

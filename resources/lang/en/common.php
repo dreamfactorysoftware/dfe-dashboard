@@ -25,7 +25,7 @@ return [
     'instance-name-label'         => 'New Instance Name',
     'instance-id-label'           => 'Imported Instance Name',
     'instance-or-label'           => 'or',
-    'instance-import-label'       => 'Restore Instance',
+    'instance-import-label'       => 'Restore from Backup',
     'instance-import-button-text' => 'Restore',
     'instance-upload-label'       => 'Upload Import',
     'instance-upload-button-text' => 'Upload',

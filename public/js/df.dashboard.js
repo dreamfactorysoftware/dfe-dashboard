@@ -189,6 +189,12 @@ jQuery(
             'change', function(e) {
                 var $_form = $('#form-import'), $_selected = $(this).find(':selected');
 
+                if ($_selected.data('instance-id').length) {
+                    $_form.find('input[name="instance-id"]').attr('disabled', 'disabled').addClass('disabled');
+                } else {
+                    $_form.find('input[name="instance-id"]').removeAttr('disabled').removeClass('disabled');
+                }
+
                 $_form.find('input[name="instance-id"]').val($_selected.data('instance-id'));
                 $_form.find('input[name="snapshot-id"]').val($_selected.val());
             }

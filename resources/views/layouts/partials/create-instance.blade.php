@@ -5,11 +5,9 @@
     <ul class="nav nav-tabs" role="tablist" id="instance-create-tabs">
         <li role="presentation" class="active"><a href="#new-instance" aria-controls="new-instance" role="tab" data-toggle="tab">New Instance</a></li>
         @if( !empty( $importables ) )
-            <li role="presentation"><a href="#import-instance" aria-controls="import-instance" role="tab" data-toggle="tab">Restore from Export</a></li>
+            <li role="presentation"><a href="#import-instance" aria-controls="import-instance" role="tab" data-toggle="tab">New Instance from Export</a></li>
         @endif
-        @if(config('dashboard.allow-import-uploads'))
-            <li role="presentation"><a href="#upload-instance" aria-controls="upload-instance" role="tab" data-toggle="tab">Upload an Export</a></li>
-        @endif
+        <li role="presentation"><a href="#upload-instance" aria-controls="upload-instance" role="tab" data-toggle="tab">New Instance from Package</a></li>
     </ul>
 
     <!-- Tab panes -->
@@ -54,9 +52,10 @@
             </form>
         </div>
 
-        @if( !empty( $importables ) )
-            <div role="tabpanel" class="tab-pane " id="import-instance">
-                <form id="form-import" class="form-horizontal" method="POST">
+        <div role="tabpanel" class="tab-pane " id="import-instance">
+            <form id="form-import" class="form-horizontal" method="POST">
+
+                @if( !empty( $importables ) )
                     <div class="form-group">
                         <label for="import-id" class="col-md-2 control-label">{{ \Lang::get('common.instance-import-label') }}</label>
 
@@ -73,21 +72,67 @@
                             </select>
                             {!! \Lang::get('common.instance-import-help') !!}
                         </div>
+
                         <div class="col-md-2">
                             <button id="btn-import-instance" type="submit" class="btn btn-primary btn-success btn-md"
                                     data-instance-action="import">
                                 <i class="fa fa-fw {{ config('icons.import') }} fa-move-right"></i><span>{{ \Lang::get('common.instance-import-button-text') }}</span>
                             </button>
                         </div>
+                        {{--@if(config('dashboard.allow-import-uploads'))--}}
+                        {{--@if(config('dashboard.allow-package-uploads'))--}}
                     </div>
-                    <input type="hidden" name="instance-id" value="">
-                    <input type="hidden" name="snapshot-id" value="">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <input type="hidden" name="_provisioner"
-                           value="{{ \DreamFactory\Enterprise\Database\Enums\GuestLocations::DFE_CLUSTER }}">
-                </form>
-            </div>
-        @endif
+                @endif
+
+                <div class="form-group">
+                    <div class="col-md-offset-1 col-md-10 col-md-offset-1">
+                        <hr />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="instance-id"
+                           class="col-md-2 control-label">{{ \Lang::get('common.instance-id-label') }}</label>
+
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <input type="text"
+                                   maxlength="64"
+                                   required
+                                   name="instance-id"
+                                   id="instance-id"
+                                   class="form-control"
+                                   placeholder="{{ $defaultInstanceName }}">
+                            <span class="input-group-addon">{{ $defaultDomain }}</span>
+                        </div>
+                        {!! \Lang::get('common.instance-create-help') !!}
+                    </div>
+                </div>
+
+                @if(config('dashboard.allow-import-uploads'))
+                    <div class="form-group">
+                        <label for="upload-file"
+                               class="col-md-2 control-label"
+                               style="padding-top:0; vertical-align:middle;">{{ \Lang::get('common.instance-upload-label') }}</label>
+
+                        <div class="col-md-8">
+                            <input type="file" class="form-control" name="upload-file" id="upload-file" accept="application/gz,application/zip">
+                            {!! \Lang::get('common.instance-upload-help') !!}
+                        </div>
+                        <div class="col-md-2">
+                            <button id="btn-upload-instance" type="submit" class="btn btn-primary btn-success btn-md" data-instance-action="upload">
+                                <i class="fa fa-fw {{ config('icons.upload') }} fa-move-right"></i><span>{{ \Lang::get('common.instance-upload-button-text') }}</span>
+                            </button>
+                        </div>
+                    </div>
+                @endif
+
+                <input type="hidden" name="snapshot-id" value="">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="_provisioner"
+                       value="{{ \DreamFactory\Enterprise\Database\Enums\GuestLocations::DFE_CLUSTER }}">
+            </form>
+        </div>
 
         @if(config('dashboard.allow-import-uploads'))
 
