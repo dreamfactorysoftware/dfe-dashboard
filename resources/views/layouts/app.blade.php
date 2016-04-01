@@ -12,26 +12,38 @@ if (null !== ($_customCssFile = config('dfe.common.custom-css-file'))) {
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
     <title>@yield('page-title', 'Welcome!') | {!! config('dfe.common.display-name') !!}</title>
+    {{-- Fonts --}}
+    <link href='//fonts.googleapis.com/css?family=Oswald|Montserrat' rel='stylesheet' type='text/css'>
+    {{-- Favicons --}}
+    <link rel="icon" type="image/png" href="/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/img/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/img/favicon-16x16.png" sizes="16x16">
+    {{-- iOS icons --}}
     <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-touch-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-touch-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon-76x76.png">
     <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-touch-icon-114x114.png">
     <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-touch-icon-120x120.png">
-    <link rel="icon" type="image/png" href="/img/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="/img/favicon-96x96.png" sizes="96x96">
-    <link rel="icon" type="image/png" href="/img/favicon-16x16.png" sizes="16x16">
+    {{-- Android icons --}}
     <link rel="manifest" href="/img/manifest.json">
+
+    {{-- CSS --}}
     @section('page-theme')
-        <link href="/static/bootswatch-3.3.6/flatly.min.css" rel="stylesheet">@show
+        <link href="/static/bootswatch-3.3.6/flatly.min.css" rel="stylesheet">
+    @show
+
     <link href="/static/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href='//fonts.googleapis.com/css?family=Oswald|Montserrat' rel='stylesheet' type='text/css'>
+    <link href="/static/bootstrap-tour-0.10.2/css/bootstrap-tour.min.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
     <link href="/css/partner.css" rel="stylesheet">
-    <script src="/static/jquery-2.1.4/jquery.min.js"></script>
+
     <!--[if lt IE 9]>
     <script src="//oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script><![endif]-->
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/static/jquery-2.1.4/jquery.min.js"></script>
 
     @section('head-links')
     @show
@@ -43,18 +55,18 @@ if (null !== ($_customCssFile = config('dfe.common.custom-css-file'))) {
         <script type="text/javascript">
             var _rcCallback = function() {
                 var _gr = {
-                    'sitekey': '{{ $_recaptchaSiteKey }}',
-                    'theme':   'light'
+                    'sitekey': '{{ $_recaptchaSiteKey }}', 'theme': 'light'
                 };
 
                 $('.g-recaptcha').each(function() {
-                    var _id = $(this).attr('id');
+                        var _id = $(this).attr('id');
 
-                    if (_id) {
-                        //noinspection JSUnresolvedVariable
-                        grecaptcha.render(_id, _gr);
+                        if (_id) {
+                            //noinspection JSUnresolvedVariable
+                            grecaptcha.render(_id, _gr);
+                        }
                     }
-                });
+                );
             };
         </script>
     @endif
@@ -101,6 +113,7 @@ if (null !== ($_customCssFile = config('dfe.common.custom-css-file'))) {
 
 <script src="//www.google.com/recaptcha/api.js?onload=_rcCallback&render=explicit" async defer></script>
 <script src="/static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+<script src="/static/bootstrap-tour-0.10.2/js/bootstrap-tour.js"></script>
 <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
 <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/additional-methods.min.js"></script>
 <script src="/js/instance.validate.js"></script>
@@ -108,5 +121,6 @@ if (null !== ($_customCssFile = config('dfe.common.custom-css-file'))) {
 
 @section('after-body-scripts')
 @show
+
 </body>
 </html>

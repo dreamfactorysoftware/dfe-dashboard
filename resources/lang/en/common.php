@@ -23,15 +23,15 @@ return [
     //* Instance panel text
     //******************************************************************************
     'instance-name-label'          => 'New Instance Name',
-    'instance-id-label'            => 'Imported Instance Name',
+    'instance-id-label'            => 'New Instance Name',
     'instance-or-label'            => 'or',
     'instance-import-label'        => 'Choose Existing Export',
     'instance-import-button-text'  => 'Restore',
     'instance-import-empty-label'  => 'No existing exports',
     'instance-package-button-text' => 'Restore',
     'instance-package-empty-label' => 'No existing exports',
-    'instance-upload-label'        => 'Upload a Backup',
-    'instance-package-label'       => 'Upload a Package',
+    'instance-upload-label'        => 'Upload an Export',
+    'instance-package-label'       => 'Upload a Package<br/><span class="text-muted"><small>optional</small></span>',
     'instance-upload-button-text'  => 'Upload',
     'instance-proof-text'          => 'I am not a robot.',
     'instance-create-heading'      => 'Create New',

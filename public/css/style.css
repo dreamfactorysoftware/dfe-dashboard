@@ -720,5 +720,21 @@ div.panel-heading > h4 > a {
 }
 
 #form-import hr {
-    margin:  0 auto 10px;
+    margin: 0 auto 10px;
+}
+
+/* Default styles for the container */
+.joyride-tip-guide {
+    width:                 300px;
+    -moz-border-radius:    3px;
+    -webkit-border-radius: 3px;
+    border-radius:         3px;
+}
+
+.jr-stop {
+    padding-right: 15px;
+}
+
+.jr-stop p {
+    font-size: 13px;
 }
