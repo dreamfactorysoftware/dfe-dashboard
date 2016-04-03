@@ -139,8 +139,9 @@ var _makeRequest = function(id, action, href) {
 /**
  * Initializes the tour by tab
  * @param tab
+ * @param elem
  */
-var initTour = function(tab) {
+var initTour = function(tab, elem) {
     switch (tab) {
         case 0:
             if (!_options.tour[tab]) {
@@ -155,7 +156,7 @@ var initTour = function(tab) {
                                 placement: 'left'
                             },
                             {
-                                element:   '#new-instance #upload-file',
+                                element:   '#new-instance #upload-package',
                                 title:     'Upload a package',
                                 content:   'You may also upload an existing DreamFactory&trade;-created package file to be installed automatically on your new instance',
                                 placement: 'left'
@@ -167,7 +168,7 @@ var initTour = function(tab) {
             }
             break;
 
-        case 1: //  New from Export
+        case 1: //  Restore
             if (!_options.tour[tab]) {
                 _options.tour[tab] = new Tour({
                         name:     'dfe-dashboard-tour-' + tab,
@@ -198,7 +199,35 @@ var initTour = function(tab) {
             }
             break;
 
-        case 2: //  New from package
+        case 2:
+            if (!_options.tour[tab]) {
+                _options.tour[tab] = new Tour({
+                        name:     'dfe-dashboard-tour-' + tab,
+                        template: '<div class="popover tour"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div><div class="popover-navigation"><button class="btn btn-sm btn-warning" data-role="prev"><i class="fa fa-fw fa-arrow-circle-left"></i> Prev</button><span data-role="separator">|</span><button class="btn btn-sm btn-warning" data-role="next">Next <i class="fa fa-fw fa-arrow-circle-right"></i></button><button class="btn btn-sm btn-warning" data-role="end">End tour</button></div></div>',
+                        steps:    [
+                            {
+                                element:   '.panel-instance:first-child button[id^="instance-launch-"]',
+                                title:     'Launch Your Instance',
+                                content:   'This is a link directly to your new instance. It will open in a new tab/window.',
+                                placement: 'top'
+                            },
+                            {
+                                element:   '.panel-instance:first-child button[id^="instance-delete-"]',
+                                title:     'Delete Your Instance',
+                                content:   'If you have uploaded your own backup, you can choose a new name for your instance here',
+                                placement: 'top'
+                            },
+                            {
+                                element:   '.panel-instance:first-child button[id^="instance-export-"]',
+                                title:     'Export Your Instance',
+                                content:   'This button will delete your instance. There is no way to get it back. Make sure you get an export first.',
+                                placement: 'top'
+                            }
+                        ]
+                    }
+                );
+                _options.tour[tab].init();
+            }
             break;
     }
 
@@ -256,7 +285,7 @@ jQuery(function($) {
 
         /** Clear any alerts after configured time */
         _closeAlert('.alert-dismissable', _dso.alertHideTimeout);
-    
+
         /** Handle the help stuff */
         $('#instance-create-tabs').find('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
                 var _tab = e.target;
@@ -265,5 +294,6 @@ jQuery(function($) {
         );
 
         initTour(0);
+        initTour(2, $('panel-toolbar').get(0));
     }
 );

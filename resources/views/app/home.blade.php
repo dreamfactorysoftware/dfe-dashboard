@@ -40,7 +40,7 @@ $_psa = Flasher::psa('Alert',
 
     <div class="row">
         <div class="col-sm-12 col-md-12">
-            <div class="instance-panel-group">
+            <div class="instance-panel-group" data-instance-count="{{ sizeof($instances) }}">
                 @if (is_string($instances))
                     {!! $instances !!}
                 @elseif(is_array($instances))

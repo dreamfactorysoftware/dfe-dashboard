@@ -174,11 +174,13 @@
 
         Tour.prototype.next = function() {
             var promise;
-            if (true == this._options.autoDone && $('.popover-navigation button[data-role="next"]').hasClass('disabled')) {
-                return this.end();
-            }
             promise = this.hideStep(this._current);
-            return this._callOnPromiseDone(promise, this._showNextStep);
+            return this._callOnPromiseDone(promise,
+                (true == this._options.autoDone && $('.popover-navigation button[data-role="next"]').hasClass('disabled'))
+                    //  Treat the last step as done...
+                    ? this.end()
+                    : this._showNextStep
+            );
         };
 
         Tour.prototype.prev = function() {

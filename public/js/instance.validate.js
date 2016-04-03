@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var _validator, _importValidator, _uploadValidator;
+var _validator, _importValidator;
 
 jQuery(function($) {
         var VALIDATION_CONFIG = {
@@ -48,16 +48,9 @@ jQuery(function($) {
         };
 
         _validator = $('#form-create').validate($.extend({}, VALIDATION_CONFIG, VALIDATION_RULES));
-        // _uploadValidator = $('#form-upload').validate($.extend({}, VALIDATION_CONFIG, VALIDATION_RULES));
 
         var IMPORT_VALIDATION_RULES = {
             rules:    {
-                'instance-id': {
-                    required:     true,
-                    minlength:    3,
-                    maxlength:    64,
-                    alphanumeric: true
-                },
                 'import-id':   {
                     required: function(element) {
                         return null == $("#upload-file").val();
@@ -79,6 +72,6 @@ jQuery(function($) {
             }
         };
 
-        _importValidator = $('#form-import').validate($.extend({}, VALIDATION_CONFIG, IMPORT_VALIDATION_RULES));
+        _importValidator = $('#form-import').validate($.extend({}, VALIDATION_CONFIG, VALIDATION_RULES, IMPORT_VALIDATION_RULES));
     }
 );

@@ -70,7 +70,7 @@ class HomeController extends BaseController
         }
 
         $_payload = \Input::all();
-        
+
         \Log::info('Import file uploaded: ' . \Input::file('upload-file'), $_payload);
 
         Dashboard::importInstance(array_get($_payload, 'instance-id'), \Input::file('upload-file')->getRealPath(), true);
@@ -92,7 +92,7 @@ class HomeController extends BaseController
         $_payload = \Input::all();
 
         \Log::info('Package file uploaded: ' . \Input::file('upload-package'), $_payload);
-
+        
         Dashboard::provisionInstance(array_get($_payload, 'instance-id'), true, false, \Input::file('upload-package')->getRealPath());
 
         return \Redirect::to('/');
@@ -108,7 +108,6 @@ class HomeController extends BaseController
         try {
             /** @type RouteHash $_hash */
             $_hash = RouteHash::with(['snapshot'])->byHash($snapshotId)->firstOrFail();
-            /** @type Filesystem $_fs */
             $_fs = $_hash->snapshot->instance->getSnapshotMount();
             $_fs->readStream($_hash->actual_path_text);
         } catch (\Exception $_ex) {
@@ -126,9 +125,7 @@ class HomeController extends BaseController
     {
         $_status = Dashboard::handleRequest($request, $id);
 
-        /** @noinspection PhpUndefinedMethodInspection */
-
-        return response()->json($_status);
+        return \Response::json($_status);
     }
 
     /**
