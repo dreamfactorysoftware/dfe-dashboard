@@ -12,15 +12,9 @@
     <!-- Tab panes -->
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="new-instance" data-tab-id="0">
-            {{--@if( isset($panelDescription) && !empty($panelDescription) )--}}
-            {{--<div class="panel-description">{!! $panelDescription !!}</div>--}}
-            {{--<hr class="hr" />--}}
-            {{--@endif--}}
-
             <form id="form-create" class="form-horizontal" method="POST">
                 <div class="form-group">
                     <label for="instance-id" class="col-md-2 control-label">{{ \Lang::get('common.instance-name-label') }}</label>
-
                     <div class="col-md-8">
                         <div class="input-group">
                             <input type="text"
@@ -43,26 +37,28 @@
                 @if( !empty( $offerings ) )
                     {!! $offerings !!}
                 @endif
-                <div class="form-group">
-                    <label for="upload-file" class="col-md-2 control-label">{!! \Lang::get('common.instance-package-label') !!}</label>
 
-                    <div class="col-md-8">
-                        <input type="file"
-                               class="form-control"
-                               name="upload-file"
-                               id="upload-file"
-                               accept="application/dfpkg,application/dfac,application/gz,application/zip">
-                        {!! \Lang::get('common.instance-package-help') !!}
+                @if(config('dashboard.allow-package-uploads'))
+                    <div class="form-group">
+                        <label for="upload-package" class="col-md-2 control-label">{!! \Lang::get('common.instance-package-label') !!}</label>
+
+                        <div class="col-md-8">
+                            <input type="file"
+                                   class="form-control"
+                                   name="upload-package"
+                                   id="upload-package"
+                                   accept="application/dfpkg,application/dfac,application/gz,application/zip">
+                            {!! \Lang::get('common.instance-package-help') !!}
+                        </div>
+                        <div class="col-md-2">
+                            <button id="btn-upload-instance" type="submit" class="btn btn-primary btn-success btn-md" data-instance-action="upload">
+                                <i class="fa fa-fw {{ config('icons.upload') }} fa-move-right"></i><span>{{ \Lang::get('common.instance-upload-button-text') }}</span>
+                            </button>
+                        </div>
                     </div>
-                    <div class="col-md-2">
-                        <button id="btn-upload-instance" type="submit" class="btn btn-primary btn-success btn-md" data-instance-action="upload">
-                            <i class="fa fa-fw {{ config('icons.upload') }} fa-move-right"></i><span>{{ \Lang::get('common.instance-upload-button-text') }}</span>
-                        </button>
-                    </div>
-                </div>
+                @endif
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <input type="hidden" name="_provisioner"
-                       value="{{ \DreamFactory\Enterprise\Database\Enums\GuestLocations::DFE_CLUSTER }}">
+                <input type="hidden" name="_provisioner" value="{{ \DreamFactory\Enterprise\Database\Enums\GuestLocations::DFE_CLUSTER }}">
             </form>
         </div>
 
@@ -71,7 +67,6 @@
 
                 <div class="form-group">
                     <label for="import-id" class="col-md-2 control-label">{{ \Lang::get('common.instance-import-label') }}</label>
-
                     <div class="col-md-8">
                         <select name="import-id" id="import-id" class="form-control {{ empty($importables) ? 'disabled' : null }}">
                             @if( !empty( $importables ) )
@@ -135,7 +130,7 @@
                     </div>
                     <div class="col-md-2">
                         <button id="btn-upload-instance" type="submit" class="btn btn-primary btn-success btn-md" data-instance-action="upload">
-                            <i class="fa fa-fw {{ config('icons.upload') }} fa-move-right"></i><span>{{ \Lang::get('common.instance-upload-button-text') }}</span>
+                            <i class="fa fa-fw {{ config('icons.upload') }} fa-move-right"></i><span>{{ \Lang::get('common.instance-upload-restore-button-text') }}</span>
                         </button>
                     </div>
                 </div>

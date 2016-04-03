@@ -256,7 +256,8 @@ jQuery(function($) {
 
         /** Clear any alerts after configured time */
         _closeAlert('.alert-dismissable', _dso.alertHideTimeout);
-
+    
+        /** Handle the help stuff */
         $('#instance-create-tabs').find('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
                 var _tab = e.target;
                 _tab && initTour($(_tab).data('tab-id'));

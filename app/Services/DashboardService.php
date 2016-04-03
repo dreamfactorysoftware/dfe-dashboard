@@ -107,10 +107,10 @@ class DashboardService extends BaseService
                 case 'provision':
                 case 'launch':
                 case 'create':
-                    return $this->provisionInstance($id, true, false);
+                    return $this->provisionInstance($id, true, false, $extra);
 
                 case 'create-remote':
-                    return $this->provisionInstance($id, false, true);
+                    return $this->provisionInstance($id, false, true, $extra);
 
                 case 'deprovision':
                 case 'destroy':
@@ -173,15 +173,20 @@ class DashboardService extends BaseService
     }
 
     /**
-     * @param string $instanceId
-     * @param bool   $trial
-     * @param bool   $remote If true, create instance on user's account
+     * @param string            $instanceId
+     * @param bool              $trial
+     * @param bool              $remote   If true, create instance on user's account
+     * @param string|array|null $packages The package(s) to initialize with
      *
      * @return bool|mixed|\stdClass
      */
-    public function provisionInstance($instanceId, $trial = false, $remote = false)
+    public function provisionInstance($instanceId, $trial = false, $remote = false, $packages = null)
     {
         Flasher::forget();
+
+        if (!empty($package) && !is_array($packages)) {
+            $packages = [$packages];
+        }
 
         $_provisioner = $this->request->input('_provisioner', GuestLocations::DFE_CLUSTER);
 
@@ -212,6 +217,7 @@ class DashboardService extends BaseService
             'owner-id'       => Auth::id(),
             'owner-type'     => OwnerTypes::USER,
             'guest-location' => $_provisioner,
+            'packages'       => $packages,
         ],
             $_clusterConfig);
 
@@ -428,7 +434,7 @@ class DashboardService extends BaseService
 
         $_name = is_object($instance) ? $instance->instance_name_text : 'NEW';
         $_id = is_object($instance) ? $instance->id : 0;
-        $_overrides = $this->getPanelOverrides($panelType); 
+        $_overrides = $this->getPanelOverrides($panelType);
         $_buttons = UX::makeInstanceToolbarButtons($instance->instance_id_text);
 
         return array_merge([

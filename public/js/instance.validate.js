@@ -15,48 +15,70 @@
  */
 var _validator, _importValidator, _uploadValidator;
 
-jQuery(function ($) {
-    var VALIDATION_CONFIG = {
-        submitHandler:  function (form) {
-            _processAction($(form).find('button[type="submit"]'), $(form));
-        },
-        ignoreTitle:    true,
-        errorClass:     'help-block',
-        errorElement:   'p',
-        errorPlacement: function (error, element) {
-            error.appendTo($(element).closest('.form-group')).addClass('col-md-offset-2 col-md-10');
-        },
-        highlight:      function (element, errorClass) {
-            $(element).closest('.form-group').find('p.help-block').hide();
-            $(element).closest('.form-group').removeClass('has-success has-feedback').addClass('has-error has-feedback');
-        },
-        unhighlight:    function (element, errorClass) {
-            $(element).closest('.form-group').removeClass('has-error has-feedback').addClass('has-success has-feedback');
-            $(element).closest('.form-group').find('p.help-block').show();
-        }
-    };
-
-    var VALIDATION_RULES = {
-        rules: {
-            'instance-id': {
-                required:     true,
-                minlength:    3,
-                maxlength:    64,
-                alphanumeric: true
+jQuery(function($) {
+        var VALIDATION_CONFIG = {
+            submitHandler:  function(form) {
+                _processAction($(form).find('button[type="submit"]'), $(form));
+            },
+            ignoreTitle:    true,
+            errorClass:     'help-block',
+            errorElement:   'p',
+            errorPlacement: function(error, element) {
+                error.appendTo($(element).closest('.form-group')).addClass('col-md-offset-2 col-md-10');
+            },
+            highlight:      function(element, errorClass) {
+                $(element).closest('.form-group').find('p.help-block').hide();
+                $(element).closest('.form-group').removeClass('has-success has-feedback').addClass('has-error has-feedback');
+            },
+            unhighlight:    function(element, errorClass) {
+                $(element).closest('.form-group').removeClass('has-error has-feedback').addClass('has-success has-feedback');
+                $(element).closest('.form-group').find('p.help-block').show();
             }
-        }
-    };
+        };
 
-    _validator = $('#form-create').validate($.extend({}, VALIDATION_CONFIG, VALIDATION_RULES));
-    _uploadValidator = $('#form-upload').validate($.extend({}, VALIDATION_CONFIG, VALIDATION_RULES));
-
-    var IMPORT_VALIDATION_RULES = {
-        rules: {
-            'import-id': {
-                required: true
+        var VALIDATION_RULES = {
+            rules: {
+                'instance-id': {
+                    required:     true,
+                    minlength:    3,
+                    maxlength:    64,
+                    alphanumeric: true
+                }
             }
-        }
-    };
+        };
 
-    _importValidator = $('#form-import').validate($.extend({}, VALIDATION_CONFIG, IMPORT_VALIDATION_RULES));
-});
+        _validator = $('#form-create').validate($.extend({}, VALIDATION_CONFIG, VALIDATION_RULES));
+        // _uploadValidator = $('#form-upload').validate($.extend({}, VALIDATION_CONFIG, VALIDATION_RULES));
+
+        var IMPORT_VALIDATION_RULES = {
+            rules:    {
+                'instance-id': {
+                    required:     true,
+                    minlength:    3,
+                    maxlength:    64,
+                    alphanumeric: true
+                },
+                'import-id':   {
+                    required: function(element) {
+                        return null == $("#upload-file").val();
+                    }
+                },
+                'upload-file': {
+                    required: function(element) {
+                        return !$("#import-id").val();
+                    }
+                }
+            },
+            messages: {
+                'import-id':   {
+                    required: 'You must select an existing export or upload your own.'
+                },
+                'upload-file': {
+                    required: 'You must upload an export or choose an existing one.'
+                }
+            }
+        };
+
+        _importValidator = $('#form-import').validate($.extend({}, VALIDATION_CONFIG, IMPORT_VALIDATION_RULES));
+    }
+);

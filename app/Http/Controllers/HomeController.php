@@ -66,14 +66,34 @@ class HomeController extends BaseController
         if (!\Input::file('upload-file')) {
             \Log::error('Import file upload failure.');
 
-            return \Redirect::to('/')->with('failure', 'There was a problem with your request.');
+            return \Redirect::to('/')->with('failure', 'There was a problem with your import upload.');
+        }
+
+        $_payload = \Input::all();
+        
+        \Log::info('Import file uploaded: ' . \Input::file('upload-file'), $_payload);
+
+        Dashboard::importInstance(array_get($_payload, 'instance-id'), \Input::file('upload-file')->getRealPath(), true);
+
+        return \Redirect::to('/');
+    }
+
+    /**
+     * Handle an uploaded import
+     */
+    public function uploadPackage()
+    {
+        if (!\Input::file('upload-package')) {
+            \Log::error('Package file upload failure.');
+
+            return \Redirect::to('/')->with('failure', 'There was a problem with your package upload.');
         }
 
         $_payload = \Input::all();
 
-        \Log::info('Import file uploaded: ' . \Input::file('upload-file'), $_payload);
+        \Log::info('Package file uploaded: ' . \Input::file('upload-package'), $_payload);
 
-        Dashboard::importInstance(array_get($_payload, 'instance-id'), \Input::file('upload-file')->getRealPath(), true);
+        Dashboard::provisionInstance(array_get($_payload, 'instance-id'), true, false, \Input::file('upload-package')->getRealPath());
 
         return \Redirect::to('/');
     }
