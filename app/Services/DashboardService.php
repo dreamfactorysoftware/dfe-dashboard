@@ -83,6 +83,14 @@ class DashboardService extends BaseService
 
     /**
      * @param \Illuminate\Http\Request $request
+     */
+    public function setRequest(Request $request)
+    {
+        $this->request = $request;
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
      * @param string|int               $id
      * @param mixed|null               $extra
      *
@@ -90,7 +98,7 @@ class DashboardService extends BaseService
      */
     public function handleRequest(Request $request, $id = null, $extra = null)
     {
-        $this->request = $request;
+        $this->setRequest($request);
 
         $id = $id ?: $request->input('id');
         $extra = $extra ?: $request->input('extra');
@@ -104,6 +112,7 @@ class DashboardService extends BaseService
             }
 
             switch ($_command) {
+                case 'upload-package':
                 case 'provision':
                 case 'launch':
                 case 'create':

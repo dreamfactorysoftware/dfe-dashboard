@@ -21,7 +21,7 @@ jQuery(function($) {
                 _processAction($(form).find('button[type="submit"]'), $(form));
             },
             ignoreTitle:    true,
-            errorClass:     'help-block',
+            errorClass:     'help-block has-error',
             errorElement:   'p',
             errorPlacement: function(error, element) {
                 error.appendTo($(element).closest('.form-group')).addClass('col-md-offset-2 col-md-10');
@@ -53,12 +53,12 @@ jQuery(function($) {
             rules:    {
                 'import-id':   {
                     required: function(element) {
-                        return null == $("#upload-file").val();
+                        return ($('import-id').data('import-count') > 1 && !$('#import-id').val()) || !$('#upload-file').val();
                     }
                 },
                 'upload-file': {
                     required: function(element) {
-                        return !$("#import-id").val();
+                        return $('import-id').data('import-count') == 1 || !$('#import-id').val();
                     }
                 }
             },

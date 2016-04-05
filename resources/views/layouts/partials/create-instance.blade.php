@@ -16,7 +16,7 @@
     <!-- Tab panes -->
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="new-instance" data-tab-id="0">
-            <form id="form-create" class="form-horizontal" method="POST">
+            <form id="form-create" class="form-horizontal" method="POST" action="/upload-package" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="instance-id" class="col-md-2 control-label">{{ trans('common.instance-name-label') }}</label>
                     <div class="col-md-8">
@@ -50,12 +50,11 @@
                             <input type="file"
                                    class="form-control"
                                    name="upload-package"
-                                   id="upload-package"
-                                   accept="application/dfpkg,application/dfac,application/gz,application/zip">
+                                   id="upload-package">
                             {!! trans('common.instance-package-help') !!}
                         </div>
                         <div class="col-md-2">
-                            <button id="btn-upload-instance" type="submit" class="btn btn-primary btn-success btn-md" data-instance-action="upload">
+                            <button id="btn-upload-package" type="submit" class="btn btn-primary btn-success btn-md" data-instance-action="upload-package">
                                 <i class="fa fa-fw {{ config('icons.upload') }} fa-move-right"></i><span>{{ trans('common.instance-upload-button-text') }}</span>
                             </button>
                         </div>
@@ -67,12 +66,15 @@
         </div>
 
         <div role="tabpanel" class="tab-pane " id="import-instance" data-tab-id="1">
-            <form id="form-import" class="form-horizontal" method="POST">
+            <form id="form-import" class="form-horizontal" method="POST" action="/upload" enctype="multipart/form-data">
 
                 <div class="form-group">
                     <label for="import-id" class="col-md-2 control-label">{{ trans('common.instance-import-label') }}</label>
                     <div class="col-md-8">
-                        <select name="import-id" id="import-id" class="form-control {{ empty($importables) ? 'disabled' : null }}">
+                        <select name="import-id"
+                                id="import-id"
+                                class="form-control {{ empty($importables) ? 'disabled' : null }}"
+                                data-import-count="{{ sizeof($importables) }}">
                             @if( !empty( $importables ) )
                                 <option data-instance-id="" value="">{!! trans('common.instance-import-select-label') !!}
                                 </option>
@@ -112,7 +114,7 @@
                         </label>
 
                         <div class="col-md-8">
-                            <input type="file" class="form-control" name="upload-file" id="upload-file" accept="application/gz,application/zip">
+                            <input type="file" class="form-control" name="upload-file" id="upload-file" accept="application/gz,application/zip,application/tgz">
                             {!! trans('common.instance-upload-help') !!}
                         </div>
                     </div>
@@ -133,6 +135,7 @@
                         </div>
                         {!! trans('common.instance-create-help') !!}
                     </div>
+
                     <div class="col-md-2">
                         <button id="btn-upload-instance" type="submit" class="btn btn-primary btn-success btn-md" data-instance-action="upload">
                             <i class="fa fa-fw {{ config('icons.upload') }} fa-move-right"></i><span>{{ trans('common.instance-upload-restore-button-text') }}</span>

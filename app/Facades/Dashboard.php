@@ -19,6 +19,7 @@ use Illuminate\View\View;
  * @method static mixed panelConfig($panel, $key, $default = null)
  * @method static View|string renderPanel($panel, array $data = [], $render = true)
  * @method static array|\stdClass|\stdClass[] getProvisioners()
+ * @method static void setRequest(Request $request)
  * @method static int push(InstancePanel $panel)
  * @method static mixed|null|InstancePanel pop()
  * @method static string renderStack(array $mergeData = [])

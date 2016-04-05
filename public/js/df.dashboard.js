@@ -46,7 +46,11 @@ var _closeAlert = function(selector, delay, show) {
  */
 var _processAction = function($element, $form) {
     //  Skip this for uploads...
-    if ($form && 'form-upload' == $form.attr('id')) {
+    if ($form && 'form-import' == $form.attr('id') && $('input[name="upload-file"]', $form).val()) {
+        return $form.submit();
+    }
+
+    if ($form && 'form-create' == $form.attr('id') && $('input[name="upload-package"]', $form).val()) {
         return $form.submit();
     }
 
@@ -65,9 +69,10 @@ var _processAction = function($element, $form) {
                 alert('Invalid instance name.');
             }
             break;
+
         case 'import':
             _id = $('input[name="instance-id"]', $form).val();
-            _extra = $('input[name="snapshot-id"]', $form).val();
+            _extra = $('input[name="import-id"]', $form).val();
             break;
         default:
             $element.addClass('disabled').prop('disabled', true);
@@ -93,6 +98,7 @@ var _makeRequest = function(id, action, href) {
         case 'launch':
             window.top.open(href, id);
             return;
+
         case 'destroy':
         case 'deprovision':
         case 'delete':
@@ -100,20 +106,24 @@ var _makeRequest = function(id, action, href) {
                 return;
             }
             break;
+
         case 'start':
             if (!confirm('Start instance "' + id + '"?')) {
                 return;
             }
             break;
+
         case 'stop':
             if (!confirm('Stop instance "' + id + '"?')) {
                 return;
             }
             break;
+
         case 'provision':
         case 'create':
         case 'help':
             break;
+
         case 'export':
             if (!confirm('Export instance "' + id + '"?')) {
                 return;
@@ -244,9 +254,7 @@ jQuery(function($) {
         var $_toolbars = $('div[id^="instance-toolbar-"]');
 
         //	Set form if not already
-        if (!_dso.controlForm) {
-            _dso.controlForm = $('form#_dsp-control');
-        }
+        _dso.controlForm = _dso.controlForm || $('form#_dsp-control');
 
         //	Open/close toolbar
         $_toolbars.on('show.bs.collapse', function() {

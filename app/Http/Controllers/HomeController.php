@@ -60,8 +60,12 @@ class HomeController extends BaseController
 
     /**
      * Handle an uploaded import
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function upload()
+    public function upload(Request $request)
     {
         if (!\Input::file('upload-file')) {
             \Log::error('Import file upload failure.');
@@ -73,6 +77,7 @@ class HomeController extends BaseController
 
         \Log::info('Import file uploaded: ' . \Input::file('upload-file'), $_payload);
 
+        Dashboard::setRequest($request);
         Dashboard::importInstance(array_get($_payload, 'instance-id'), \Input::file('upload-file')->getRealPath(), true);
 
         return \Redirect::to('/');
@@ -80,8 +85,12 @@ class HomeController extends BaseController
 
     /**
      * Handle an uploaded import
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function uploadPackage()
+    public function uploadPackage(Request $request)
     {
         if (!\Input::file('upload-package')) {
             \Log::error('Package file upload failure.');
@@ -92,7 +101,8 @@ class HomeController extends BaseController
         $_payload = \Input::all();
 
         \Log::info('Package file uploaded: ' . \Input::file('upload-package'), $_payload);
-        
+
+        Dashboard::setRequest($request);
         Dashboard::provisionInstance(array_get($_payload, 'instance-id'), true, false, \Input::file('upload-package')->getRealPath());
 
         return \Redirect::to('/');
