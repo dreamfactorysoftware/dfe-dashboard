@@ -1,8 +1,18 @@
+/*!
+ * DreamFactory Enterprise(tm) User Dashboard
+ * Copyright 2012-2102 DreamFactory Software, Inc. All Rights Reserved.
+ * 
+ * NOTICE: All information contained herein is, and remains the property of DreamFactory Software, Inc. and its
+ * suppliers, if any. The intellectual and technical concepts contained herein are proprietary to DreamFactory
+ * Software, Inc. and its suppliers and may be covered by U.S. and Foreign Patents, patents in process, and are
+ * protected by trade secret or copyright law. Dissemination of this information or reproduction of this material is
+ * strictly forbidden unless prior written permission is obtained from DreamFactory Software, Inc.
+ */
 /**
  * Our global options
  */
 var _options = {
-    alertHideDelay: 10000, notifyDiv: 'div#request-message', ajaxMessageFadeTime: 6000, tour: [null, null, null]
+    alertHideDelay: 10000, notifyDiv: 'div#request-message', ajaxMessageFadeTime: 6000
 };
 /**
  * Global settings
@@ -12,11 +22,6 @@ var _options = {
 var _dso = {
     controlForm: null, statusCheckFrequency: 30000, alertHideTimeout: 30000
 };
-/**
- * @type {boolean}
- * @private
- */
-var _checking = false;
 /**
  * Sets up a timer to close an open alert
  * @param selector
@@ -79,7 +84,7 @@ var _processAction = function($element, $form) {
             break;
     }
 
-    var _result = _makeRequest(_id, _action, _extra || null);
+    _makeRequest(_id, _action, _extra || null);
 
     $element.removeClass('disabled').prop('disabled', false);
 };
@@ -147,106 +152,6 @@ var _makeRequest = function(id, action, href) {
 };
 
 /**
- * Initializes the tour by tab
- * @param tab
- * @param elem
- */
-var initTour = function(tab, elem) {
-    switch (tab) {
-        case 0:
-            if (!_options.tour[tab]) {
-                _options.tour[tab] = new Tour({
-                        name:     'dfe-dashboard-tour-' + tab,
-                        template: '<div class="popover tour"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div><div class="popover-navigation"><button class="btn btn-sm btn-warning" data-role="prev"><i class="fa fa-fw fa-arrow-circle-left"></i> Prev</button><span data-role="separator">|</span><button class="btn btn-sm btn-warning" data-role="next">Next <i class="fa fa-fw fa-arrow-circle-right"></i></button><button class="btn btn-sm btn-warning" data-role="end">End tour</button></div></div>',
-                        steps:    [
-                            {
-                                element:   '#new-instance input#instance-id',
-                                title:     'New Instance Name',
-                                content:   'Choose a name for your new DreamFactory&trade; instance, and enter it here',
-                                placement: 'left'
-                            },
-                            {
-                                element:   '#new-instance #upload-package',
-                                title:     'Upload a package',
-                                content:   'You may also upload an existing DreamFactory&trade;-created package file to be installed automatically on your new instance',
-                                placement: 'left'
-                            }
-                        ]
-                    }
-                );
-                _options.tour[tab].init();
-            }
-            break;
-
-        case 1: //  Restore
-            if (!_options.tour[tab]) {
-                _options.tour[tab] = new Tour({
-                        name:     'dfe-dashboard-tour-' + tab,
-                        template: '<div class="popover tour"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div><div class="popover-navigation"><button class="btn btn-sm btn-warning" data-role="prev"><i class="fa fa-fw fa-arrow-circle-left"></i> Prev</button><span data-role="separator">|</span><button class="btn btn-sm btn-warning" data-role="next">Next <i class="fa fa-fw fa-arrow-circle-right"></i></button><button class="btn btn-sm btn-warning" data-role="end">End tour</button></div></div>',
-                        steps:    [
-                            {
-                                element:   '#import-instance #import-id',
-                                title:     'Have an existing export?',
-                                content:   'We keep a backup of all your exported instances, choose one to instantly restore it',
-                                placement: 'left'
-                            },
-                            {
-                                element:   '#import-instance #upload-file',
-                                title:     'Upload your own!',
-                                content:   'No backups available? You can upload any DreamFactory&trade; export and restore it on this system',
-                                placement: 'left'
-                            },
-                            {
-                                element:   '#import-instance #instance-id',
-                                title:     'Name your instance',
-                                content:   'If you have uploaded your own backup, you can choose a new name for your instance here',
-                                placement: 'left'
-                            }
-                        ]
-                    }
-                );
-                _options.tour[tab].init();
-            }
-            break;
-
-        case 2:
-            if (!_options.tour[tab]) {
-                _options.tour[tab] = new Tour({
-                        name:     'dfe-dashboard-tour-' + tab,
-                        template: '<div class="popover tour"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div><div class="popover-navigation"><button class="btn btn-sm btn-warning" data-role="prev"><i class="fa fa-fw fa-arrow-circle-left"></i> Prev</button><span data-role="separator">|</span><button class="btn btn-sm btn-warning" data-role="next">Next <i class="fa fa-fw fa-arrow-circle-right"></i></button><button class="btn btn-sm btn-warning" data-role="end">End tour</button></div></div>',
-                        steps:    [
-                            {
-                                element:   '.panel-instance:first-child button[id^="instance-launch-"]',
-                                title:     'Launch Your Instance',
-                                content:   'This is a link directly to your new instance. It will open in a new tab/window.',
-                                placement: 'top'
-                            },
-                            {
-                                element:   '.panel-instance:first-child button[id^="instance-delete-"]',
-                                title:     'Delete Your Instance',
-                                content:   'If you have uploaded your own backup, you can choose a new name for your instance here',
-                                placement: 'top'
-                            },
-                            {
-                                element:   '.panel-instance:first-child button[id^="instance-export-"]',
-                                title:     'Export Your Instance',
-                                content:   'This button will delete your instance. There is no way to get it back. Make sure you get an export first.',
-                                placement: 'top'
-                            }
-                        ]
-                    }
-                );
-                _options.tour[tab].init();
-            }
-            break;
-    }
-
-    if (_options.tour[tab]) {
-        _options.tour[tab].start();
-    }
-};
-
-/**
  * DR
  */
 jQuery(function($) {
@@ -281,7 +186,7 @@ jQuery(function($) {
         );
 
         //  Set the data-instance-id on btn-import-instance when an import is chosen
-        $('select#import-id').on('change', function(e) {
+        $('select#import-id').on('change', function() {
                 var $_form = $('#form-import'), $_selected = $(this).find(':selected');
                 $_form.find('input[name="instance-id"]').val($_selected.data('instance-id'));
                 $_form.find('input[name="snapshot-id"]').val($_selected.val());
@@ -293,15 +198,5 @@ jQuery(function($) {
 
         /** Clear any alerts after configured time */
         _closeAlert('.alert-dismissable', _dso.alertHideTimeout);
-
-        /** Handle the help stuff */
-        $('#instance-create-tabs').find('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
-                var _tab = e.target;
-                _tab && initTour($(_tab).data('tab-id'));
-            }
-        );
-
-        initTour(0);
-        initTour(2, $('panel-toolbar').get(0));
     }
 );

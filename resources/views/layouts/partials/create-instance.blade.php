@@ -15,7 +15,7 @@
 
     <!-- Tab panes -->
     <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="new-instance" data-tab-id="0">
+        <div role="tabpanel" class="tab-pane fade in active" id="new-instance" data-tab-id="0">
             <form id="form-create" class="form-horizontal" method="POST" action="/upload-package" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="instance-id" class="col-md-2 control-label">{{ trans('common.instance-name-label') }}</label>
@@ -65,7 +65,7 @@
             </form>
         </div>
 
-        <div role="tabpanel" class="tab-pane " id="import-instance" data-tab-id="1">
+        <div role="tabpanel" class="tab-pane fade" id="import-instance" data-tab-id="1">
             <form id="form-import" class="form-horizontal" method="POST" action="/upload" enctype="multipart/form-data">
 
                 <div class="form-group">
