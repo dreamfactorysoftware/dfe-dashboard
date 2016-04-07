@@ -22,7 +22,7 @@ return [
     //******************************************************************************
     'common'           => [
         'display-name'       => 'DreamFactory™ Enterprise Dashboard',
-        'display-version'    => env('DFE_VERSION', '1.0.15'),
+        'display-version'    => env('DFE_VERSION', '1.0.16'),
         'display-copyright'  => '© DreamFactory Software, Inc. 2012-' . date('Y') . '. All Rights Reserved.',
         /**
          * Theme selection -- a bootswatch theme name
