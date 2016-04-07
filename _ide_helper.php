@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.2.27 on 2016-03-30.
+ * Generated for Laravel 5.2.29 on 2016-04-07.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -4155,6 +4155,17 @@ namespace {
         }
         
         /**
+         * Add a "cross join" clause to the query.
+         *
+         * @param string $table
+         * @return \Illuminate\Database\Query\Builder|static 
+         * @static 
+         */
+        public static function crossJoin($table){
+            return \Illuminate\Database\Query\Builder::crossJoin($table);
+        }
+        
+        /**
          * Apply the callback's query changes if the given "value" is true.
          *
          * @param bool $value
@@ -7156,7 +7167,7 @@ namespace {
          * Here is the process to determine the format:
          * 
          *  * format defined by the user (with setRequestFormat())
-         *  * _format request parameter
+         *  * _format request attribute
          *  * $default
          *
          * @param string $default The default format
@@ -9886,7 +9897,7 @@ namespace {
          * Here is the process to determine the format:
          * 
          *  * format defined by the user (with setRequestFormat())
-         *  * _format request parameter
+         *  * _format request attribute
          *  * $default
          *
          * @param string $default The default format
@@ -12845,6 +12856,16 @@ namespace {
          * 
          *
          * @param \Illuminate\Http\Request $request
+         * @static 
+         */
+        public static function setRequest($request){
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::setRequest($request);
+        }
+        
+        /**
+         * 
+         *
+         * @param \Illuminate\Http\Request $request
          * @param string|int $id
          * @param mixed|null $extra
          * @return bool|mixed|\stdClass|void 
@@ -12860,11 +12881,12 @@ namespace {
          * @param string $instanceId
          * @param bool $trial
          * @param bool $remote If true, create instance on user's account
+         * @param string|array|null $packages The package(s) to initialize with
          * @return bool|mixed|\stdClass 
          * @static 
          */
-        public static function provisionInstance($instanceId, $trial = false, $remote = false){
-            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::provisionInstance($instanceId, $trial, $remote);
+        public static function provisionInstance($instanceId, $trial = false, $remote = false, $packages = null){
+            return \DreamFactory\Enterprise\Dashboard\Services\DashboardService::provisionInstance($instanceId, $trial, $remote, $packages);
         }
         
         /**
@@ -13316,6 +13338,19 @@ namespace {
         }
         
         /**
+         * We want the package path of the instance to point to the user's private package area
+         *
+         * @param \DreamFactory\Enterprise\Database\Models\Instance $instance
+         * @param string|null $append
+         * @param bool $create
+         * @return string 
+         * @static 
+         */
+        public static function getPackagePath($instance, $append = null, $create = false){
+            return \DreamFactory\Enterprise\Storage\Services\InstanceStorageService::getPackagePath($instance, $append, $create);
+        }
+        
+        /**
          * We want the private path of the instance to point to the user's area. Instances have no "private path" per se.
          *
          * @param \DreamFactory\Enterprise\Database\Models\Instance $instance
@@ -13423,6 +13458,18 @@ namespace {
          */
         public static function getPrivateStorageMount($instance, $tag = null){
             return \DreamFactory\Enterprise\Storage\Services\InstanceStorageService::getPrivateStorageMount($instance, $tag);
+        }
+        
+        /**
+         * 
+         *
+         * @param \DreamFactory\Enterprise\Database\Models\Instance $instance
+         * @param string $tag
+         * @return \League\Flysystem\Filesystem 
+         * @static 
+         */
+        public static function getPackageStorageMount($instance, $tag = null){
+            return \DreamFactory\Enterprise\Storage\Services\InstanceStorageService::getPackageStorageMount($instance, $tag);
         }
         
         /**
