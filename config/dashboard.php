@@ -14,6 +14,8 @@ return [
     'require-captcha'             => env('DFE_REQUIRE_RECAPTCHA_FOR_LAUNCH', false),
     /** If true, users are allowed to upload their own exports for importing. Defaults to "false" */
     'allow-import-uploads'        => env('DFE_ALLOW_IMPORT_UPLOADS', false),
+    /** If true, users are allowed to upload their own packages for instance creation. Defaults to "false" */
+    'allow-package-uploads'       => env('DFE_ALLOW_PACKAGE_UPLOADS', false),
     //  Instance defaults
     'default-dns-zone'            => env('DFE_DEFAULT_DNS_ZONE', 'enterprise'),
     'default-dns-domain'          => env('DFE_DEFAULT_DNS_DOMAIN', 'dreamfactory.com'),

@@ -27,7 +27,6 @@ return [
     'instance-import-label'       => 'Restaurar una Exportación',
     'instance-import-button-text' => 'Importación',
     'instance-proof-text'         => 'Yo no soy un robot.',
-    'instance-create-heading'     => 'Crear Nuevo',
     'instance-create-title'       => '¡Bienvenido a su DreamFactory Dashboard (panel de información)! El Dashboard se utiliza para crear y gestionar todas sus DreamFactory máquinas en un solo lugar .',
     'instance-create-button-text' => 'Crear',
     'instance-create-help'        => <<<HTML

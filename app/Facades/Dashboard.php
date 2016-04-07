@@ -9,6 +9,8 @@ use Illuminate\View\View;
 /**
  * Dashboard
  *
+ * @see \DreamFactory\Enterprise\Dashboard\Services\DashboardService
+ *
  * @method static mixed handleRequest(Request $request, $id = null, $extra = null);
  * @method static array|null|string userInstanceTable(array $data = null, $render = false)
  * @method static string renderInstance($view, array $data = [], $panel = 'default')
@@ -17,10 +19,13 @@ use Illuminate\View\View;
  * @method static mixed panelConfig($panel, $key, $default = null)
  * @method static View|string renderPanel($panel, array $data = [], $render = true)
  * @method static array|\stdClass|\stdClass[] getProvisioners()
+ * @method static void setRequest(Request $request)
  * @method static int push(InstancePanel $panel)
  * @method static mixed|null|InstancePanel pop()
  * @method static string renderStack(array $mergeData = [])
  * @method static bool|mixed|\stdClass importInstance($instanceId, $snapshotId, $file = false)
+ * @method static bool|mixed|\stdClass provisionInstance($instanceId, $trial = false, $remote = false, $package = null)
+ * @method static bool|mixed|\stdClass deprovisionInstance($instanceId)
  */
 class Dashboard extends Facade
 {

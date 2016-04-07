@@ -60,20 +60,50 @@ class HomeController extends BaseController
 
     /**
      * Handle an uploaded import
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function upload()
+    public function upload(Request $request)
     {
         if (!\Input::file('upload-file')) {
             \Log::error('Import file upload failure.');
 
-            return \Redirect::to('/')->with('failure', 'There was a problem with your request.');
+            return \Redirect::to('/')->with('failure', 'There was a problem with your import upload.');
         }
 
         $_payload = \Input::all();
 
         \Log::info('Import file uploaded: ' . \Input::file('upload-file'), $_payload);
 
+        Dashboard::setRequest($request);
         Dashboard::importInstance(array_get($_payload, 'instance-id'), \Input::file('upload-file')->getRealPath(), true);
+
+        return \Redirect::to('/');
+    }
+
+    /**
+     * Handle an uploaded import
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function uploadPackage(Request $request)
+    {
+        if (!\Input::file('upload-package')) {
+            \Log::error('Package file upload failure.');
+
+            return \Redirect::to('/')->with('failure', 'There was a problem with your package upload.');
+        }
+
+        $_payload = \Input::all();
+
+        \Log::info('Package file uploaded: ' . \Input::file('upload-package'), $_payload);
+
+        Dashboard::setRequest($request);
+        Dashboard::provisionInstance(array_get($_payload, 'instance-id'), true, false, \Input::file('upload-package')->getRealPath());
 
         return \Redirect::to('/');
     }
@@ -88,7 +118,6 @@ class HomeController extends BaseController
         try {
             /** @type RouteHash $_hash */
             $_hash = RouteHash::with(['snapshot'])->byHash($snapshotId)->firstOrFail();
-            /** @type Filesystem $_fs */
             $_fs = $_hash->snapshot->instance->getSnapshotMount();
             $_fs->readStream($_hash->actual_path_text);
         } catch (\Exception $_ex) {
@@ -106,9 +135,7 @@ class HomeController extends BaseController
     {
         $_status = Dashboard::handleRequest($request, $id);
 
-        /** @noinspection PhpUndefinedMethodInspection */
-
-        return response()->json($_status);
+        return \Response::json($_status);
     }
 
     /**
