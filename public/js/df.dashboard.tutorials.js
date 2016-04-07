@@ -28,19 +28,19 @@ var tutOpts = {
                         content:   'You may also upload an existing DreamFactory&trade;-created package file to be installed automatically on your new instance',
                         placement: 'left'
                     }, {
-                        element:   '.instance-panel-group .panel-instance:first-child .panel-toolbar button[id^="instance-launch-"]',
+                        element:   '.instance-panel-group .panel-instance:first-child .panel-toolbar button[id^="instance-launch-"]:first',
                         title:     'Launch Your Instance',
                         content:   'This is a link directly to your new instance. It will open in a new tab/window.',
                         placement: 'top'
                     },
                     {
-                        element:   '.instance-panel-group .panel-instance:first-child .panel-toolbar button[id^="instance-delete-"]',
+                        element:   '.instance-panel-group .panel-instance:first-child .panel-toolbar button[id^="instance-delete-"]:first',
                         title:     'Delete Your Instance',
                         content:   'If you have uploaded your own backup, you can choose a new name for your instance here',
                         placement: 'top'
                     },
                     {
-                        element:   '.instance-panel-group .panel-instance:first-child .panel-toolbar button[id^="instance-export-"]',
+                        element:   '.instance-panel-group .panel-instance:first-child .panel-toolbar button[id^="instance-export-"]:first',
                         title:     'Export Your Instance',
                         content:   'This button will delete your instance. There is no way to get it back. Make sure you get an export first.',
                         placement: 'top'
@@ -85,6 +85,13 @@ var initializeTutorials = function(newInstance, force) {
     if (force || null === tutOpts.tour[tab]) {
         tutOpts.tour[tab] = new Tour(newInstance ? tutOpts.settings.new : tutOpts.settings.import);
         tutOpts.tour[tab].init();
+
+        //  Prevent disabled clicks
+        $('button').on('click', '.disabled', function(e) {
+                e.preventDefault();
+                return false;
+            }
+        )
     }
 
     if (tutOpts.tour[tab]) {
