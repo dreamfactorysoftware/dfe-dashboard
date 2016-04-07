@@ -27,24 +27,26 @@ var tutOpts = {
                         title:     'Upload a package',
                         content:   'You may also upload an existing DreamFactory&trade;-created package file to be installed automatically on your new instance',
                         placement: 'left'
-                    }, {
-                        element:   '.instance-panel-group .panel-instance:first-child .panel-toolbar button[id^="instance-launch-"]:first',
-                        title:     'Launch Your Instance',
-                        content:   'This is a link directly to your new instance. It will open in a new tab/window.',
-                        placement: 'top'
-                    },
-                    {
-                        element:   '.instance-panel-group .panel-instance:first-child .panel-toolbar button[id^="instance-delete-"]:first',
-                        title:     'Delete Your Instance',
-                        content:   'This button will delete your instance. There is no way to get it back. Make sure you get an export first.',
-                        placement: 'top'
-                    },
-                    {
-                        element:   '.instance-panel-group .panel-instance:first-child .panel-toolbar button[id^="instance-export-"]:first',
-                        title:     'Export Your Instance',
-                        content:   'Click here to make an export of your instance. We keep a backup as well for easy restoration.',
-                        placement: 'top'
                     }
+                    // ,
+                    // {
+                    //     element:   '.instance-panel-group .panel-instance .panel-toolbar button[id^="instance-launch-"]:first',
+                    //     title:     'Launch Your Instance',
+                    //     content:   'This is a link directly to your new instance. It will open in a new tab/window.',
+                    //     placement: 'top'
+                    // },
+                    // {
+                    //     element:   '.instance-panel-group .panel-instance .panel-toolbar button[id^="instance-delete-"]:first',
+                    //     title:     'Delete Your Instance',
+                    //     content:   'This button will delete your instance. There is no way to get it back. Make sure you get an export first.',
+                    //     placement: 'top'
+                    // },
+                    // {
+                    //     element:   '.instance-panel-group .panel-instance .panel-toolbar button[id^="instance-export-"]:first',
+                    //     title:     'Export Your Instance',
+                    //     content:   'Click here to make an export of your instance. We keep a backup as well for easy restoration.',
+                    //     placement: 'top'
+                    // }
                 ]
             },
             import: {
