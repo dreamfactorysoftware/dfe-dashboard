@@ -36,13 +36,13 @@ var tutOpts = {
                     {
                         element:   '.instance-panel-group .panel-instance:first-child .panel-toolbar button[id^="instance-delete-"]:first',
                         title:     'Delete Your Instance',
-                        content:   'If you have uploaded your own backup, you can choose a new name for your instance here',
+                        content:   'This button will delete your instance. There is no way to get it back. Make sure you get an export first.',
                         placement: 'top'
                     },
                     {
                         element:   '.instance-panel-group .panel-instance:first-child .panel-toolbar button[id^="instance-export-"]:first',
                         title:     'Export Your Instance',
-                        content:   'This button will delete your instance. There is no way to get it back. Make sure you get an export first.',
+                        content:   'Click here to make an export of your instance. We keep a backup as well for easy restoration.',
                         placement: 'top'
                     }
                 ]
