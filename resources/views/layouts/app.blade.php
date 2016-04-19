@@ -34,7 +34,6 @@ if (null !== ($_customCssFile = config('dfe.common.custom-css-file'))) {
     @show
 
     <link href="/static/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/static/bootstrap-tour-0.10.2/css/bootstrap-tour.min.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
     <link href="/css/partner.css" rel="stylesheet">
 
@@ -113,11 +112,9 @@ if (null !== ($_customCssFile = config('dfe.common.custom-css-file'))) {
 
 <script src="//www.google.com/recaptcha/api.js?onload=_rcCallback&render=explicit" async defer></script>
 <script src="/static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
-<script src="/static/bootstrap-tour-0.10.2/js/bootstrap-tour.js"></script>
 <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
 <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/additional-methods.min.js"></script>
 <script src="/js/df.dashboard.validation.js"></script>
-<script src="/js/df.dashboard.tutorials.js"></script>
 <script src="/js/df.dashboard.js"></script>
 
 @section('after-body-scripts')
