@@ -77,7 +77,7 @@ var _processAction = function($element, $form) {
 
         case 'import':
             _id = $('input[name="instance-id"]', $form).val();
-            _extra = $('input[name="import-id"]', $form).val();
+            _extra = $('select[name="import-id"]', $form).val();
             break;
         default:
             $element.addClass('disabled').prop('disabled', true);
