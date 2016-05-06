@@ -17,10 +17,7 @@
                             @else
                                 {{ "Set \$panelTitle to change" }}
                             @endif
-                            @if ( isset($headerStatusIcon) )
-                                <span class="pull-right"><i
-                                        class="fa fa-fw {{ $headerStatusIcon }} {{ $headerStatusIconSize or 'fa-1x' }} header-status-icon"></i></span>
-                            @endif
+
                         </a>
                     @endif
                 </h4>
@@ -57,12 +54,8 @@
 
                         @section('panel-toolbar')
                             @if ( isset($toolbarButtons) && !empty($toolbarButtons) )
-                                <div class="instance-actions"
-                                     data-toggle="collapse"
-                                     data-target="#instance-toolbar-{{ $instanceName }}"
-                                     aria-expanded="{{ $autoExpand }}"
-                                     aria-controls="instance-toolbar-{{ $instanceName }}"><i
-                                        class="fa fa-fw fa-angle-down"></i>
+                                <div class="instance-actions">
+                                    <i class="fa fa-fw fa-angle-down"></i>
                                 </div>
 
                                 <div id="instance-toolbar-{{ $instanceName }}"

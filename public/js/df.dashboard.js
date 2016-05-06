@@ -178,18 +178,27 @@ jQuery(function($) {
             }
         );
 
-        //	All toolbar button clicks go here...
+        $('#upload-file').change(function(e){
+            //clear out any previous select entries..
+            if($('#import-id').val()){
+                $('#import-id, #instance-id').val('');
+            }
+        });
+
+        $('#import-id').change(function(e){
+            //clear out any previous file uploads..
+            if($('#upload-file').val()){
+                $('#upload-file').val('');
+            }
+            var $_selected = $("option:selected", $(this));
+            $('input#instance-id').val($_selected.data('instance-id'));
+            $('input#snapshot-id').val($_selected.val());
+        });
+
+        //	All instance panel toolbar button clicks go here...
         $('.panel-toolbar').on('click', 'button', function(e) {
                 e.preventDefault();
                 _processAction($(this));
-            }
-        );
-
-        //  Set the data-instance-id on btn-import-instance when an import is chosen
-        $('select#import-id').on('change', function() {
-                var $_form = $('#form-import'), $_selected = $(this).find(':selected');
-                $_form.find('input[name="instance-id"]').val($_selected.data('instance-id'));
-                $_form.find('input[name="snapshot-id"]').val($_selected.val());
             }
         );
 
