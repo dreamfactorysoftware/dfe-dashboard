@@ -63,7 +63,7 @@ HTML
     /** Uploaded file */
     'instance-upload-heading'             => 'Upload Your Own',
     'instance-upload-title'               => 'Have a snapshot from another system?',
-    'instance-upload-label'               => 'Upload a Snapshot',
+    'instance-upload-label'               => 'Browse for a Snapshot',
     'instance-upload-help'                => '<p class="help-block">Select an existing snapshot file (*.zip or *.tar.gz) to upload from your system and click the <strong>Upload</strong> button.</p>',
     //******************************************************************************
     //* Buttons

@@ -161,6 +161,8 @@ jQuery(function($) {
         //	Reusables...
         var $_toolbars = $('div[id^="instance-toolbar-"]');
 
+        $('[data-toggle="tooltip"]').tooltip();
+
         //	Set form if not already
         _dso.controlForm = _dso.controlForm || $('form#_dsp-control');
 

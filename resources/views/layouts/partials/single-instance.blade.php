@@ -70,8 +70,8 @@
                                                 data-instance-id="{{ $instanceName }}"
                                                 data-instance-href="{{ $instanceUrl }}"
                                                 data-instance-action="{{ $_button['action'] }}"
-                                                data-toggle="tooltip" data-placement="bottom"
-                                                title="{{ $_button['hint'] or $_button['text'] }}"
+                                                data-toggle="tooltip" data-placement="top"
+                                                title="{{ $_button['hint'] or $_button['text'] }} Instance"
                                                 class="btn {{ $_button['size'] or 'btn-xs' }} {{ $_button['context'] or 'btn-default' }}">{!!
                                             $_button['icon'] !!}
                                                 <span
