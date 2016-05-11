@@ -106,18 +106,17 @@
 
                 <div class="form-group">
                     <div class="col-md-offset-1 col-md-10 col-md-offset-1">
-                        <hr />
+                        <div align="center"><strong>-or-</strong></div>
                     </div>
                 </div>
                 @if(config('dashboard.allow-import-uploads'))
                     <div class="form-group">
                         <label for="upload-file"
-                               class="col-md-2 control-label"><span style="font-weight: normal;">or</span>&nbsp;{{ trans('common.instance-upload-label') }}
+                               class="col-md-2 control-label">{{ trans('common.instance-upload-label') }}
                         </label>
 
                         <div class="col-md-8">
                             <input type="file" class="form-control" name="upload-file" id="upload-file" accept="application/gz,application/zip,application/tgz">
-                            {!! trans('common.instance-upload-help') !!}
                         </div>
                     </div>
                 @endif
@@ -135,7 +134,6 @@
                                    placeholder="{{ $defaultInstanceName }}">
                             <span class="input-group-addon">{{ $defaultDomain }}</span>
                         </div>
-                        {!! trans('common.instance-create-help') !!}
                     </div>
 
 

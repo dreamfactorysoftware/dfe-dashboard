@@ -26,7 +26,7 @@ return [
     'instance-id-label'                   => 'New Instance Name',
     'instance-or-label'                   => 'or',
     'instance-package-empty-label'        => 'No existing snapshots',
-    'instance-package-label'              => 'Upload a Package File<br/><span class="text-muted"><small>optional</small></span>',
+    'instance-package-label'              => 'Package File<br/><span class="text-muted"><small>optional</small></span>',
     'instance-proof-text'                 => 'I am not a robot.',
     //******************************************************************************
     //* Instance panel bodies

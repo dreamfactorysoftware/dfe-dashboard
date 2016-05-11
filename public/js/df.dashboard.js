@@ -43,6 +43,15 @@ var _closeAlert = function(selector, delay, show) {
         }
     }
 };
+
+var _dfeModal = function(title, body, closeBtn, confirmBtn){
+    $dfeModal.find('.modal-title').text(title);
+    $dfeModal.find('.modal-body').html(body);
+    $dfeModal.find('button.btn-close').text(closeBtn);
+    $dfeModal.find('button.btn-success').text(confirmBtn);
+    $dfeModal.modal('show');
+};
+
 /**
  * Generates the necessary form data to push an action request to the console
  * @param {jQuery} [$element]
@@ -99,44 +108,37 @@ var _processAction = function($element, $form) {
  */
 var _makeRequest = function(id, action, href) {
 
+    $('input[name="id"]', _dso.controlForm).val(id);
+    $('input[name="extra"]', _dso.controlForm).val(href);
+    $('input[name="control"]', _dso.controlForm).val(action);
+
     switch (action) {
         case 'launch':
             window.top.open(href, id);
             return;
 
+        case 'provision':
+        case 'create':
+            return _dso.controlForm.submit();
+            break;
+
         case 'destroy':
         case 'deprovision':
         case 'delete':
-            if (!confirm('Permanently delete instance "' + id + '"?')) {
-                return;
-            }
-            break;
-
-        case 'start':
-            if (!confirm('Start instance "' + id + '"?')) {
-                return;
-            }
-            break;
-
-        case 'stop':
-            if (!confirm('Stop instance "' + id + '"?')) {
-                return;
-            }
-            break;
-
-        case 'provision':
-        case 'create':
-        case 'help':
+            _dfeModal('Delete Instance ', 'Permanently delete instance "' + id + '"?', 'Cancel', 'Delete');
             break;
 
         case 'export':
-            if (!confirm('Export instance "' + id + '"?')) {
-                return;
-            }
+            _dfeModal('Export Instance ', 'Do you want to export instance "' + id + '"?', 'Cancel', 'Export');
+
             break;
 
         case 'import':
-            //  Nothing...
+            if(!$('#panel-body-'+ id).length){
+                return _dso.controlForm.submit();
+            } else {
+                _dfeModal('Duplicate Instance Detected', 'It looks like you already have an active instance with the name "' + id + '". Importing will overwrite that instance. Proceed?', 'Cancel', 'Import');
+            }
             break;
 
         default:
@@ -144,17 +146,18 @@ var _makeRequest = function(id, action, href) {
             return;
     }
 
-    $('input[name="id"]', _dso.controlForm).val(id);
-    $('input[name="extra"]', _dso.controlForm).val(href);
-    $('input[name="control"]', _dso.controlForm).val(action);
 
-    return _dso.controlForm.submit();
+    return;
 };
 
 /**
  * DR
  */
+
+var $dfeModal;
+
 jQuery(function($) {
+
         //	Reusables...
         var $_toolbars = $('div[id^="instance-toolbar-"]');
 
@@ -207,5 +210,14 @@ jQuery(function($) {
 
         /** Clear any alerts after configured time */
         _closeAlert('.alert-dismissable', _dso.alertHideTimeout);
+
+        //Create the modal object
+        $dfeModal = $('.modal').clone().modal('hide');
+
+        $dfeModal.on('click', '.btn-success', function(){
+            $dfeModal.modal('hide');
+            _dso.controlForm.submit();
+        });
+
     }
 );

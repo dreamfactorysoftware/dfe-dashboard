@@ -54,14 +54,11 @@
 
                         @section('panel-toolbar')
                             @if ( isset($toolbarButtons) && !empty($toolbarButtons) )
-                                <div class="instance-actions">
-                                    <i class="fa fa-fw fa-angle-down"></i>
-                                </div>
+
 
                                 <div id="instance-toolbar-{{ $instanceName }}"
-                                     class="panel-toolbar collapse {{ 'true' == $autoExpand ? 'in' : '' }}"
+                                     class="panel-toolbar
                                      role="toolbar">
-                                    <hr class="hr" style="margin-bottom: 5px;" />
                                     @foreach( $toolbarButtons as $_button )
                                         <button id="{{ $_button['id'] }}"
                                                 type="{{ $_button['type'] }}"
