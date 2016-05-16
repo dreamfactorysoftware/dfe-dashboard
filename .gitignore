@@ -10,5 +10,6 @@ node_modules/
 .env
 .env.work
 .idea/
+_ide_helper.php
 /bootstrap/cache/*
 

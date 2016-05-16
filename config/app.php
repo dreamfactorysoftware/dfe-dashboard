@@ -3,7 +3,7 @@ return [
     //******************************************************************************
     //* Application Settings
     //******************************************************************************
-    'debug'           => env('APP_DEBUG'),
+    'debug'           => env('APP_DEBUG', false),
     'env'             => env('APP_ENV', 'production'),
     'url'             => env('APP_URL'),
     'timezone'        => env('TIME_ZONE', 'America/New_York'),

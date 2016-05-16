@@ -43,6 +43,15 @@ var _closeAlert = function(selector, delay, show) {
         }
     }
 };
+
+var _dfeModal = function(title, body, closeBtn, confirmBtn){
+    $dfeModal.find('.modal-title').text(title);
+    $dfeModal.find('.modal-body').html(body);
+    $dfeModal.find('button.btn-close').text(closeBtn);
+    $dfeModal.find('button.btn-success').text(confirmBtn);
+    $dfeModal.modal('show');
+};
+
 /**
  * Generates the necessary form data to push an action request to the console
  * @param {jQuery} [$element]
@@ -77,7 +86,7 @@ var _processAction = function($element, $form) {
 
         case 'import':
             _id = $('input[name="instance-id"]', $form).val();
-            _extra = $('input[name="import-id"]', $form).val();
+            _extra = $('select[name="import-id"]', $form).val();
             break;
         default:
             $element.addClass('disabled').prop('disabled', true);
@@ -99,44 +108,37 @@ var _processAction = function($element, $form) {
  */
 var _makeRequest = function(id, action, href) {
 
+    $('input[name="id"]', _dso.controlForm).val(id);
+    $('input[name="extra"]', _dso.controlForm).val(href);
+    $('input[name="control"]', _dso.controlForm).val(action);
+
     switch (action) {
         case 'launch':
             window.top.open(href, id);
             return;
 
+        case 'provision':
+        case 'create':
+            return _dso.controlForm.submit();
+            break;
+
         case 'destroy':
         case 'deprovision':
         case 'delete':
-            if (!confirm('Permanently delete instance "' + id + '"?')) {
-                return;
-            }
-            break;
-
-        case 'start':
-            if (!confirm('Start instance "' + id + '"?')) {
-                return;
-            }
-            break;
-
-        case 'stop':
-            if (!confirm('Stop instance "' + id + '"?')) {
-                return;
-            }
-            break;
-
-        case 'provision':
-        case 'create':
-        case 'help':
+            _dfeModal('Delete Instance ', 'Permanently delete instance "' + id + '"?', 'Cancel', 'Delete');
             break;
 
         case 'export':
-            if (!confirm('Export instance "' + id + '"?')) {
-                return;
-            }
+            _dfeModal('Export Instance ', 'Do you want to export instance "' + id + '"?', 'Cancel', 'Export');
+
             break;
 
         case 'import':
-            //  Nothing...
+            if(!$('#panel-body-'+ id).length){
+                return _dso.controlForm.submit();
+            } else {
+                _dfeModal('Duplicate Instance Detected', 'It looks like you already have an active instance with the name "' + id + '". Importing will overwrite that instance. Proceed?', 'Cancel', 'Import');
+            }
             break;
 
         default:
@@ -144,19 +146,22 @@ var _makeRequest = function(id, action, href) {
             return;
     }
 
-    $('input[name="id"]', _dso.controlForm).val(id);
-    $('input[name="extra"]', _dso.controlForm).val(href);
-    $('input[name="control"]', _dso.controlForm).val(action);
 
-    return _dso.controlForm.submit();
+    return;
 };
 
 /**
  * DR
  */
+
+var $dfeModal;
+
 jQuery(function($) {
+
         //	Reusables...
         var $_toolbars = $('div[id^="instance-toolbar-"]');
+
+        $('[data-toggle="tooltip"]').tooltip();
 
         //	Set form if not already
         _dso.controlForm = _dso.controlForm || $('form#_dsp-control');
@@ -178,18 +183,27 @@ jQuery(function($) {
             }
         );
 
-        //	All toolbar button clicks go here...
+        $('#upload-file').change(function(e){
+            //clear out any previous select entries..
+            if($('#import-id').val()){
+                $('#import-id, #instance-id').val('');
+            }
+        });
+
+        $('#import-id').change(function(e){
+            //clear out any previous file uploads..
+            if($('#upload-file').val()){
+                $('#upload-file').val('');
+            }
+            var $_selected = $("option:selected", $(this));
+            $('input#instance-id').val($_selected.data('instance-id'));
+            $('input#snapshot-id').val($_selected.val());
+        });
+
+        //	All instance panel toolbar button clicks go here...
         $('.panel-toolbar').on('click', 'button', function(e) {
                 e.preventDefault();
                 _processAction($(this));
-            }
-        );
-
-        //  Set the data-instance-id on btn-import-instance when an import is chosen
-        $('select#import-id').on('change', function() {
-                var $_form = $('#form-import'), $_selected = $(this).find(':selected');
-                $_form.find('input[name="instance-id"]').val($_selected.data('instance-id'));
-                $_form.find('input[name="snapshot-id"]').val($_selected.val());
             }
         );
 
@@ -198,5 +212,14 @@ jQuery(function($) {
 
         /** Clear any alerts after configured time */
         _closeAlert('.alert-dismissable', _dso.alertHideTimeout);
+
+        //Create the modal object
+        $dfeModal = $('.modal').clone().modal('hide');
+
+        $dfeModal.on('click', '.btn-success', function(){
+            $dfeModal.modal('hide');
+            _dso.controlForm.submit();
+        });
+
     }
 );

@@ -55,6 +55,12 @@ jQuery(function($) {
                     required: function(element) {
                         return $('import-id').data('import-count') == 1 || !$('#import-id').val();
                     }
+                },
+                'instance-id': {
+                    required:     true,
+                    minlength:    3,
+                    maxlength:    64,
+                    alphanumeric: true
                 }
             },
             messages: {
@@ -63,6 +69,10 @@ jQuery(function($) {
                 },
                 'upload-file': {
                     required: 'You must upload an export or choose an existing one.'
+                },
+                'instance-id': {
+                    required: 'An Instance name is required.',
+                    alphanumeric: 'Instance names may contain only letters, numbers, and underscores.'
                 }
             }
         };

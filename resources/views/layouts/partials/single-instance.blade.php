@@ -17,10 +17,7 @@
                             @else
                                 {{ "Set \$panelTitle to change" }}
                             @endif
-                            @if ( isset($headerStatusIcon) )
-                                <span class="pull-right"><i
-                                        class="fa fa-fw {{ $headerStatusIcon }} {{ $headerStatusIconSize or 'fa-1x' }} header-status-icon"></i></span>
-                            @endif
+
                         </a>
                     @endif
                 </h4>
@@ -57,18 +54,11 @@
 
                         @section('panel-toolbar')
                             @if ( isset($toolbarButtons) && !empty($toolbarButtons) )
-                                <div class="instance-actions"
-                                     data-toggle="collapse"
-                                     data-target="#instance-toolbar-{{ $instanceName }}"
-                                     aria-expanded="{{ $autoExpand }}"
-                                     aria-controls="instance-toolbar-{{ $instanceName }}"><i
-                                        class="fa fa-fw fa-angle-down"></i>
-                                </div>
+
 
                                 <div id="instance-toolbar-{{ $instanceName }}"
-                                     class="panel-toolbar collapse {{ 'true' == $autoExpand ? 'in' : '' }}"
+                                     class="panel-toolbar
                                      role="toolbar">
-                                    <hr class="hr" style="margin-bottom: 5px;" />
                                     @foreach( $toolbarButtons as $_button )
                                         <button id="{{ $_button['id'] }}"
                                                 type="{{ $_button['type'] }}"
@@ -80,8 +70,8 @@
                                                 data-instance-id="{{ $instanceName }}"
                                                 data-instance-href="{{ $instanceUrl }}"
                                                 data-instance-action="{{ $_button['action'] }}"
-                                                data-toggle="tooltip" data-placement="bottom"
-                                                title="{{ $_button['hint'] or $_button['text'] }}"
+                                                data-toggle="tooltip" data-placement="top"
+                                                title="{{ $_button['hint'] or $_button['text'] }} Instance"
                                                 class="btn {{ $_button['size'] or 'btn-xs' }} {{ $_button['context'] or 'btn-default' }}">{!!
                                             $_button['icon'] !!}
                                                 <span

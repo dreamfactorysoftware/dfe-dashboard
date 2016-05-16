@@ -355,7 +355,12 @@ class DashboardService extends BaseService
      */
     public function importInstance($instanceId, $snapshot, $indirect = false)
     {
-        $_payload = ['instance-id' => $instanceId, 'snapshot' => $snapshot, '--indirect' => $indirect, 'owner-id' => Auth::user()->id];
+        $_payload = [
+            'instance-id' => $instanceId,
+            'snapshot' => $snapshot,
+            '--indirect' => $indirect,
+            'owner-id' => Auth::user()->id
+        ];
 
         return $this->createResponseFromCallResult($this->callConsole('import', $_payload));
     }

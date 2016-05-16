@@ -54,6 +54,8 @@ $_psa = Flasher::psa('Alert',
         </div>
     </div>
 
+    @include('layouts.modal')
+
     <!--suppress HtmlUnknownTarget -->
     <form id="_dsp-control" method="POST" action="/control">
         <input type="hidden" name="id" value="">

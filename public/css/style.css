@@ -309,6 +309,7 @@ table.dataTable thead th {
     height:           60px;
     background-color: #2c3e50;
     color:            rgba(255, 255, 255, .75);
+    z-index:          2;
 }
 
 .footer > .container {
@@ -551,6 +552,22 @@ label[for="import-file"] {
 
 .panel-toolbar {
     text-align: center;
+    margin-top:10px;
+}
+
+.panel-info>.panel-heading {
+    color: #ffffff;
+    background-color: #2C3E50;
+    border-color: #2C3E50;
+}
+
+.panel-info {
+    border-color: #2C3E50;
+}
+
+.modal-header {
+    background-color: #2C3E50;
+    color: #ffffff;
 }
 
 .instance-status-name {
