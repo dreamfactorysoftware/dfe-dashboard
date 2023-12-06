@@ -1,0 +1,258 @@
+repo_name: dreamfactorysoftware/dfe-dashboard
+report_id: a6e2f72b2981c6918b07868464030bad
+repo_type: Public
+timestamp: '2023-12-06T22:36:56+00:00'
+requested_by: chas688
+provider: github
+branch: master
+detected_tools_count: 20
+tools:
+- name: JavaScript
+  description: Lightweight, interpreted, object-oriented language with first-class
+    functions
+  website_url: https://developer.mozilla.org/en-US/docs/Web/JavaScript
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/1209/javascript.jpeg
+  detection_source: Repo Metadata
+- name: PHP
+  description: A popular general-purpose scripting language that is especially suited
+    to web development
+  website_url: http://www.php.net/
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/991/hwUcGZ41_400x400.jpg
+  detection_source: Repo Metadata
+- name: Guzzle
+  description: PHP HTTP client that makes it easy to send HTTP requests and trivial
+    to integrate with web services
+  website_url: http://guzzlephp.org/
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Microframeworks (Backend)
+  image_url: https://img.stackshare.io/service/2350/638632.png
+  detection_source: composer.json
+  last_updated_by: Jerry Ablan
+  last_updated_on: 2016-03-08 18:20:39.000000000 Z
+- name: Laravel
+  description: A PHP Framework For Web Artisans
+  website_url: http://laravel.com/
+  version: '5.2'
+  open_source: false
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Frameworks (Full Stack)
+  image_url: https://img.stackshare.io/service/992/AcA2LnWL_400x400.jpg
+  detection_source_url: github.com/dreamfactorysoftware/dfe-dashboard/blob/master/composer.json
+  detection_source: composer.json
+  last_updated_by: Jerry Ablan
+  last_updated_on: 2016-03-08 22:38:27.000000000 Z
+- name: Git
+  description: Fast, scalable, distributed revision control system
+  website_url: http://git-scm.com/
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Version Control System
+  image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source: Repo Metadata
+- name: PHPUnit
+  description: Testing framework for PHP
+  website_url: https://phpunit.de/
+  version: '4.0'
+  license: BSD-3-Clause
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Testing Frameworks
+  image_url: https://img.stackshare.io/service/1616/1_WsEnddd5Y4EgEHsT054kUQ.jpeg
+  detection_source_url: github.com/dreamfactorysoftware/dfe-dashboard/blob/master/composer.json
+  detection_source: composer.json
+  last_updated_by: Jerry Ablan
+  last_updated_on: 2015-03-20 03:58:01.000000000 Z
+- name: PhpSpec
+  description: A  toolset for behavior driven development
+  website_url: http://www.phpspec.net/en/latest/
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Testing Frameworks
+  image_url: https://img.stackshare.io/service/3502/6b9dfb07681dee602dbdf75d9393f07c_400x400.png
+  detection_source: composer.json
+  last_updated_by: Jerry Ablan
+  last_updated_on: 2015-03-20 03:58:01.000000000 Z
+- name: barryvdh/laravel-ide-helper
+  description: Laravel IDE Helper
+  package_url: https://packagist.org/barryvdh/laravel-ide-helper
+  version: '2.1'
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: github.com/dreamfactorysoftware/dfe-dashboard/blob/master/composer.json
+  detection_source: composer.json
+  last_updated_by: Jerry Ablan
+  last_updated_on: 2016-03-08 22:38:27.000000000 Z
+- name: doctrine/dbal
+  description: Powerful PHP database abstraction layer
+  package_url: https://packagist.org/doctrine/dbal
+  version: '2.3'
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: github.com/dreamfactorysoftware/dfe-dashboard/blob/master/composer.json
+  detection_source: composer.json
+  last_updated_by: Jerry Ablan
+  last_updated_on: 2016-03-07 22:58:20.000000000 Z
+- name: graham-campbell/flysystem
+  description: Flysystem Is A Flysystem Bridge For Laravel
+  package_url: https://packagist.org/graham-campbell/flysystem
+  version: '3.0'
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: github.com/dreamfactorysoftware/dfe-dashboard/blob/master/composer.json
+  detection_source: composer.json
+  last_updated_by: Jerry Ablan
+  last_updated_on: 2016-03-07 22:58:20.000000000 Z
+- name: graham-campbell/github
+  description: GitHub Is A GitHub Bridge For Laravel
+  package_url: https://packagist.org/graham-campbell/github
+  version: '4.0'
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: github.com/dreamfactorysoftware/dfe-dashboard/blob/master/composer.json
+  detection_source: composer.json
+  last_updated_by: Jerry Ablan
+  last_updated_on: 2016-03-07 22:58:20.000000000 Z
+- name: guzzlehttp/guzzle
+  description: Guzzle is a PHP HTTP client library
+  package_url: https://packagist.org/guzzlehttp/guzzle
+  version: 4.2.3
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: github.com/dreamfactorysoftware/dfe-dashboard/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Jerry Ablan
+  last_updated_on: 2016-03-08 18:20:39.000000000 Z
+- name: laravel/framework
+  description: The Laravel Framework
+  package_url: https://packagist.org/laravel/framework
+  version: '5.2'
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: github.com/dreamfactorysoftware/dfe-dashboard/blob/master/composer.json
+  detection_source: composer.json
+  last_updated_by: Jerry Ablan
+  last_updated_on: 2016-03-08 22:38:27.000000000 Z
+- name: laravelcollective/bus
+  description: The Laravel Bus
+  package_url: https://packagist.org/laravelcollective/bus
+  version: '5.2'
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: github.com/dreamfactorysoftware/dfe-dashboard/blob/master/composer.json
+  detection_source: composer.json
+  last_updated_by: Jerry Ablan
+  last_updated_on: 2016-03-08 22:38:27.000000000 Z
+- name: league/flysystem-ziparchive
+  description: ZIP filesystem adapter for Flysystem
+  package_url: https://packagist.org/league/flysystem-ziparchive
+  version: '1.0'
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: github.com/dreamfactorysoftware/dfe-dashboard/blob/master/composer.json
+  detection_source: composer.json
+  last_updated_by: Jerry Ablan
+  last_updated_on: 2016-03-07 22:58:20.000000000 Z
+- name: phpspec/phpspec
+  description: Specification-oriented BDD framework for PHP 7.1+
+  package_url: https://packagist.org/phpspec/phpspec
+  version: '2.1'
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: github.com/dreamfactorysoftware/dfe-dashboard/blob/master/composer.json
+  detection_source: composer.json
+  last_updated_by: Jerry Ablan
+  last_updated_on: 2016-03-07 22:58:20.000000000 Z
+- name: phpunit/phpunit
+  description: The PHP Unit Testing framework
+  package_url: https://packagist.org/phpunit/phpunit
+  version: '4.0'
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: github.com/dreamfactorysoftware/dfe-dashboard/blob/master/composer.json
+  detection_source: composer.json
+  last_updated_by: Jerry Ablan
+  last_updated_on: 2016-03-07 22:58:20.000000000 Z
+- name: symfony/css-selector
+  description: Converts CSS selectors to XPath expressions
+  package_url: https://packagist.org/symfony/css-selector
+  version: '3.0'
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: github.com/dreamfactorysoftware/dfe-dashboard/blob/master/composer.json
+  detection_source: composer.json
+  last_updated_by: Jerry Ablan
+  last_updated_on: 2016-03-09 00:10:03.000000000 Z
+- name: symfony/dom-crawler
+  description: Eases DOM navigation for HTML and XML documents
+  package_url: https://packagist.org/symfony/dom-crawler
+  version: '3.0'
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: github.com/dreamfactorysoftware/dfe-dashboard/blob/master/composer.json
+  detection_source: composer.json
+  last_updated_by: Jerry Ablan
+  last_updated_on: 2016-03-07 22:58:20.000000000 Z
+- name: way/generators
+  description: Rapidly generate resources
+  package_url: https://packagist.org/way/generators
+  version: 3.0.3
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: github.com/dreamfactorysoftware/dfe-dashboard/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Jerry Ablan
+  last_updated_on: 2016-03-07 22:58:20.000000000 Z
